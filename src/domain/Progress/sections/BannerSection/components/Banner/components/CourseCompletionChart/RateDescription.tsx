@@ -6,10 +6,21 @@ export const RateDescription = ({ rate }: ChartType) => {
   return (
     <Stack css={sx.rateTextContainer}>
       <Stack css={sx.rateTextWrapper}>
-        <Typography fontSize="100px" fontWeight={700} color="white">
+        <Typography
+          fontSize="100px"
+          fontWeight={700}
+          color="white"
+          letterSpacing={"-1.75px"}
+        >
           {rate}
         </Typography>
-        <Typography variant="h2" lineHeight={1} color="white" css={sx.percent}>
+        <Typography
+          variant="h2"
+          lineHeight={1}
+          color="white"
+          letterSpacing="-1.75px"
+          css={sx.percent}
+        >
           {"%"}
         </Typography>
       </Stack>
@@ -18,6 +29,7 @@ export const RateDescription = ({ rate }: ChartType) => {
         lineHeight={1.2}
         fontWeight={700}
         color="white"
+        letterSpacing={"1.5px"}
         textAlign={"center"}
       >
         {"Course Completion"}
@@ -29,12 +41,12 @@ export const RateDescription = ({ rate }: ChartType) => {
 const sx = {
   rateTextContainer: css`
     position: absolute;
-    top: 44%;
+    top: 42%;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
-    gap: 36px;
+    gap: 40px;
   `,
   rateTextWrapper: css`
     position: relative;
@@ -43,6 +55,6 @@ const sx = {
   percent: css`
     position: absolute;
     top: -40px;
-    right: -16px;
+    right: -20px;
   `,
 };

@@ -13,13 +13,23 @@ export const CurrentCourseTitle = ({
   desc,
 }: CurrentCourseTitleType) => (
   <Stack css={sx.title}>
-    <Typography variant="subtitle1" color="white" mb={"6px"}>
+    <Typography
+      variant="subtitle1"
+      color="white"
+      mb={"6px"}
+      letterSpacing="0.3px"
+    >
       {caption}
     </Typography>
-    <Typography variant="h2" color="white" mb={"4px"}>
+    <Typography variant="h2" color="white" letterSpacing="0.3px" mb={"4px"}>
       {title + ":"}
     </Typography>
-    <Typography variant="h3" fontWeight={400} color="white">
+    <Typography
+      variant="h3"
+      fontWeight={400}
+      letterSpacing="0.3px"
+      color="white"
+    >
       {desc}
     </Typography>
   </Stack>
