@@ -2,8 +2,7 @@ import { css } from "@emotion/react";
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import FullBannerImage from "@/assets/progress/banner/img-banner.png";
-import { CurrentCourseTitle } from "./components/CurrentCourseTitle/CurrentCourseTitle";
-import { CourseCompletionChart } from "./components/CourseCompletionChart/CourseCompletionChart";
+import { CourseCompletionChart, CurrentCourseTitle } from "./components";
 
 export const Banner = () => {
   const model = {

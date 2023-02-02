@@ -3,6 +3,8 @@
 
 * {
   box-sizing: border-box;
+  font-family: "DM Sans", sans-serif;
+
 }
 
 html,
@@ -16,4 +18,6 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  font-family: "DM Sans", sans-serif;
+
 }
