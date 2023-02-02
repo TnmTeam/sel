@@ -41,7 +41,7 @@ export const RateDescription = ({ rate }: ChartType) => {
 const sx = {
   rateTextContainer: css`
     position: absolute;
-    top: 42%;
+    top: 44%;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -54,7 +54,7 @@ const sx = {
   `,
   percent: css`
     position: absolute;
-    top: -40px;
+    top: -32px;
     right: -20px;
   `,
 };

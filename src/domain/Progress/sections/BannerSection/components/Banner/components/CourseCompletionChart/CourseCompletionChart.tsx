@@ -19,7 +19,7 @@ const sx = {
   chart: css`
     width: 324px;
     position: absolute;
-    top: 90px;
+    top: 84px;
     right: 200px;
   `,
   chartWrapper: css`
