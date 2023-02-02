@@ -29,6 +29,12 @@ const baseTypographyOptions: TypographyOptions = {
     fontWeight: "normal",
   },
 
+  subtitle1: {
+    fontSize: "20px",
+    lineHeight: "26px",
+    fontWeight: 700,
+  },
+
   body1: { fontSize: "18px", lineHeight: "26px", fontWeight: "normal" },
   body2: { fontSize: "16px", lineHeight: "24px", fontWeight: "normal" },
 
