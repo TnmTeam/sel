@@ -1,7 +1,7 @@
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 
 const baseTypographyOptions: TypographyOptions = {
-  fontFamily: "Pretendard",
+  fontFamily: "DM Sans",
   h1: {
     fontSize: "60px",
     lineHeight: "68px",
@@ -27,6 +27,12 @@ const baseTypographyOptions: TypographyOptions = {
     fontSize: "25px",
     lineHeight: "33px",
     fontWeight: "normal",
+  },
+
+  subtitle1: {
+    fontSize: "20px",
+    lineHeight: "26px",
+    fontWeight: 700,
   },
 
   body1: { fontSize: "18px", lineHeight: "26px", fontWeight: "normal" },
