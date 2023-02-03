@@ -22,6 +22,7 @@ export const CourseDescription = () => {
         lineHeight="23px"
         color="#4F5B70"
         whiteSpace={"pre-wrap"}
+        height="161px"
       >
         {models.description}
       </Typography>
