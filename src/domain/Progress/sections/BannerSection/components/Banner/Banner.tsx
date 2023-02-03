@@ -16,7 +16,7 @@ export const Banner = () => {
     },
   };
   return (
-    <Stack css={sx.root}>
+    <Stack css={sx.bannerContainer}>
       <BannerImage />
       <CurrentCourseTitle
         caption={model.title.caption}
@@ -29,7 +29,7 @@ export const Banner = () => {
 };
 
 const sx = {
-  root: css`
+  bannerContainer: css`
     height: 452px;
     position: relative;
     overflow: hidden;

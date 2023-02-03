@@ -19,7 +19,7 @@ export const CourseProgressList = () => {
   };
 
   return (
-    <Stack css={sx.root}>
+    <Stack css={sx.courseProgressListContainer}>
       <PlainProgressList list={models.plain} />
       <ChartProgressList list={models.chart} />
     </Stack>
@@ -27,7 +27,7 @@ export const CourseProgressList = () => {
 };
 
 const sx = {
-  root: css`
+  courseProgressListContainer: css`
     width: 100%;
     height: 430px;
     padding: 0 120px;
