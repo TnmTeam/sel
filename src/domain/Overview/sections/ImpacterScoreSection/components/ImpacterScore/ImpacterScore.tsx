@@ -8,6 +8,9 @@ export const ImpacterScore = () => {
             rate: 78,
             studentName: "Jaime's",
         },
+        StudentVideo: {
+            url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        },
     };
     return (
         <Stack>
@@ -15,6 +18,7 @@ export const ImpacterScore = () => {
                 rate={model.impacterScore.rate}
                 studentName={model.impacterScore.studentName}
             />
+            <ScoreVideo url={model.StudentVideo.url} />
         </Stack>
     );
 };
