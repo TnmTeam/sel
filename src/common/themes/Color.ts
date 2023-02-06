@@ -22,6 +22,9 @@ export enum Colors {
   Text400 = "#98A0B3",
   Text200 = "#C3CAD9",
   Text100 = "#F2F6FF",
+
+  // process color
+  UnCompeleteYellow = "#F1AB27",
 }
 
 // 테마에 적용될 컬러 팔레트를 정의 합니다.

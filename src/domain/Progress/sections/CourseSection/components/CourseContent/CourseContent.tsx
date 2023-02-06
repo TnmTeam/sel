@@ -16,7 +16,7 @@ const sx = {
   root: css`
     width: 100%;
     background-color: white;
-    padding: 30px 40px;
+    padding: 26px 40px;
     border-radius: 20px;
   `,
 };
