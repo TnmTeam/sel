@@ -50,11 +50,6 @@ const sx = {
     padding-right: 17.32px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.11);
     cursor: pointer;
-
-    &:hover {
-      transition: 0.3s;
-      background-color: ${Colors.FlexBlue};
-    }
   `,
   text: css`
     color: #0a0b26;
@@ -64,5 +59,9 @@ const sx = {
   `,
   icon: css`
     width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   `,
 };
