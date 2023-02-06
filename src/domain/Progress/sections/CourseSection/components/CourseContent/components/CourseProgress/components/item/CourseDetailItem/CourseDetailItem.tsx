@@ -8,16 +8,22 @@ import { CourseDetailType } from "../../../../../types/course.type";
 type DetailCourseItemType = {
   item: CourseDetailType;
   onItemClick: () => void;
+  isSelected: boolean;
 };
 
 export const DetailCourseItem = ({
   item,
   onItemClick,
+  isSelected,
 }: DetailCourseItemType) => {
   const { getCompletionIcon, getCourseTypeIcon } = useCourseDetailItem();
 
   return (
-    <Stack onClick={onItemClick} direction="row" css={sx.courseDetailItem}>
+    <Stack
+      onClick={onItemClick}
+      direction="row"
+      css={sx.courseDetailItem(isSelected)}
+    >
       <Image
         width={20}
         height={30}
@@ -45,7 +51,7 @@ export const DetailCourseItem = ({
 };
 
 const sx = {
-  courseDetailItem: css`
+  courseDetailItem: (isSelected: boolean) => css`
     width: 100%;
     flex: 1;
     display: flex;
@@ -54,10 +60,11 @@ const sx = {
     padding-left: 24px;
     padding-right: 17.32px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+    background-color: ${isSelected && " rgba(103, 135, 183, 0.2)"};
     cursor: pointer;
     &:hover {
       transition: 0.3s;
-      background-color: ${Colors.FlexBlue};
+      background-color: rgba(103, 135, 183, 0.2);
     }
   `,
   text: css`
