@@ -29,6 +29,7 @@ export const DetailCourseItem = ({
         width="362px"
         lineHeight={"21px"}
         ml={"20px"}
+        mr={"20px"}
         css={sx.text}
       >
         {item.title}
