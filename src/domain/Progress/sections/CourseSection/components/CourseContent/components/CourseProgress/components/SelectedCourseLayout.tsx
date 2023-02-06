@@ -1,21 +1,15 @@
-import { CourseDetailType, CourseType } from "../../../types/course.type";
 import { css } from "@emotion/react";
 import { Stack } from "@mui/material";
+import { SelectedCourseLayoutType } from "../../../types/course.type";
 import { DetailCourseItem } from "./item/CourseDetailItem/CourseDetailItem";
 import { CourseItem } from "./item/CourseItem/CourseItem";
 
-type SelectedCourseLayoutProps = {
-  selectedCourse: CourseType;
-  selectedDetailCourse: CourseDetailType | null;
-  onListBack: () => void;
-  onCourseClick: (detailCourse: CourseDetailType) => void;
-};
-
 export const SelectedCourseLayout = ({
   selectedCourse,
+  selectedDetailCourse,
   onListBack,
   onCourseClick,
-}: SelectedCourseLayoutProps) => {
+}: SelectedCourseLayoutType) => {
   return (
     <Stack css={sx.courseListLayout}>
       <CourseItem item={selectedCourse} onItemClick={onListBack} isSelected />
@@ -23,6 +17,7 @@ export const SelectedCourseLayout = ({
         <DetailCourseItem
           key={index}
           item={it}
+          isSelected={it == selectedDetailCourse}
           onItemClick={() => onCourseClick(it)}
         />
       ))}

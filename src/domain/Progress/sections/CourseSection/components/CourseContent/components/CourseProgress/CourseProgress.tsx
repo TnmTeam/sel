@@ -1,21 +1,8 @@
 import { Stack, Typography } from "@mui/material";
 import { css } from "@emotion/react";
-import { CourseDetailType, CourseType } from "../../types/course.type";
+import { CourseProgressType } from "../../types/course.type";
 import { CourseListLayout } from "./components/CourseLIstLayout";
 import { SelectedCourseLayout } from "./components/SelectedCourseLayout";
-
-type CourseProgressType = {
-  courseState: {
-    courses: CourseType[];
-    course: CourseType | null;
-    onCourseClick: (selectedCourse: CourseType) => void;
-  };
-  detailCourseState: {
-    course: CourseDetailType | null;
-    onCourseClick: (selectedDetailCourse: CourseDetailType) => void;
-  };
-  onListBack: () => void;
-};
 
 export const CourseProgress = ({
   courseState,
