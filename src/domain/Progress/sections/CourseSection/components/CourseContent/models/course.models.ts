@@ -1,15 +1,15 @@
-import { CourseType } from "./course.type";
+import { CourseType } from "../types/course.type";
 
 export const courseModel: CourseType[] = [
   {
     dayTitle: "Introduction",
     date: "19 Jan",
-    process: 80,
+    process: 20,
     courseDetailList: [
       {
         title: "Watch: Leadership Is a Skill",
         iconType: "",
-        isCompleted: true,
+        isCompleted: false,
       },
       { title: "Read: How to Guide", iconType: "", isCompleted: true },
       {
@@ -52,7 +52,7 @@ export const courseModel: CourseType[] = [
   {
     dayTitle: "Day 1 : Description",
     date: "19 Jan",
-    process: 80,
+    process: 0,
     courseDetailList: [
       {
         title: "Watch: Leadership Is a Skill",
@@ -100,7 +100,7 @@ export const courseModel: CourseType[] = [
   {
     dayTitle: "Day 2 : Description",
     date: "19 Jan",
-    process: 80,
+    process: 100,
     courseDetailList: [
       {
         title: "Watch: Leadership Is a Skill",

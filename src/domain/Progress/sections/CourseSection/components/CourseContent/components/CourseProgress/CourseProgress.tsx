@@ -1,22 +1,30 @@
 import { Stack, Typography } from "@mui/material";
 import { css } from "@emotion/react";
-import { useState } from "react";
-import { CourseType } from "../../course.type";
+import { CourseProgressType } from "../../types/course.type";
 import { CourseListLayout } from "./components/CourseLIstLayout";
 import { SelectedCourseLayout } from "./components/SelectedCourseLayout";
-import { courseModel } from "../../course.models";
 
-export const CourseProgress = () => {
-  const courses = courseModel;
-  const [course, setCourse] = useState<CourseType | null>(null);
+export const CourseProgress = ({
+  courseState,
+  detailCourseState,
+  onListBack,
+}: CourseProgressType) => {
   return (
     <Stack css={sx.progressContainer}>
       <CourseProgressTitle />
       <div>
-        {!course ? (
-          <CourseListLayout courses={courses} onCourseClick={() => null} />
+        {!courseState.course ? (
+          <CourseListLayout
+            courses={courseState.courses}
+            onCourseClick={courseState.onCourseClick}
+          />
         ) : (
-          <SelectedCourseLayout selectedCourse={course} />
+          <SelectedCourseLayout
+            selectedCourse={courseState.course}
+            selectedDetailCourse={detailCourseState.course}
+            onListBack={onListBack}
+            onCourseClick={detailCourseState.onCourseClick}
+          />
         )}
       </div>
     </Stack>
