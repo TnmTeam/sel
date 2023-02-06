@@ -1,8 +1,8 @@
-import { ProgressView } from "@/domain/Progress/views";
-import { NextPage } from "next";
+import { ProgressView } from '@/domain/Progress/views';
+import { NextPage } from 'next';
 
 const ProgressPage: NextPage = () => {
-  return <ProgressView />;
+    return <ProgressView />;
 };
 
 export default ProgressPage;
