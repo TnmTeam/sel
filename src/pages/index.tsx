@@ -1,8 +1,8 @@
-import { ProgressView } from '@/domain/Progress/views';
+import { LoginView } from '@/domain/Login/views';
 import { NextPage } from 'next';
 
-const ProgressPage: NextPage = () => {
-    return <ProgressView />;
+const LoginPage: NextPage = () => {
+    return <LoginView />;
 };
 
-export default ProgressPage;
+export default LoginPage;
