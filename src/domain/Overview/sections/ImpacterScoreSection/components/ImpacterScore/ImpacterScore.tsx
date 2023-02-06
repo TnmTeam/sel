@@ -9,7 +9,7 @@ export const ImpacterScore = () => {
             studentName: "Jaime's",
         },
         StudentVideo: {
-            url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+            url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
         },
     };
     return (
