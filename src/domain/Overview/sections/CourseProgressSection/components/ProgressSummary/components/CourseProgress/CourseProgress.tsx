@@ -4,6 +4,7 @@ import { CourseProgressType } from './types/CourseProgress.type';
 import { CourseTimeline } from './CourseTimeline';
 import Image from "next/image";
 import FullBannerImage from "@/assets/overview/img-CourseProgress.png";
+import Link from '@mui/material/Link';
 
 export const CourseProgress = ({title, plain}: CourseProgressType) => {
     return (
@@ -31,6 +32,7 @@ export const CourseProgress = ({title, plain}: CourseProgressType) => {
                         dept={it.dept}
                     />
                 ))}
+                <Link href="/progress" css={sx.viewAllText}>View all {'>'}</Link>
             </Stack>
             
         </Stack>
@@ -65,6 +67,17 @@ const sx = {
     `,
     titleText: css`
         font-weight: bold;
+    `, 
+    viewAllText: css`
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.01em;
+        color: #147AD6;
+        margin-left:15px;
+        text-decoration-line : none;
     `,
 };
 
