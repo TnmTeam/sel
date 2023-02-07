@@ -7,13 +7,12 @@ const nextConfig = {
             labelFormat: '[dirname]-[filename]-[local]',
         },
     },
-  },
-  images: {
-    unoptimized: true,
-  },
+    images: {
+        unoptimized: true,
+    },
 
-  reactStrictMode: true,
-  assetPrefix: ".",
+    reactStrictMode: true,
+    assetPrefix: '.',
 };
 
 module.exports = nextConfig;
