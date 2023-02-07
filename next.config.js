@@ -11,7 +11,7 @@ const nextConfig = {
     unoptimized: true,
   },
   reactStrictMode: true,
-  assetPrefix: ".",
+  //assetPrefix: ".",
 };
 
 module.exports = nextConfig;

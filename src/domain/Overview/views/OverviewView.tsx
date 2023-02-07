@@ -3,12 +3,14 @@ import { Stack } from '@mui/material';
 import Image from 'next/image';
 import OverViewBackgroundImage from '@/assets/overview/img-background.png';
 import { ImpacterScoreSection } from '../sections';
+import { FeaturedImpactorVideosSection } from '../sections';
 
 export const OverviewView = () => {
     return (
         <Stack css={sx.overviewContainer}>
             <OverViewImage />
             <ImpacterScoreSection />
+            <FeaturedImpactorVideosSection />
         </Stack>
     );
 };
