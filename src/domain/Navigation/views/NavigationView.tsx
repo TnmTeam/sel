@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { Stack } from '@mui/material';
 import { AddInsightsSection } from '../sections';
 
-export const Navigation = () => {
+export const NavigationView = () => {
     return (
         <Stack css={sx.sample}>
             <AddInsightsSection />

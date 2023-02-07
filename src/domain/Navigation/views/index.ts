@@ -1,1 +1,1 @@
-export { AddInsights } from './Navigation';
+export { NavigationView } from './NavigationView';
