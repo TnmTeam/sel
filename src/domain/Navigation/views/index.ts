@@ -1,0 +1,1 @@
+export { AddInsights } from './Navigation';

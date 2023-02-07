@@ -14,6 +14,8 @@ import LogoImage from '@/assets/Logo/Frame.png';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useRouter } from 'next/router';
 import { TextMenu } from './components/TextMenu/TextMenu';
+import { InsightsDialogButton } from '@/domain/Navigation/sections/AddInsightsSection/components';
+import { NotificationDialogIcon } from '@/domain/Navigation/sections/NotificationSection/components';
 
 export const Appbar = () => {
     const router = useRouter();
@@ -22,14 +24,44 @@ export const Appbar = () => {
     const menu = [
         { menuType: 'logo', url: '', title: '', buttonType: '' },
         { menuType: 'blank', url: '', title: '', buttonType: '' },
-        { menuType: 'button', url: '/overview', title: 'Overview', buttonType: 'text' },
-        { menuType: 'button', url: '/progress', title: 'Progress', buttonType: 'text' },
-        { menuType: 'button', url: '/growth', title: 'Growth', buttonType: 'text' },
-        { menuType: 'button', url: '/resources', title: 'Resources', buttonType: 'text' },
-        { menuType: 'button', url: '/addinsights', title: 'Add Insights', buttonType: 'outline' },
+        {
+            menuType: 'button',
+            url: '/overview',
+            title: 'Overview',
+            buttonType: 'text',
+        },
+        {
+            menuType: 'button',
+            url: '/progress',
+            title: 'Progress',
+            buttonType: 'text',
+        },
+        {
+            menuType: 'button',
+            url: '/growth',
+            title: 'Growth',
+            buttonType: 'text',
+        },
+        {
+            menuType: 'button',
+            url: '/resources',
+            title: 'Resources',
+            buttonType: 'text',
+        },
+        {
+            menuType: 'buttonPopup',
+            url: '/addinsights',
+            title: 'Add Insights',
+            buttonType: 'outline',
+        },
         { menuType: 'icon', url: '', title: '', buttonType: '' },
-        { menuType: 'button', url: '/account', title: 'Account', buttonType: 'text' },
-    ]
+        {
+            menuType: 'button',
+            url: '/account',
+            title: 'Account',
+            buttonType: 'text',
+        },
+    ];
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -38,35 +70,44 @@ export const Appbar = () => {
                 sx={{ height: 89, background: Colors.BackBlue }}
             >
                 <Toolbar component='div' sx={{ height: 89 }}>
-                    {
-                        menu.map((item, index) => {
-                            if(item.menuType === 'button') {
-                                return <TextMenu
-                                    key={ index }
-                                    url={ item.url }
-                                    currentRoute={ currentRoute }
-                                    title={ item.title }
-                                    buttonType={ item.buttonType }
+                    {menu.map((item, index) => {
+                        if (item.menuType === 'button') {
+                            return (
+                                <TextMenu
+                                    key={index}
+                                    url={item.url}
+                                    currentRoute={currentRoute}
+                                    title={item.title}
+                                    buttonType={item.buttonType}
                                 />
-                            } else if(item.menuType === 'logo') {
-                                return <Link
-                                    key={ index }
+                            );
+                        } else if (item.menuType === 'buttonPopup') {
+                            return <InsightsDialogButton key={index} />;
+                        } else if (item.menuType === 'logo') {
+                            return (
+                                <Link
+                                    key={index}
                                     css={{ textDecoration: 'none' }}
-                                    href="/overview"
+                                    href='/overview'
                                 >
                                     <Button>
                                         <Logo />
                                     </Button>
                                 </Link>
-                            } else if(item.menuType === 'blank') {
-                                return <Typography
-                                    key={ index }
+                            );
+                        } else if (item.menuType === 'blank') {
+                            return (
+                                <Typography
+                                    key={index}
                                     variant='h6'
                                     component='div'
                                     sx={{ flexGrow: 1 }}
                                 ></Typography>
-                            } else if(item.menuType === 'icon') {
-                                return <Link
+                            );
+                        } else if (item.menuType === 'icon') {
+                            return <NotificationDialogIcon key={index} />;
+                            /*
+                                <Link
                                     key={ index }
                                     css={{ textDecoration: 'none' }}
                                     href="/helpmenu"
@@ -81,9 +122,9 @@ export const Appbar = () => {
                                         <ChatIcon />
                                     </IconButton>
                                 </Link>
-                              }
-                        })
-                    }
+                                */
+                        }
+                    })}
                 </Toolbar>
             </AppBar>
         </Box>
@@ -93,11 +134,7 @@ export const Appbar = () => {
 const Logo = () => {
     return (
         <Stack css={{ margin: '0px 0px 0px 0px' }}>
-            <Image
-                src={ LogoImage }
-                alt={ 'img' }
-                width={ '150' }
-            />
+            <Image src={LogoImage} alt={'img'} width={'150'} />
         </Stack>
     );
 };
