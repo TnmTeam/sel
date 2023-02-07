@@ -8,7 +8,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export const VideoCard = () => {
     return (
-        <Card sx={{ maxWidth: 345 , height: 330, borderRadius: 5}}>
+        <Card sx={{ maxWidth: 400 , height: 350, borderRadius: 5}}>
         <CardActionArea href="https://www.youtube.com/watch?v=6plRta91tDk">
           <CardMedia
             component="img"
@@ -35,7 +35,7 @@ export const VideoCard = () => {
 
 export const VideoCard2 = () => {
   return (
-      <Card sx={{ maxWidth: 345 , height: 330, borderRadius: 5}}>
+      <Card sx={{ maxWidth: 400 , height: 350, borderRadius: 5}}>
       <CardActionArea href="https://www.youtube.com/watch?v=G0H3ThQ1uP0">
         <CardMedia
           component="img"
@@ -62,7 +62,7 @@ export const VideoCard2 = () => {
 
 export const VideoCard3 = () => {
   return (
-      <Card sx={{ maxWidth: 345 , height: 330, borderRadius: 5}}>
+      <Card sx={{ maxWidth: 400 , height: 350, borderRadius: 5}}>
       <CardActionArea href="https://www.youtube.com/watch?v=u2fFjrRd7G8">
         <CardMedia
           component="img"
