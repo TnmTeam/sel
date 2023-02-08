@@ -1,6 +1,6 @@
-import { Stack } from '@mui/material';
 import {} from '../../Progress/sections';
+import { LoginSection } from '../sections';
 
 export const LoginView = () => {
-    return <Stack>Login page</Stack>;
+    return <LoginSection />;
 };
