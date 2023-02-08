@@ -27,6 +27,45 @@ export enum Colors {
   // process color
   UnCompeleteYellow = "#F1AB27",
 }
+// Flex Blue Buttons
+export enum FlexBlueButtons {
+  TextColor = '#FFFFFF',
+  ButtonColor = '#6787B7',
+  OnHoverTextColor = '#FFFFFF',
+  onHoverButtonColor = '#4E5668',
+}
+
+// White Buttons
+export enum WhiteButtons {
+  TextColor = '#6787B7',
+  ButtonColor = '#FFFFFF',
+  OnHoverTextColor = '#FFFFFF',
+  onHoverButtonColor = '#4E5668',
+}
+
+// Radial Buttons
+export enum RadialButtons {
+  TextColor = '#6787B7',
+  ButtonColor = '#6787B7',
+
+  OnHoverTextColor = '#6787B7',
+  OnHoverStrokeColor = '#EFF6FF',
+
+  SelectedTextColor = '#EFF6FF',
+  SelectedCircleColor = '#6787B7',
+}
+
+// Text Links
+export enum TextLinks {
+  TextColor = '#6787B7',
+}
+
+// Navigation Items
+export enum NavigationItems {
+  TextColor = '#C6CFE7',
+  OnHoverTextColor = '#FFFFFF',
+  SelectedTextColor = '#FFFFFF',
+}
 
 // 테마에 적용될 컬러 팔레트를 정의 합니다.
 export const palette: PaletteOptions = {
