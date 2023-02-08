@@ -1,0 +1,1 @@
+export { ScheduleDetailBoxList } from './ScheduleDetailPopupContainer/ScheduleDetailBoxList';

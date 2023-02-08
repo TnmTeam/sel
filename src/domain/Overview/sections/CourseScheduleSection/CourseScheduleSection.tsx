@@ -5,7 +5,7 @@ export const CourseScheduleSection = () => {
     return (
         <Stack>
             <ScheduleSummary />
-            <ScheduleDetailPopup />
+            {/* <ScheduleDetailPopup /> */}
         </Stack>
     );
 };
