@@ -36,9 +36,11 @@ export const ScheduleSummary = () => {
                 picDate={model.ScheduleDatePicker.picDate}
                 detailList={model.ScheduleDatePicker.detailList}
             />
-            <ScheduleDatePicker
-                picDate={model.ScheduleDatePicker.picDate}
-            />
+            <Stack css={sx.pickerTest}>
+                <ScheduleDatePicker
+                    picDate={model.ScheduleDatePicker.picDate}
+                />
+            </Stack>
         </Stack>
     );
 };
@@ -46,11 +48,16 @@ export const ScheduleSummary = () => {
 const sx = {
     scheduleSummaryContainer: css`
         position: absolute;
-        width: 400px;
+        width: 376.47px;
         height: 427px;
         left: 677.19px;
         top: 723px;
         background: #FFFFFF;
         border-radius: 28px;
+    `
+    ,
+    pickerTest: css`
+        padding: 25px;
+
     `
 };

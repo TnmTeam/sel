@@ -10,6 +10,10 @@ import { useTheme } from '@mui/material/styles';
 import { ScheduleDetailBoxType } from '../../../ScheduleDetailPopup/components/ScheduleDetailPopupContainer/types/ScheduleDetailBox.type';
 
 
+import Image from 'next/image';
+import OverViewBackgroundImage from '@/assets/overview/popupCloseBtn.png';
+  
+
 export const SchedulePopupButton = ({picDate, detailList}: ScheduleDetailBoxType) => {
 
     const [open, setOpen] = React.useState(false);
@@ -35,6 +39,7 @@ export const SchedulePopupButton = ({picDate, detailList}: ScheduleDetailBoxType
                 <ScheduleDetailPopup 
                     picDate={picDate}
                     detailList={detailList}
+                    closeHandle={handleClose}
                 />
             </Dialog>
         </Stack>

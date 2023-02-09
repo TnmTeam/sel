@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
-import { ScheduleDetailBoxType } from './types/ScheduleDetailBox.type';
+import { ScheduleDetailListType } from './types/ScheduleDetailBox.type';
 
-export const ScheduleDetailBox = ({title, time}: ScheduleDetailBoxType) => (
+export const ScheduleDetailBox = ({title, time}: ScheduleDetailListType) => (
     <Stack css={sx.scheduleBoxText}>
         <Stack css={sx.title}> {title} </Stack>
         <Stack css={sx.time}> {time} </Stack>

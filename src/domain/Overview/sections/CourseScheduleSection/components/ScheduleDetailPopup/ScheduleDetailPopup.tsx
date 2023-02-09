@@ -2,10 +2,15 @@ import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
 import { ScheduleDatePicker } from '@/domain/Overview/sections/CourseScheduleSection/components/ScheduleSummary/components/ScheduleContainer/ScheduleDatePicker';
 import { ScheduleDetailBoxList } from './components/ScheduleDetailPopupContainer/ScheduleDetailBoxList';
-import { ScheduleDetailBoxType } from './components/ScheduleDetailPopupContainer/types/ScheduleDetailBox.type';
+import { ScheduleDetailBoxAddPopup } from './components/ScheduleDetailPopupContainer/ScheduleDetailBoxAddPopup';
+import { SchedulePopupType } from './components/ScheduleDetailPopupContainer/types/ScheduleDetailBox.type';
+import Image from 'next/image';
+import OverViewBackgroundImage from '@/assets/overview/popupCloseBtn.png';
 
-
-export const ScheduleDetailPopup = ({picDate, detailList}: ScheduleDetailBoxType) => {
+export interface CloseBtnType {
+    closeHandle: () => void;
+}
+export const ScheduleDetailPopup = ({picDate, detailList, closeHandle}: SchedulePopupType) => {
     
     return (
         <Stack css={sx.popupContainer}>
@@ -18,14 +23,20 @@ export const ScheduleDetailPopup = ({picDate, detailList}: ScheduleDetailBoxType
 
             <Stack css={sx.popupCenterLine}></Stack>
 
+            <CloseBtnImage 
+                closeHandle={closeHandle}
+            />
+
             <ScheduleDetailBoxList 
                 picDate={picDate}
                 detailList={detailList}
             />
 
-            <Stack css={sx.popupAddBtn}>
+            <ScheduleDetailBoxAddPopup />
+
+            {/* <Stack css={sx.popupAddBtn}>
                 + Add To Calender
-            </Stack>
+            </Stack> */}
 
         </Stack>
     );
@@ -33,6 +44,8 @@ export const ScheduleDetailPopup = ({picDate, detailList}: ScheduleDetailBoxType
 
 const sx = {
     popupCenterLine: css`
+        position: absolute;
+        top: 50%;
         width: 353px;
         height: 0px;
         border: 0.25px solid #B9B9B9;
@@ -59,29 +72,7 @@ const sx = {
         left: 24px;
         top: 20px;
         border-radius: 28px;
-    `,
-    popupScheduleList: css`
-    
-    `,
-    scheduleBox: css`
-        box-sizing: border-box;
-        position: absolute;
-        width: 327.23px;
-        height: 76.59px;
-        left: 471.53px;
-        top: 108px;
-        background: #FFFFFF;
-        border: 0.50502px solid #979797;
-        border-radius: 5.0502px;
-    `,
-    scheduleBoxLine: css`
-        position: absolute;
-        width: 7px;
-        height: 76.23px;
-        left: 471.53px;
-        top: 108px;
-        background: #147AD6;
-        border-radius: 5.0502px;
+        padding: 25px;
     `,
     popupAddBtn: css`
         position: absolute;
@@ -95,5 +86,23 @@ const sx = {
         font-size: 16px;
         line-height: 24px;
         color: #147AD6;
+        cursor: pointer;
+    `,
+    closeImgBtn: css`
+        position: absolute;
+        right: 0px;
+        padding: 20px;
+        cursor: pointer;
     `
 };
+
+const CloseBtnImage = (props: CloseBtnType) => (
+    <Stack css={sx.closeImgBtn}>
+        <Image
+            onClick={props.closeHandle}
+            src={OverViewBackgroundImage}
+            alt={'overview'}
+        />
+    </Stack>
+);
+
