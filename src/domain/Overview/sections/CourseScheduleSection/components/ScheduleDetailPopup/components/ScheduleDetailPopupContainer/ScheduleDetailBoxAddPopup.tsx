@@ -60,13 +60,13 @@ export const ScheduleDetailBoxAddPopup = () => {
                             <Divider />
                             <ListItemButton autoFocus>
                                 <ListItem disableGutters>
-                                    <ListItemText primary="Outlook" css={sx.listFontSelect} />
+                                    <ListItemText primary="Outlook" css={sx.listFontDefault} />
                                 </ListItem>
                             </ListItemButton>
                             <Divider />
                             <ListItemButton autoFocus>
                                 <ListItem disableGutters>
-                                    <ListItemText primary="Google" css={sx.listFontSelect} />
+                                    <ListItemText primary="Google" css={sx.listFontDefault} />
                                 </ListItem>
                             </ListItemButton>
                         </List>
