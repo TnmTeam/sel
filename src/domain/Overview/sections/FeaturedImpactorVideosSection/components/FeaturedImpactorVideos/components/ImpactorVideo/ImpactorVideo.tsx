@@ -3,9 +3,10 @@ import { Stack } from '@mui/system';
 import { VideoCard } from './components';
 import Grid from '@mui/material/Unstable_Grid2';
 import Button from '@mui/material/Button';
-import { VideoCard2, VideoCard3 } from './components/VideoCard/VideoCard';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import Typography from '@mui/material/Typography';
+import { Colors, WhiteButtons } from '@/common/themes/Color';
 
 export const ImpactorVideo = () => {
     const url = 'https://www.googleapis.com/youtube/v3/playlistItems';
@@ -48,44 +49,48 @@ export const ImpactorVideo = () => {
 
     return (
         <Stack css={sx.ImpactorVideo}>
-            <h2
-                style={{
-                    fontSize: '40px',
-                    color: '#fff',
-                    textAlign: 'center',
-                    marginBottom: '50px',
-                }}
-            >
+            <Typography variant='h2' color={Colors.Text100} ml={8} mt={15}>
                 Fetured Impactor Videos
-            </h2>
+            </Typography>
             <Grid
                 container
-                spacing={0}
+                mt={3}
+                spacing={6.1}
                 direction='row'
                 justifyContent='center'
                 alignItems='center'
             >
                 {videoList.map((item, index) =>
                     index < 3 ? (
-                        <Grid key={index} xs={3.4}>
-                            <VideoCard item={item} key={index}></VideoCard>
+                        <Grid key={index}>
+                            <VideoCard item={item} index={index} key={index} />
                         </Grid>
                     ) : null
                 )}
             </Grid>
+
             <Button
-                href='https://www.youtube.com/@LearnWorlds/videos'
-                style={{
-                    border: '1pt solid #6787B7',
-                    borderRadius: 3,
-                    backgroundColor: '#fff',
-                    padding: '10px',
-                    color: '#6787B7',
-                    width: '230px',
-                    margin: 'auto',
-                    textTransform: 'initial',
+                sx={{
+                    fontSize: '18pt',
+                    backgroundColor: WhiteButtons.ButtonColor,
+                    color: WhiteButtons.TextColor,
+                    width: '264px',
+                    ':hover': {
+                        backgroundColor: WhiteButtons.onHoverButtonColor,
+                        color: WhiteButtons.OnHoverTextColor,
+                        border: '0',
+                    },
+                    border: '0',
+                    textAlign: 'center',
+                    margin: '50px auto auto auto',
                 }}
                 variant='outlined'
+                onClick={() =>
+                    window.open(
+                        'https://www.youtube.com/@impacterpathway/playlists',
+                        '_blank'
+                    )
+                }
             >
                 View All
             </Button>
@@ -95,8 +100,8 @@ export const ImpactorVideo = () => {
 
 const sx = {
     ImpactorVideo: css`
-        height: 550px;
         position: relative;
         background-color: #4a7199;
+        padding-bottom: 100px;
     `,
 };

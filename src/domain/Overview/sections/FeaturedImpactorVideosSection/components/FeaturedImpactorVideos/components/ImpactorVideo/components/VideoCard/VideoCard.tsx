@@ -5,56 +5,47 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { VideoCardItemType } from './types/VideoCard.type';
 
-export const VideoCard = (item: any, index: number) => {
-    const itemMap = JSON.parse(JSON.stringify(item));
-    const videoId = itemMap.item.snippet.resourceId.videoId;
-    console.log(videoId);
+export const VideoCard = ({ item, index }: VideoCardItemType) => {
+    const videoId = item.snippet.resourceId.videoId;
     const videoUrl = 'https://www.youtube.com/watch?v=' + videoId;
-    console.log(videoUrl);
+    const title = item.snippet.title;
+    const publishedAt = item.snippet.publishedAt.split('T');
+    const description = item.snippet.description;
+    const thumbnails = item.snippet.thumbnails.default.url;
 
-    const title = itemMap.item.snippet.title;
-    console.log(title);
+    var titleSummary = '';
+    var descriptionSummary = '';
 
-    const publishedAt = itemMap.item.snippet.publishedAt;
-    console.log(publishedAt);
+    if (title.length > 23) titleSummary = title.substr(0, 23) + ' ...';
+    else titleSummary = title;
 
-    const description = itemMap.item.snippet.description;
-    console.log(description);
-
-    const thumbnails: string = itemMap.item.snippet.thumbnails.standard.url;
-    console.log(thumbnails);
+    if (description.length > 38)
+        descriptionSummary = description.substr(0, 38) + ' ...';
+    else descriptionSummary = description;
 
     return (
-        <Card sx={{ maxWidth: 345, height: 330, borderRadius: 5 }}>
-            <CardActionArea href='#'>
-                <CardMedia
-                    component='img'
-                    height='230'
-                    image='https://img.youtube.com/vi/6plRta91tDk/mqdefault.jpg'
-                />
+        <Card sx={{ maxWidth: 409.69, height: 424, borderRadius: 5 }}>
+            <CardActionArea onClick={() => window.open(videoUrl, '_blank')}>
+                <CardMedia component='img' height='308' image={thumbnails} />
                 <CardContent>
-                    <Typography
-                        variant='body2'
-                        color='text.secondary'
-                        fontSize='10pt'
-                    >
-                        23/02/07
+                    <Typography color='text.secondary'>
+                        {publishedAt[0]}
                     </Typography>
-                    <Typography gutterBottom variant='h6' marginTop='-5px'>
-                        Want to upgrade to the...
+                    <Typography variant='h5' fontWeight={'bold'}>
+                        {titleSummary}
                     </Typography>
-                    <Typography
-                        variant='body2'
-                        color='text.secondary'
-                        marginTop='-10px'
-                    >
-                        Details here...
+                    <Typography color='text.secondary'>
+                        {descriptionSummary}
                     </Typography>
+
                     <FavoriteIcon
+                        fontSize='large'
                         style={{
                             float: 'right',
                             marginTop: '-30px',
+                            marginRight: '-5px',
                             color: 'red',
                         }}
                     />
@@ -62,91 +53,4 @@ export const VideoCard = (item: any, index: number) => {
             </CardActionArea>
         </Card>
     );
-};
-
-export const VideoCard2 = () => {
-    return (
-        <Card sx={{ maxWidth: 345, height: 330, borderRadius: 5 }}>
-            <CardActionArea href='https://www.youtube.com/watch?v=G0H3ThQ1uP0'>
-                <CardMedia
-                    component='img'
-                    height='230'
-                    image='https://img.youtube.com/vi/G0H3ThQ1uP0/mqdefault.jpg'
-                />
-                <CardContent>
-                    <Typography
-                        variant='body2'
-                        color='text.secondary'
-                        fontSize='10pt'
-                    >
-                        23/02/07
-                    </Typography>
-                    <Typography gutterBottom variant='h6' marginTop='-5px'>
-                        🔥 Switch to LearnWorlds...
-                    </Typography>
-                    <Typography
-                        variant='body2'
-                        color='text.secondary'
-                        marginTop='-10px'
-                    >
-                        Details here...
-                    </Typography>
-                    <FavoriteIcon
-                        style={{
-                            float: 'right',
-                            marginTop: '-30px',
-                            color: 'red',
-                        }}
-                    />
-                </CardContent>
-            </CardActionArea>
-        </Card>
-    );
-};
-
-export const VideoCard3 = () => {
-    return (
-        <Card sx={{ maxWidth: 345, height: 330, borderRadius: 5 }}>
-            <CardActionArea href='https://www.youtube.com/watch?v=u2fFjrRd7G8'>
-                <CardMedia
-                    component='img'
-                    height='230'
-                    image='https://img.youtube.com/vi/u2fFjrRd7G8/mqdefault.jpg'
-                />
-                <CardContent>
-                    <Typography
-                        variant='body2'
-                        color='text.secondary'
-                        fontSize='10pt'
-                    >
-                        23/02/07
-                    </Typography>
-                    <Typography gutterBottom variant='h6' marginTop='-5px'>
-                        The ultimate formula for...
-                    </Typography>
-                    <Typography
-                        variant='body2'
-                        color='text.secondary'
-                        marginTop='-10px'
-                    >
-                        Details here...
-                    </Typography>
-                    <FavoriteIcon
-                        style={{
-                            float: 'right',
-                            marginTop: '-30px',
-                            color: 'red',
-                        }}
-                    />
-                </CardContent>
-            </CardActionArea>
-        </Card>
-    );
-};
-
-const sx = {
-    ImpactorVideo: css`
-        height: 452px;
-        position: relative;
-    `,
 };
