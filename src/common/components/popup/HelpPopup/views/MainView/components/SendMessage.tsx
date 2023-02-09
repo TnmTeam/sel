@@ -1,18 +1,18 @@
 import { css } from "@emotion/react";
 import Image from "next/image";
 import send from "@/assets/helppopup/main/send-ic.png";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 export const SendMessage = () => {
   return (
     <div css={sx.root}>
-      <div>
+      <Stack direction={"column"}>
         <Typography variant="caption" fontWeight={600} color="black">
           {"Send us a message"}
         </Typography>
         <Typography variant="caption" color="#737373">
           {"We typically reply within a day"}
         </Typography>
-      </div>
+      </Stack>
       <Image src={send} alt="send" width={13} height={14} />
     </div>
   );

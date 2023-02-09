@@ -70,11 +70,11 @@ const sx = {
     padding: 10px 12px;
   `,
   root: css`
-    width: 100%;
+    width: 99%;
     height: 147px;
     background-color: white;
     font-size: 14px;
-    margin: 12px 0;
+    margin: 12px 1px;
     border-radius: 10px;
     padding: 8px;
     display: flex;
