@@ -36,12 +36,9 @@ export const ScheduleDetailBoxAddPopup = () => {
         <Stack>
             
             <Stack css={sx.popupAddBtn} onClick={handleClickOpen}>
-                + Add To Calenderr
+                + Add To Calender
             </Stack>
 
-            
-            
-                
                 <Dialog 
                     // fullScreen={fullScreen}
                     // maxWidth={false}
@@ -57,25 +54,26 @@ export const ScheduleDetailBoxAddPopup = () => {
                         <List>
                             <ListItemButton autoFocus>
                                 <ListItem disableGutters>
-                                    <ListItemText primary="iCal file" />
+                                    <ListItemText primary="iCal file" css={sx.listFontSelect} />
                                 </ListItem>
                             </ListItemButton>
                             <Divider />
                             <ListItemButton autoFocus>
                                 <ListItem disableGutters>
-                                    <ListItemText primary="Outlook" />
+                                    <ListItemText primary="Outlook" css={sx.listFontSelect} />
                                 </ListItem>
                             </ListItemButton>
                             <Divider />
                             <ListItemButton autoFocus>
                                 <ListItem disableGutters>
-                                    <ListItemText primary="Google" />
+                                    <ListItemText primary="Google" css={sx.listFontSelect} />
                                 </ListItem>
                             </ListItemButton>
                         </List>
 
                     </Stack>
                 </Dialog>
+
         </Stack>
         
     );
@@ -105,6 +103,24 @@ const sx = {
         top: 120px;
         backgroundColor: 'transparent';
         boxShadow: 'none';
+    `,
+    listFontSelect: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+        color: #147AD6;
+    `,
+    listFontDefault: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+        color: #147AD6;
     `
 }
 
