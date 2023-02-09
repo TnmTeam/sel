@@ -1,6 +1,8 @@
 import { Colors } from "@/common/themes/Color";
 import { css } from "@emotion/react";
 import { Typography } from "@mui/material";
+import { BottomBar } from "../../components";
+import { Content, SearchBar } from "./components";
 
 export const HelpView = () => {
   return (
@@ -14,7 +16,10 @@ export const HelpView = () => {
         >
           {"Help"}
         </Typography>
+        <SearchBar />
       </div>
+      <Content />
+      <BottomBar />
     </div>
   );
 };
