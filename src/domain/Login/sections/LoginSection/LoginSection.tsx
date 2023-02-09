@@ -1,6 +1,11 @@
-import { Stack } from '@mui/material';
-import { Authentication } from './components';
+import { Grid } from '@mui/material';
+import { Authentication, Previews } from './components';
 
 export const LoginSection = () => {
-    return <Stack></Stack>;
+    return (
+        <Grid container>
+            <Previews />
+            <Authentication />
+        </Grid>
+    );
 };
