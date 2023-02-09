@@ -24,17 +24,17 @@ export const ImpactorVideo = () => {
                 const params = {
                     key,
                     playlistId,
-                    part
-                }
-                const response = await axios.get(url, {params});
+                    part,
+                };
+                const response = await axios.get(url, { params });
 
                 setVideoList(response.data.items);
                 console.log(response.data.items);
-            } catch(e) {
+            } catch (e) {
                 console.log(e);
                 alert('error 임시로 메세지만');
             }
-        }
+        };
 
         fetchVideoList();
 
@@ -44,35 +44,51 @@ export const ImpactorVideo = () => {
         // 로딩: isLoading 값에 따라서 loading component 보일지 말지 구성
         // next.config.js 설정 중 reactStrictMode: true인 경우 개발 환경에서는 2번 호출됨
         // 해당 설정을 false로 바꾸면 1번만 호출됨
-    }, [setVideoList])
+    }, [setVideoList]);
 
     return (
         <Stack css={sx.ImpactorVideo}>
-            <h2 style={{ fontSize: "40px",
-                color: "#fff", textAlign: "center", marginBottom: "50px"}}>Fetured Impactor Videos</h2>
-            <Grid container spacing={0} direction="row" justifyContent="center" alignItems="center">
-                <Grid xs={3.4}>
-                    <VideoCard></VideoCard>
-                </Grid>
-                <Grid xs={3.4}>
-                    <VideoCard2></VideoCard2>
-                </Grid>
-                <Grid xs={2.9}>
-                    <VideoCard3></VideoCard3>
-                </Grid>
-            </Grid>
-            <Button href="https://www.youtube.com/@LearnWorlds/videos"
+            <h2
                 style={{
-                    border: "1pt solid #6787B7",
+                    fontSize: '40px',
+                    color: '#fff',
+                    textAlign: 'center',
+                    marginBottom: '50px',
+                }}
+            >
+                Fetured Impactor Videos
+            </h2>
+            <Grid
+                container
+                spacing={0}
+                direction='row'
+                justifyContent='center'
+                alignItems='center'
+            >
+                {videoList.map((item, index) =>
+                    index < 3 ? (
+                        <Grid key={index} xs={3.4}>
+                            <VideoCard item={item} key={index}></VideoCard>
+                        </Grid>
+                    ) : null
+                )}
+            </Grid>
+            <Button
+                href='https://www.youtube.com/@LearnWorlds/videos'
+                style={{
+                    border: '1pt solid #6787B7',
                     borderRadius: 3,
-                    backgroundColor: "#fff",
-                    padding: "10px",
-                    color: "#6787B7",
-                    width: "230px",
-                    margin: "auto",
-                    textTransform: "initial"
-                }} variant="outlined"
-            >View All</Button>
+                    backgroundColor: '#fff',
+                    padding: '10px',
+                    color: '#6787B7',
+                    width: '230px',
+                    margin: 'auto',
+                    textTransform: 'initial',
+                }}
+                variant='outlined'
+            >
+                View All
+            </Button>
         </Stack>
     );
 };
@@ -81,6 +97,6 @@ const sx = {
     ImpactorVideo: css`
         height: 550px;
         position: relative;
-        background-color: #4A7199;
+        background-color: #4a7199;
     `,
 };
