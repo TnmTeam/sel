@@ -120,7 +120,7 @@ const sx = {
         font-size: 16px;
         line-height: 24px;
         text-align: center;
-        color: #147AD6;
+        color: #979797;
     `
 }
 
