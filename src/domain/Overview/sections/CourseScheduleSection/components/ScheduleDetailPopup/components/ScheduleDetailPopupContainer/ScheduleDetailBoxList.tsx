@@ -12,14 +12,12 @@ export const ScheduleDetailBoxList = ({picDate, detailList}: ScheduleDetailBoxTy
     const dayName = dayjs(date).format("dddd");
     const dayNumber = dayjs(date).format("D");
 
-
     return (
         <Stack css={sx.scheduleDetailList}>
             <Stack css={sx.scheduleBox}>
                 <Stack css={sx.popupDate}>
                     {dayNumber} {dayName}
                 </Stack>
-
                 {detailList.map((item, index) => (
                     <ScheduleDetailBox
                         key={index}
@@ -27,20 +25,6 @@ export const ScheduleDetailBoxList = ({picDate, detailList}: ScheduleDetailBoxTy
                         time={item.time}
                     />
                 ))}
-
-                {/* <ScheduleDetailBox 
-                    title={"test title 1"}
-                    date={"2023-02-08"}
-                />
-                <ScheduleDetailBox 
-                    title={"test title 2"}
-                    date={"2023-02-08"}
-                />
-                <ScheduleDetailBox 
-                    title={"test title 3"}
-                    date={"2023-02-08"}
-                /> */}
-
             </Stack>
         </Stack>
     );

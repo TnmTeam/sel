@@ -34,10 +34,6 @@ export const ScheduleDetailPopup = ({picDate, detailList, closeHandle}: Schedule
 
             <ScheduleDetailBoxAddPopup />
 
-            {/* <Stack css={sx.popupAddBtn}>
-                + Add To Calender
-            </Stack> */}
-
         </Stack>
     );
 };

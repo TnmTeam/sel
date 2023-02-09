@@ -1,18 +1,13 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
-import { ScheduleDetailPopup } from '@/domain/Overview/sections/CourseScheduleSection/components/ScheduleDetailPopup/ScheduleDetailPopup';
 
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { ScheduleDetailBoxType } from '../../../ScheduleDetailPopup/components/ScheduleDetailPopupContainer/types/ScheduleDetailBox.type';
+import { ScheduleDetailPopup } from '@/domain/Overview/sections/CourseScheduleSection/components/ScheduleDetailPopup/ScheduleDetailPopup';
 
-
-import Image from 'next/image';
-import OverViewBackgroundImage from '@/assets/overview/popupCloseBtn.png';
-  
 
 export const SchedulePopupButton = ({picDate, detailList}: ScheduleDetailBoxType) => {
 
@@ -34,7 +29,6 @@ export const SchedulePopupButton = ({picDate, detailList}: ScheduleDetailBoxType
                 maxWidth={false}
                 open={open}
                 onClose={handleClose}
-                // aria-labelledby="responsive-dialog-title"
             >
                 <ScheduleDetailPopup 
                     picDate={picDate}
