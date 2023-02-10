@@ -1,5 +1,5 @@
 import { Stack } from '@mui/system';
-import { NotificationDialogIcon } from './components';
+import { NotificationDialogIcon } from './NotificationSummary/components';
 
 export const NotificationSection = () => {
     return (
