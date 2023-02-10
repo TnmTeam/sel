@@ -2,14 +2,15 @@ import { useState, useRef, useEffect } from 'react';
 import { css } from '@emotion/react';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
+import { PhotoType } from '../types/photo.type';
 
-export const PhotoUpload = () => {
-    const [uploadedImage, setUploadedImage] = useState<File>();
-    const uploadBoxRef = useRef();
+export const PhotoUpload = ({ ratio, rotate }: PhotoType) => {
+    const [uploadedImage, setUploadedImage] = useState<string>();
+    const uploadBoxRef = useRef<HTMLDivElement>();
 
     useEffect(() => {
-        const uploadBox = uploadBoxRef.current;
-
+        const uploadBox: HTMLDivElement | undefined = uploadBoxRef.current;
+        
         const handleFiles = (file: File) => {
             if (file === undefined) {
                 return;
@@ -18,9 +19,11 @@ export const PhotoUpload = () => {
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onloadend = (e) => {
-                    const result = e.target!.result;
-                    //setUploadedImage(result);
-                };
+                    const result: string | ArrayBuffer | null = e.target!.result;
+                    if(typeof result === 'string') {
+                        setUploadedImage(result);
+                    }
+                }
                 reader.readAsDataURL(file);
             }
         };
@@ -28,58 +31,48 @@ export const PhotoUpload = () => {
         const dropHandler = (event: any) => {
             event.preventDefault();
             event.stopPropagation();
-            const files = event.dataTransfer.files[0];
-            handleFiles(files);
+            const file = event.dataTransfer.files[0];
+            handleFiles(file);
         };
-
-        const dragOverHandler = (event: any) => {
+        
+        const dragOverHandler = (event: Event) => {
             event.preventDefault();
             event.stopPropagation();
         };
-
-        //uploadBox.addEventListener('drop', dropHandler);
-        //uploadBox.addEventListener('dragover', dragOverHandler);
+        
+        if(uploadBox) {
+            uploadBox.addEventListener('drop', dropHandler);
+            uploadBox.addEventListener('dragover', dragOverHandler);
+        }
 
         return () => {
-            //uploadBox.removeEventListener('drop', dropHandler);
-            //uploadBox.removeEventListener('dragover', dragOverHandler);
+            if(uploadBox) {
+                uploadBox.removeEventListener('drop', dropHandler);
+                uploadBox.removeEventListener('dragover', dragOverHandler);
+            }
         };
     }, [uploadedImage]);
 
     return (
-        <Box css={st.photoBox} ref={uploadBoxRef}>
-            {!!uploadedImage ? (
-                <div css={st.imageBox}>
-                    <img src={`${uploadedImage}`} />
-                </div>
-            ) : (
-                <>
-                    <Typography
-                        component='h1'
-                        variant='h4'
-                        sx={{
-                            color: '#979797',
-                            position: 'absolute',
-                            top: '105px',
-                            left: 'calc(50% - 80px)',
-                        }}
-                    >
-                        Drag Photo
-                    </Typography>
-                    <Typography
-                        component='h1'
-                        variant='h4'
-                        sx={{
-                            color: '#979797',
-                            position: 'absolute',
-                            top: '150px',
-                            left: 'calc(50% - 35px)',
-                        }}
-                    >
-                        Here
-                    </Typography>
-                </>
-            )}
+        <Box css={ st.photoBox } ref={ uploadBoxRef }>
+            {
+                !!uploadedImage
+                    ? <div css={ st.imageBox }>
+                        <img
+                            src={ `${ uploadedImage }` }
+                            css={ zoomCss(ratio, rotate) }
+                            alt='Invalid image file.'
+                        />
+                    </div>
+                    : <>
+                        <Typography component='h1' variant='h4' sx={{color: '#979797', position: 'absolute', top: '105px', left: 'calc(50% - 80px)'}}>
+                            Drag Photo
+                        </Typography>
+                        <Typography component='h1' variant='h4' sx={{color: '#979797', position: 'absolute', top: '150px', left: 'calc(50% - 35px)'}}>
+                            Here
+                        </Typography>
+                    </>
+            }
         </Box>
     );
 };
@@ -100,5 +93,13 @@ const st = {
         height: 279px;
         overflow: hidden;
         border-radius: 140px;
-    `,
-};
+    `
+}
+
+const zoomCss = (ratio: number, rotate: number) => {
+    return css`
+        zoom: calc(${ratio}/100*1.5 + 0.5);
+        transform-origin: 140px 140px;
+        transform: rotate( ${rotate * 90}deg );
+    `
+}
