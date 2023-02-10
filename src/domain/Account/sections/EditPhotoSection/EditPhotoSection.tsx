@@ -1,11 +1,10 @@
 import { Stack } from '@mui/system';
-import { PhotoPopup, PhotoUpload } from './components';
+import { PhotoPopup } from './components';
 
 export const EditPhotoSection = () => {
     return (
         <Stack>
             <PhotoPopup />
-            <PhotoUpload />
         </Stack>
     );
 };

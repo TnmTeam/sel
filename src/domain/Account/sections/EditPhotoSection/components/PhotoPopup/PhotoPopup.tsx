@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import {
     Stack,
     Box,
-    Slider,
     Avatar,
     Button,
     Dialog,
@@ -16,12 +15,9 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import { FlexBlueButtons } from '@/common/themes/Color';
-import { Colors } from '@/common/themes/Color';
-
-import SearchIcon from '@mui/icons-material/Search';
-import CachedIcon from '@mui/icons-material/Cached';
 
 import { PhotoUpload } from './components/PhotoUpload/PhotoUpload';
+import { PhotoZoom } from './components/PhotoZoom/PhotoZoom';
 
 export const PhotoPopup = () => {
     const [open, setOpen] = React.useState(false);
@@ -79,12 +75,8 @@ function PhotoEditDialog(props: PhotoEditDialogProps) {
         onClose('');
     };
 
-    // Slide
-    const [value, setValue] = React.useState<number>(50);
-
-    const handleChange = (event: Event, newValue: number | number[]) => {
-        setValue(newValue as number);
-    };
+    // zoom
+    const [ratio, setRatio] = React.useState<number>(50);
 
     return (
         <Dialog
@@ -109,35 +101,18 @@ function PhotoEditDialog(props: PhotoEditDialogProps) {
                     <CloseIcon></CloseIcon>
                 </Button>
             </DialogActions>
+
             <DialogContent sx={{ height: '400px' }}>
-                <PhotoUpload />
+                <PhotoUpload
+                    ratio={ratio}
+                />
             </DialogContent>
+
             <Box sx={{ width: 400, m: 'auto' }}>
-                <Stack spacing={2} mb={5} direction='row' alignItems='center'>
-                    <SearchIcon />
-                    Zoom
-                    <Slider
-                        aria-label='Volume'
-                        value={value}
-                        onChange={handleChange}
-                        color='secondary'
-                    />
-                    <Button
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            m: 'auto',
-                            color: Colors.BackBlue,
-                            ':hover': {
-                                color: Colors.ActiveBlue,
-                            },
-                        }}
-                        href='#'
-                    >
-                        Rotate
-                    </Button>
-                    <CachedIcon />
-                </Stack>
+                <PhotoZoom
+                    ratio={ratio}
+                    setRatio={setRatio}
+                />
             </Box>
 
             <DialogActions>
