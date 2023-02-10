@@ -11,6 +11,8 @@ import {
     DialogActions,
 } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
+import CloseIcon from '@mui/icons-material/Close';
+import { NotificationDialogContent } from './NotificationDialogContent';
 
 export const NotificationDialogIcon = () => {
     const [open, setOpen] = React.useState(false);
@@ -67,13 +69,28 @@ function NotificationDialog(props: NotificationDialogProps) {
             fullWidth={true}
             maxWidth={'xs'}
             scroll='paper'
-        >
-            <DialogTitle>Notifications</DialogTitle>
+        >              
+            <DialogActions>
+                <Button onClick={handleClose}>
+                <CloseIcon></CloseIcon></Button>
+            </DialogActions>
+            <DialogTitle sx={{
+                mt: "-55px",
+                fontSize: "18pt",
+                }}>Notifications</DialogTitle>
             <DialogContent>
-                <DialogContentText>sample</DialogContentText>
+                <DialogContentText ml = {-2}>
+                    <NotificationDialogContent/>
+                </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>View All</Button>
+                <Button sx={{
+                    mt : "-20px",
+                    color: "#147AD6",
+                    textTransform: "initial", 
+                    fontSize: "14pt",
+                    marginRight: "250pt"
+                }}  href="/account">View All</Button>
             </DialogActions>
         </Dialog>
     );
