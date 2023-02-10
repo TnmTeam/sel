@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import Image from "next/image";
 import logo from "@/assets/helppopup/main/logo.png";
 import { BottomBar } from "../../components";
-import { Graph, SearchForHelp, SendMessage } from "./components";
+import { PieChart, SearchForHelp, SendMessage } from "./components";
 import { Typography } from "@mui/material";
 
 export const MainView = () => {
@@ -26,7 +26,7 @@ export const MainView = () => {
         </div>
         <SendMessage />
         <SearchForHelp />
-        <Graph />
+        <PieChart />
       </div>
       <BottomBar />
     </div>
@@ -42,16 +42,35 @@ const sx = {
     padding: 28px 16px;
     overflow: hidden;
     box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.16);
-    font-size: 14px;
   `,
   titleWrap: css`
     margin-top: 76px;
     margin-bottom: 16px;
   `,
   inner: css`
+    padding-bottom: 20px;
+    height: 100%;
     position: relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   `,
   blueBg: css`
+    width: 100%;
+    height: 388px;
+    background: linear-gradient(
+      117.67deg,
+      #3f6193 0%,
+      #5b8dd7 50%,
+      #cbddf0 100%
+    );
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 388px;
     background: linear-gradient(
