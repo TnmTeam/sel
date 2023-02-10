@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { PhotoType } from '../types/photo.type';
@@ -13,11 +13,11 @@ export const PhotoUpload = ({ ratio, rotate }: PhotoType) => {
         const uploadBox: HTMLDivElement | undefined = uploadBoxRef.current;
         
         const handleFiles = (file: File) => {
-            if(file === undefined) {
+            if (file === undefined) {
                 return;
             }
-            
-            if(file.type.startsWith('image/')) {
+
+            if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onloadend = (e) => {
                     const result: string | ArrayBuffer | null = e.target!.result;
@@ -28,7 +28,7 @@ export const PhotoUpload = ({ ratio, rotate }: PhotoType) => {
                 reader.readAsDataURL(file);
             }
         };
-        
+
         const dropHandler = (event: any) => {
             event.preventDefault();
             event.stopPropagation();
@@ -76,7 +76,7 @@ export const PhotoUpload = ({ ratio, rotate }: PhotoType) => {
             }
         </Box>
     );
-}
+};
 
 const st = {
     photoBox: css`
@@ -87,7 +87,7 @@ const st = {
         margin: auto;
         position: relative;
         margin-top: 30px;
-        background: #F7F7F7;
+        background: #f7f7f7;
     `,
     imageBox: css`
         width: 279px;
