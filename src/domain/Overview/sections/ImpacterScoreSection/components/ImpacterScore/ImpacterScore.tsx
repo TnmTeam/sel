@@ -13,7 +13,7 @@ export const ImpacterScore = () => {
         },
     };
     return (
-        <Stack>
+        <Stack css={sx.ImpacterScoreContainer} direction={'row'}>
             <ScoreChart
                 rate={model.impacterScore.rate}
                 studentName={model.impacterScore.studentName}
@@ -24,14 +24,10 @@ export const ImpacterScore = () => {
 };
 
 const sx = {
-    ImpacterScoreContainer: css``,
-    opacity: css`
+    ImpacterScoreContainer: css`
         width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        background-color: rgba(10, 11, 38, 0.6);
+        height: 548px;
+        background: #4a7199;
+        margin-top: 80px;
     `,
 };

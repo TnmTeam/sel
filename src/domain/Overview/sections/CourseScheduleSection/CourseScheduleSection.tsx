@@ -2,9 +2,5 @@ import { Stack } from '@mui/material';
 import { ScheduleDetailPopup, ScheduleSummary } from './components';
 
 export const CourseScheduleSection = () => {
-    return (
-        <Stack>
-            <ScheduleSummary />
-        </Stack>
-    );
+    return <ScheduleSummary />;
 };
