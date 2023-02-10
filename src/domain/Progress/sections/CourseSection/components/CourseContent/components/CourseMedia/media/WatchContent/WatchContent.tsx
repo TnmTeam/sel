@@ -33,6 +33,8 @@ const sx = {
     position: relative;
     width: 744px;
     height: 754px;
+    border-radius: 20px;
+    overflow: hidden;
   `,
   videoFrame: css`
     position: absolute;

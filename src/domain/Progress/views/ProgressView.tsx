@@ -1,5 +1,10 @@
 import { Stack } from "@mui/material";
-import { BannerSection, CourseSection, ReportSection } from "../sections";
+import {
+  BannerSection,
+  CourseSection,
+  ReportSection,
+  SuggestSection,
+} from "../sections";
 
 export const ProgressView = () => {
   return (
@@ -7,6 +12,7 @@ export const ProgressView = () => {
       <BannerSection />
       <CourseSection />
       <ReportSection />
+      <SuggestSection />
     </Stack>
   );
 };
