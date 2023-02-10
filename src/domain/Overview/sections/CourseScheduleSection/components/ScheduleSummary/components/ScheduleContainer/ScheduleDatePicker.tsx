@@ -10,16 +10,17 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 
 
-export const ScheduleDatePicker = ({picDate}: ScheduleDatePickerType) => {
+export const ScheduleDatePicker = ({picDate, disabledYN}: ScheduleDatePickerType) => {
 
     const [date, setDate] = React.useState<Dayjs | null>(dayjs(picDate));
+    const [disabledVal, setDisabledVal] = React.useState(disabledYN);
 
     return (
         <Stack>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
-                    <CalendarPicker date={date} onChange={(newDate) => setDate(newDate)} />
+                    <CalendarPicker date={date} onChange={(newDate) => setDate(newDate)} disabled={disabledVal}/>
                 </Grid>
                 </Grid>
             </LocalizationProvider>
