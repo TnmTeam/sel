@@ -13,7 +13,7 @@ const nextConfig = {
   },
 
     reactStrictMode: true,
-    //assetPrefix: '.',
+    assetPrefix: '.',
 };
 
 module.exports = nextConfig;
