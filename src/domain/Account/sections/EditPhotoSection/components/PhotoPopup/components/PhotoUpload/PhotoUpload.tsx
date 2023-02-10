@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { PhotoType } from '../types/photo.type';
-import Image from 'next/image';
 
 export const PhotoUpload = ({ ratio, rotate }: PhotoType) => {
     const [uploadedImage, setUploadedImage] = useState<string>();
@@ -59,7 +58,7 @@ export const PhotoUpload = ({ ratio, rotate }: PhotoType) => {
             {
                 !!uploadedImage
                     ? <div css={ st.imageBox }>
-                        <Image
+                        <img
                             src={ `${ uploadedImage }` }
                             css={ zoomCss(ratio, rotate) }
                             alt='Invalid image file.'
