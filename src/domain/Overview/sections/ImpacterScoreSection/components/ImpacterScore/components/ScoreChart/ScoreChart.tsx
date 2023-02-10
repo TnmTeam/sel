@@ -25,8 +25,7 @@ export const ScoreChart = ({ rate, studentName }: ChartType) => {
 const sx = {
     chart: css`
         width: 400px;
-        position: absolute;
-        top: 70px;
+        position: relative;
         left: 150px;
     `,
     chartWrapper: css`

@@ -16,10 +16,9 @@ export const ScoreVideo = ({ url }: VideoType) => {
 const sx = {
     video: css`
         position: absolute;
-        width: 600px;
-        height: 450px;
-        top: 70px;
-        right: 100px;
+        width: 702px;
+        height: 503px;
+        right: 59px;
         padding: 15px;
         border-radius: 15px;
         background-color: white;
