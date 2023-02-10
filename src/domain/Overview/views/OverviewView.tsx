@@ -9,6 +9,7 @@ import {
 } from '../sections';
 import { FeaturedImpactorVideosSection } from '../sections';
 import { SelfScoresSection } from '../sections';
+import { FeturedStudentWorkSection } from '../sections/FeturedStudentWorkSection/FeturedStudentWorkSection';
 
 export const OverviewView = () => {
     return (
@@ -17,6 +18,7 @@ export const OverviewView = () => {
             <Stack direction={'row'} css={sx.CourseContainer}>
                 <CourseProgressSection />
                 <CourseScheduleSection />
+                <FeturedStudentWorkSection />
             </Stack>
             <SelfScoresSection />
             <FeaturedImpactorVideosSection />
