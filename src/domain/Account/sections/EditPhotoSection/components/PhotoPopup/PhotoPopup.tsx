@@ -78,6 +78,9 @@ function PhotoEditDialog(props: PhotoEditDialogProps) {
     // zoom
     const [ratio, setRatio] = React.useState<number>(50);
 
+    // rotate
+    const [rotate, setRotate] = React.useState<number>(0);
+
     return (
         <Dialog
             onClose={handleClose}
@@ -104,14 +107,17 @@ function PhotoEditDialog(props: PhotoEditDialogProps) {
 
             <DialogContent sx={{ height: '400px' }}>
                 <PhotoUpload
-                    ratio={ratio}
+                    ratio={ ratio }
+                    rotate={ rotate }
                 />
             </DialogContent>
 
             <Box sx={{ width: 400, m: 'auto' }}>
                 <PhotoZoom
-                    ratio={ratio}
-                    setRatio={setRatio}
+                    ratio={ ratio }
+                    setRatio={ setRatio }
+                    rotate={ rotate }
+                    setRotate={ setRotate }
                 />
             </Box>
 

@@ -10,9 +10,9 @@ import CachedIcon from '@mui/icons-material/Cached';
 import { Colors } from '@/common/themes/Color';
 import { PhotoType } from '../types/photo.type';
 
-export const PhotoZoom = ({ratio, setRatio}: PhotoType) => {
+export const PhotoZoom = ({ ratio, setRatio, rotate, setRotate }: PhotoType) => {
 
-    const handleChange = (event: Event, newValue: number | number[]) => {
+    const ratioChangeHandler = (e: Event, newValue: number | number[]) => {
         if(setRatio) {
             setRatio(newValue as number);
         }
@@ -43,6 +43,15 @@ export const PhotoZoom = ({ratio, setRatio}: PhotoType) => {
         }
     }, [ratio]);
 
+    const rotateHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if(setRotate) {
+            setRotate((rotate+1)%4);
+        }
+        return;
+    }
+
     return (
         <Stack spacing={2} mb={5} direction='row' alignItems='center'>
             <SearchIcon />
@@ -54,12 +63,17 @@ export const PhotoZoom = ({ratio, setRatio}: PhotoType) => {
                     defaultValue={50}
                     aria-label='Volume'
                     value={ ratio }
-                    onChange={ handleChange }
+                    onChange={ ratioChangeHandler }
                     color='secondary'
                     ref={ sliderRef }
                 />
             </div>
-            <Button css={st.button}>Rotate</Button>
+            <Button
+                css={st.button}
+                onClick={ (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => rotateHandler(e) }
+            >
+                Rotate
+            </Button>
             <CachedIcon />
         </Stack>
     )

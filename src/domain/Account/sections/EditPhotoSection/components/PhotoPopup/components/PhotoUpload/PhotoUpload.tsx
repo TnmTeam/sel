@@ -3,8 +3,9 @@ import { css } from "@emotion/react";
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { PhotoType } from '../types/photo.type';
+import Image from 'next/image';
 
-export const PhotoUpload = ({ratio}: PhotoType) => {
+export const PhotoUpload = ({ ratio, rotate }: PhotoType) => {
     const [uploadedImage, setUploadedImage] = useState<string>();
     const uploadBoxRef = useRef<HTMLDivElement>();
 
@@ -31,8 +32,8 @@ export const PhotoUpload = ({ratio}: PhotoType) => {
         const dropHandler = (event: any) => {
             event.preventDefault();
             event.stopPropagation();
-            const files = event.dataTransfer.files[0];
-            handleFiles(files);
+            const file = event.dataTransfer.files[0];
+            handleFiles(file);
         };
         
         const dragOverHandler = (event: Event) => {
@@ -40,13 +41,13 @@ export const PhotoUpload = ({ratio}: PhotoType) => {
             event.stopPropagation();
         };
         
-        if(uploadBox !== undefined) {
+        if(uploadBox) {
             uploadBox.addEventListener('drop', dropHandler);
             uploadBox.addEventListener('dragover', dragOverHandler);
         }
-        
+
         return () => {
-            if(uploadBox !== undefined) {
+            if(uploadBox) {
                 uploadBox.removeEventListener('drop', dropHandler);
                 uploadBox.removeEventListener('dragover', dragOverHandler);
             }
@@ -58,7 +59,11 @@ export const PhotoUpload = ({ratio}: PhotoType) => {
             {
                 !!uploadedImage
                     ? <div css={ st.imageBox }>
-                        <img src={`${ uploadedImage }`} css={ test(ratio) } />
+                        <Image
+                            src={ `${ uploadedImage }` }
+                            css={ zoomCss(ratio, rotate) }
+                            alt='Invalid image file.'
+                        />
                     </div>
                     : <>
                         <Typography component='h1' variant='h4' sx={{color: '#979797', position: 'absolute', top: '105px', left: 'calc(50% - 80px)'}}>
@@ -92,8 +97,10 @@ const st = {
     `
 }
 
-const test = (ratio: number) => {
+const zoomCss = (ratio: number, rotate: number) => {
     return css`
         zoom: calc(${ratio}/100*1.5 + 0.5);
+        transform-origin: 140px 140px;
+        transform: rotate( ${rotate * 90}deg );
     `
 }
