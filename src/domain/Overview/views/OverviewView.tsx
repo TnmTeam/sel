@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { Stack } from '@mui/material';
 import Image from 'next/image';
 import OverViewBackgroundImage from '@/assets/overview/img-background.png';
-import { CourseProgressSection, ImpacterScoreSection } from '../sections';
+import { CourseProgressSection, ImpacterScoreSection, CourseScheduleSection } from '../sections';
 import { FeaturedImpactorVideosSection } from '../sections';
 
 export const OverviewView = () => {
@@ -11,6 +11,7 @@ export const OverviewView = () => {
             <OverViewImage />
             <ImpacterScoreSection />
             <CourseProgressSection />
+            <CourseScheduleSection />
             <FeaturedImpactorVideosSection />
         </Stack>
     );
