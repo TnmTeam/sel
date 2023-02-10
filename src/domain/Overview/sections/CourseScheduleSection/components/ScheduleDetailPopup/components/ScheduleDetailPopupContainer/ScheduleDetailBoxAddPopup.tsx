@@ -10,53 +10,71 @@ import Dialog from '@mui/material/Dialog';
 import Divider from '@mui/material/Divider';
 
 
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+
+
+
 export const ScheduleDetailBoxAddPopup = () => {
 
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
-        setOpen(false);
+        setAnchorEl(null);
     };
+
   
     return (
         <Stack>
-            
-            <Stack css={sx.popupAddBtn} onClick={handleClickOpen}>
+
+            <Stack css={sx.popupAddBtnText}>
                 + Add To Calender
+                <Button css={sx.popupAddBtn} onClick={handleClick}> </Button>
             </Stack>
 
-                <Dialog 
-                    // fullScreen={fullScreen}
-                    // maxWidth={false}
-                    open={open}
-                    onClose={handleClose}
-                    css={sx.dialogCss}
-                    
-                >
-                    <Stack css={sx.popupAddPopupList}>
-                        <List>
-                            <ListItemButton autoFocus>
-                                <ListItem disableGutters>
-                                    <ListItemText primary="iCal file" css={sx.listFontSelect} />
-                                </ListItem>
-                            </ListItemButton>
-                            <Divider />
-                            <ListItemButton autoFocus>
-                                <ListItem disableGutters>
-                                    <ListItemText primary="Outlook" css={sx.listFontDefault} />
-                                </ListItem>
-                            </ListItemButton>
-                            <Divider />
-                            <ListItemButton autoFocus>
-                                <ListItem disableGutters>
-                                    <ListItemText primary="Google" css={sx.listFontDefault} />
-                                </ListItem>
-                            </ListItemButton>
-                        </List>
-                    </Stack>
-                </Dialog>
+            <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left'
+                }}
+                transformOrigin={{ 
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                }}
+                MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                }}
+                PaperProps={{  
+                    style: {  
+                        width: 150,
+                    },  
+                }} 
+            >
+                
+                <Divider />
+                <MenuItem css={sx.listFontSelect} onClick={handleClose}> 
+                    iCal file
+                </MenuItem>
+                
+                <Divider />
+                <MenuItem css={sx.listFontDefault} onClick={handleClose}> 
+                    Outlook
+                </MenuItem>
+                
+                <Divider />
+                <MenuItem css={sx.listFontDefault} onClick={handleClose}> 
+                    Google 
+                </MenuItem>
+
+            </Menu>
         </Stack>
         
     );
@@ -64,7 +82,7 @@ export const ScheduleDetailBoxAddPopup = () => {
 
 
 const sx = {
-    popupAddBtn: css`
+    popupAddBtnText: css`
         position: absolute;
         width: 140px;
         height: 24px;
@@ -76,16 +94,15 @@ const sx = {
         font-size: 16px;
         line-height: 24px;
         color: #147AD6;
+        /*
         cursor: pointer;
+        */
     `,
-    popupAddPopupList: css`
-        width: 187px;
-    `,
-    dialogCss: css`
-        left: 620px;
-        top: 120px;
-        backgroundColor: 'transparent';
-        boxShadow: 'none';
+    popupAddBtn: css`
+        position: absolute;
+        width: 100%;
+        height: 200%;
+        top: -15px;
     `,
     listFontSelect: css`
         font-family: 'DM Sans';

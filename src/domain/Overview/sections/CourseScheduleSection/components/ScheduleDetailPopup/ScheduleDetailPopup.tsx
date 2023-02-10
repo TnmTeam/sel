@@ -18,6 +18,7 @@ export const ScheduleDetailPopup = ({picDate, detailList, closeHandle}: Schedule
             <Stack css={sx.popupDatePicker}>
                 <ScheduleDatePicker 
                     picDate={picDate}
+                    disabledYN={false}
                 />
             </Stack>
 
@@ -69,20 +70,6 @@ const sx = {
         top: 20px;
         border-radius: 28px;
         padding: 25px;
-    `,
-    popupAddBtn: css`
-        position: absolute;
-        width: 140px;
-        height: 24px;
-        left: 670px;
-        top: 412px;
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 24px;
-        color: #147AD6;
-        cursor: pointer;
     `,
     closeImgBtn: css`
         position: absolute;
