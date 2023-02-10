@@ -5,9 +5,6 @@ export const CourseScheduleSection = () => {
     return (
         <Stack>
             <ScheduleSummary />
-            {/* 
-            <ScheduleDetailPopup /> 
-            */}
         </Stack>
     );
 };

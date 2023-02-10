@@ -7,9 +7,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { ScheduleDetailBoxType } from '../../../ScheduleDetailPopup/components/ScheduleDetailPopupContainer/types/ScheduleDetailBox.type';
 import { ScheduleDetailPopup } from '@/domain/Overview/sections/CourseScheduleSection/components/ScheduleDetailPopup/ScheduleDetailPopup';
+import { ScheduleDatePicker } from './ScheduleDatePicker';
 
-
-export const SchedulePopupButton = ({picDate, detailList}: ScheduleDetailBoxType) => {
+export const ScheduleContainer = ({picDate, detailList}: ScheduleDetailBoxType) => {
 
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
@@ -23,7 +23,16 @@ export const SchedulePopupButton = ({picDate, detailList}: ScheduleDetailBoxType
 
     return (
         <Stack>
-            <Stack css={sx.scheduleTitle} onClick={handleClickOpen}> COURSE SCHEDULE </Stack>
+            <Stack onClick={handleClickOpen}>
+                <Stack css={sx.scheduleTitle}> COURSE SCHEDULE </Stack>
+                <Stack css={sx.pickerTest}>
+                    <ScheduleDatePicker
+                        picDate={picDate}
+                        disabledYN={true}
+                    />
+                </Stack>
+            </Stack>
+
             <Dialog
                 fullScreen={fullScreen}
                 maxWidth={false}
@@ -55,6 +64,9 @@ const sx = {
         line-height: 21px;
         letter-spacing: 0.02em;
         color: #5E6C84;
-        cursor: pointer;
+    ` ,
+    pickerTest: css`
+        padding: 25px;
+
     `
 };

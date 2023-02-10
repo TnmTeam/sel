@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
-import { ScheduleDatePicker, SchedulePopupButton } from './components';
+import { ScheduleContainer } from './components';
 
 
 export const ScheduleSummary = () => {
@@ -32,15 +32,10 @@ export const ScheduleSummary = () => {
     };
     return (
         <Stack css={sx.scheduleSummaryContainer} >
-            <SchedulePopupButton 
+            <ScheduleContainer 
                 picDate={model.ScheduleDatePicker.picDate}
                 detailList={model.ScheduleDatePicker.detailList}
             />
-            <Stack css={sx.pickerTest}>
-                <ScheduleDatePicker
-                    picDate={model.ScheduleDatePicker.picDate}
-                />
-            </Stack>
         </Stack>
     );
 };
@@ -54,10 +49,7 @@ const sx = {
         top: 723px;
         background: #FFFFFF;
         border-radius: 28px;
-    `
-    ,
-    pickerTest: css`
-        padding: 25px;
 
+        cursor: pointer;
     `
 };
