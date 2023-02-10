@@ -21,6 +21,8 @@ import { Colors } from '@/common/themes/Color';
 import SearchIcon from '@mui/icons-material/Search';
 import CachedIcon from '@mui/icons-material/Cached';
 
+import { PhotoUpload } from './components/PhotoUpload/PhotoUpload';
+
 export const PhotoPopup = () => {
     const [open, setOpen] = React.useState(false);
 
@@ -107,7 +109,9 @@ function PhotoEditDialog(props: PhotoEditDialogProps) {
                     <CloseIcon></CloseIcon>
                 </Button>
             </DialogActions>
-            <DialogContent sx={{ height: '400px' }}>Content</DialogContent>
+            <DialogContent sx={{ height: '400px' }}>
+                <PhotoUpload />
+            </DialogContent>
             <Box sx={{ width: 400, m: 'auto' }}>
                 <Stack spacing={2} mb={5} direction='row' alignItems='center'>
                     <SearchIcon />
