@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/material';
-import { PhotoPopup } from '../sections/EditPhotoSection/components';
+import { ProfileSection, EditPhotoSection } from '../sections';
 
 export const AccountView = () => {
-    return <PhotoPopup />;
+    return <ProfileSection />;
 };
