@@ -11,6 +11,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
 
+import React, { useState } from 'react';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../../firebaseConfig';
+
 import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -25,6 +29,19 @@ export const Authentication = () => {
             email: data.get('email'),
             password: data.get('password'),
         });
+    };
+
+    const [userData, setUserData] = useState(null);
+    function handleGoogleLogin() {
+        const provider = new GoogleAuthProvider(); // provider를 구글로 설정
+        signInWithPopup(auth, provider) // popup을 이용한 signup
+          .then((data) => {
+//            setUserData(data.user); // user data 설정
+            console.log(data) // console로 들어온 데이터 표시
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     };
 
     return (
@@ -57,7 +74,7 @@ export const Authentication = () => {
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LinkedInIcon />
                     </Avatar>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} onClick={handleGoogleLogin}>
                         <GoogleIcon />
                     </Avatar>
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
