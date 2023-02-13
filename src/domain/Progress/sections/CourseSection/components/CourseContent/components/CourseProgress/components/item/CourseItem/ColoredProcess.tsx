@@ -9,44 +9,25 @@ type ColoredProcessType = {
   processNumber: number;
 };
 export const ColoredProcess = ({ processNumber }: ColoredProcessType) => {
+  const isNumberTextBlack = processNumber < 20 ? true : false;
   return (
-    <React.Fragment>{ColoredProcessByNumber(processNumber)}</React.Fragment>
-  );
-};
-
-const ColoredProcessByNumber = (v: number) => {
-  switch (v) {
-    case 0:
-      return (
-        <div css={sx.coloredProcess("transparent")}>
-          <Typography variant="caption" css={sx.text("#0A0B26")}>
-            {v + "%"}
-          </Typography>
-        </div>
-      );
-    case 100:
-      return (
-        <div css={sx.coloredProcess(Colors.CompeleteGreen)}>
+    <React.Fragment>
+      {" "}
+      <div css={sx.coloredProcess(getColorByNumber(processNumber))}>
+        {processNumber == 100 && (
           <Image
             width={21.25}
             height={19.37}
             src={CompletedIcon}
             alt={"completed"}
           />
-          <Typography variant="caption" css={sx.text("white")}>
-            {v + "%"}
-          </Typography>
-        </div>
-      );
-    default:
-      return (
-        <div css={sx.coloredProcess(Colors.UnCompeleteYellow)}>
-          <Typography variant="caption" css={sx.text("white")} ml={"5px"}>
-            {v + "%"}
-          </Typography>
-        </div>
-      );
-  }
+        )}
+        <Typography variant="caption" css={sx.text(isNumberTextBlack)}>
+          {processNumber + "%"}
+        </Typography>
+      </div>
+    </React.Fragment>
+  );
 };
 
 const sx = {
@@ -56,13 +37,30 @@ const sx = {
     border-radius: 5px;
     text-align: center;
     background-color: ${backgroundColor};
-
     display: flex;
     align-items: center;
     justify-content: center;
   `,
-  text: (textColor: string) => css`
-    color: ${textColor};
+  text: (isBlack: boolean) => css`
+    color: ${isBlack ? "#0A0B26" : "white"};
     font-weight: 500;
+    margin-left: 4px;
   `,
+};
+
+const getColorByNumber = (v: number) => {
+  switch (true) {
+    case v < 20:
+      return "transparent";
+    case v < 40:
+      return Colors.LateRed;
+    case v <= 60:
+      return Colors.MiddleCompeleteYellow;
+    case v <= 80:
+      return Colors.ActiveBlue;
+    case v <= 100:
+      return Colors.CompeleteGreen;
+    default:
+      return "transparent";
+  }
 };
