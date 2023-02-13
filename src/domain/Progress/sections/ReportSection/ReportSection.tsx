@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { ProgressReports, RecentUploads, StudentWorkbook } from "./components";
 
 export const ReportSection = () => {
