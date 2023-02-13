@@ -50,6 +50,10 @@ const sx = {
     padding-right: 17.32px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.11);
     cursor: pointer;
+
+    &:nth-last-of-type(1) {
+      border-bottom: none;
+    }
   `,
   text: css`
     color: #0a0b26;
