@@ -1,46 +1,27 @@
 import { Colors } from "@/common/themes/Color";
 import { css } from "@emotion/react";
-import { Button, Stack, Typography } from "@mui/material";
-import ImageCard from "@/assets/progress/banner/img-banner.png";
+import { Button, Stack, Typography, TypographyProps } from "@mui/material";
 import Image from "next/image";
+import { CardType } from "../../../../types/mapItem.type";
 
 type MapCardType = {
   isCircleOnRight: boolean;
+  cardState: CardType;
 };
 
-export const MapCard = ({ isCircleOnRight }: MapCardType) => {
-  const models = {
-    title: "Finding Your Role to Make Team Work",
-    desc: "Being on a team isn't easy. Especially when the stakes are high and results really matter. In this course, you'll learn how to listen and empower others; and you'll gain an appreciation for the importance of roles and responsibilities when completing large-scale tasks.",
-    btnText: "Enroll $1495",
-  };
-
+export const MapCard = ({ isCircleOnRight, cardState }: MapCardType) => {
   return (
     <Stack className="mapCard" css={sx.card(isCircleOnRight)}>
       <div css={sx.image}>
-        <Image fill src={ImageCard} alt="img" />
+        <Image fill src={cardState.image} alt="img" />
       </div>
       <Stack spacing="15px" css={sx.content}>
         <Stack spacing="4px">
-          <Typography
-            fontSize="22px"
-            lineHeight="28px"
-            color={Colors.BottomBlue}
-            css={sx.title}
-          >
-            {models.title}
-          </Typography>
-          <Typography
-            fontSize="12px"
-            lineHeight="20px"
-            color="#94A3B8"
-            css={sx.desc}
-          >
-            {models.desc}
-          </Typography>
+          <CardTitle> {cardState.title}</CardTitle>
+          <CardDesc>{cardState.desc}</CardDesc>
         </Stack>
         <Button fullWidth css={sx.btn}>
-          {"Enroll $1495"}
+          {cardState.btnText}
         </Button>
       </Stack>
     </Stack>
@@ -54,7 +35,6 @@ const sx = {
     position: absolute;
     ${isCircleOnRight ? "bottom: 12px" : "bottom: 12px"};
     ${isCircleOnRight ? "right: 12px" : "left: 12px"};
-
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 12px 0px 24px rgba(0, 0, 0, 0.12);
@@ -99,9 +79,34 @@ const sx = {
     font-size: 14px;
     line-height: 18px;
     text-align: center;
+    text-transform: none;
     color: white;
     &:hover {
       background-color: #6394c7;
     }
   `,
+};
+
+const CardTitle = (p: TypographyProps) => {
+  return (
+    <Typography
+      fontSize="22px"
+      lineHeight="28px"
+      color={Colors.BottomBlue}
+      css={sx.title}
+      {...p}
+    />
+  );
+};
+
+const CardDesc = (p: TypographyProps) => {
+  return (
+    <Typography
+      fontSize="12px"
+      lineHeight="20px"
+      color="#94A3B8"
+      css={sx.desc}
+      {...p}
+    />
+  );
 };

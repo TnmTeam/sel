@@ -1,14 +1,16 @@
 import { css } from "@emotion/react";
+import { CardType } from "../../../../types/mapItem.type";
 import { MapCard } from "../MapCard/MapCard";
 type CircleType = {
   isOnRight: boolean;
+  cardState: CardType;
 };
 
-export const Circle = ({ isOnRight }: CircleType) => {
+export const Circle = ({ isOnRight, cardState }: CircleType) => {
   return (
     <div css={sx.circleContainer(isOnRight)}>
       <div className="circle" css={sx.circle}></div>
-      <MapCard isOnRight={isOnRight} />
+      <MapCard isCircleOnRight={isOnRight} cardState={cardState} />
     </div>
   );
 };
@@ -26,7 +28,7 @@ const sx = {
       }
       .mapCard {
         display: block;
-        z-index: 99;
+        z-index: 3;
       }
     }
   `,

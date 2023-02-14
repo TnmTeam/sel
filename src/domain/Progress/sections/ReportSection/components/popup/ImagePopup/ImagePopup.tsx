@@ -24,10 +24,7 @@ export const ImagePopup = ({ open, onClose, image }: ImagePopupType) => {
           <CloseButton onClose={onClose} />
           <Stack css={sx.content} spacing={"32px"}>
             <ImageContainer image={image} />
-            <ButtonContainer
-              saveBtnClick={() => null}
-              shareBtnClick={() => null}
-            />
+            <ButtonContainer saveBtnClick={() => null} />
           </Stack>
         </div>
       </Box>

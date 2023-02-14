@@ -4,30 +4,24 @@ import { Circle } from "./Circle";
 import { XPosition, YPosition } from "../../../../enum/mapItem.enum";
 import { ItemType, MapItemType } from "../../../../types/mapItem.type";
 import { CurrentCircle } from "./CurrentCircle";
-import { MapCard } from "../MapCard/MapCard";
 
-export const MapItem = ({
-  textYPosition,
-  circleXPosition,
-  x,
-  y,
-  text,
-  isHere,
-}: MapItemType) => {
+export const MapItem = ({ item, card }: MapItemType) => {
   return (
-    <div css={sx.item(x, y)}>
+    <div css={sx.item(item.x, item.y)}>
       <div css={sx.itemContainer}>
-        {textYPosition == YPosition.Bottom ? (
+        {item.textYPosition == YPosition.Bottom ? (
           <TextOnBottomItem
-            isCircleOnRight={circleXPosition == XPosition.Right}
-            text={text}
-            isHere={isHere}
+            isCircleOnRight={item.circleXPosition == XPosition.Right}
+            text={item.text}
+            isHere={item.isHere}
+            cardState={card}
           />
         ) : (
           <TextOnTopItem
-            isCircleOnRight={circleXPosition == XPosition.Right}
-            text={text}
-            isHere={isHere}
+            isCircleOnRight={item.circleXPosition == XPosition.Right}
+            text={item.text}
+            isHere={item.isHere}
+            cardState={card}
           />
         )}
       </div>
@@ -54,13 +48,18 @@ const sx = {
   `,
 };
 
-const TextOnBottomItem = ({ isCircleOnRight, text, isHere }: ItemType) => {
+const TextOnBottomItem = ({
+  isCircleOnRight,
+  text,
+  isHere,
+  cardState,
+}: ItemType) => {
   return (
     <Stack spacing="16px">
       {isHere ? (
         <CurrentCircle isOnRight={isCircleOnRight} />
       ) : (
-        <Circle isOnRight={isCircleOnRight} />
+        <Circle isOnRight={isCircleOnRight} cardState={cardState} />
       )}
       <Typography
         fontSize="22px"
@@ -74,13 +73,18 @@ const TextOnBottomItem = ({ isCircleOnRight, text, isHere }: ItemType) => {
   );
 };
 
-const TextOnTopItem = ({ isCircleOnRight, text, isHere }: ItemType) => {
+const TextOnTopItem = ({
+  isCircleOnRight,
+  text,
+  isHere,
+  cardState,
+}: ItemType) => {
   return (
     <Stack flexDirection={"column-reverse"}>
       {isHere ? (
         <CurrentCircle isOnRight={isCircleOnRight} />
       ) : (
-        <Circle isOnRight={isCircleOnRight} />
+        <Circle isOnRight={isCircleOnRight} cardState={cardState} />
       )}
       <Typography
         fontFamily="Readex Pro"
