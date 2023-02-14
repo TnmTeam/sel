@@ -14,24 +14,14 @@ export const ChartScoreItem = ({
 }: ScoreType) => {
     return (
         <Stack css={sx.item}>
-            <div css={sx.chart}>
-                <PieChart
-                    data={[{ value: 1, key: 1, color: Colors.BackBlue }]}
-                    reveal={progress * 20}
-                    lineWidth={14}
-                    background={'#DBDFF1'}
-                    lengthAngle={230}
-                    startAngle={155}
-                    rounded
-                    animate
-                />
-            </div>
+            <Stack css={sx.chart}>{pieChart(iconType, progress)}</Stack>
             <Stack css={sx.progressWrapper}>
                 <Typography
                     variant='h1'
                     color='#253858'
                     letterSpacing={'-1.75px'}
                     mb='12px'
+                    fontSize={'70pt'}
                 >
                     {progress}
                 </Typography>
@@ -63,12 +53,15 @@ export const ChartScoreItem = ({
 
 const sx = {
     item: css`
-        width: 250px;
         position: relative;
+        width: 250px;
+        height: 449px;
     `,
     chart: css`
         width: 90%;
-        margin: 0 auto;
+        margin: auto;
+        margin-bottom: 130px;
+        height: 449px;
     `,
     progressWrapper: css`
         width: 100%;
@@ -76,10 +69,75 @@ const sx = {
         flex-direction: column;
         align-items: center;
         position: absolute;
-        top: 28%;
-        left: 50%;
         transform: translateX(-50%);
+        transform: translateY(50%);
     `,
+};
+
+const pieChart = (iconType: string, progress: number) => {
+    if (iconType === 'TuneIcon') {
+        return (
+            <PieChart
+                data={[{ value: 1, key: 1, color: 'url(#gradient1)' }]}
+                reveal={progress * 20}
+                lineWidth={14}
+                background={'#DBDFF1'}
+                lengthAngle={230}
+                startAngle={155}
+                rounded
+                animate
+            >
+                <defs>
+                    <linearGradient id='gradient1'>
+                        <stop offset='0%' stopColor='#6B52BD' />
+                        <stop offset='100%' stopColor='#D22066' />
+                    </linearGradient>
+                </defs>
+            </PieChart>
+        );
+    } else if (iconType === 'GpsFixedIcon') {
+        return (
+            <PieChart
+                data={[{ value: 1, key: 1, color: 'url(#gradient2)' }]}
+                reveal={progress * 20}
+                lineWidth={14}
+                background={'#DBDFF1'}
+                lengthAngle={230}
+                startAngle={155}
+                rounded
+                animate
+            >
+                <defs>
+                    <linearGradient id='gradient2'>
+                        <stop offset='0%' stopColor='#147AD6' />
+                        <stop offset='100%' stopColor='#253858' />
+                    </linearGradient>
+                </defs>
+            </PieChart>
+        );
+    } else if (iconType === 'FavoriteIcon') {
+        return (
+            <PieChart
+                data={[{ value: 1, key: 1, color: 'url(#gradient3)' }]}
+                reveal={progress * 20}
+                lineWidth={14}
+                background={'#DBDFF1'}
+                lengthAngle={230}
+                startAngle={155}
+                rounded
+                animate
+            >
+                <defs>
+                    <linearGradient id='gradient3'>
+                        <stop offset='0%' stopColor='#E6BF71' />
+                        <stop offset='100%' stopColor='#EA4848' />
+                    </linearGradient>
+                </defs>
+            </PieChart>
+        );
+    } else {
+        null;
+    }
 };
 
 const iconImage = (iconType: string) => {
