@@ -5,6 +5,7 @@ import { DetailCourseItem } from "./item/CourseDetailItem/CourseDetailItem";
 import { CourseItem } from "./item/CourseItem/CourseItem";
 
 export const SelectedCourseLayout = ({
+  detailCourses,
   selectedCourse,
   selectedDetailCourse,
   onListBack,
@@ -13,14 +14,15 @@ export const SelectedCourseLayout = ({
   return (
     <Stack css={sx.courseListLayout}>
       <CourseItem item={selectedCourse} onItemClick={onListBack} isSelected />
-      {selectedCourse.courseDetailList.map((it, index) => (
-        <DetailCourseItem
-          key={index}
-          item={it}
-          isSelected={it == selectedDetailCourse}
-          onItemClick={() => onCourseClick(it)}
-        />
-      ))}
+      {detailCourses &&
+        detailCourses.map((it, index) => (
+          <DetailCourseItem
+            key={index}
+            item={it}
+            isSelected={it == selectedDetailCourse}
+            onItemClick={() => onCourseClick(it)}
+          />
+        ))}
     </Stack>
   );
 };

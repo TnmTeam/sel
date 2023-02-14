@@ -1,13 +1,27 @@
+import { CustomProgress } from "@/common/components/progress";
 import { Colors } from "@/common/themes/Color";
 import { css } from "@emotion/react";
 import { Stack } from "@mui/material";
+import { CourseStateType } from "../../types/course.type";
 import { CourseContent, CourseDescription } from "./components";
 
-export const CourseSection = () => {
+type DataType = {
+  data: CourseStateType;
+};
+
+export const CourseSection = ({ data }: DataType) => {
+  if (!data.result || data.isLoading) {
+    return (
+      <Stack css={sx.root}>
+        <CustomProgress />
+      </Stack>
+    );
+  }
+
   return (
     <Stack css={sx.root}>
-      <CourseDescription />
-      <CourseContent />
+      <CourseDescription description={data.result.courseDesc!!} />
+      <CourseContent models={data.result.units} />
     </Stack>
   );
 };

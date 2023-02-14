@@ -2,7 +2,13 @@ import { Button, Stack, Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import { Colors } from "@/common/themes/Color";
 import { SuggestCard } from "./SuggestCard";
-export const SuggestSection = () => {
+import { SuggestCourseUnits } from "@/data/api/progress/progress.dto";
+
+type DataType = {
+  data: { result: SuggestCourseUnits; isLoading: boolean };
+};
+
+export const SuggestSection = ({ data }: DataType) => {
   const models = [
     {
       image: "/assets/progress/banner/img-banner.png",

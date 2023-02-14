@@ -1,12 +1,10 @@
 import { Stack, Typography } from "@mui/material";
 
-export const CourseDescription = () => {
-  const models = {
-    title: "Course Description",
-    description:
-      "Explore research-based practices in leadership, self-efficacy, and other non-cognitive areas of study that help young people develop\nthe skills requisite for achieving high-impact outcomes.\n\nGrow your empathy and gain the perspective of walking in the shoes of others as you survey the community around you for any areas of need.\nDevelop the impact of others with intention.",
-  };
+type CourseDescriptionType = {
+  description: string;
+};
 
+export const CourseDescription = ({ description }: CourseDescriptionType) => {
   return (
     <Stack paddingX={"36px"}>
       <Typography
@@ -15,7 +13,7 @@ export const CourseDescription = () => {
         letterSpacing={"0.3px"}
         mb="30px"
       >
-        {models.title}
+        {"Course Description"}
       </Typography>
       <Typography
         variant="body1"
@@ -24,7 +22,7 @@ export const CourseDescription = () => {
         whiteSpace={"pre-wrap"}
         height="161px"
       >
-        {models.description}
+        {description}
       </Typography>
     </Stack>
   );

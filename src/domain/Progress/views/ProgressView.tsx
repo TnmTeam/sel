@@ -6,15 +6,17 @@ import {
   SuggestSection,
 } from "../sections";
 import { JourneySection } from "../sections/JourneySection/JourneySection";
+import { useProgressView } from "./useProgressView";
 
 export const ProgressView = () => {
+  const { bannerState, courseState, suggestState } = useProgressView();
   return (
     <Stack>
-      <BannerSection />
-      <CourseSection />
+      <BannerSection data={bannerState} />
+      <CourseSection data={courseState} />
       <ReportSection />
       <JourneySection />
-      <SuggestSection />
+      <SuggestSection data={suggestState} />
     </Stack>
   );
 };

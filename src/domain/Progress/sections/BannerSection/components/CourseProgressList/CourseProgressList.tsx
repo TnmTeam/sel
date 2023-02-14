@@ -1,27 +1,27 @@
+import { RateType } from "@/domain/Progress/types/banner.type";
 import { css } from "@emotion/react";
 import { Stack } from "@mui/material";
 import { ChartProgressList, PlainProgressList } from "./components";
 
-export const CourseProgressList = () => {
-  const models = {
-    plain: [
-      { progress: 27, progressDesc: "Hours Spent" },
-      { progress: 1456, progressDesc: "Words Written" },
-      { progress: 4, progressDesc: "Videos Uploaded" },
-      { progress: 95, progressDesc: "Attendance" },
-    ],
-    chart: [
-      { progress: 3, progressDesc: "Self-Control" },
-      { progress: 4, progressDesc: "Purpose" },
-      { progress: 3, progressDesc: "Gratitude" },
-      { progress: 3, progressDesc: "Grit" },
-    ],
-  };
+type CourseProgressListDataType = {
+  models: RateType;
+};
 
+export const CourseProgressList = ({ models }: CourseProgressListDataType) => {
   return (
     <Stack css={sx.courseProgressListContainer}>
-      <PlainProgressList list={models.plain} />
-      <ChartProgressList list={models.chart} />
+      <PlainProgressList
+        attendance={models.plain.attendance}
+        hoursSpent={models.plain.hoursSpent}
+        videosUploaded={models.plain.videosUploaded}
+        wordsWritten={models.plain.wordsWritten}
+      />
+      <ChartProgressList
+        selfControl={models.chart.selfControl}
+        purpose={models.chart.purpose}
+        gratitude={models.chart.gratitude}
+        grit={models.chart.grit}
+      />
     </Stack>
   );
 };

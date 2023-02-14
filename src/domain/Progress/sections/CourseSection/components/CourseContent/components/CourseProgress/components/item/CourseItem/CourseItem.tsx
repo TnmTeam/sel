@@ -1,11 +1,10 @@
-import { Colors } from "@/common/themes/Color";
 import { Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { css } from "@emotion/react";
-import { CourseType } from "../../../../../types/course.type";
 import NextIcon from "@/assets/progress/icon/ic-next.svg";
 import DownIcon from "@/assets/progress/icon/ic-down.svg";
 import { ColoredProcess } from "./ColoredProcess";
+import { CourseType } from "@/domain/Progress/types/course.type";
 
 type CourseItemType = {
   item: CourseType;
@@ -20,13 +19,13 @@ export const CourseItem = ({
 }: CourseItemType) => {
   return (
     <Stack onClick={onItemClick} direction="row" css={sx.courseItem}>
-      <ColoredProcess processNumber={item.process} />
+      <ColoredProcess processNumber={item.progressPercent} />
       <Typography variant="body2" width="247px" css={sx.text}>
-        {item.dayTitle}
+        {item.title}
       </Typography>
       <Stack direction="row" alignItems={"center"}>
         <Typography variant="caption" width="73px" css={sx.text}>
-          {item.date}
+          {getDate(item.date)}
         </Typography>
         <div css={sx.icon}>
           {isSelected ? (
@@ -68,4 +67,11 @@ const sx = {
     align-items: center;
     justify-content: center;
   `,
+};
+
+const getDate = (date: number) => {
+  const formattedDate = new Date(date).toString().split(" ");
+  const month = formattedDate[1];
+  const day = formattedDate[2];
+  return `${month} ${day}`;
 };

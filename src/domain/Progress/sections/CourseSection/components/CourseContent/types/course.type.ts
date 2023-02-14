@@ -1,9 +1,15 @@
+import {
+  CourseDetailType,
+  CourseType,
+} from "@/domain/Progress/types/course.type";
+
 export type CourseListLayoutType = {
   courses: CourseType[];
   onCourseClick: (v: CourseType) => void;
 };
 
 export type SelectedCourseLayoutType = {
+  detailCourses: CourseDetailType[] | null;
   selectedCourse: CourseType;
   selectedDetailCourse: CourseDetailType | null;
   onListBack: () => void;
@@ -17,21 +23,9 @@ export type CourseProgressType = {
     onCourseClick: (selectedCourse: CourseType) => void;
   };
   detailCourseState: {
+    courses: CourseDetailType[] | null;
     course: CourseDetailType | null;
     onCourseClick: (selectedDetailCourse: CourseDetailType) => void;
   };
   onListBack: () => void;
-};
-
-export type CourseType = {
-  dayTitle: string;
-  date: string;
-  process: number;
-  courseDetailList: CourseDetailType[];
-};
-
-export type CourseDetailType = {
-  title: string;
-  iconType: any;
-  isCompleted: boolean;
 };
