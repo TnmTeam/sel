@@ -4,7 +4,11 @@ import { Button, Stack, Typography } from "@mui/material";
 import ImageCard from "@/assets/progress/banner/img-banner.png";
 import Image from "next/image";
 
-export const MapCard = () => {
+type MapCardType = {
+  isCircleOnRight: boolean;
+};
+
+export const MapCard = ({ isCircleOnRight }: MapCardType) => {
   const models = {
     title: "Finding Your Role to Make Team Work",
     desc: "Being on a team isn't easy. Especially when the stakes are high and results really matter. In this course, you'll learn how to listen and empower others; and you'll gain an appreciation for the importance of roles and responsibilities when completing large-scale tasks.",
@@ -12,7 +16,7 @@ export const MapCard = () => {
   };
 
   return (
-    <Stack className="mapCard" css={sx.card}>
+    <Stack className="mapCard" css={sx.card(isCircleOnRight)}>
       <div css={sx.image}>
         <Image fill src={ImageCard} alt="img" />
       </div>
@@ -44,13 +48,13 @@ export const MapCard = () => {
 };
 
 const sx = {
-  card: css`
+  card: (isCircleOnRight: boolean) => css`
     width: 309px;
-    height: 441px;
     display: none;
     position: absolute;
-    left: 0;
-    top: 0;
+    ${isCircleOnRight ? "bottom: 12px" : "bottom: 12px"};
+    ${isCircleOnRight ? "right: 12px" : "left: 12px"};
+
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 12px 0px 24px rgba(0, 0, 0, 0.12);

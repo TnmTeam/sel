@@ -8,7 +8,7 @@ export const Circle = ({ isOnRight }: CircleType) => {
   return (
     <div css={sx.circleContainer(isOnRight)}>
       <div className="circle" css={sx.circle}></div>
-      <MapCard />
+      <MapCard isOnRight={isOnRight} />
     </div>
   );
 };
