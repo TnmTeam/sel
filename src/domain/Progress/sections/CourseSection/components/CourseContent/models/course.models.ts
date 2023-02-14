@@ -4,7 +4,7 @@ export const courseModel: CourseType[] = [
   {
     dayTitle: "Introduction",
     date: "19 Jan",
-    process: 20,
+    process: 0,
     courseDetailList: [
       {
         title: "Watch: Leadership Is a Skill",
@@ -52,7 +52,7 @@ export const courseModel: CourseType[] = [
   {
     dayTitle: "Day 1 : Description",
     date: "19 Jan",
-    process: 0,
+    process: 20,
     courseDetailList: [
       {
         title: "Watch: Leadership Is a Skill",
@@ -148,7 +148,7 @@ export const courseModel: CourseType[] = [
   {
     dayTitle: "Day 3 : Description",
     date: "19 Jan",
-    process: 80,
+    process: 50,
     courseDetailList: [
       {
         title: "Watch: Leadership Is a Skill",
@@ -196,7 +196,7 @@ export const courseModel: CourseType[] = [
   {
     dayTitle: "Day 4 : Description",
     date: "19 Jan",
-    process: 80,
+    process: 60,
     courseDetailList: [
       {
         title: "Watch: Leadership Is a Skill",
@@ -244,7 +244,7 @@ export const courseModel: CourseType[] = [
   {
     dayTitle: "Day 5 : Description",
     date: "19 Jan",
-    process: 80,
+    process: 50,
     courseDetailList: [
       {
         title: "Watch: Leadership Is a Skill",
@@ -292,7 +292,7 @@ export const courseModel: CourseType[] = [
   {
     dayTitle: "Day 6 : Description",
     date: "19 Jan",
-    process: 80,
+    process: 70,
     courseDetailList: [
       {
         title: "Watch: Leadership Is a Skill",
@@ -340,7 +340,7 @@ export const courseModel: CourseType[] = [
   {
     dayTitle: "Day 7 : Description",
     date: "19 Jan",
-    process: 80,
+    process: 90,
     courseDetailList: [
       {
         title: "Watch: Leadership Is a Skill",

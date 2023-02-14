@@ -5,6 +5,7 @@ import {
   ReportSection,
   SuggestSection,
 } from "../sections";
+import { JourneySection } from "../sections/JourneySection/JourneySection";
 
 export const ProgressView = () => {
   return (
@@ -12,6 +13,7 @@ export const ProgressView = () => {
       <BannerSection />
       <CourseSection />
       <ReportSection />
+      <JourneySection />
       <SuggestSection />
     </Stack>
   );

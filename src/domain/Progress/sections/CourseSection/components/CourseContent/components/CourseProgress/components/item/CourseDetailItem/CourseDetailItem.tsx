@@ -1,7 +1,6 @@
-import { Stack, Typography } from "@mui/material";
+import { IconButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { css } from "@emotion/react";
-import { Colors } from "@/common/themes/Color";
 import { useCourseDetailItem } from "./useCourseDetailItem";
 import { CourseDetailType } from "../../../../../types/course.type";
 
@@ -19,11 +18,7 @@ export const DetailCourseItem = ({
   const { getCompletionIcon, getCourseTypeIcon } = useCourseDetailItem();
 
   return (
-    <Stack
-      onClick={onItemClick}
-      direction="row"
-      css={sx.courseDetailItem(isSelected)}
-    >
+    <Stack direction="row" css={sx.courseDetailItem(isSelected)}>
       <Image
         width={20}
         height={30}
@@ -40,12 +35,9 @@ export const DetailCourseItem = ({
       >
         {item.title}
       </Typography>
-      <Image
-        width={30}
-        height={30}
-        src={getCourseTypeIcon(item.title)}
-        alt="media"
-      />
+      <IconButton onClick={onItemClick} css={sx.mediaImage}>
+        <Image fill src={getCourseTypeIcon(item.title)} alt="media" />
+      </IconButton>
     </Stack>
   );
 };
@@ -61,15 +53,18 @@ const sx = {
     padding-right: 17.32px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.11);
     background-color: ${isSelected && " rgba(103, 135, 183, 0.2)"};
-    cursor: pointer;
-    &:hover {
-      transition: 0.3s;
-      background-color: rgba(103, 135, 183, 0.2);
+    &:nth-last-of-type(1) {
+      border-bottom: none;
     }
   `,
   text: css`
     color: #0a0b26;
     font-weight: 500;
     letter-spacing: 0.02em;
+  `,
+  mediaImage: css`
+    position: relative;
+    width: 30px;
+    height: 30px;
   `,
 };
