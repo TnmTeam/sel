@@ -3,7 +3,7 @@ import { Authentication, Previews } from './components';
 
 export const LoginSection = () => {
     return (
-        <Grid container>
+        <Grid container height={'100%'}>
             <Previews />
             <Authentication />
         </Grid>
