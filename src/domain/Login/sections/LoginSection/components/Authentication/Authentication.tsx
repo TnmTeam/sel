@@ -35,14 +35,14 @@ export const Authentication = () => {
     function handleGoogleLogin() {
         const provider = new GoogleAuthProvider(); // provider를 구글로 설정
         signInWithPopup(auth, provider) // popup을 이용한 signup
-          .then((data) => {
-//            setUserData(data.user); // user data 설정
-            console.log(data) // console로 들어온 데이터 표시
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-    };
+            .then((data) => {
+                //            setUserData(data.user); // user data 설정
+                console.log(data); // console로 들어온 데이터 표시
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 
     return (
         <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} square>
@@ -51,11 +51,17 @@ export const Authentication = () => {
                 alignItems={'center'}
                 display={'flex'}
                 sx={{
-                    my: 30,
-                    mx: 6,
+                    mx: 25,
+                    mt: 20,
+                    mb: 25,
                 }}
             >
-                <Typography component='h1' variant='h3' textAlign='center'>
+                <Typography
+                    component='h1'
+                    variant='h3'
+                    textAlign='center'
+                    sx={{ mb: 3 }}
+                >
                     Welcome Parents!
                 </Typography>
 
@@ -64,33 +70,31 @@ export const Authentication = () => {
                     flexDirection={'row'}
                     alignItems={'center'}
                     display={'flex'}
+                    sx={{ mb: 3 }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
                         <FacebookSharpIcon />
                     </Avatar>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
                         <TwitterIcon />
                     </Avatar>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
                         <LinkedInIcon />
                     </Avatar>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} onClick={handleGoogleLogin}>
-                        <GoogleIcon />
-                    </Avatar>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Link href='#' onClick={handleGoogleLogin}>
+                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
+                            <GoogleIcon />
+                        </Avatar>
+                    </Link>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
                         <AppleIcon />
                     </Avatar>
                 </Grid>
 
-                <Typography component='h1' variant='h6'>
+                <Typography component='h1' variant='h6' sx={{ mb: 3 }}>
                     - or -
                 </Typography>
-                <Box
-                    component='form'
-                    noValidate
-                    onSubmit={handleSubmit}
-                    sx={{ mt: 1 }}
-                >
+                <Box component='form' noValidate onSubmit={handleSubmit}>
                     <TextField
                         margin='normal'
                         required

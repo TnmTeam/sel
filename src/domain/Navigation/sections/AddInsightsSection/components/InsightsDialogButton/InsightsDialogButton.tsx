@@ -27,7 +27,7 @@ export const InsightsDialogButton = () => {
         <Stack>
             <Button
                 sx={{
-                    fontSize: '18pt',
+                    fontSize: '15pt',
                     backgroundColor: WhiteButtons.ButtonColor,
                     color: WhiteButtons.TextColor,
                     marginRight: '40px',
