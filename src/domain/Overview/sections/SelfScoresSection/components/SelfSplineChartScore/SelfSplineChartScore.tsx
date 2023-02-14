@@ -65,7 +65,7 @@ export const SelfSplineChartScore = () => {
                                     enabled: false,
                                 },
                                 tooltip: {
-                                    enabled: false
+                                    enabled: true
                                 },
                                 grid: {
                                     show: true,
