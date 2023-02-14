@@ -1,0 +1,1 @@
+export { ParentInfo } from './ParentInfo/ParentInfo';

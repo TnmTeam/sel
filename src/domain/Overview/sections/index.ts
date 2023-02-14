@@ -2,3 +2,4 @@ export { CourseProgressSection } from './CourseProgressSection/CourseProgressSec
 export { CourseScheduleSection } from './CourseScheduleSection/CourseScheduleSection';
 export { FeaturedImpactorVideosSection } from './FeaturedImpactorVideosSection/FeaturedImpactorVideosSection';
 export { ImpacterScoreSection } from './ImpacterScoreSection/ImpacterScoreSection';
+export { SelfScoresSection } from './SelfScoresSection/SelfScoresSection';

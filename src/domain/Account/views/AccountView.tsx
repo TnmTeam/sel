@@ -1,17 +1,7 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/material';
+import { ProfileSection, EditPhotoSection } from '../sections';
 
 export const AccountView = () => {
-    return <Stack css={sx.sample}>
-        
-    </Stack>;
-};
-
-const sx = {
-    sample: css`
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-        background-color: black;
-    `,
+    return <ProfileSection />;
 };

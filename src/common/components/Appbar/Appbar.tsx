@@ -7,7 +7,7 @@ import LogoImage from '@/assets/logo/Frame.png';
 import { useRouter } from 'next/router';
 import { TextMenu } from './components/TextMenu/TextMenu';
 import { InsightsDialogButton } from '@/domain/Navigation/sections/AddInsightsSection/components';
-import { NotificationDialogIcon } from '@/domain/Navigation/sections/NotificationSection/components';
+import { NotificationDialogIcon } from '@/domain/Navigation/sections/NotificationSection/NotificationSummary/components';
 
 export const Appbar = () => {
     const router = useRouter();
