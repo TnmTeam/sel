@@ -3,27 +3,18 @@ import { Stack } from "@mui/system";
 import Image from "next/image";
 import FullBannerImage from "@/assets/progress/banner/img-banner.png";
 import { CourseCompletionChart, CurrentCourseTitle } from "./components";
+import { BannerType } from "@/domain/Progress/types/banner.type";
 
-export const Banner = () => {
-  const model = {
-    title: {
-      caption: "CURRENT COURSE",
-      currentCourseTitle: "The 7-Day Student Leadership Challenge",
-      currentCourseDesc: "How To Grow Your Mindset In Just One Week",
-    },
-    pregress: {
-      rate: 50,
-    },
-  };
+type BannerDataType = {
+  models: BannerType;
+};
+
+export const Banner = ({ models }: BannerDataType) => {
   return (
     <Stack css={sx.bannerContainer}>
       <BannerImage />
-      <CurrentCourseTitle
-        caption={model.title.caption}
-        title={model.title.currentCourseTitle}
-        desc={model.title.currentCourseDesc}
-      />
-      <CourseCompletionChart rate={model.pregress.rate} />
+      <CurrentCourseTitle title={models.title} desc={models.desc} />
+      <CourseCompletionChart rate={models.rate} />
     </Stack>
   );
 };

@@ -2,7 +2,7 @@ import { IconButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { css } from "@emotion/react";
 import { useCourseDetailItem } from "./useCourseDetailItem";
-import { CourseDetailType } from "../../../../../types/course.type";
+import { CourseDetailType } from "@/domain/Progress/types/course.type";
 
 type DetailCourseItemType = {
   item: CourseDetailType;
@@ -22,7 +22,7 @@ export const DetailCourseItem = ({
       <Image
         width={20}
         height={30}
-        src={getCompletionIcon(item.isCompleted)}
+        src={getCompletionIcon(item.done)}
         alt="icon"
       />
       <Typography
@@ -36,7 +36,7 @@ export const DetailCourseItem = ({
         {item.title}
       </Typography>
       <IconButton onClick={onItemClick} css={sx.mediaImage}>
-        <Image fill src={getCourseTypeIcon(item.title)} alt="media" />
+        <Image fill src={getCourseTypeIcon(item.type)} alt="media" />
       </IconButton>
     </Stack>
   );

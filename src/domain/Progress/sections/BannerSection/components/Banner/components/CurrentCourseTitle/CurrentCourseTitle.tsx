@@ -2,16 +2,11 @@ import { css } from "@emotion/react";
 import { Stack, Typography } from "@mui/material";
 
 type CurrentCourseTitleType = {
-  caption: string;
   title: string;
   desc: string;
 };
 
-export const CurrentCourseTitle = ({
-  caption,
-  title,
-  desc,
-}: CurrentCourseTitleType) => (
+export const CurrentCourseTitle = ({ title, desc }: CurrentCourseTitleType) => (
   <Stack css={sx.title}>
     <Typography
       variant="subtitle1"
@@ -19,7 +14,7 @@ export const CurrentCourseTitle = ({
       mb={"6px"}
       letterSpacing="0.3px"
     >
-      {caption}
+      {"CURRENT COURSE"}
     </Typography>
     <Typography variant="h2" color="white" letterSpacing="0.3px" mb={"4px"}>
       {title + ":"}

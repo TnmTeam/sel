@@ -20,6 +20,7 @@ export const CourseProgress = ({
           />
         ) : (
           <SelectedCourseLayout
+            detailCourses={detailCourseState.courses}
             selectedCourse={courseState.course}
             selectedDetailCourse={detailCourseState.course}
             onListBack={onListBack}
