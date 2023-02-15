@@ -23,6 +23,9 @@ export enum Colors {
   Text200 = "#C3CAD9",
   Text100 = "#F2F6FF",
   BasicText = "#4F5B70",
+  Gray900 = "#101828",
+  Gray800 = "#5E6C84",
+  Gray600 = "#475467",
 
   // process color
   UnCompeleteYellow = "#F1AB27",
