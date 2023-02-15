@@ -2,13 +2,17 @@ import { css } from "@emotion/react";
 import { BottomBar } from "../../components";
 import { MessageBox, SendMessageBtn } from "./components";
 
-export const MessagesView = () => {
+export interface HelpPopupProps {
+    setCurrentView: Function;
+}
+
+export const MessagesView = ({setCurrentView}: HelpPopupProps) => {
   return (
     <div css={sx.root}>
       <div css={sx.header}>Messages</div>
       <MessageBox />
       <SendMessageBtn />
-      <BottomBar />
+      <BottomBar setCurrentView={setCurrentView} />
     </div>
   );
 };

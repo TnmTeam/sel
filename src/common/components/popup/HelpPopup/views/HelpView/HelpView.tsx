@@ -4,7 +4,11 @@ import { Typography } from "@mui/material";
 import { BottomBar } from "../../components";
 import { Content, SearchBar } from "./components";
 
-export const HelpView = () => {
+export interface HelpPopupProps {
+    setCurrentView: Function;
+}
+
+export const HelpView = ({setCurrentView}: HelpPopupProps) => {
   return (
     <div css={sx.root}>
       <div css={sx.header}>
@@ -19,7 +23,7 @@ export const HelpView = () => {
         <SearchBar />
       </div>
       <Content />
-      <BottomBar />
+      <BottomBar setCurrentView={setCurrentView} />
     </div>
   );
 };

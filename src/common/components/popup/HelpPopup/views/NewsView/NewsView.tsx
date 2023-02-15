@@ -2,12 +2,16 @@ import { css } from "@emotion/react";
 import { BottomBar } from "../../components";
 import { Content } from "./components";
 
-export const NewsView = () => {
+export interface HelpPopupProps {
+    setCurrentView: Function;
+}
+
+export const NewsView = ({setCurrentView}: HelpPopupProps) => {
   return (
     <div css={sx.root}>
       <div css={sx.header}>News</div>
       <Content />
-      <BottomBar />
+      <BottomBar setCurrentView={setCurrentView} />
     </div>
   );
 };

@@ -3,11 +3,16 @@ import Image from "next/image";
 import { useState } from "react";
 import { BottombarModels } from "./bottombar.model";
 
-export const BottomBar = () => {
+export interface HelpPopupProps {
+    setCurrentView: Function;
+}
+
+export const BottomBar = ({setCurrentView}: HelpPopupProps) => {
   const models = BottombarModels;
   const [isClicked, setIsClicked] = useState(0);
   const onClick = (index: number) => {
     setIsClicked(index);
+    setCurrentView(models[index].title);
   };
   return (
     <div css={sx.root}>

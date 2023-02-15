@@ -5,7 +5,11 @@ import { BottomBar } from "../../components";
 import { PieChart, SearchForHelp, SendMessage } from "./components";
 import { Typography } from "@mui/material";
 
-export const MainView = () => {
+export interface HelpPopupProps {
+    setCurrentView: Function;
+}
+
+export const MainView = ({setCurrentView}: HelpPopupProps) => {
   return (
     <div css={sx.root}>
       <div css={sx.blueBg}></div>
@@ -28,7 +32,7 @@ export const MainView = () => {
         <SearchForHelp />
         <PieChart />
       </div>
-      <BottomBar />
+      <BottomBar setCurrentView={setCurrentView} />
     </div>
   );
 };
