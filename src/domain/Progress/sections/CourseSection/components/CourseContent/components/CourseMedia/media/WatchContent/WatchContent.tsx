@@ -11,20 +11,23 @@ export const WatchContent = ({ url }: MediaType) => {
 
   return (
     <Stack css={sx.root}>
-      <div css={sx.videoFrame}>
+      <div css={sx.videoFrame(!playBtnVisiblity)}>
+        <div
+          css={sx.videoControlContainer(!playBtnVisiblity)}
+          onClick={toggleVideoPlay}
+        >
+          {playBtnVisiblity && <VideoPlayButton />}
+        </div>
         <video
           ref={ref}
           css={sx.video}
-          controls
-          preload="metadata"
+          controls={!playBtnVisiblity}
+          preload="auto"
           onPlay={hidePlayBtn}
           onPause={visiblePlayBtn}
         >
           <source src={url} type="video/mp4" />
         </video>
-        <div css={sx.videoControlContainer} onClick={toggleVideoPlay}>
-          {playBtnVisiblity && <VideoPlayButton />}
-        </div>
       </div>
     </Stack>
   );
@@ -38,20 +41,21 @@ const sx = {
     border-radius: 20px;
     overflow: hidden;
   `,
-  videoFrame: css`
+  videoFrame: (isPlaying: boolean) => css`
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
+    z-index: ${isPlaying ? "1" : "0"};
   `,
   video: css`
     width: 100%;
     height: 100%;
     object-fit: cover;
   `,
-  videoControlContainer: css`
+  videoControlContainer: (isPlaying: boolean) => css`
     position: absolute;
     top: 0;
     left: 0;
@@ -60,6 +64,6 @@ const sx = {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: ${isPlaying ? "0" : "1"};
   `,
 };
