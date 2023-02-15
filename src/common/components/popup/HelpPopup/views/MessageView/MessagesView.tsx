@@ -27,7 +27,7 @@ const sx = {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 18px;    
   `,
   root: css`
     width: 400px;
@@ -37,5 +37,6 @@ const sx = {
     font-size: 14px;
     overflow: hidden;
     box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.16);
+    background-color: rgba(255,255,255,1);
   `,
 };
