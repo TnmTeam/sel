@@ -26,10 +26,7 @@ export const VideoPopup = ({ open, onClose, videoSrc }: ImagePopupType) => {
             <Stack css={sx.wrapper}>
               <VideoContainer video={videoSrc} />
             </Stack>
-            <ButtonContainer
-              saveBtnClick={() => null}
-              shareBtnClick={() => null}
-            />
+            <ButtonContainer saveBtnClick={() => null} />
           </Stack>
         </div>
       </Box>

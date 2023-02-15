@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: "http://20.214.234.47:8123/api",
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 export { axiosClient };

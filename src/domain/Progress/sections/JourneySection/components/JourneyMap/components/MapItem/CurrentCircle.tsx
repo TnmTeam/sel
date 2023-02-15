@@ -4,7 +4,6 @@ import ImageCurrCircle from "@/assets/progress/jouney/img-current-circle.png";
 type CircleType = {
   isOnRight: boolean;
 };
-
 export const CurrentCircle = ({ isOnRight }: CircleType) => {
   return (
     <div css={sx.circle(isOnRight)}>
@@ -19,6 +18,5 @@ const sx = {
     width: 67px;
     aspect-ratio: 1;
     align-self: ${isOnRight ? "end" : "start"};
-    cursor: pointer;
   `,
 };

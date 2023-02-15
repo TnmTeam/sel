@@ -13,15 +13,7 @@ export const JourneyMap = () => {
       <div css={sx.mapContainer}>
         <BackgroundImage />
         {models.map((it, index) => (
-          <MapItem
-            key={index}
-            x={it.x}
-            y={it.y}
-            circleXPosition={it.circleXPosition}
-            textYPosition={it.textYPosition}
-            text={it.text}
-            isHere={it.isHere}
-          />
+          <MapItem key={index} item={it.item} card={it.card} />
         ))}
       </div>
     </Box>

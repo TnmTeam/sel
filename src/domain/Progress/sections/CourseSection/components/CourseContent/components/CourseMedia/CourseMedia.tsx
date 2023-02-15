@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { css } from "@emotion/react";
 import { ActivityContent, ReadContent, WatchContent } from "./media";
-import { CourseDetailType } from "../../types/course.type";
+import { CourseDetailType } from "@/domain/Progress/types/course.type";
 
 type CourseMediaType = {
   selectedDetailCourse: CourseDetailType | null;
@@ -11,7 +11,7 @@ export const CourseMedia = ({ selectedDetailCourse }: CourseMediaType) => {
   return (
     <Stack css={sx.mediaContainer}>
       {selectedDetailCourse &&
-        getMediaCOntentByCourseType(selectedDetailCourse.title)}
+        getMediaCOntentByCourseType(selectedDetailCourse.type)}
     </Stack>
   );
 };

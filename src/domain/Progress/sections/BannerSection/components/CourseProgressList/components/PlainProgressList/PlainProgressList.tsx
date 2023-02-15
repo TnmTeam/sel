@@ -1,18 +1,23 @@
 import { Stack } from "@mui/material";
 import { css } from "@emotion/react";
 import { ProgressItem } from "./ProgressItem";
-import { ProgressListType } from "../types/progress.type";
+import { PlainRateType } from "@/domain/Progress/types/banner.type";
 
-export const PlainProgressList = ({ list }: ProgressListType) => {
+export const PlainProgressList = ({
+  attendance,
+  hoursSpent,
+  videosUploaded,
+  wordsWritten,
+}: PlainRateType) => {
   return (
     <Stack direction={"row"} css={sx.wrapper}>
-      {list.map((it, index) => (
-        <ProgressItem
-          key={index}
-          progress={it.progress}
-          progressDesc={it.progressDesc}
-        />
-      ))}
+      <ProgressItem progress={hoursSpent} progressDesc={"Hours Spent"} />
+      <ProgressItem progress={wordsWritten} progressDesc={"Words Written"} />
+      <ProgressItem
+        progress={videosUploaded}
+        progressDesc={"Videos Uploaded"}
+      />
+      <ProgressItem progress={attendance} progressDesc={"Attendance"} />
     </Stack>
   );
 };

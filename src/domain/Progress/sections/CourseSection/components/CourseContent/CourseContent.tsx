@@ -3,9 +3,15 @@ import { css } from "@emotion/react";
 import { CourseMedia } from "./components/CourseMedia/CourseMedia";
 import { CourseProgress } from "./components/CourseProgress/CourseProgress";
 import { useCourseContent } from "./useCourseContent";
+import { CourseType } from "@/domain/Progress/types/course.type";
 
-export const CourseContent = () => {
-  const { courseState, detailCourseState, onListBack } = useCourseContent();
+type CourseContentType = {
+  models: CourseType[];
+};
+
+export const CourseContent = ({ models }: CourseContentType) => {
+  const { courseState, detailCourseState, onListBack } =
+    useCourseContent(models);
 
   return (
     <Stack direction={"row"} css={sx.root}>
