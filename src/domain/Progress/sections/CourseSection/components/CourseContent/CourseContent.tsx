@@ -32,6 +32,6 @@ const sx = {
     padding: 26px 40px;
     border-radius: 20px;
     display: flex;
-    gap: 21px;
+    gap: 20px;
   `,
 };

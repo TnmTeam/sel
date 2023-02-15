@@ -34,7 +34,7 @@ export const WatchContent = ({ url }: MediaType) => {
 const sx = {
   root: css`
     position: relative;
-    width: 744px;
+    width: 100%;
     height: 754px;
     border-radius: 20px;
     overflow: hidden;

@@ -12,22 +12,20 @@ export const CourseProgress = ({
   return (
     <Stack css={sx.progressContainer}>
       <CourseProgressTitle />
-      <div>
-        {!courseState.course ? (
-          <CourseListLayout
-            courses={courseState.courses}
-            onCourseClick={courseState.onCourseClick}
-          />
-        ) : (
-          <SelectedCourseLayout
-            detailCourses={detailCourseState.courses}
-            selectedCourse={courseState.course}
-            selectedDetailCourse={detailCourseState.course}
-            onListBack={onListBack}
-            onCourseClick={detailCourseState.onCourseClick}
-          />
-        )}
-      </div>
+      {!courseState.course ? (
+        <CourseListLayout
+          courses={courseState.courses}
+          onCourseClick={courseState.onCourseClick}
+        />
+      ) : (
+        <SelectedCourseLayout
+          detailCourses={detailCourseState.courses}
+          selectedCourse={courseState.course}
+          selectedDetailCourse={detailCourseState.course}
+          onListBack={onListBack}
+          onCourseClick={detailCourseState.onCourseClick}
+        />
+      )}
     </Stack>
   );
 };
@@ -40,6 +38,7 @@ const sx = {
 
 const CourseProgressTitle = () => (
   <Typography
+    width={"100%"}
     fontSize="24px"
     lineHeight="31px"
     letterSpacing="0.02em"

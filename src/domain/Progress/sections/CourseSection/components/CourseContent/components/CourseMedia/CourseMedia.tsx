@@ -21,7 +21,7 @@ export const CourseMedia = ({ selectedDetailCourse }: CourseMediaType) => {
 
 const sx = {
   mediaContainer: css`
-    width: 744px;
+    flex: 1;
     height: 754px;
   `,
 };
@@ -38,6 +38,7 @@ const getMediaCOntentByCourseType = (courseTitle: string, url: string) => {
 
     case "A":
       return <ActivityContent />;
+
     default:
       return <ActivityContent />;
   }

@@ -1,8 +1,9 @@
-import { Button, CircularProgress, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import { Colors } from "@/common/themes/Color";
 import { SuggestCard } from "./SuggestCard";
 import { SuggestStateType } from "../../types/suggest.type";
+import { CustomProgress } from "@/common/components/progress";
 
 type DataType = {
   data: SuggestStateType;
@@ -12,7 +13,7 @@ export const SuggestSection = ({ data }: DataType) => {
   if (!data.result || data.isLoading) {
     return (
       <Stack css={sx.root} justifyContent="center" alignItems="center">
-        <CircularProgress />
+        <CustomProgress />
       </Stack>
     );
   }

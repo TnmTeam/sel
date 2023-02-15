@@ -14,15 +14,17 @@ export const SelectedCourseLayout = ({
   return (
     <Stack css={sx.courseListLayout}>
       <CourseItem item={selectedCourse} onItemClick={onListBack} isSelected />
-      {detailCourses &&
-        detailCourses.map((it, index) => (
-          <DetailCourseItem
-            key={index}
-            item={it}
-            isSelected={it == selectedDetailCourse}
-            onItemClick={() => onCourseClick(it)}
-          />
-        ))}
+      <div css={sx.container}>
+        {detailCourses &&
+          detailCourses.map((it, index) => (
+            <DetailCourseItem
+              key={index}
+              item={it}
+              isSelected={index == selectedDetailCourse?.id}
+              onItemClick={() => onCourseClick(it)}
+            />
+          ))}
+      </div>
     </Stack>
   );
 };
@@ -33,5 +35,13 @@ const sx = {
     height: 664px;
     display: flex;
     flex-direction: column;
+  `,
+  container: css`
+    width: 100%;
+    flex: 1;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   `,
 };

@@ -60,7 +60,8 @@ const mappingToDetailCourses = (
   if (!list) {
     return null;
   }
-  const result = list.map((it) => ({
+  const result = list.map((it, index) => ({
+    id: index,
     type: it.type,
     title: it.title,
     contentType: it.contentType,

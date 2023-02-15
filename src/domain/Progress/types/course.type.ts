@@ -16,6 +16,7 @@ export type CourseType = {
 };
 
 export type DetailCourseType = {
+  id: number;
   type: string;
   title: string;
   contentType: string;

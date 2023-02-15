@@ -9,13 +9,15 @@ export const CourseListLayout = ({
 }: CourseListLayoutType) => {
   return (
     <Stack css={sx.courseListLayout}>
-      {courses.map((it, index) => (
-        <CourseItem
-          key={index}
-          item={it}
-          onItemClick={() => onCourseClick(it)}
-        />
-      ))}
+      <div css={sx.container}>
+        {courses.map((it, index) => (
+          <CourseItem
+            key={index}
+            item={it}
+            onItemClick={() => onCourseClick(it)}
+          />
+        ))}
+      </div>
     </Stack>
   );
 };
@@ -24,5 +26,13 @@ const sx = {
   courseListLayout: css`
     width: 100%;
     height: 664px;
+  `,
+  container: css`
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   `,
 };

@@ -20,7 +20,12 @@ export const CourseItem = ({
   return (
     <Stack onClick={onItemClick} direction="row" css={sx.courseItem}>
       <ColoredProcess processNumber={item.progressPercent} />
-      <Typography variant="body2" width="247px" css={sx.text}>
+      <Typography
+        variant="body2"
+        width="240px"
+        paddingLeft={"10px"}
+        css={sx.text}
+      >
         {item.title}
       </Typography>
       <Stack direction="row" alignItems={"center"}>

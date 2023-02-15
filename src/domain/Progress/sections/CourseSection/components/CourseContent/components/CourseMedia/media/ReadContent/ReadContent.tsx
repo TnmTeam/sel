@@ -9,17 +9,25 @@ export const ReadContent = ({ url }: MediaType) => {
 
   return (
     <Stack css={sx.root}>
-      <Image width={782} height={523} src={imageUrl} alt="img" />
+      <div css={sx.image}>
+        <Image fill src={imageUrl} alt="img" />
+      </div>
     </Stack>
   );
 };
 
 const sx = {
   root: css`
-    width: 744px;
+    width: 100%;
     height: 754px;
     display: flex;
     align-items: center;
     justify-content: center;
+  `,
+
+  image: css`
+    position: relative;
+    width: 100%;
+    height: 523px;
   `,
 };
