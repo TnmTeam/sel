@@ -22,7 +22,7 @@ export const TextMenu = ({ url, currentRoute, title, buttonType }: TextMenuType)
 
 const stTextButton = (path: string, currentRoute: string) => {
     return {
-        fontSize: '16pt',
+        fontSize: '15pt',
         textTransform: 'none',
         marginRight: '40px',
         color: path === currentRoute ? NavigationItems.SelectedTextColor : NavigationItems.TextColor,
@@ -33,7 +33,7 @@ const stTextButton = (path: string, currentRoute: string) => {
 }
 
 const stOutlineButton = {
-    fontSize: '18pt',
+    fontSize: '16pt',
     backgroundColor: WhiteButtons.ButtonColor,
     color: WhiteButtons.TextColor,
     marginRight: '40px',
