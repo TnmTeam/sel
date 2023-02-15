@@ -1,10 +1,16 @@
+import { Colors } from "@/common/themes/Color";
 import { css } from "@emotion/react";
+import { Typography } from "@mui/material";
 import { MessageContent } from "./components";
 
 export const SendView = () => {
   return (
     <div css={sx.root}>
-      <div css={sx.header}>Send a Message</div>
+      <div css={sx.header}>
+        <Typography variant="body1" fontWeight={700} color="white">
+          {" Send a Message"}
+        </Typography>
+      </div>
       <MessageContent />
     </div>
   );
@@ -12,14 +18,11 @@ export const SendView = () => {
 
 const sx = {
   header: css`
-    background: #6787b7;
-    color: #fff;
+    background-color: ${Colors.BackBlue};
     height: 64px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    font-size: 18px;
   `,
   root: css`
     width: 400px;

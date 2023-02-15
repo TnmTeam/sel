@@ -1,25 +1,18 @@
 import { Colors } from "@/common/themes/Color";
 import { css } from "@emotion/react";
 import { Typography } from "@mui/material";
-import { BottomBar } from "../../components";
 import { Content, SearchBar } from "./components";
 
 export const HelpView = () => {
   return (
     <div css={sx.root}>
       <div css={sx.header}>
-        <Typography
-          variant="body1"
-          color="white"
-          fontWeight={700}
-          lineHeight={1}
-        >
+        <Typography variant="body1" color="white" fontWeight={700}>
           {"Help"}
         </Typography>
         <SearchBar />
       </div>
       <Content />
-      <BottomBar />
     </div>
   );
 };
@@ -35,7 +28,7 @@ const sx = {
     box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.16);
   `,
   header: css`
-    background: ${Colors.BackBlue};
+    background-color: ${Colors.BackBlue};
     height: 120px;
     display: flex;
     flex-direction: column;

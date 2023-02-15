@@ -3,23 +3,24 @@ import Image from "next/image";
 import { useState } from "react";
 import { BottombarModels } from "./bottombar.model";
 
-export const BottomBar = () => {
+export type BottomBarType = {
+  viewIndex: number;
+  onClick: (index: number) => void;
+};
+
+export const BottomBar = (p: BottomBarType) => {
   const models = BottombarModels;
-  const [isClicked, setIsClicked] = useState(0);
-  const onClick = (index: number) => {
-    setIsClicked(index);
-  };
   return (
     <div css={sx.root}>
       {models.map((it, index) => (
-        <div css={sx.innerBox} key={index} onClick={() => onClick(index)}>
+        <div css={sx.innerBox} key={index} onClick={() => p.onClick(index)}>
           <Image
-            src={index == isClicked ? it.selected : it.src}
+            src={index == p.viewIndex ? it.selected : it.src}
             alt={it.alt}
             width={24}
             height={24}
           />
-          <span css={sx.title(index == isClicked)}>{it.title}</span>
+          <span css={sx.title(index == p.viewIndex)}>{it.title}</span>
         </div>
       ))}
     </div>
