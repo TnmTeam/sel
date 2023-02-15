@@ -6,8 +6,7 @@ import { useVideoPlayButton, VideoPlayButton } from "./VideoPlayButton";
 
 export const WatchContent = ({ url }: MediaType) => {
   const { ref, toggleVideoPlay } = useVideoControl();
-  const { playBtnVisiblity, visiblePlayBtn, hidePlayBtn } =
-    useVideoPlayButton();
+  const { playBtnVisiblity, hidePlayBtn } = useVideoPlayButton();
 
   return (
     <Stack css={sx.root}>
@@ -24,7 +23,6 @@ export const WatchContent = ({ url }: MediaType) => {
           controls={!playBtnVisiblity}
           preload="auto"
           onPlay={hidePlayBtn}
-          onPause={visiblePlayBtn}
         >
           <source src={url} type="video/mp4" />
         </video>

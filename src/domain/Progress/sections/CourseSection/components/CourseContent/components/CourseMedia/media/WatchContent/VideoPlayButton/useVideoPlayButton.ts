@@ -7,7 +7,6 @@ export const useVideoPlayButton = () => {
 
   return {
     playBtnVisiblity,
-    visiblePlayBtn,
     hidePlayBtn,
   };
 };
