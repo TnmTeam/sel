@@ -2,11 +2,14 @@ import { css } from "@emotion/react";
 import { Stack } from "@mui/material";
 import Image from "next/image";
 import ReadContentSampleImage from "@/assets/progress/img-read-content.png";
+import { MediaType } from "../media.type";
 
-export const ReadContent = () => {
+export const ReadContent = ({ url }: MediaType) => {
+  const imageUrl = url.startsWith("") ? ReadContentSampleImage : url;
+
   return (
     <Stack css={sx.root}>
-      <Image width={782} height={523} src={ReadContentSampleImage} alt="img" />
+      <Image width={782} height={523} src={imageUrl} alt="img" />
     </Stack>
   );
 };

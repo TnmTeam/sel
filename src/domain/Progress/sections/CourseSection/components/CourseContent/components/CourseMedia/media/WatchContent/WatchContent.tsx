@@ -1,9 +1,10 @@
 import { css } from "@emotion/react";
 import { Stack } from "@mui/material";
+import { MediaType } from "../media.type";
 import { useVideoControl } from "./useVideoControl";
 import { useVideoPlayButton, VideoPlayButton } from "./VideoPlayButton";
 
-export const WatchContent = () => {
+export const WatchContent = ({ url }: MediaType) => {
   const { ref, toggleVideoPlay } = useVideoControl();
   const { playBtnVisiblity, visiblePlayBtn, hidePlayBtn } =
     useVideoPlayButton();
@@ -14,11 +15,12 @@ export const WatchContent = () => {
         <video
           ref={ref}
           css={sx.video}
+          controls
           preload="metadata"
           onPlay={hidePlayBtn}
           onPause={visiblePlayBtn}
         >
-          <source src="assets/videos/video-sample.mp4" type="video/mp4" />
+          <source src={url} type="video/mp4" />
         </video>
         <div css={sx.videoControlContainer} onClick={toggleVideoPlay}>
           {playBtnVisiblity && <VideoPlayButton />}
@@ -48,8 +50,6 @@ const sx = {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    mask-image: url("assets/videos/img-video-sample.png");
-    mask-size: cover;
   `,
   videoControlContainer: css`
     position: absolute;

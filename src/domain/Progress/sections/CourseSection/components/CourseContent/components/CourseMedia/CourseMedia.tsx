@@ -11,7 +11,10 @@ export const CourseMedia = ({ selectedDetailCourse }: CourseMediaType) => {
   return (
     <Stack css={sx.mediaContainer}>
       {selectedDetailCourse &&
-        getMediaCOntentByCourseType(selectedDetailCourse.type)}
+        getMediaCOntentByCourseType(
+          selectedDetailCourse.type,
+          selectedDetailCourse.contentUrl
+        )}
     </Stack>
   );
 };
@@ -23,15 +26,15 @@ const sx = {
   `,
 };
 
-const getMediaCOntentByCourseType = (courseTitle: string) => {
+const getMediaCOntentByCourseType = (courseTitle: string, url: string) => {
   const courseType = courseTitle.substring(0, 1);
 
   switch (courseType) {
     case "W":
-      return <WatchContent />;
+      return <WatchContent url={url} />;
 
     case "R":
-      return <ReadContent />;
+      return <ReadContent url={url} />;
 
     case "A":
       return <ActivityContent />;
