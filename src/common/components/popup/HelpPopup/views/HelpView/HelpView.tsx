@@ -5,10 +5,11 @@ import { BottomBar } from "../../components";
 import { Content, SearchBar } from "./components";
 
 export interface HelpPopupProps {
-    setCurrentView: Function;
+  isClicked: number;
+  setIsClicked: Function;
 }
 
-export const HelpView = ({setCurrentView}: HelpPopupProps) => {
+export const HelpView = ({isClicked, setIsClicked}: HelpPopupProps) => {
   return (
     <div css={sx.root}>
       <div css={sx.header}>
@@ -23,7 +24,7 @@ export const HelpView = ({setCurrentView}: HelpPopupProps) => {
         <SearchBar />
       </div>
       <Content />
-      <BottomBar setCurrentView={setCurrentView} />
+      <BottomBar isClicked={isClicked} setIsClicked={setIsClicked} />
     </div>
   );
 };

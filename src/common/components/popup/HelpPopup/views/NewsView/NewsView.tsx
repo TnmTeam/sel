@@ -3,15 +3,16 @@ import { BottomBar } from "../../components";
 import { Content } from "./components";
 
 export interface HelpPopupProps {
-    setCurrentView: Function;
+  isClicked: number;
+  setIsClicked: Function;
 }
 
-export const NewsView = ({setCurrentView}: HelpPopupProps) => {
+export const NewsView = ({isClicked, setIsClicked}: HelpPopupProps) => {
   return (
     <div css={sx.root}>
       <div css={sx.header}>News</div>
       <Content />
-      <BottomBar setCurrentView={setCurrentView} />
+      <BottomBar isClicked={isClicked} setIsClicked={setIsClicked} />
     </div>
   );
 };

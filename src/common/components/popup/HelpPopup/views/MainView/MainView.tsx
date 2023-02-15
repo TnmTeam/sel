@@ -6,10 +6,11 @@ import { PieChart, SearchForHelp, SendMessage } from "./components";
 import { Typography } from "@mui/material";
 
 export interface HelpPopupProps {
-    setCurrentView: Function;
+  isClicked: number;
+  setIsClicked: Function;
 }
 
-export const MainView = ({setCurrentView}: HelpPopupProps) => {
+export const MainView = ({isClicked, setIsClicked}: HelpPopupProps) => {
   return (
     <div css={sx.root}>
       <div css={sx.blueBg}></div>
@@ -32,7 +33,7 @@ export const MainView = ({setCurrentView}: HelpPopupProps) => {
         <SearchForHelp />
         <PieChart />
       </div>
-      <BottomBar setCurrentView={setCurrentView} />
+      <BottomBar isClicked={isClicked} setIsClicked={setIsClicked} />
     </div>
   );
 };

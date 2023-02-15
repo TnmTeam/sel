@@ -4,15 +4,14 @@ import { useState } from "react";
 import { BottombarModels } from "./bottombar.model";
 
 export interface HelpPopupProps {
-    setCurrentView: Function;
+  isClicked: number;
+  setIsClicked: Function;
 }
 
-export const BottomBar = ({setCurrentView}: HelpPopupProps) => {
+export const BottomBar = ({isClicked, setIsClicked}: HelpPopupProps) => {
   const models = BottombarModels;
-  const [isClicked, setIsClicked] = useState(0);
   const onClick = (index: number) => {
     setIsClicked(index);
-    setCurrentView(models[index].title);
   };
   return (
     <div css={sx.root}>

@@ -12,7 +12,7 @@ import ModeCommentIcon from '@mui/icons-material/ModeComment';
 
 export const HelpPopup = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [currentView, setCurrentView] = React.useState<string>('Home');
+    const [isClicked, setIsClicked] = React.useState<number>(0);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -21,18 +21,23 @@ export const HelpPopup = () => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popper' : undefined;
 
-    const fnReturnView = (title: string) => {
-        if(title === 'Home') {
-            return (<MainView setCurrentView={setCurrentView} />);
-        } else if(title === 'Message') {
-            return (<MessagesView setCurrentView={setCurrentView} />);
-        } else if(title === 'Help') {
-            return (<HelpView setCurrentView={setCurrentView} />);
-        } else if(title === 'News') {
-            return (<NewsView setCurrentView={setCurrentView} />);
-        } else {
-            return (<MainView setCurrentView={setCurrentView} />);
-        }
+    const fnReturnView = (index: number) => {
+        switch(index) {
+            case 0:
+                return (<MainView isClicked={isClicked} setIsClicked={setIsClicked} />);
+                break;
+            case 1:
+                return (<MessagesView isClicked={isClicked} setIsClicked={setIsClicked} />);
+                break;
+            case 2:
+                return (<HelpView isClicked={isClicked} setIsClicked={setIsClicked} />);
+                break;
+            case 3:
+                return (<NewsView isClicked={isClicked} setIsClicked={setIsClicked} />);
+                break;
+            default:
+                return (<MainView isClicked={isClicked} setIsClicked={setIsClicked} />);
+            }
     }
 
     return (
@@ -41,7 +46,7 @@ export const HelpPopup = () => {
                 <ModeCommentIcon fontSize='large' />
             </Avatar>
             <Popper id={id} open={open} anchorEl={anchorEl} placement='top-end'>
-                {() => fnReturnView(currentView)}
+                {() => fnReturnView(isClicked)}
             </Popper>
         </Stack>
     );

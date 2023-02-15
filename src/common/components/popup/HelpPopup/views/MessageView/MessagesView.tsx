@@ -3,16 +3,17 @@ import { BottomBar } from "../../components";
 import { MessageBox, SendMessageBtn } from "./components";
 
 export interface HelpPopupProps {
-    setCurrentView: Function;
+  isClicked: number;
+  setIsClicked: Function;
 }
 
-export const MessagesView = ({setCurrentView}: HelpPopupProps) => {
+export const MessagesView = ({isClicked, setIsClicked}: HelpPopupProps) => {
   return (
     <div css={sx.root}>
       <div css={sx.header}>Messages</div>
       <MessageBox />
       <SendMessageBtn />
-      <BottomBar setCurrentView={setCurrentView} />
+      <BottomBar isClicked={isClicked} setIsClicked={setIsClicked} />
     </div>
   );
 };
