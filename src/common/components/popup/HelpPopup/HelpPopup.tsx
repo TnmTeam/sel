@@ -12,6 +12,7 @@ import ModeCommentIcon from '@mui/icons-material/ModeComment';
 
 export const HelpPopup = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [isClicked, setIsClicked] = React.useState<number>(0);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -20,13 +21,32 @@ export const HelpPopup = () => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popper' : undefined;
 
+    const fnReturnView = (index: number) => {
+        switch(index) {
+            case 0:
+                return (<MainView isClicked={isClicked} setIsClicked={setIsClicked} />);
+                break;
+            case 1:
+                return (<MessagesView isClicked={isClicked} setIsClicked={setIsClicked} />);
+                break;
+            case 2:
+                return (<HelpView isClicked={isClicked} setIsClicked={setIsClicked} />);
+                break;
+            case 3:
+                return (<NewsView isClicked={isClicked} setIsClicked={setIsClicked} />);
+                break;
+            default:
+                return (<MainView isClicked={isClicked} setIsClicked={setIsClicked} />);
+            }
+    }
+
     return (
         <Stack>
             <Avatar aria-describedby={id} onClick={handleClick} css={sx.popup}>
                 <ModeCommentIcon fontSize='large' />
             </Avatar>
             <Popper id={id} open={open} anchorEl={anchorEl} placement='top-end'>
-                <MainView />
+                {() => fnReturnView(isClicked)}
             </Popper>
         </Stack>
     );

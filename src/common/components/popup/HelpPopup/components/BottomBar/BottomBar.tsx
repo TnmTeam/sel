@@ -3,9 +3,13 @@ import Image from "next/image";
 import { useState } from "react";
 import { BottombarModels } from "./bottombar.model";
 
-export const BottomBar = () => {
+export interface HelpPopupProps {
+  isClicked: number;
+  setIsClicked: Function;
+}
+
+export const BottomBar = ({isClicked, setIsClicked}: HelpPopupProps) => {
   const models = BottombarModels;
-  const [isClicked, setIsClicked] = useState(0);
   const onClick = (index: number) => {
     setIsClicked(index);
   };

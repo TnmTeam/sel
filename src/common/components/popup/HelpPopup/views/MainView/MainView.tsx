@@ -5,7 +5,12 @@ import { BottomBar } from "../../components";
 import { PieChart, SearchForHelp, SendMessage } from "./components";
 import { Typography } from "@mui/material";
 
-export const MainView = () => {
+export interface HelpPopupProps {
+  isClicked: number;
+  setIsClicked: Function;
+}
+
+export const MainView = ({isClicked, setIsClicked}: HelpPopupProps) => {
   return (
     <div css={sx.root}>
       <div css={sx.blueBg}></div>
@@ -28,7 +33,7 @@ export const MainView = () => {
         <SearchForHelp />
         <PieChart />
       </div>
-      <BottomBar />
+      <BottomBar isClicked={isClicked} setIsClicked={setIsClicked} />
     </div>
   );
 };
@@ -41,7 +46,8 @@ const sx = {
     position: relative;
     padding: 28px 16px;
     overflow: hidden;
-    box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.16);
+    box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.16);   
+    background-color: rgba(255,255,255,1);
   `,
   titleWrap: css`
     margin-top: 76px;
