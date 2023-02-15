@@ -2,10 +2,10 @@ import { IconButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { css } from "@emotion/react";
 import { useCourseDetailItem } from "./useCourseDetailItem";
-import { CourseDetailType } from "@/domain/Progress/types/course.type";
+import { DetailCourseType } from "@/domain/Progress/types/course.type";
 
 type DetailCourseItemType = {
-  item: CourseDetailType;
+  item: DetailCourseType;
   onItemClick: () => void;
   isSelected: boolean;
 };

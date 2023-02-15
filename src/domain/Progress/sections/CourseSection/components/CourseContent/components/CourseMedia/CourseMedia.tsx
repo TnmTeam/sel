@@ -1,10 +1,10 @@
 import { Stack } from "@mui/material";
 import { css } from "@emotion/react";
 import { ActivityContent, ReadContent, WatchContent } from "./media";
-import { CourseDetailType } from "@/domain/Progress/types/course.type";
+import { DetailCourseType } from "@/domain/Progress/types/course.type";
 
 type CourseMediaType = {
-  selectedDetailCourse: CourseDetailType | null;
+  selectedDetailCourse: DetailCourseType | null;
 };
 
 export const CourseMedia = ({ selectedDetailCourse }: CourseMediaType) => {
