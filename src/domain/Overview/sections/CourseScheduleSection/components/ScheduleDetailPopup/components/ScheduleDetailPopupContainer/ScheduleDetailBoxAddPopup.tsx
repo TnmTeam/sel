@@ -84,7 +84,7 @@ export const ScheduleDetailBoxAddPopup = () => {
 const sx = {
     popupAddBtnText: css`
         position: absolute;
-        width: 140px;
+        width: 150px;
         height: 24px;
         left: 670px;
         top: 412px;
