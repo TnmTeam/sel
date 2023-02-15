@@ -7,23 +7,26 @@ import {
 import { useEffect, useState } from "react";
 
 export const useCourseContent = (models: CourseType[]) => {
+  // 강의
   const courses = models;
-
   const [course, setCourse] = useState<CourseType | null>(null);
   const courseIndex = course?.index ?? 0;
+
+  // 소강의
   const [detailCourse, setDetailCourse] = useState<CourseDetailType | null>(
     null
   );
-
   const { data, mutate } = useGetUnit();
   const detailCourses = data ? data.resonseData.unitList : null;
 
+  // 대강의의 index 가 바뀔 때마다 소강의 api 호출
   useEffect(() => {
     if (!courseIndex) return;
 
     mutate(courseIndex);
   }, [courseIndex, mutate]);
 
+  // funcstions
   const handleSetCourse = (selectedCourse: CourseType) => {
     setCourse(selectedCourse);
   };
@@ -50,6 +53,7 @@ export const useCourseContent = (models: CourseType[]) => {
   };
 };
 
+// 소강의 대이터를 ui dto에 맞게 매핑
 const unitsToDetailCourses = (
   list: Unit[] | null
 ): CourseDetailType[] | null => {
