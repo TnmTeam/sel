@@ -48,13 +48,11 @@ type CourseUnit = {
   progressPercent: number;
 };
 
-export type SuggestCourseUnits =
-  | {
-      title: string;
-      description: string;
-      thumbnail: string;
-    }[]
-  | null;
+export type SuggestCourseUnits = {
+  title: string;
+  description: string;
+  thumbnail: string;
+}[];
 
 export type Unit = {
   type: string;

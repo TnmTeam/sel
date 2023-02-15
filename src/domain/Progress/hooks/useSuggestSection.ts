@@ -1,4 +1,6 @@
 import { useGetSuggestedCourse } from "@/data/api/progress/useProgressApiHooks";
+import { CardType } from "../types/suggest.type";
+import { SuggestCourseUnits } from "@/data/api/progress/progress.dto";
 
 export const useSuggestSection = () => {
   const { data, isLoading } = useGetSuggestedCourse("test001");
@@ -12,10 +14,23 @@ export const useSuggestSection = () => {
     };
   }
 
+  const response = data.responseData;
+  const [cards] = [response];
+
   return {
     suggestState: {
-      result: data.responseData,
+      result: mappingToCards(cards),
       isLoading: isLoading,
     },
   };
+};
+
+const mappingToCards = (list: SuggestCourseUnits): CardType[] => {
+  const result = list.map((it) => ({
+    title: it.title,
+    desc: it.description,
+    image: it.thumbnail,
+  }));
+
+  return result;
 };

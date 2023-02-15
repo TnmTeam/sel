@@ -1,31 +1,21 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, CircularProgress, Stack, Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import { Colors } from "@/common/themes/Color";
 import { SuggestCard } from "./SuggestCard";
-import { SuggestCourseUnits } from "@/data/api/progress/progress.dto";
+import { SuggestStateType } from "../../types/suggest.type";
 
 type DataType = {
-  data: { result: SuggestCourseUnits; isLoading: boolean };
+  data: SuggestStateType;
 };
 
 export const SuggestSection = ({ data }: DataType) => {
-  const models = [
-    {
-      image: "/assets/progress/banner/img-banner.png",
-      title: "THE 7 DAY LEADERSHIP CHALLENGE",
-      desc: "In order to impact others, it's essential to first dig deep into one of the most important people in your life: YOU. Before going out and making a difference in the world, impacters must first look within to understand who they are, where they come from, and what their purpose is.",
-    },
-    {
-      image: "/assets/progress/banner/img-banner.png",
-      title: "THE 7 DAY LEADERSHIP CHALLENGE",
-      desc: "In order to impact others, it's essential to first dig deep into one of the most important people in your life: YOU. Before going out and making a difference in the world, impacters must first look within to understand who they are, where they come from, and what their purpose is.",
-    },
-    {
-      image: "/assets/progress/banner/img-banner.png",
-      title: "THE 7 DAY LEADERSHIP CHALLENGE",
-      desc: "In order to impact others, it's essential to first dig deep into one of the most important people in your life: YOU. Before going out and making a difference in the world, impacters must first look within to understand who they are, where they come from, and what their purpose is.",
-    },
-  ];
+  if (!data.result || data.isLoading) {
+    return (
+      <Stack css={sx.root} justifyContent="center" alignItems="center">
+        <CircularProgress />
+      </Stack>
+    );
+  }
 
   return (
     <Stack css={sx.root}>
@@ -33,7 +23,7 @@ export const SuggestSection = ({ data }: DataType) => {
         Suggested Courses
       </Typography>
       <div css={sx.cardContainer}>
-        {models.map((it, index) => (
+        {data.result.map((it, index) => (
           <SuggestCard
             key={index}
             image={it.image}
