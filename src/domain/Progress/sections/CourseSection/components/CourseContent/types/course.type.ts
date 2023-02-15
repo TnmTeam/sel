@@ -1,5 +1,5 @@
 import {
-  CourseDetailType,
+  DetailCourseType,
   CourseType,
 } from "@/domain/Progress/types/course.type";
 
@@ -9,11 +9,11 @@ export type CourseListLayoutType = {
 };
 
 export type SelectedCourseLayoutType = {
-  detailCourses: CourseDetailType[] | null;
+  detailCourses: DetailCourseType[] | null;
   selectedCourse: CourseType;
-  selectedDetailCourse: CourseDetailType | null;
+  selectedDetailCourse: DetailCourseType | null;
   onListBack: () => void;
-  onCourseClick: (detailCourse: CourseDetailType) => void;
+  onCourseClick: (detailCourse: DetailCourseType) => void;
 };
 
 export type CourseProgressType = {
@@ -23,9 +23,9 @@ export type CourseProgressType = {
     onCourseClick: (selectedCourse: CourseType) => void;
   };
   detailCourseState: {
-    courses: CourseDetailType[] | null;
-    course: CourseDetailType | null;
-    onCourseClick: (selectedDetailCourse: CourseDetailType) => void;
+    courses: DetailCourseType[] | null;
+    course: DetailCourseType | null;
+    onCourseClick: (selectedDetailCourse: DetailCourseType) => void;
   };
   onListBack: () => void;
 };

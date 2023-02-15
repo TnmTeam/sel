@@ -1,5 +1,3 @@
-import { ShorthandPropertyAssignment } from "typescript";
-
 export type CourseStateType = {
   result: CourseData | null;
   isLoading: boolean;
@@ -17,7 +15,7 @@ export type CourseType = {
   index: number;
 };
 
-export type CourseDetailType = {
+export type DetailCourseType = {
   type: string;
   title: string;
   contentType: string;

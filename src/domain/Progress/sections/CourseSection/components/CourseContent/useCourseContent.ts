@@ -2,7 +2,7 @@ import { Unit } from "@/data/api/progress/progress.dto";
 import { useGetUnit } from "@/data/api/progress/useProgressApiHooks";
 import {
   CourseType,
-  CourseDetailType,
+  DetailCourseType,
 } from "@/domain/Progress/types/course.type";
 import { useEffect, useState } from "react";
 
@@ -13,7 +13,7 @@ export const useCourseContent = (models: CourseType[]) => {
   const courseIndex = course?.index ?? 0;
 
   // 소강의
-  const [detailCourse, setDetailCourse] = useState<CourseDetailType | null>(
+  const [detailCourse, setDetailCourse] = useState<DetailCourseType | null>(
     null
   );
   const { data, mutate } = useGetUnit();
@@ -34,7 +34,7 @@ export const useCourseContent = (models: CourseType[]) => {
     setCourse(null);
   };
 
-  const handleSetDetailCourse = (selectedDetailCourse: CourseDetailType) => {
+  const handleSetDetailCourse = (selectedDetailCourse: DetailCourseType) => {
     setDetailCourse(selectedDetailCourse);
   };
 
@@ -45,7 +45,7 @@ export const useCourseContent = (models: CourseType[]) => {
       onCourseClick: handleSetCourse,
     },
     detailCourseState: {
-      courses: unitsToDetailCourses(detailCourses),
+      courses: mappingToDetailCourses(detailCourses),
       course: detailCourse,
       onCourseClick: handleSetDetailCourse,
     },
@@ -54,9 +54,9 @@ export const useCourseContent = (models: CourseType[]) => {
 };
 
 // 소강의 대이터를 ui dto에 맞게 매핑
-const unitsToDetailCourses = (
+const mappingToDetailCourses = (
   list: Unit[] | null
-): CourseDetailType[] | null => {
+): DetailCourseType[] | null => {
   if (!list) {
     return null;
   }
