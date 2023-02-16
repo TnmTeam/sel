@@ -3,6 +3,11 @@ import { css } from "@emotion/react";
 import { Typography } from "@mui/material";
 import { Content } from "./components";
 
+export interface HelpPopupProps {
+  isClicked: number;
+  setIsClicked: Function;
+}
+
 export const NewsView = () => {
   return (
     <div css={sx.root}>
@@ -32,5 +37,6 @@ const sx = {
     font-size: 14px;
     overflow: hidden;
     box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.16);
+    background-color: rgba(255,255,255,1);
   `,
 };

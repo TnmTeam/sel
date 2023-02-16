@@ -1,14 +1,33 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
 import { Box } from '@mui/system';
+import { SelfScoreItem } from './SelfScoreItem';
 
 export const SelfScore = () => {
     return (
         <Stack css={sx.mainContainer}>
             <Box css={sx.itemContainer} flexDirection={'row'}>
-                <Box css={sx.itemWrapper}>3</Box>
-                <Box css={sx.itemWrapper}>2</Box>
-                <Box css={sx.itemWrapper}>3</Box>
+                <Box css={sx.itemWrapper}>
+                    <SelfScoreItem
+                        selfValue={3}
+                        progress={60}
+                        progressDesc={'Grit'}
+                    />
+                </Box>
+                <Box css={sx.itemWrapper}>
+                    <SelfScoreItem
+                        selfValue={2}
+                        progress={40}
+                        progressDesc={'Compassion'}
+                    />
+                </Box>
+                <Box css={sx.itemWrapper}>
+                    <SelfScoreItem
+                        selfValue={3}
+                        progress={60}
+                        progressDesc={'Honesty'}
+                    />
+                </Box>
             </Box>
         </Stack>
     );

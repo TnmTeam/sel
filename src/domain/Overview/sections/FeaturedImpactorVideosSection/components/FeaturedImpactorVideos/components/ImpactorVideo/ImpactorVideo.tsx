@@ -71,7 +71,7 @@ export const ImpactorVideo = () => {
 
             <Button
                 sx={{
-                    fontSize: '18pt',
+                    fontSize: '15pt',
                     backgroundColor: WhiteButtons.ButtonColor,
                     color: WhiteButtons.TextColor,
                     width: '264px',
