@@ -18,6 +18,9 @@ export const SelfScoreItem = ({
                         height: 14,
                         top: 154,
                         borderRadius: '10px',
+                        '& .MuiLinearProgress-bar': {
+                            borderRadius: '10px',
+                          },
                       }}
                 />
             </div>
