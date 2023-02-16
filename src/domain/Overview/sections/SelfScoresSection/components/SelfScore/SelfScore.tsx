@@ -9,6 +9,7 @@ export const SelfScore = () => {
             <Box css={sx.itemContainer} flexDirection={'row'}>
                 <Box css={sx.itemWrapper}>
                     <SelfScoreItem
+                        selfCnt={1}
                         selfValue={3}
                         progress={60}
                         progressDesc={'Grit'}
@@ -16,6 +17,7 @@ export const SelfScore = () => {
                 </Box>
                 <Box css={sx.itemWrapper}>
                     <SelfScoreItem
+                        selfCnt={2}
                         selfValue={2}
                         progress={40}
                         progressDesc={'Compassion'}
@@ -23,6 +25,7 @@ export const SelfScore = () => {
                 </Box>
                 <Box css={sx.itemWrapper}>
                     <SelfScoreItem
+                        selfCnt={3}
                         selfValue={3}
                         progress={60}
                         progressDesc={'Honesty'}

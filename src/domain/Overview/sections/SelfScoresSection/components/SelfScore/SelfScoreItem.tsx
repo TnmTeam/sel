@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import { SelfType } from './selfType/self.type';
 
 export const SelfScoreItem = ({
+    selfCnt,
     selfValue,
     progress,
     progressDesc,
@@ -10,19 +11,7 @@ export const SelfScoreItem = ({
     return (
         <Stack css={sx.item} >
             <div css={sx.slider}>
-                <LinearProgress 
-                    variant="determinate" 
-                    value={progress} 
-                    color="secondary"
-                    sx={{
-                        height: 14,
-                        top: 154,
-                        borderRadius: '10px',
-                        '& .MuiLinearProgress-bar': {
-                            borderRadius: '10px',
-                          },
-                      }}
-                />
+                {linearProgress(selfCnt, progress)}
             </div>
             <Stack css={sx.progressWrapper}>
                 <Typography
@@ -30,7 +19,7 @@ export const SelfScoreItem = ({
                     color='#253858'
                     letterSpacing={'-1.75px'}
                     fontSize={'70pt'}
-                    mb='3px'
+                    mb='5px'
                 >
                     {selfValue}
                 </Typography>
@@ -79,3 +68,59 @@ const sx = {
     `,
 };
 
+const linearProgress = (selfCnt: number, progress: number) => {
+    if (selfCnt === 1) {
+        return (
+            <LinearProgress 
+                variant="determinate" 
+                value={progress} 
+                color="secondary"
+                sx={{
+                    height: 14,
+                    top: 154,
+                    borderRadius: '10px',
+                    '& .MuiLinearProgress-bar': {
+                        borderRadius: '10px',
+                        background: `linear-gradient(90deg, #6FCBB6 ${100 - progress}%, #9C64F4 100%)`,
+                      },
+                  }}
+            />
+        );
+    } else if (selfCnt === 2) {
+        return (
+            <LinearProgress 
+                variant="determinate" 
+                value={progress} 
+                color="secondary"
+                sx={{
+                    height: 14,
+                    top: 154,
+                    borderRadius: '10px',
+                    '& .MuiLinearProgress-bar': {
+                        borderRadius: '10px',
+                        background: `linear-gradient(90deg, #00CCFF ${100 - progress}%, #FF00CC 100%)`,
+                      },
+                  }}
+            />
+        );
+    } else if (selfCnt === 3) {
+        return (
+            <LinearProgress 
+                variant="determinate" 
+                value={progress} 
+                color="secondary"
+                sx={{
+                    height: 14,
+                    top: 154,
+                    borderRadius: '10px',
+                    '& .MuiLinearProgress-bar': {
+                        borderRadius: '10px',
+                        background: `linear-gradient(90deg, #006699 ${100 - progress}%, #FF6633 100%)`,
+                      },
+                  }}
+            />
+        );
+    } else {
+        null;
+    }
+};
