@@ -3,14 +3,44 @@ import { Stack } from '@mui/system';
 import { ScheduleDetailBox } from './ScheduleDetailBox';
 import { ScheduleDetailBoxType } from './types/ScheduleDetailBox.type';
 import dayjs, { Dayjs } from 'dayjs';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export const ScheduleDetailBoxList = ({picDate, detailList}: ScheduleDetailBoxType) => {
+export const ScheduleDetailBoxList = ({picDate}: ScheduleDetailBoxType) => {
     
-    const date = dayjs(picDate);
-    console.log(picDate)
-    console.log(date);
-    const dayName = dayjs(date).format("dddd");
-    const dayNumber = dayjs(date).format("D");
+    if(picDate == null)
+    {
+        picDate = dayjs();
+    }
+    
+    const dayName = picDate.format("dddd");
+    const dayNumber = picDate.format("D");
+
+
+    // API 
+    // getDetailList
+    /*
+    const url = "";
+    const [detailList, setDetailList] = useState([]);
+    useEffect(() => {
+        const test = async () => {
+            try {
+                setDetailList([]);
+
+                const params = {};
+                const response = await axios.get(url, { params });
+
+                setDetailList([]);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+        test();
+
+    }, [picDate]);
+    */
+
 
     return (
         <Stack css={sx.scheduleDetailList}>
@@ -18,6 +48,7 @@ export const ScheduleDetailBoxList = ({picDate, detailList}: ScheduleDetailBoxTy
                 <Stack css={sx.popupDate}>
                     {dayNumber} {dayName}
                 </Stack>
+                {/* 
                 {detailList.map((item, index) => (
                     <ScheduleDetailBox
                         key={index}
@@ -25,6 +56,21 @@ export const ScheduleDetailBoxList = ({picDate, detailList}: ScheduleDetailBoxTy
                         time={item.time}
                     />
                 ))}
+                */}
+
+                <ScheduleDetailBox
+                    title={"Lesson 2 Due"}
+                    time={"9:00am"}
+                />
+                <ScheduleDetailBox
+                    title={"Lesson 3 Due"}
+                    time={"9:00am"}
+                />
+                <ScheduleDetailBox
+                    title={"Lesson 4 Due"}
+                    time={"9:00am"}
+                />
+                
             </Stack>
         </Stack>
     );
