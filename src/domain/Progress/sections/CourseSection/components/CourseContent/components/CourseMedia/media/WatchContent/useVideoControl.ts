@@ -5,15 +5,12 @@ export const useVideoControl = () => {
 
   const getVideoElement = () => ref && ref.current;
   const playVideo = () => getVideoElement()?.play();
-  const pauseVideo = () => getVideoElement()?.pause();
-  const toggleVideoPlay = () =>
-    getVideoElement()?.paused ? playVideo() : pauseVideo();
+  const toggleVideoPlay = () => getVideoElement()?.paused && playVideo();
 
   return {
     ref,
     getVideoElement,
     playVideo,
-    pauseVideo,
     toggleVideoPlay,
   };
 };

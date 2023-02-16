@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import arrow from "@/assets/helppopup/help/arrow-ic.png";
 import Image from "next/image";
+import { Stack, Typography } from "@mui/material";
 export const Content = () => {
   const models = [
     {
@@ -22,52 +23,41 @@ export const Content = () => {
   ];
   return (
     <div css={sx.root}>
-      <div css={sx.topText}>5 collections</div>
-      <ul css={sx.contentBox}>
+      <div css={sx.topText}>{`${models.length} collections`}</div>
+      <Stack component={"ul"} paddingX="20px">
         {models.map((it, index) => (
-          <li css={sx.textBox} key={index}>
-            <div css={sx.textWrap}>
-              <p css={sx.title}>{it.title}</p>
-              <div css={sx.text}>{it.text}</div>
-            </div>
-            <div css={sx.iconWrap}>
-              <Image src={arrow} alt="arrow" width={6} height={9} />
-            </div>
+          <li css={sx.box} key={index}>
+            <Stack
+              height="100%"
+              spacing={"4px"}
+              justifyContent={"space-between"}
+            >
+              <Typography variant="caption" fontWeight={700}>
+                {it.title}
+              </Typography>
+              <Typography fontSize="13px" lineHeight="20px" color="#757171">
+                {it.text}
+              </Typography>
+            </Stack>
+            <Image src={arrow} alt="arrow" width={6} height={9} />
           </li>
         ))}
-      </ul>
+      </Stack>
     </div>
   );
 };
 
 const sx = {
-  iconWrap: css`
+  box: css`
+    height: 125px;
     display: flex;
     align-items: center;
-    margin-right: 5px;
-  `,
-  textWrap: css`
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
-  `,
-  text: css`
-    color: #757171;
-    font-size: 13px;
-    line-height: 20px;
-  `,
-  title: css`
-    font-size: 14px;
-    font-weight: 700;
-  `,
-  textBox: css`
-    height: 125px;
+    gap: 20px;
     border-bottom: 1px solid rgba(216, 216, 216, 0.69);
-    display: flex;
     padding: 20px 0;
-  `,
-  contentBox: css`
-    padding: 0 20px;
+    padding-right: 10px;
+    cursor: pointer;
   `,
   topText: css`
     padding: 0 24px;

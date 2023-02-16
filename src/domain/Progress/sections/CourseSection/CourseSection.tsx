@@ -12,7 +12,7 @@ type DataType = {
 export const CourseSection = ({ data }: DataType) => {
   if (!data.result || data.isLoading) {
     return (
-      <Stack css={sx.root}>
+      <Stack css={sx.root} justifyContent="center" alignItems={"center"}>
         <CustomProgress />
       </Stack>
     );

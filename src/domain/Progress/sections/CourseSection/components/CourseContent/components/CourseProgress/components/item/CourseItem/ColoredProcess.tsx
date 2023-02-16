@@ -12,7 +12,6 @@ export const ColoredProcess = ({ processNumber }: ColoredProcessType) => {
   const isNumberTextBlack = processNumber < 20 ? true : false;
   return (
     <React.Fragment>
-      {" "}
       <div css={sx.coloredProcess(getColorByNumber(processNumber))}>
         {processNumber == 100 && (
           <Image

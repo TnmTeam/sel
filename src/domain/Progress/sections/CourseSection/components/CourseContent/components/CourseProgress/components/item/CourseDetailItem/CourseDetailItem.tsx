@@ -2,10 +2,10 @@ import { IconButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { css } from "@emotion/react";
 import { useCourseDetailItem } from "./useCourseDetailItem";
-import { CourseDetailType } from "@/domain/Progress/types/course.type";
+import { DetailCourseType } from "@/domain/Progress/types/course.type";
 
 type DetailCourseItemType = {
-  item: CourseDetailType;
+  item: DetailCourseType;
   onItemClick: () => void;
   isSelected: boolean;
 };
@@ -18,7 +18,7 @@ export const DetailCourseItem = ({
   const { getCompletionIcon, getCourseTypeIcon } = useCourseDetailItem();
 
   return (
-    <Stack direction="row" css={sx.courseDetailItem(isSelected)}>
+    <Stack direction="row" spacing="20px" css={sx.courseDetailItem(isSelected)}>
       <Image
         width={20}
         height={30}
@@ -27,7 +27,7 @@ export const DetailCourseItem = ({
       />
       <Typography
         variant="body2"
-        width="362px"
+        width="100%"
         lineHeight={"21px"}
         ml={"20px"}
         mr={"20px"}
@@ -45,8 +45,7 @@ export const DetailCourseItem = ({
 const sx = {
   courseDetailItem: (isSelected: boolean) => css`
     width: 100%;
-    flex: 1;
-    display: flex;
+    height: 64px;
     align-items: center;
     justify-content: space-between;
     padding-left: 24px;

@@ -2,11 +2,18 @@ import { css } from "@emotion/react";
 import Image from "next/image";
 import send from "@/assets/helppopup/messages/send-ic.png";
 import { Colors } from "@/common/themes/Color";
-export const SendMessageBtn = () => {
+import { Typography } from "@mui/material";
+
+type SendMessageBtnType = {
+  onClick: () => void;
+};
+export const SendMessageBtn = ({ onClick }: SendMessageBtnType) => {
   return (
-    <div css={sx.root}>
+    <div css={sx.root} onClick={onClick}>
       <Image src={send} alt="send" width={15} height={15} />
-      <p>Send us a message</p>
+      <Typography color="white" variant="caption" fontWeight={600}>
+        {"Send us a message"}
+      </Typography>
     </div>
   );
 };
@@ -21,11 +28,9 @@ const sx = {
     align-items: center;
     padding: 0 24px;
     justify-content: space-between;
-    color: #fff;
-    font-weight: 600;
     position: absolute;
     bottom: 105px;
     left: 98px;
-    font-size: 14px;
+    cursor: pointer;
   `,
 };

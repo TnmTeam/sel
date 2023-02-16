@@ -10,7 +10,7 @@ type DataType = {
 export const BannerSection = ({ data }: DataType) => {
   if (!data.result || data.isLoading) {
     return (
-      <Stack height={"452px"}>
+      <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
         <CustomProgress />
       </Stack>
     );

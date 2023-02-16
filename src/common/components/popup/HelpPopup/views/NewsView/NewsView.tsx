@@ -1,5 +1,6 @@
+import { Colors } from "@/common/themes/Color";
 import { css } from "@emotion/react";
-import { BottomBar } from "../../components";
+import { Typography } from "@mui/material";
 import { Content } from "./components";
 
 export interface HelpPopupProps {
@@ -7,26 +8,26 @@ export interface HelpPopupProps {
   setIsClicked: Function;
 }
 
-export const NewsView = ({isClicked, setIsClicked}: HelpPopupProps) => {
+export const NewsView = () => {
   return (
     <div css={sx.root}>
-      <div css={sx.header}>News</div>
+      <div css={sx.header}>
+        <Typography variant="body1" fontWeight={700} color="white">
+          {"News"}
+        </Typography>
+      </div>
       <Content />
-      <BottomBar isClicked={isClicked} setIsClicked={setIsClicked} />
     </div>
   );
 };
 
 const sx = {
   header: css`
-    background: #6787b7;
-    color: #fff;
+    background-color: ${Colors.BackBlue};
     height: 64px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    font-size: 18px;
   `,
   root: css`
     width: 400px;

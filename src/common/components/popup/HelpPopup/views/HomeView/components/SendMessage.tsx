@@ -2,10 +2,14 @@ import { css } from "@emotion/react";
 import Image from "next/image";
 import send from "@/assets/helppopup/main/send-ic.png";
 import { Stack, Typography } from "@mui/material";
-export const SendMessage = () => {
+
+type SendMessageType = {
+  onMessageTab: () => void;
+};
+export const SendMessage = ({ onMessageTab }: SendMessageType) => {
   return (
-    <div css={sx.root}>
-      <Stack direction={"column"}>
+    <div css={sx.root} onClick={onMessageTab}>
+      <Stack>
         <Typography variant="caption" fontWeight={600} color="black">
           {"Send us a message"}
         </Typography>
@@ -30,5 +34,6 @@ const sx = {
     align-items: center;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06),
       0px 0px 0px 1px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
   `,
 };

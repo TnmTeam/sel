@@ -11,7 +11,6 @@ export const useCourseDetailItem = () => {
 
   const getIconByCourseType = (courseTitle: string) => {
     const courseType = courseTitle.substring(0, 1);
-
     switch (courseType) {
       case "W":
         return IconWatch;

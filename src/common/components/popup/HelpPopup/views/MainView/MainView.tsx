@@ -1,39 +1,38 @@
 import { css } from "@emotion/react";
-import Image from "next/image";
-import logo from "@/assets/helppopup/main/logo.png";
 import { BottomBar } from "../../components";
-import { PieChart, SearchForHelp, SendMessage } from "./components";
-import { Typography } from "@mui/material";
+import { HomeView } from "../HomeView/HomeView";
+import { MessagesView } from "../MessageView/MessagesView";
+import { HelpView } from "../HelpView/HelpView";
+import { NewsView } from "../NewsView/NewsView";
+import { useState } from "react";
 
-export interface HelpPopupProps {
-  isClicked: number;
-  setIsClicked: Function;
-}
+export const MainView = () => {
+  const [viewIndex, SetViewIndex] = useState(0);
+  const onClick = (index: number) => {
+    SetViewIndex(index);
+  };
+  const getViewByIndex = (index?: number) => {
+    switch (index) {
+      case 0:
+        return (
+          <HomeView
+            onMessageTab={() => onClick(1)}
+            onHelpTab={() => onClick(2)}
+          />
+        );
+      case 1:
+        return <MessagesView />;
+      case 2:
+        return <HelpView />;
+      case 3:
+        return <NewsView />;
+    }
+  };
 
-export const MainView = ({isClicked, setIsClicked}: HelpPopupProps) => {
   return (
     <div css={sx.root}>
-      <div css={sx.blueBg}></div>
-      <div css={sx.inner}>
-        <Image src={logo} alt="logo" width={32} height={32} />
-        <div css={sx.titleWrap}>
-          <Typography
-            variant="h4"
-            fontSize={"32px"}
-            color="white"
-            sx={{ opacity: "0.7" }}
-          >
-            {"Hello there"}
-          </Typography>
-          <Typography variant="h4" fontSize={"32px"} color="white">
-            {"How can we help?"}
-          </Typography>
-        </div>
-        <SendMessage />
-        <SearchForHelp />
-        <PieChart />
-      </div>
-      <BottomBar isClicked={isClicked} setIsClicked={setIsClicked} />
+      {getViewByIndex(viewIndex)}
+      <BottomBar viewIndex={viewIndex} onClick={onClick} />
     </div>
   );
 };
@@ -44,49 +43,9 @@ const sx = {
     height: 682.18px;
     border-radius: 16px;
     position: relative;
-    padding: 28px 16px;
     overflow: hidden;
-    box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.16);   
-    background-color: rgba(255,255,255,1);
-  `,
-  titleWrap: css`
-    margin-top: 76px;
-    margin-bottom: 16px;
-  `,
-  inner: css`
-    padding-bottom: 20px;
-    height: 100%;
-    position: relative;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  `,
-  blueBg: css`
-    width: 100%;
-    height: 388px;
-    background: linear-gradient(
-      117.67deg,
-      #3f6193 0%,
-      #5b8dd7 50%,
-      #cbddf0 100%
-    );
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 388px;
-    background: linear-gradient(
-      117.67deg,
-      #3f6193 0%,
-      #5b8dd7 50%,
-      #cbddf0 100%
-    );
-    position: absolute;
-    left: 0;
-    top: 0;
+    box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.16);
+    background-color: white;
+    z-index: 99;
   `,
 };
