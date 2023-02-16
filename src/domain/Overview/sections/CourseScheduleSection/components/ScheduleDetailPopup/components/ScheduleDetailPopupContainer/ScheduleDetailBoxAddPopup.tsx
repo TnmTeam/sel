@@ -59,7 +59,6 @@ export const ScheduleDetailBoxAddPopup = () => {
                 }} 
             >
                 
-                <Divider />
                 <MenuItem css={sx.listFontSelect} onClick={handleClose}> 
                     iCal file
                 </MenuItem>

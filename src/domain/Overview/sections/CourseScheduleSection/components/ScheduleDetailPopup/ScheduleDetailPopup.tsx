@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
-import { ScheduleDatePicker } from '@/domain/Overview/sections/CourseScheduleSection/components/ScheduleSummary/components/ScheduleContainer/ScheduleDatePicker';
+import { ScheduleDatePicker } from '@/domain/Overview/sections/CourseScheduleSection/components/ScheduleSummary/components/ScheduleDatePicker/ScheduleDatePicker';
 import { ScheduleDetailBoxList } from './components/ScheduleDetailPopupContainer/ScheduleDetailBoxList';
 import { ScheduleDetailBoxAddPopup } from './components/ScheduleDetailPopupContainer/ScheduleDetailBoxAddPopup';
 import { SchedulePopupType } from './components/ScheduleDetailPopupContainer/types/ScheduleDetailBox.type';
@@ -10,31 +10,27 @@ import OverViewBackgroundImage from '@/assets/overview/popupCloseBtn.png';
 export interface CloseBtnType {
     closeHandle: () => void;
 }
-export const ScheduleDetailPopup = ({picDate, detailList, closeHandle}: SchedulePopupType) => {
+export const ScheduleDetailPopup = ({picDate, changeDate, closeHandle}: SchedulePopupType) => {
     
     return (
         <Stack css={sx.popupContainer}>
-            
-            <Stack css={sx.popupDatePicker}>
+            <Stack css={sx.popupDatePicker}>                {/* Date Picker */}
                 <ScheduleDatePicker 
                     picDate={picDate}
+                    changeDate={changeDate}
                     disabledYN={false}
                 />
             </Stack>
 
-            <Stack css={sx.popupCenterLine}></Stack>
+            <Stack css={sx.popupCenterLine}></Stack>        {/* Center Line */}
 
-            <CloseBtnImage 
-                closeHandle={closeHandle}
-            />
+            <CloseBtnImage closeHandle={closeHandle} />     {/* Close Btn */}
 
             <ScheduleDetailBoxList 
                 picDate={picDate}
-                detailList={detailList}
-            />
+            />                                              {/* PicDate & List */}
 
-            <ScheduleDetailBoxAddPopup />
-
+            <ScheduleDetailBoxAddPopup />                   {/* Add Btn */}
         </Stack>
     );
 };
@@ -75,7 +71,6 @@ const sx = {
         position: absolute;
         right: 0px;
         padding: 20px;
-        cursor: pointer;
     `
 };
 
@@ -83,6 +78,7 @@ const CloseBtnImage = (props: CloseBtnType) => (
     <Stack css={sx.closeImgBtn}>
         <Image
             onClick={props.closeHandle}
+            style={{cursor: 'pointer'}}
             src={OverViewBackgroundImage}
             alt={'overview'}
         />

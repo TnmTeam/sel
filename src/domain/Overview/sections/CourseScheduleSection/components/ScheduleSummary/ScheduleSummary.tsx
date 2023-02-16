@@ -1,52 +1,48 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
-import { ScheduleContainer } from './components';
+import dayjs, { Dayjs } from 'dayjs';
+import { ScheduleDatePicker } from './components/ScheduleDatePicker/ScheduleDatePicker';
 
-export const ScheduleSummary = () => {
-    // 달력에 지정할 날짜
-    //
-    const model = {
-        ScheduleDatePicker: {
-            // startDate: "2023-02-07",
-            // endDate: "2023-02-10",
-            picDate: '2023-02-14',
-            detailList: [
-                {
-                    title: 'Lesson 2 Due',
-                    date: '2023-02-14',
-                    time: '9:00am',
-                },
-                {
-                    title: 'Lesson 3 Due',
-                    date: '2023-02-14',
-                    time: '9:00am',
-                },
-                {
-                    title: 'Lesson 4 Due',
-                    date: '2023-02-14',
-                    time: '9:00am',
-                },
-            ],
-        },
-    };
+export interface ScheduleSummaryType {
+    picDate: dayjs.Dayjs | null;
+    changeDate: (newDate: dayjs.Dayjs | null) => void;
+    handleClickOpen: () => void;
+}
+export const ScheduleSummary = ({picDate, changeDate, handleClickOpen}: ScheduleSummaryType) => {
+
     return (
-        <Stack css={sx.scheduleSummaryContainer}>
-            <ScheduleContainer
-                picDate={model.ScheduleDatePicker.picDate}
-                detailList={model.ScheduleDatePicker.detailList}
-            />
-        </Stack>
+            <Stack onClick={handleClickOpen}>
+                <Stack css={sx.scheduleTitle}> COURSE SCHEDULE </Stack>
+                <Stack css={sx.pickerTest}>
+                    <ScheduleDatePicker
+                        picDate={picDate}
+                        changeDate={changeDate}
+                        disabledYN={true}
+                    />
+                </Stack>
+            </Stack>
     );
 };
 
 const sx = {
-    scheduleSummaryContainer: css`
-        position: absolute;
-        width: 376.47px;
-        height: 427px;
-        left: 679px;
-        background: #ffffff;
-        border-radius: 28px;
-        cursor: pointer;
-    `,
+    scheduleTitle: css`
+        position: relative;
+        width: 226.27px;
+        height: 39px;
+        left: 24.07px;
+        top: 25px;
+        margin-bottom: 20px;
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 21px;
+        letter-spacing: 0.02em;
+        color: #5E6C84;
+    ` ,
+    pickerTest: css`
+        padding: 25px;
+
+    `
+
 };

@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
 import { ScheduleDatePickerType } from './types/ScheduleDatePicker.type';
 
-import * as React from 'react';
+import {useState} from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import Grid from '@mui/material/Grid';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -10,19 +10,24 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 
 
-export const ScheduleDatePicker = ({picDate, disabledYN}: ScheduleDatePickerType) => {
-
-    const [date, setDate] = React.useState<Dayjs | null>(dayjs(picDate));
-    const [disabledVal, setDisabledVal] = React.useState(disabledYN);
+export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDatePickerType) => {
+    
+    const [date, setDate] = useState<Dayjs | null>(dayjs());
+    // const [disabledVal, setDisabledVal] = useState(disabledYN);
 
     return (
         <Stack>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                    <CalendarPicker date={date} onChange={(newDate) => setDate(newDate)} disabled={disabledVal}/>
-                </Grid>
-                </Grid>
+                <CalendarPicker 
+                    date={picDate} 
+                    onChange={
+                        (newDate) => {
+                            setDate(newDate); 
+                            changeDate(newDate);
+                        }
+                    } 
+                    disabled={disabledYN}
+                />
             </LocalizationProvider>
         </Stack> 
     );
