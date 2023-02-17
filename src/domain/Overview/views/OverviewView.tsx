@@ -10,11 +10,13 @@ import {
 import { FeaturedImpactorVideosSection } from '../sections';
 import { SelfScoresSection } from '../sections';
 import { FeturedStudentWorkSection } from '../sections/FeturedStudentWorkSection/FeturedStudentWorkSection';
+import { useOverView } from "./useOverView";
 
 export const OverviewView = () => {
+    const { impacterSocreState } = useOverView();
     return (
         <Stack css={sx.overviewContainer}>
-            <ImpacterScoreSection />
+            <ImpacterScoreSection data={impacterSocreState} />
             <Stack direction={'row'} css={sx.CourseContainer}>
                 <CourseProgressSection />
                 <CourseScheduleSection />
