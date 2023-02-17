@@ -1,3 +1,5 @@
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Colors, NavigationItems, WhiteButtons } from '@/common/themes/Color';
 import { Stack, Box, AppBar, Typography, Button } from '@mui/material';
@@ -9,12 +11,23 @@ import { TextMenu } from './components/TextMenu/TextMenu';
 import { InsightsDialogButton } from '@/domain/Navigation/sections/AddInsightsSection/components';
 import { NotificationDialogIcon } from '@/domain/Navigation/sections/NotificationSection/NotificationSummary/components';
 
-export const Appbar = () => {
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { css } from '@emotion/react';
+import NativeSelect from '@mui/material/NativeSelect';
+import { StudentCourseListType, StudentCourseItemType, CourseItemType} from './components/TextMenu/types/textMenu.types';
+
+
+export const Appbar = ({ StudentCourseList }: StudentCourseListType) => {
     const router = useRouter();
     const currentRoute = router.pathname;
 
     const menu = [
         { menuType: 'logo', url: '', title: '', buttonType: '' },
+        { menuType: 'TextField', url: '', title: 'Student', buttonType: '' },
         { menuType: 'blank', url: '', title: '', buttonType: '' },
         {
             menuType: 'button',
@@ -62,7 +75,9 @@ export const Appbar = () => {
                 sx={{ height: 89, background: Colors.BackBlue }}
             >
                 <Toolbar component='div' sx={{ height: 89 }}>
+               
                     {menu.map((item, index) => {
+                        
                         if (item.menuType === 'button') {
                             return (
                                 <TextMenu
@@ -98,6 +113,12 @@ export const Appbar = () => {
                             );
                         } else if (item.menuType === 'icon') {
                             return <NotificationDialogIcon key={index} />;
+                        }else if (item.menuType === 'TextField') {
+                            return (
+                                <Student key={index} 
+                                StudentCourseList={StudentCourseList} />
+                                
+                            );
                         }
                     })}
                 </Toolbar>
@@ -113,3 +134,42 @@ const Logo = () => {
         </Stack>
     );
 };
+
+const Student = ({StudentCourseList}: StudentCourseListType) => {
+/*
+    const [ searchYear, setSearchYear ] = useState("");
+    const [ searchMonth, setSearchMonth ] = useState("");
+
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>, type: string) => {
+        const value = e.target.value;
+        type === 'year' ? setSearchYear(value) : setSearchMonth(value)
+    }
+*/
+    return (
+        <div >
+            <FormControl variant="standard" sx={{ m: 1, minWidth: 110 , fontSize: 5}}>
+            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                    Student
+                </InputLabel>
+                <NativeSelect
+                    defaultValue={30}
+                    inputProps={{
+                    name: 'Student',
+                    id: 'uncontrolled-native',
+                    }}
+                   // onChange={(e) => handleChange(e, 'year')}
+                >
+                    {StudentCourseList.map((it, index) => (
+                        <StudentCourseOption key={index} Student={it.Student} Course={it.Course}  />
+                    )
+                    )}
+                    
+                </NativeSelect>
+            </FormControl>
+            </div>
+    );
+};
+
+const StudentCourseOption = ({Student, Course}: StudentCourseItemType) => {
+ return <option value={Student} > {Student}</option>
+}
