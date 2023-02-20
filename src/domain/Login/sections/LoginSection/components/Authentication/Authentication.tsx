@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 
@@ -21,7 +21,13 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 
+import { axiosClient } from "@/data/client/client";
+
 export const Authentication = () => {
+    useEffect(() => {
+        localStorage.removeItem('accessToken');
+      }, [])
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -35,13 +41,22 @@ export const Authentication = () => {
     function handleGoogleLogin() {
         const provider = new GoogleAuthProvider(); // provider를 구글로 설정
         signInWithPopup(auth, provider) // popup을 이용한 signup
-            .then((data) => {
-                //            setUserData(data.user); // user data 설정
-                console.log(data); // console로 들어온 데이터 표시
+            .then(async (data) => {
+                const accessToken = await data.user.getIdToken();
+                // 만료되었거나 5분 이내 완료이면 새로 발급해오는 듯?
+                localStorage.setItem('accessToken', accessToken);
+                console.log('accessToken', accessToken);
+                location.href='/overview';
             })
             .catch((err) => {
                 console.log(err);
             });
+    }
+
+    const apiTest = async () => {
+        console.log('hi, api test');
+        const response = await axiosClient('/reports/progress-reports/164');
+        console.log(response);
     }
 
     return (
@@ -142,6 +157,14 @@ export const Authentication = () => {
                         href='/overview'
                     >
                         Login
+                    </Button>
+                    
+                    <Button
+                        fullWidth
+                        variant='contained'
+                        onClick={apiTest}
+                    >
+                        API test
                     </Button>
                 </Box>
             </Box>
