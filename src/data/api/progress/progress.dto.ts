@@ -1,6 +1,9 @@
 export type BannerResponse = {
-  resultCode: string;
-  responseData: BannerData;
+  impact_score: number;
+  words_written: number;
+  activities_completed: number;
+  video_upload: number;
+  hours_spent: number;
 };
 
 export type CourseResponse = {
@@ -20,21 +23,6 @@ export type UnitResponse = {
   };
 };
 
-export type BannerData = {
-  courseMainTitle: string;
-  courseSubTitle: string;
-  courseProgressPercent: number;
-  courseProgressItem: {
-    hoursSpent: number;
-    wordsWritten: number;
-    videosUploaded: number;
-    attendance: number;
-    selfControl: number;
-    purpose: number;
-    gratitude: number;
-    grit: number;
-  };
-} | null;
 
 export type CourseData = {
   courseDescription: string;
@@ -60,4 +48,8 @@ export type Unit = {
   contentType: string;
   done: boolean;
   contentUrl: string;
+};
+
+export type StudentWorkbookResponse = { 
+  workbook_id: string;
 };

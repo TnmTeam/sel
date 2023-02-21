@@ -14,3 +14,7 @@ export type SchedulePopupType = {
     changeDate: (newDate: dayjs.Dayjs | null) => void;
     closeHandle: () => void;
 };
+
+export type ClosePopupBtnType = {
+    closeHandle: () => void;
+}

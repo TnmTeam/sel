@@ -4,6 +4,7 @@ import {
   CourseResponse,
   SuggestCourseResponse,
   UnitResponse,
+  StudentWorkbookResponse,
 } from "./progress.dto";
 
 class ProgressApiService {
@@ -12,8 +13,13 @@ class ProgressApiService {
     return this.instance || (this.instance = new this());
   }
 
-  async getBanner(id: string): Promise<BannerResponse> {
-    const response = await axiosClient.post(`/getBanner?id=${id}`);
+  async getBanner(studentIdNumber: number, studentId: string, courseId: string): Promise<BannerResponse> {
+    var param = { 
+      student_id_number : studentIdNumber,
+      student_id : studentId, 
+      course_id : courseId 
+    };
+    const response = await axiosClient.post(`/progress/banner`, param);
 
     return response.data;
   }
@@ -32,6 +38,16 @@ class ProgressApiService {
 
   async getUnit(index: number): Promise<UnitResponse> {
     const response = await axiosClient.post(`/getUnit?index=${index}`);
+
+    return response.data;
+  }
+
+  async getStudentWorkbook(studentId: string, courseId: string) : Promise<StudentWorkbookResponse> {
+    var param = { 
+      student_id : studentId, 
+      course_id : courseId 
+    };
+    const response = await axiosClient.post(`/progress/student-workbook`, param);
 
     return response.data;
   }
