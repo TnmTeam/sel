@@ -1,7 +1,12 @@
 import { useGetBanner } from "@/data/api/progress/useProgressApiHooks";
 
 export const useBannerSection = () => {
-  const { data, isLoading } = useGetBanner("test001");
+  const studentId = "636190c367b952049905f9b8";
+  const courseId = "7dlc1002";
+  const studentIdNumber = 283;
+
+  const { data, isLoading } = useGetBanner(studentIdNumber, studentId, courseId);
+  console.log("banner data ", data);
 
   if (!data) {
     return {
@@ -12,35 +17,34 @@ export const useBannerSection = () => {
     };
   }
 
-  const response = data.responseData!!;
-  const progressResponse = data.responseData!!.courseProgressItem;
+  const response = data;
+  // const progressResponse = data.responseData!!.courseProgressItem;
 
   // banner
   const [title, desc, rate] = [
-    response?.courseMainTitle,
-    response?.courseSubTitle,
-    response?.courseProgressPercent,
+    "Title",
+    "desc",
+    response.impact_score,
   ];
 
-  // progress
   const [
     hoursSpent,
     wordsWritten,
     videosUploaded,
     attendance,
-    selfControl,
-    purpose,
-    gratitude,
-    grit,
+    // selfControl,
+    // purpose,
+    // gratitude,
+    // grit,
   ] = [
-    progressResponse?.hoursSpent,
-    progressResponse?.wordsWritten,
-    progressResponse?.videosUploaded,
-    progressResponse?.attendance,
-    progressResponse?.selfControl,
-    progressResponse?.purpose,
-    progressResponse?.gratitude,
-    progressResponse?.grit,
+    response.hours_spent,
+    response.words_written,
+    response.video_upload,
+    response.activities_completed,
+    // progressResponse?.selfControl,
+    // progressResponse?.purpose,
+    // progressResponse?.gratitude,
+    // progressResponse?.grit,
   ];
 
   return {
@@ -58,12 +62,12 @@ export const useBannerSection = () => {
             videosUploaded: videosUploaded,
             attendance: attendance,
           },
-          chart: {
-            selfControl: selfControl,
-            purpose: purpose,
-            gratitude: gratitude,
-            grit: grit,
-          },
+          // chart: {
+          //   selfControl: selfControl,
+          //   purpose: purpose,
+          //   gratitude: gratitude,
+          //   grit: grit,
+          // },
         },
       },
       isLoading: isLoading,
