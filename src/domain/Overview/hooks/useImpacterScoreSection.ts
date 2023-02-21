@@ -1,7 +1,7 @@
 import { useGetImpacterScore } from "@/data/api/overview/useOverviewApiHooks";
 
 export const useImpacterScoreSection = () => {
-  const { data, isLoading } = useGetImpacterScore("636190c367b952049905f9b8", "7dlc1002");
+  const { data, isLoading } = useGetImpacterScore("6337a6e9f62401d9f405913c", "7dlcnlym");
   
   if (!data) {
     return {
