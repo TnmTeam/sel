@@ -16,12 +16,12 @@ export const CourseProgressList = ({ models }: CourseProgressListDataType) => {
         videosUploaded={models.plain.videosUploaded}
         wordsWritten={models.plain.wordsWritten}
       />
-      <ChartProgressList
+      {/* <ChartProgressList
         selfControl={models.chart.selfControl}
         purpose={models.chart.purpose}
         gratitude={models.chart.gratitude}
         grit={models.chart.grit}
-      />
+      /> */}
     </Stack>
   );
 };

@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from "react-query";
 import ProgressApiService from "./progress.api";
 
-export const useGetBanner = (id: string) => {
-  return useQuery(["banner", id], () => ProgressApiService.getBanner(id));
+export const useGetBanner = (studentIdNumber:number, studentId: string, courseId: string) => {
+  return useQuery(["banner", studentId], () => ProgressApiService.getBanner(studentIdNumber, studentId, courseId));
 };
 
 export const useGetCourse = (id: string) => {
@@ -18,3 +18,8 @@ export const useGetSuggestedCourse = (id: string) => {
 export const useGetUnit = () => {
   return useMutation((index: number) => ProgressApiService.getUnit(index));
 };
+
+export const useGetStudentWorkbook = (studentId: string, courseId: string) => {
+  return useQuery(["student-workbook", studentId], () => ProgressApiService.getStudentWorkbook(studentId, courseId));
+};
+

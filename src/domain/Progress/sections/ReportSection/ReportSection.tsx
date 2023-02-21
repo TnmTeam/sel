@@ -1,15 +1,20 @@
 import { css } from "@emotion/react";
 import { Stack } from "@mui/material";
 import { ProgressReports, RecentUploads, StudentWorkbook } from "./components";
+import { RepoertStateType } from "../../types/banner.type";
 
-export const ReportSection = () => {
+type DataType = {
+  data: RepoertStateType;
+};
+
+export const ReportSection = ({ data }: DataType) => {
   return (
     <Stack css={sx.root} direction="row">
       <div>
         <ProgressReports />
         <RecentUploads />
       </div>
-      <StudentWorkbook />
+      <StudentWorkbook data={data.studentWrokbookState}/>
     </Stack>
   );
 };
