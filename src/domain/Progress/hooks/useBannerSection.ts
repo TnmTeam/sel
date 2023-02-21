@@ -6,7 +6,7 @@ export const useBannerSection = () => {
   const studentIdNumber = 283;
 
   const { data, isLoading } = useGetBanner(studentIdNumber, studentId, courseId);
-  console.log("banner data ", data);
+  // console.log("banner data ", data);
 
   if (!data) {
     return {
@@ -23,7 +23,7 @@ export const useBannerSection = () => {
   // banner
   const [title, desc, rate] = [
     "Title",
-    "desc",
+    "",
     response.impact_score,
   ];
 

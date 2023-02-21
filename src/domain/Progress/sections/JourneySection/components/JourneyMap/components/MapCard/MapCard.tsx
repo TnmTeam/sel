@@ -20,7 +20,7 @@ export const MapCard = ({ isCircleOnRight, cardState }: MapCardType) => {
           <CardTitle> {cardState.title}</CardTitle>
           <CardDesc>{cardState.desc}</CardDesc>
         </Stack>
-        <Button fullWidth css={sx.btn}>
+        <Button fullWidth css={sx.btn} style={{display:"none"}}>
           {cardState.btnText}
         </Button>
       </Stack>

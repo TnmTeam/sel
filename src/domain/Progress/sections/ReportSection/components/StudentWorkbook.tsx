@@ -17,30 +17,30 @@ type DataType = {
 };
 
 export const StudentWorkbook = ({data}: DataType) => {
-
-  if (!data.result || data.isLoading) {
-    return (
-      <Stack css={sx.container}>
-        <Typography css={sx.title}>Student Workbook</Typography>
-        <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
-          <CustomProgress />
-        </Stack>
-      </Stack>
-    );
-  }
-  
-  const url = data.result.workbookId;
   return (
     <Stack css={sx.container}>
       <Typography css={sx.title}>Student Workbook</Typography>
-      <ReactGoogleSlides
-        width={675} 
-        height={990}
-        slidesLink={url}
-        position={1}
-        slideDuration={10}
-        showControls={true}     // Toggles the slideshow controls at the bottom of the screen 
-      />
+      
+      {
+        !data.result || data.isLoading ?
+        (
+          <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
+            <CustomProgress />
+          </Stack>
+        )
+        : 
+        (
+          <ReactGoogleSlides
+            width={675} 
+            height={990}
+            slidesLink={data.result.workbookId}
+            position={1}
+            slideDuration={10}
+            showControls={true}     // Toggles the slideshow controls at the bottom of the screen 
+          />
+        )
+      }
+      
     </Stack>
   );
 };
@@ -54,7 +54,7 @@ const sx = {
     margin-bottom: 31px;
   `,
   container: css`
-    width: 753px; 
+    width: 675px; 
     height: 973px;
   `
 };
