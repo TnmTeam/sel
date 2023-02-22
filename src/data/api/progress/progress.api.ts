@@ -87,6 +87,35 @@ class ProgressApiService {
 
     return response.data;
   }
+  
+  async getUnitItemContent1(studentId: string, courseId: string, unitId:string ): Promise<UnitResponse> {
+    console.log("getUnitItemContent1 Start");
+    var param = { 
+      student_id : studentId, 
+      course_id : courseId, 
+      sect_num : unitId 
+    };
+    console.log("getUnitItemContent1 param");
+    console.log(param);
+    const response = await axiosClient.post(`/progress/unit-item-responses`, param);
+    console.log("getUnitItemContent1 response");
+    console.log(response.data);
+    return response.data;
+  }
+
+  async getUnitItemContent2(studentIdNum: number, unitId: string): Promise<UnitResponse> {
+    console.log("getUnitItemContent2 Start");
+    var param = { 
+      student_id_num : studentIdNum, 
+      unit_id : unitId 
+    };
+    console.log("getUnitItemContent2 param");
+    console.log(param);
+    const response = await axiosClient.post(`/progress/unit-item-videoask`, param);
+    console.log("getUnitItemContent2 response");
+    console.log(response.data);
+    return response.data;
+  }
 }
 
 export default ProgressApiService.Instance;
