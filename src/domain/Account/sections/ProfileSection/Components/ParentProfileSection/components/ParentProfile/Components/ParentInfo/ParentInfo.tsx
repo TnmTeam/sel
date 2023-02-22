@@ -3,18 +3,8 @@ import { profileProps } from '@/domain/Account/sections/ProfileSection/ProfileSe
 import { ParentInfoEdit, ParentInfoView } from './Components';
 
 export const ParentInfo = (props:profileProps) => {
-    const {isEdit} = props;
-    const model = {
-        firstName : 'Jane',
-        lastName : 'Doe',
-        email : 'janedoe@gmail.com',
-        address : '1237 SW 83rd St.',
-        country : 'USA',
-        state : 'Califonia',
-        city : 'San Jose',
-        zipCode : '96522',
-        phone : '733-334-6789',
-    }
+    const {isEdit, parentIndex} = props;
+    const model = props.infomation;
 
     return (
         <>
@@ -26,10 +16,12 @@ export const ParentInfo = (props:profileProps) => {
                     !isEdit ?
                     <ParentInfoView 
                         {...model}
+                        parentIndex={parentIndex}
                     />
                     :
                     <ParentInfoEdit 
                         {...model}
+                        parentIndex={parentIndex}
                     />
                 }
             </Stack>

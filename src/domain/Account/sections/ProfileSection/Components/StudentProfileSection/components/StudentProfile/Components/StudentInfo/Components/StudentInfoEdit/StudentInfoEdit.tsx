@@ -1,8 +1,14 @@
-import { studentInfoProps } from '@/domain/Account/sections/ProfileSection/ProfileSection';
 import { MenuItem, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 
-export const StudentInfoEdit = (model:studentInfoProps) => { 
+type DataType = {
+    name: string;
+    email: string;
+    grade: string;
+    school: string;
+};
+
+export const StudentInfoEdit = (model:DataType) => { 
     return (
         <Box
             component="form"
@@ -15,36 +21,26 @@ export const StudentInfoEdit = (model:studentInfoProps) => {
             <div>
                 <TextField
                     id="outlined-basic"
-                    label="First Name"
-                    defaultValue={model.firstName}
+                    label="Name"
+                    defaultValue={model.name}
                 />
-                <TextField
-                    id="outlined-basic"
-                    label="Last Name"
-                    defaultValue={model.lastName}
-                />
-            </div>
-            <div>
                 <TextField
                     id="outlined-basic"
                     label="Email Address"
                     defaultValue={model.email}
                 />
-                <TextField
+            </div>
+                {/* <TextField
                     id="outlined-basic"
                     label="Phone Number"
                     defaultValue={model.phone}
-                />
-            </div>
-            <div>
-                <TextField
+                /> */}
+                {/* <TextField
                     id="outlined-basic"
                     label="Address"
                     defaultValue={model.address}
-                />
-            </div>
-            <div>
-                <TextField
+                /> */}
+                {/* <TextField
                     id="outlined-select-currency"
                     select
                     label="Country"
@@ -59,10 +55,8 @@ export const StudentInfoEdit = (model:studentInfoProps) => {
                     id="outlined-basic"
                     label="State/Region"
                     defaultValue={model.state}
-                />
-            </div>
-            <div>
-                <TextField
+                /> */}
+                {/* <TextField
                     id="outlined-basic"
                     label="City"
                     defaultValue={model.city}
@@ -71,8 +65,7 @@ export const StudentInfoEdit = (model:studentInfoProps) => {
                     id="outlined-basic"
                     label="Zip Code"
                     defaultValue={model.zipCode}
-                />
-            </div>
+                /> */}
             <div>
                 <TextField
                     id="outlined-basic"
@@ -85,8 +78,7 @@ export const StudentInfoEdit = (model:studentInfoProps) => {
                     defaultValue={model.grade}
                 />
             </div>
-            <div>
-                <TextField
+                {/* <TextField
                     id="outlined-basic"
                     label="Facebook"
                     defaultValue={model.facebook}
@@ -95,15 +87,12 @@ export const StudentInfoEdit = (model:studentInfoProps) => {
                     id="outlined-basic"
                     label="Instagram"
                     defaultValue={model.instagram}
-                />
-            </div>
-            <div>
-                <TextField
+                /> */}
+                {/* <TextField
                     id="outlined-basic"
                     label="Tiktok"
                     defaultValue={model.tiktok}
-                />
-            </div>
+                /> */}
         </Box>
     )
 }
