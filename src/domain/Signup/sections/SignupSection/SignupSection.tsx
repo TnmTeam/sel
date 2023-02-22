@@ -13,7 +13,6 @@ import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
 
 import React, { useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
 
 import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -23,7 +22,7 @@ import AppleIcon from '@mui/icons-material/Apple';
 
 import { axiosClient } from '@/data/client/client';
 
-export const Authentication = () => {
+export const SignupSection = () => {
     useEffect(() => {
         localStorage.removeItem('accessToken');
     }, []);
@@ -36,37 +35,6 @@ export const Authentication = () => {
             password: data.get('password'),
         });
     };
-
-    const [userData, setUserData] = useState(null);
-    function handleGoogleLogin() {
-        const provider = new GoogleAuthProvider(); // provider를 구글로 설정
-        signInWithPopup(auth, provider) // popup을 이용한 signup
-            .then(async (data) => {
-                console.log(data);
-                console.log(data.user);
-                const accessToken = await data.user.getIdToken();
-                // 만료되었거나 5분 이내 완료이면 새로 발급해오는 듯?
-                console.log( localStorage );
-                localStorage.setItem('accessToken', accessToken);
-                if (data.user.email != null)
-                    localStorage.setItem('email', await data.user.email);
-                if (data.user.displayName != null)
-                    localStorage.setItem(
-                        'displayName',
-                        await data.user.displayName
-                    );
-                if (data.user.displayName != null)
-                    localStorage.setItem('uid', await data.user.uid);
-                console.log('localStorage', localStorage);
-
-                // 로그인 API 연동
-                authLogin();
-                //location.href='/overview';
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
 
     const authLogin = async () => {
         const response = await axiosClient('/auth/login');
@@ -114,10 +82,9 @@ export const Authentication = () => {
             localStorage.setItem('role', await response.data.role);
             location.href = '/overview'; // 페이지 이동
         }
-        
-        //location.href = '/signup';
 
-        
+        // 회원 가입 페이지 자동 이동 2.23 이후 제작 예정
+        // location.href='/signup';
     };
 
     const moveOverview = async () => {
@@ -129,74 +96,7 @@ export const Authentication = () => {
     };
 
     return (
-        <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} square>
-            <Box
-                flexDirection={'column'}
-                alignItems={'center'}
-                display={'flex'}
-                sx={{
-                    mx: 25,
-                    mt: 40,
-                    mb: 25,
-                }}
-            >
-                <Typography
-                    component='h1'
-                    variant='h3'
-                    textAlign='center'
-                    sx={{ mb: 3 }}
-                >
-                    Welcome Parents!
-                </Typography>
-
-                <Grid
-                    item
-                    flexDirection={'row'}
-                    alignItems={'center'}
-                    display={'flex'}
-                    sx={{ mb: 3 }}
-                >
-                    <Link href='#' onClick={handleGoogleLogin}>
-                        <Avatar
-                            sx={{
-                                m: 1,
-                                bgcolor: 'secondary.main',
-                                width: '50px',
-                                height: '50px',
-                            }}
-                        >
-                            <GoogleIcon />
-                        </Avatar>
-                    </Link>
-                </Grid>
-
-                <Button
-                    type='submit'
-                    fullWidth
-                    variant='contained'
-                    sx={{
-                        mt: 3,
-                        mb: 2,
-                        fontSize: '18pt',
-                        background: FlexBlueButtons.ButtonColor,
-                        color: FlexBlueButtons.TextColor,
-                        ':hover': {
-                            background: FlexBlueButtons.onHoverButtonColor,
-                            color: FlexBlueButtons.OnHoverTextColor,
-                        },
-                    }}
-                    onClick={moveOverview}
-                    //href='/overview'
-                >
-                    Login
-                </Button>
-            </Box>
-        </Grid>
-    );
-
-    /*
-    return (
-        <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={6} md={6} >
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}
@@ -215,35 +115,9 @@ export const Authentication = () => {
                 >
                     Welcome Parents!
                 </Typography>
-
-                <Grid
-                    item
-                    flexDirection={'row'}
-                    alignItems={'center'}
-                    display={'flex'}
-                    sx={{ mb: 3 }}
-                >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
-                        <FacebookSharpIcon />
-                    </Avatar>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
-                        <TwitterIcon />
-                    </Avatar>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
-                        <LinkedInIcon />
-                    </Avatar>
-                    <Link href='#' onClick={handleGoogleLogin}>
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
-                            <GoogleIcon />
-                        </Avatar>
-                    </Link>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
-                        <AppleIcon />
-                    </Avatar>
-                </Grid>
-
+                
                 <Typography component='h1' variant='h6' sx={{ mb: 3 }}>
-                    - or -
+                    - Sign Up -
                 </Typography>
                 <Box component='form' noValidate onSubmit={handleSubmit}>
                     <TextField
@@ -260,24 +134,33 @@ export const Authentication = () => {
                         margin='normal'
                         required
                         fullWidth
-                        name='password'
-                        label='Password'
-                        type='password'
-                        id='password'
-                        autoComplete='current-password'
+                        id='name'
+                        label='Name'
+                        name='name'
+                        autoComplete='name'
+                        autoFocus
                     />
-
-                    <FormControlLabel
-                        control={<Checkbox value='remember' color='primary' />}
-                        label='Remember me'
-                    />
-                    <Link href='#' textAlign={'right'}>
-                        Forgot password?
-                    </Link>
 
                     <Button
+                        type='submit'                        
+                        variant='contained'
+                        sx={{
+                            mt: 3,
+                            mb: 2,
+                            fontSize: '18pt',
+                            background: FlexBlueButtons.ButtonColor,
+                            color: FlexBlueButtons.TextColor,
+                            ':hover': {
+                                background: FlexBlueButtons.onHoverButtonColor,
+                                color: FlexBlueButtons.OnHoverTextColor,
+                            },
+                        }}
+                        href='/'
+                    >
+                        Cancle
+                    </Button>
+                    <Button
                         type='submit'
-                        fullWidth
                         variant='contained'
                         sx={{
                             mt: 3,
@@ -292,16 +175,9 @@ export const Authentication = () => {
                         }}
                         href='/overview'
                     >
-                        Login
+                        Sign Up
                     </Button>
                     
-                    <Button
-                        fullWidth
-                        variant='contained'
-                        onClick={apiTest}
-                    >
-                        API test
-                    </Button>
                 </Box>
             </Box>
             <Box
@@ -317,7 +193,6 @@ export const Authentication = () => {
             </Box>
         </Grid>
     );
-    */
 };
 
 const sx = {

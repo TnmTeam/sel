@@ -1,0 +1,1 @@
+export { SignupView } from './SignupView';
