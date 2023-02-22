@@ -3,9 +3,11 @@ import { useRecoilValue } from 'recoil';
 import { courseMapState, studentMapState } from "@/common/atom/Atom";
 
 export const useImpacterScoreSection = () => {
-  const currenCourseMap:any = useRecoilValue(courseMapState);
+
+const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
   const { data, isLoading } = useGetImpacterScore(currenStudentMap.lw_id, currenCourseMap.course_id);
+
   
   if (!data) {
     return {
@@ -27,7 +29,7 @@ export const useImpacterScoreSection = () => {
     impacterSocreState: {
       result: {
         impacterScore: {
-            rate: rate,
+            rate: rate * 10,
             studentName: studentName,
             url: url,
         },

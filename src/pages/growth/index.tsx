@@ -1,8 +1,7 @@
-import { ResourcesView } from '@/domain/Resources/views';
 import { NextPage } from 'next';
 import { Stack } from '@mui/material'
 
-const ResourcesPage: NextPage = () => {
+const GrowthPage: NextPage = () => {
     return <Stack sx={{
         position:'absolute',
         top : '50%',
@@ -12,7 +11,6 @@ const ResourcesPage: NextPage = () => {
     >
         coming soon
     </Stack>;
-    //return <ResourcesView />;
 };
 
-export default ResourcesPage;
+export default GrowthPage;

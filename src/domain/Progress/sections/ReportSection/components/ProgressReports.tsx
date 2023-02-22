@@ -5,9 +5,32 @@ import report from "@/assets/progress/report/report.png";
 import { ImagePopup } from "./popup/ImagePopup";
 import { useModalHooks } from "./useModalHooks";
 
+import Dialog from '@mui/material/Dialog';
+import {useState} from 'react';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { LinkPopup } from "./popup/LinkPopup";
+
+
 export const ProgressReports = () => {
   const models = [report, report];
   const { modalState } = useModalHooks();
+
+  const [popupIndex, setPopupIndex] = useState(0);
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = (idx: number) => {
+      setOpen(true); 
+      setPopupIndex(idx);
+      console.log("popupIndex ",popupIndex);
+  };
+  const handleClose = () => {
+      setOpen(false);
+  };
+  
+
 
   return (
     <Stack css={sx.root}>
@@ -17,17 +40,26 @@ export const ProgressReports = () => {
           <div
             css={sx.image}
             key={index}
-            onClick={() => modalState.onImageOpen(it)}
+            onClick={(e)=>{handleClickOpen(index)}}
+            // onClick={() => modalState.onImageOpen(it)}
           >
             <Image src={it} alt="report" width={169} height={308} />
           </div>
         ))}
       </div>
-      <ImagePopup
-        open={modalState.open}
-        onClose={modalState.onClose}
-        image={modalState.image}
-      />
+      
+      <Dialog
+        fullScreen={fullScreen}
+        maxWidth={false}
+        open={open}
+        onClose={handleClose}
+      >
+        <LinkPopup
+          popupIndex={popupIndex}
+          closeHandle={handleClose}
+        />
+      </Dialog>
+
     </Stack>
   );
 };
@@ -46,6 +78,13 @@ const sx = {
   imageContainer: css`
     display: flex;
     gap: 43px;
+    
+    /*
+    border: 5px solid black;
+    */
+    width: 450px;
+    overflow: auto;
+    white-space: nowrap;
   `,
   image: css`
     cursor: pointer;

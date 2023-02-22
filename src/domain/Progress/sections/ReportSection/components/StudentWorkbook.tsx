@@ -2,14 +2,46 @@ import { Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import workbook from "@/assets/progress/report/workbook.png";
 import Image from "next/image";
-export const StudentWorkbook = () => {
+import { StudentWorkbookType } from "../../../types/banner.type";
+import { CustomProgress } from "@/common/components/progress";
+import { Stack } from "@mui/material";
+import dynamic from 'next/dynamic';
+
+const ReactGoogleSlides = dynamic(
+  () => import('react-google-slides'),
+  {ssr: false}
+);
+
+type DataType = {
+  data: StudentWorkbookType;
+};
+
+export const StudentWorkbook = ({data}: DataType) => {
   return (
-    <div>
+    <Stack css={sx.container}>
       <Typography css={sx.title}>Student Workbook</Typography>
-      <div>
-        <Image src={workbook} alt="workbook" width={753} height={973} />
-      </div>
-    </div>
+      
+      {
+        !data.result || data.isLoading ?
+        (
+          <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
+            <CustomProgress />
+          </Stack>
+        )
+        : 
+        (
+          <ReactGoogleSlides
+            width={675} 
+            height={990}
+            slidesLink={data.result.workbookId}
+            position={1}
+            slideDuration={10}
+            showControls={true}     // Toggles the slideshow controls at the bottom of the screen 
+          />
+        )
+      }
+      
+    </Stack>
   );
 };
 
@@ -21,4 +53,8 @@ const sx = {
     color: #0a0b26;
     margin-bottom: 31px;
   `,
+  container: css`
+    width: 675px; 
+    height: 973px;
+  `
 };

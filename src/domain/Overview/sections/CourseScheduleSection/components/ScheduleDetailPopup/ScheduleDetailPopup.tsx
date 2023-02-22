@@ -6,10 +6,9 @@ import { ScheduleDetailBoxAddPopup } from './components/ScheduleDetailPopupConta
 import { SchedulePopupType } from './components/ScheduleDetailPopupContainer/types/ScheduleDetailBox.type';
 import Image from 'next/image';
 import OverViewBackgroundImage from '@/assets/overview/popupCloseBtn.png';
+import { ClosePopupBtn } from './components/ScheduleDetailPopupContainer/ClosePopupBtn';
 
-export interface CloseBtnType {
-    closeHandle: () => void;
-}
+
 export const ScheduleDetailPopup = ({picDate, changeDate, closeHandle}: SchedulePopupType) => {
     
     return (
@@ -24,7 +23,7 @@ export const ScheduleDetailPopup = ({picDate, changeDate, closeHandle}: Schedule
 
             <Stack css={sx.popupCenterLine}></Stack>        {/* Center Line */}
 
-            <CloseBtnImage closeHandle={closeHandle} />     {/* Close Btn */}
+            <ClosePopupBtn closeHandle={closeHandle} />     {/* Close Btn */}
 
             <ScheduleDetailBoxList 
                 picDate={picDate}
@@ -66,22 +65,5 @@ const sx = {
         top: 20px;
         border-radius: 28px;
         padding: 25px;
-    `,
-    closeImgBtn: css`
-        position: absolute;
-        right: 0px;
-        padding: 20px;
     `
 };
-
-const CloseBtnImage = (props: CloseBtnType) => (
-    <Stack css={sx.closeImgBtn}>
-        <Image
-            onClick={props.closeHandle}
-            style={{cursor: 'pointer'}}
-            src={OverViewBackgroundImage}
-            alt={'overview'}
-        />
-    </Stack>
-);
-

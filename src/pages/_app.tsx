@@ -16,7 +16,8 @@ const queryClient = new QueryClient({
 export default function App({ Component, pageProps }: AppProps) {
   if (
     (pageProps && pageProps.pathname) === "/" ||
-    (pageProps && pageProps.pathname) === "/login"
+    (pageProps && pageProps.pathname) === "/login" ||
+    (pageProps && pageProps.pathname) === "/signup"
   ) {
     return (
       <QueryClientProvider client={queryClient}>
