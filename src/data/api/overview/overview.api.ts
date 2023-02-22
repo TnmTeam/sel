@@ -15,11 +15,10 @@ class OverviewApiService {
       student_id : studentId, 
       course_id : courseId 
     };
-    console.log("getImpacterScore");
-    console.log(param);
+    
     const response = await axiosClient.post(`/overview/impacter-score`, param);
-    console.log("response");
-    console.log(response);
+    //console.log("response");
+    //console.log(response);
     return response.data;
   }
 }

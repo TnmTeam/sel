@@ -4,7 +4,10 @@ export type SuggestStateType = {
 };
 
 export type CardType = {
-  title: string;
-  desc: string;
-  image: string;
+  id: number;
+  courseTitle: string;
+  courseThumbnail: string;
+  courseDescription: string;
+  numberInSequence: number;
+  courseFamily: string;
 };
