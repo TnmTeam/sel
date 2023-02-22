@@ -10,56 +10,73 @@ import {useState} from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { LinkPopup } from "./popup/LinkPopup";
+import { ProgressReportskType } from "../../../types/report.type";
+import { CustomProgress } from "@/common/components/progress";
 
 
-export const ProgressReports = () => {
+type DataType = {
+  data: ProgressReportskType;
+};
+
+export const ProgressReports = ({data}: DataType) => {
   const models = [report, report];
   const { modalState } = useModalHooks();
 
-  const [popupIndex, setPopupIndex] = useState(0);
+  const [popupUrl, setPopupUrl] = useState("");
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [open, setOpen] = useState(false);
-  const handleClickOpen = (idx: number) => {
+  const handleClickOpen = (url: string) => {
       setOpen(true); 
-      setPopupIndex(idx);
-      console.log("popupIndex ",popupIndex);
+      setPopupUrl(url);
   };
   const handleClose = () => {
       setOpen(false);
   };
   
 
-
   return (
     <Stack css={sx.root}>
       <Typography css={sx.title}>Progress Reports</Typography>
-      <div css={sx.imageContainer}>
-        {models.map((it, index) => (
-          <div
-            css={sx.image}
-            key={index}
-            onClick={(e)=>{handleClickOpen(index)}}
-            // onClick={() => modalState.onImageOpen(it)}
-          >
-            <Image src={it} alt="report" width={169} height={308} />
-          </div>
-        ))}
-      </div>
-      
-      <Dialog
-        fullScreen={fullScreen}
-        maxWidth={false}
-        open={open}
-        onClose={handleClose}
-      >
-        <LinkPopup
-          popupIndex={popupIndex}
-          closeHandle={handleClose}
-        />
-      </Dialog>
 
+      {
+        !data.result || data.isLoading ?
+        (
+          <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
+            <CustomProgress />
+          </Stack>
+        )
+        : 
+        (
+          <>
+            <div css={sx.imageContainer}>
+              {models.map((it, index) => (
+                <div
+                  css={sx.image}
+                  key={index}
+                  onClick={(e)=>{handleClickOpen( data.result.popupList[index] )}}
+                >
+                  <Image src={it} alt="report" width={169} height={308} />
+                </div>
+              ))}
+            </div>
+            
+            <Dialog
+              fullScreen={fullScreen}
+              maxWidth={false}
+              open={open}
+              onClose={handleClose}
+            >
+              <LinkPopup
+                popupUrl={popupUrl}
+                closeHandle={handleClose}
+              />
+            </Dialog>
+          </>
+        )
+      }
+      
     </Stack>
   );
 };

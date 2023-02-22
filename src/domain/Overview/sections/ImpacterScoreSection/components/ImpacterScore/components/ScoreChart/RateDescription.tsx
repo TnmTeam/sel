@@ -39,7 +39,7 @@ export const RateDescription = ({ rate, studentName }: ChartType) => {
                     {'IMPACTER SCORE'}
                 </Typography>
                 <Typography
-                    fontSize='50px'
+                    fontSize='45px'
                     fontWeight={700}
                     color='white'
                     letterSpacing={'-1.75px'}

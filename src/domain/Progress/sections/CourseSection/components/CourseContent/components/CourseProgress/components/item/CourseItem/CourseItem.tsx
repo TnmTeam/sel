@@ -26,11 +26,11 @@ export const CourseItem = ({
         paddingLeft={"10px"}
         css={sx.text}
       >
-        {item.title}
+        {item.section_title}
       </Typography>
       <Stack direction="row" alignItems={"center"}>
-        <Typography variant="caption" width="73px" css={sx.text}>
-          {getDate(item.date)}
+        <Typography variant="caption" paddingLeft={"50px"} width="73px" css={sx.text}>
+          {item.unit_item_cnt}
         </Typography>
         <div css={sx.icon}>
           {isSelected ? (

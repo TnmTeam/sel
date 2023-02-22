@@ -8,13 +8,27 @@ import axios from 'axios';
 
 export const ScheduleDetailBoxList = ({picDate}: ScheduleDetailBoxType) => {
     
-    if(picDate == null)
+const dayNames = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+];
+
+    let startDate = new Date();
+    let endDate = new Date();
+
+    if(picDate != null)
     {
-        picDate = dayjs();
+        startDate = new Date(picDate?.startDate);
+        endDate = new Date(picDate?.endDate);
     }
     
-    const dayName = picDate.format("dddd");
-    const dayNumber = picDate.format("D");
+    const dayName = dayNames[startDate.getDay()];
+    const dayNumber = startDate.getDate();
 
 
     // API 

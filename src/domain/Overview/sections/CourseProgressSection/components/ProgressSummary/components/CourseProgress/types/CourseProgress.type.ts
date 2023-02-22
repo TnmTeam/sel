@@ -5,7 +5,7 @@ export type CourseProgressType = {
 
 export type CourseItemType = {
     title: string;
-    date: string;
+    progress: string;
     time: string;
     dept: number;
   };

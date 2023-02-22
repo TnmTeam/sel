@@ -1,9 +1,19 @@
-import dayjs from "dayjs";
-
 export type ScheduleDatePickerType = {
     // startDate: string;
     // endDate: string;
-    picDate: dayjs.Dayjs | null;
-    changeDate: (newDate: dayjs.Dayjs | null) => void;
+    picDate: OnChangeDateType | null;
+    changeDate: (changeVal: OnChangeDateType) => void;
     disabledYN: boolean;
 };
+
+export type OnChangeDateType = {
+    startDate: Date;
+    endDate: Date;
+    key: string;
+}
+
+export type ScheduleSummaryType = {
+    picDate: OnChangeDateType | null;
+    changeDate: (changeVal: OnChangeDateType) => void;
+    handleClickOpen: () => void;
+}

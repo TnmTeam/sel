@@ -15,7 +15,7 @@ export const ProgressItem = ({ progress, progressDesc }: ProgressItemType) => {
       >
         {numberWithComma(progress)}
       </Typography>
-      <Typography variant="subtitle1" color="#253858" letterSpacing={"1.5px"}>
+      <Typography variant="subtitle1" color="#253858" letterSpacing={"0.2px"}>  {/* letterSpacing 1.5px */}
         {progressDesc}
       </Typography>
     </Stack>
@@ -29,10 +29,12 @@ const sx = {
     flex-direction: column;
     align-items: center;
 
+    /*
     &:nth-of-type(4) {
       .progress::after {
         content: "%";
       }
     }
+    */
   `,
 };
