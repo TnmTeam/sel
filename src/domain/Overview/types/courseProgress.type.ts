@@ -1,14 +1,10 @@
-export type CourseProgressType = {
-    result: CourseType | null;
+import { CourseProgressType } from "../sections/CourseProgressSection/components/ProgressSummary/components/CourseProgress/types/CourseProgress.type";
+
+export type CourseProgressApiType = {
+    result: CourseProgressApiData | null;
     isLoading: boolean;
 };
 
-export type CourseType = {
-    impacterScore: ChartType;
-};
-
-export type ChartType = {
-    rate: number;
-    studentName: String;
-    url: string;
+export type CourseProgressApiData = {
+    models: CourseProgressType;
 };

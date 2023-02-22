@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { OnChangeDateType } from "../../../../ScheduleSummary/components/ScheduleDatePicker/types/ScheduleDatePicker.type";
 
 export type ScheduleDetailListType = {
     title: string;
@@ -6,15 +7,16 @@ export type ScheduleDetailListType = {
 };
 
 export type ScheduleDetailBoxType = {
-    picDate: dayjs.Dayjs | null;
+    picDate: OnChangeDateType | null;
 };
 
 export type SchedulePopupType = {
-    picDate: dayjs.Dayjs | null;
-    changeDate: (newDate: dayjs.Dayjs | null) => void;
+    picDate: OnChangeDateType | null;
+    changeDate: (changeVal: OnChangeDateType) => void;
     closeHandle: () => void;
 };
 
 export type ClosePopupBtnType = {
     closeHandle: () => void;
 }
+

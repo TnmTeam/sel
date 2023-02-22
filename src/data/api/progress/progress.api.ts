@@ -7,6 +7,7 @@ import {
   SuggestCourseUnits,
   UnitResponse,
   StudentWorkbookResponse,
+  ProgressReportsResponse,
 } from "./progress.dto";
 
 class ProgressApiService {
@@ -77,6 +78,16 @@ class ProgressApiService {
     return response.data;
   }
 
+  async getProgressReports(studentId: string, courseId: string) : Promise<ProgressReportsResponse> {
+    var param = { 
+      student_id : studentId, 
+      course_id : courseId 
+    };
+    const response = await axiosClient.post(`/progress/progress-reports`, param);
+
+    return response.data;
+  }
+  
   async getUnitItemContent1(studentId: string, courseId: string, unitId:string ): Promise<UnitResponse> {
     console.log("getUnitItemContent1 Start");
     var param = { 

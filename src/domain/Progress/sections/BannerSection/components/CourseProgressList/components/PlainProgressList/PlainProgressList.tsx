@@ -17,7 +17,7 @@ export const PlainProgressList = ({
         progress={videosUploaded}
         progressDesc={"Videos Uploaded"}
       />
-      <ProgressItem progress={attendance} progressDesc={"Attendance"} />
+      <ProgressItem progress={attendance} progressDesc={"Activities Completed"} />
     </Stack>
   );
 };
