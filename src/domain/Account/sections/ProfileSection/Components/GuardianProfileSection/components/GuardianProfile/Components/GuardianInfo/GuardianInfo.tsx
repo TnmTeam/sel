@@ -25,11 +25,11 @@ export const GuardianInfo = (props:profileProps) => {
                 {
                     !isEdit?
                     <GuardianInfoView 
-                        {...model}
+                        // {...model}
                     />
                     :
                     <GuardianInfoEdit 
-                        {...model}
+                        // {...model}
                     />
                 }
             </Stack>
