@@ -8,10 +8,6 @@ export const useCourseProgressSection = () => {
   
   const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
-  // console.log("useCourseProgressSection id========");
-  // console.log(currenCourseMap.course_id);
-  // console.log(currenStudentMap.lw_id);
-
   
   const studentId = currenStudentMap.lw_id;
   const courseId = currenCourseMap.course_id;
@@ -43,7 +39,6 @@ export const useCourseProgressSection = () => {
       }
     }
   );
-
 
   const models = {
     title: "Course Progress",

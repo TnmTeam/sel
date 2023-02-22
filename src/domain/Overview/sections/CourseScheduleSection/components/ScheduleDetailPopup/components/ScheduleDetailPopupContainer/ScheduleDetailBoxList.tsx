@@ -18,8 +18,6 @@ const dayNames = [
     "Saturday"
 ];
 
-    console.log('picDate ',picDate);
-
     let startDate = new Date();
     let endDate = new Date();
 

@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/material';
 import { ScheduleDetailPopup, ScheduleSummary } from './components';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Dialog from '@mui/material/Dialog';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -21,16 +21,6 @@ type DataType = {
 
 export const CourseScheduleSection = ({data}: DataType) => {
 
-    if (!data.result || data.isLoading || !data.result.dateRange) {
-        return (
-            <Stack css={sx.scheduleSummaryContainer}>
-                <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
-                    <CustomProgress />
-                </Stack>
-            </Stack>
-        );
-    }
-
     const [open, setOpen] = useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -41,12 +31,12 @@ export const CourseScheduleSection = ({data}: DataType) => {
         setOpen(false);
     };
 
-
+/*
     const [state, setState] = useState(
         {
-          startDate: new Date(data.result.dateRange.startDate),
-          endDate: new Date(data.result.dateRange.endDate),
-          key: "selection"
+            startDate: new Date(data.result.dateRange.startDate),
+            endDate: new Date(data.result.dateRange.endDate),
+            key: "selection"
         }
     );
     
@@ -62,14 +52,37 @@ export const CourseScheduleSection = ({data}: DataType) => {
             ); 
         }
     }
+*/
 
+    if (!data.result || data.isLoading || !data.result.dateRange) {
+        return (
+            <Stack css={sx.scheduleSummaryContainer}>
+                <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
+                    <CustomProgress />
+                </Stack>
+            </Stack>
+        );
+    }
+    
+
+
+    const picDate = {
+        startDate: new Date(data.result.dateRange.startDate),
+        endDate: new Date(data.result.dateRange.endDate),
+        key: "selection"
+    };
+
+    const onChangeRange = (changeVal: OnChangeDateType) => {
+        
+    }
 
     
+
 
     return (
         <Stack css={sx.scheduleSummaryContainer}>
             <ScheduleSummary 
-                picDate={state}
+                picDate={picDate}
                 changeDate={onChangeRange}
                 handleClickOpen={handleClickOpen}
             />
@@ -80,7 +93,7 @@ export const CourseScheduleSection = ({data}: DataType) => {
                 onClose={handleClose}
             >
                 <ScheduleDetailPopup 
-                    picDate={state}
+                    picDate={picDate}
                     changeDate={onChangeRange}
                     closeHandle={handleClose}
                 />

@@ -1,7 +1,13 @@
 import { useGetCourseSchedule } from "@/data/api/overview/useOverviewApiHooks";
+import { useRecoilValue } from 'recoil';
+import { courseMapState, studentMapState } from "@/common/atom/Atom";
+
 
 export const useCourseScheduleSection = () => {
-  const courseId = "7dlc1002";
+
+  const currenCourseMap:any = useRecoilValue(courseMapState);
+  const courseId = currenCourseMap.course_id;
+
   const { data, isLoading } = useGetCourseSchedule(courseId);
   
   if (!data) {

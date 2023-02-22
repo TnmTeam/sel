@@ -47,9 +47,9 @@ export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDa
                             item.selection.key
                         ];
                         
-                        console.log("item.selection.startDate ", item.selection.startDate);
-                        console.log("item.selection.endDate ", item.selection.endDate);
-                        console.log("item.selection.key ", item.selection.key);
+                        // console.log("item.selection.startDate ", item.selection.startDate);
+                        // console.log("item.selection.endDate ", item.selection.endDate);
+                        // console.log("item.selection.key ", item.selection.key);
                         if(tempStartDate && tempEndDate && tempKey)
                         {
                             const changeVal = {
@@ -79,7 +79,7 @@ export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDa
                         width:"330px",
                         height:"260px",
                         position: "absolute",
-                        border: "3px solid red",
+                        // border: "3px solid red",
                     }}
                 >
                 </Stack>
