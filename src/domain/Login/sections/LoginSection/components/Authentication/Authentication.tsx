@@ -73,22 +73,29 @@ export const Authentication = () => {
         if (response.data.status_code == 500) {
             // Expired toekn
             console.log(response.data.message);
-        } else if (response.data.status_code == 400) {
-            // Account Does Not Exist
+        } else if (response.data.status_code == 400) {  // 로그인 시도 성공
+            // Account Already Exists!
             console.log(response.data.message);
 
-            // 자동으로 회원 가입( 2.23 임시)
-            authSignup();
-            // 회원 가입 페이지 자동 이동
-            //location.href='/signup';
-        } // 로그인 성공
-        else {
             const authEmail = await response.data.email;
+            
             if (localStorage.getItem('email') == authEmail) {
                 // 회원 가입 성공
                 localStorage.setItem('role', await response.data.role);
                 location.href = '/overview'; // 페이지 이동
             }
+            else
+            {
+                localStorage.setItem('role', await response.data.role);
+                location.href = '/overview'; // 페이지 이동
+            }
+            
+        }
+        else {
+             // 자동으로 회원 가입( 2.23 임시)
+             authSignup();
+             // 회원 가입 페이지 자동 이동
+             //location.href='/signup';
         }
     };
 

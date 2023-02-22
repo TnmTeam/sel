@@ -4,6 +4,7 @@ import { theme } from "@/common/themes/Theme";
 import { ThemeProvider } from "@mui/material";
 import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { RecoilRoot } from "recoil";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,11 +29,13 @@ export default function App({ Component, pageProps }: AppProps) {
   } else {
     return (
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ThemeProvider>
+        <RecoilRoot>
+          <ThemeProvider theme={theme}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
+        </RecoilRoot>
       </QueryClientProvider>
     );
   }
