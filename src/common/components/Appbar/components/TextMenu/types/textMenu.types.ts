@@ -4,8 +4,3 @@ export type TextMenuType = {
     title: string;
     buttonType: string;
 };
-
-export type StudentCourseItemType = {
-    student: string;
-    course: string[];
-};

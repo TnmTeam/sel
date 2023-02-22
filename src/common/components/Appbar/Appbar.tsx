@@ -1,7 +1,5 @@
-
-import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Colors, NavigationItems, WhiteButtons } from '@/common/themes/Color';
+import { Colors} from '@/common/themes/Color';
 import { Stack, Box, AppBar, Typography, Button } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import Image from 'next/image';
@@ -11,27 +9,11 @@ import { TextMenu } from './components/TextMenu/TextMenu';
 import { InsightsDialogButton } from '@/domain/Navigation/sections/AddInsightsSection/components';
 import { NotificationDialogIcon } from '@/domain/Navigation/sections/NotificationSection/NotificationSummary/components';
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { css } from '@emotion/react';
-import NativeSelect from '@mui/material/NativeSelect';
-import { StudentCourseItemType } from './components/TextMenu/types/textMenu.types';
-
-
-interface StudentCourseListProps {
-  studentCourseList: StudentCourseItemType[];
-}
-
-export const Appbar = ({ studentCourseList }: StudentCourseListProps) => {
+export const Appbar = () => {
     const router = useRouter();
     const currentRoute = router.pathname;
-
     const menu = [
         { menuType: 'logo', url: '', title: '', buttonType: '' },
-        { menuType: 'TextField', url: '', title: 'Student', buttonType: '' },
         { menuType: 'blank', url: '', title: '', buttonType: '' },
         {
             menuType: 'button',
@@ -71,7 +53,7 @@ export const Appbar = ({ studentCourseList }: StudentCourseListProps) => {
             buttonType: 'text',
         },
     ];
-
+    
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar
@@ -79,7 +61,6 @@ export const Appbar = ({ studentCourseList }: StudentCourseListProps) => {
                 sx={{ height: 89, background: Colors.BackBlue }}
             >
                 <Toolbar component='div' sx={{ height: 89 }}>
-               
                     {menu.map((item, index) => {
                         
                         if (item.menuType === 'button') {
@@ -117,12 +98,6 @@ export const Appbar = ({ studentCourseList }: StudentCourseListProps) => {
                             );
                         } else if (item.menuType === 'icon') {
                             return <NotificationDialogIcon key={index} />;
-                        }else if (item.menuType === 'TextField') {
-                            return (
-                                <Student key={index} 
-                                studentCourseList={studentCourseList} />
-                                
-                            );
                         }
                     })}
                 </Toolbar>
@@ -138,42 +113,3 @@ const Logo = () => {
         </Stack>
     );
 };
-
-const Student = ({ studentCourseList }: StudentCourseListProps) => {
-/*
-    const [ searchYear, setSearchYear ] = useState("");
-    const [ searchMonth, setSearchMonth ] = useState("");
-
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>, type: string) => {
-        const value = e.target.value;
-        type === 'year' ? setSearchYear(value) : setSearchMonth(value)
-    }
-*/
-    return (
-        <div >
-            <FormControl variant="standard" sx={{ m: 1, minWidth: 110 , fontSize: 5}}>
-            <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                    Student
-                </InputLabel>
-                <NativeSelect
-                    defaultValue={30}
-                    inputProps={{
-                    name: 'Student',
-                    id: 'uncontrolled-native',
-                    }}
-                   // onChange={(e) => handleChange(e, 'year')}
-                >
-                    {studentCourseList.map((it, index) => (
-                        <StudentCourseOption key={index} student={it.student} course={it.course}  />
-                    )
-                    )}
-                    
-                </NativeSelect>
-            </FormControl>
-            </div>
-    );
-};
-
-const StudentCourseOption = ({student, course}: StudentCourseItemType) => {
- return <option value={student} > {student}</option>
-}

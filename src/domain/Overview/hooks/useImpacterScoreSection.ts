@@ -1,7 +1,13 @@
 import { useGetImpacterScore } from "@/data/api/overview/useOverviewApiHooks";
+import { useRecoilValue } from 'recoil';
+import { courseMapState, studentMapState } from "@/common/atom/Atom";
 
 export const useImpacterScoreSection = () => {
-  const { data, isLoading } = useGetImpacterScore("636190c367b952049905f9b8", "7dlc1002");
+
+const currenCourseMap:any = useRecoilValue(courseMapState);
+  const currenStudentMap:any = useRecoilValue(studentMapState);
+  const { data, isLoading } = useGetImpacterScore(currenStudentMap.lw_id, currenCourseMap.course_id);
+
   
   if (!data) {
     return {
@@ -23,7 +29,7 @@ export const useImpacterScoreSection = () => {
     impacterSocreState: {
       result: {
         impacterScore: {
-            rate: rate,
+            rate: rate * 10,
             studentName: studentName,
             url: url,
         },

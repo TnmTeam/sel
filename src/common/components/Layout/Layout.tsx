@@ -3,27 +3,31 @@ import { ReactNode } from 'react';
 import { Stack } from '@mui/material';
 import { Appbar } from '../Appbar';
 import { HelpPopup } from '../popup/HelpPopup';
-import { StudentCourseItemType } from '../Appbar/components/TextMenu/types/textMenu.types'
+import { useStudentList } from "../StudentCourse/useStudentCourse";
+import { StudentCourseSection } from '../StudentCourse';
 
 export interface LayoutProps {
     children: ReactNode;
 }
 
-const model: StudentCourseItemType[] = [
-    {
-        student: 'Jamie Doe',
-        course: ['Start Task', 'Worbook', 'Video']
-    },
-    {
-        student: 'Jamie Lee',
-        course: ['Start Task', 'Worbook', 'Video', 'Video']
-    },
-];
+// const model: StudentCourseItemType[] = [
+//     {
+//         student: 'Jamie Doe',
+//         course: ['Start Task', 'Worbook', 'Video']
+//     },
+//     {
+//         student: 'Jamie Lee',
+//         course: ['Start Task', 'Worbook', 'Video', 'Video']
+//     },
+// ];
 
 export const Layout = ({ children }: LayoutProps) => {
+    const {studentListState} = useStudentList();
+
     return (
         <Stack css={st.root}>
-            <Appbar studentCourseList={model} />
+            <Appbar/>
+            <StudentCourseSection data={studentListState}/>
             <Stack direction='row' width='100%' height='100%'>
                 <main css={st.main}>{children}</main>
             </Stack>
