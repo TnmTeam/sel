@@ -22,9 +22,9 @@ export const useBannerSection = () => {
 
   // banner
   const [title, desc, rate] = [
-    "Title",
+    response.course_title,
     "",
-    response.impact_score,
+    response.course_completion,
   ];
 
   const [

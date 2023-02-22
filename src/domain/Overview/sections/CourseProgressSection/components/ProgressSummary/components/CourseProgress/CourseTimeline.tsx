@@ -9,23 +9,23 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 
-export const CourseTimeline = ({title, date, time, dept}: CourseItemType) => {
+export const CourseTimeline = ({title, progress, time, dept}: CourseItemType) => {
 
     const Separator =( {dept} : {dept:number;} ) => {
 
-        if(dept == 2){
+        if(dept == 0){
             return ( <TimelineSeparator>
                 <TimelineDot variant="outlined"  color="secondary"/>
                 <TimelineConnector style={{ background: '#147ad6' }}/>
             </TimelineSeparator>);
         }else if(dept == 1){
             return ( <TimelineSeparator>
-                <TimelineDot variant="outlined"/>
-                <TimelineConnector/>
+                <TimelineDot variant="outlined" color="secondary"/>
+                <TimelineConnector style={{ background: '#147ad6' }}/>
             </TimelineSeparator>);
         }else{
             return ( <TimelineSeparator>
-                <TimelineDot variant="outlined"/>
+                <TimelineDot variant="outlined" color="secondary"/>
             </TimelineSeparator>);
         }
         
@@ -45,15 +45,15 @@ export const CourseTimeline = ({title, date, time, dept}: CourseItemType) => {
                 <TimelineItem>
                     <Separator dept={dept}/>
                     <TimelineContent>
-                        <Typography variant="subtitle1" component="span" >
+                        <Typography variant="subtitle1" component="span" style={{fontSize:'17px'}}>
                             {title}
                         </Typography>
                         <Typography css={sx.date}>
-                            {date}
+                            {progress}
                         </Typography>
-                        <Typography css={sx.desc} mt={"10px"}>
+                        {/* <Typography css={sx.desc} mt={"10px"}>
                             Task that needs to be done here.
-                        </Typography>
+                        </Typography> */}
                         <Typography css={sx.time}>
                             {time}
                         </Typography>

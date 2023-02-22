@@ -13,13 +13,14 @@ import { FeturedStudentWorkSection } from '../sections/FeturedStudentWorkSection
 import { useOverView } from "./useOverView";
 
 export const OverviewView = () => {
-    const { impacterSocreState } = useOverView();
+    const { impacterSocreState, courseScheduleState, courseProgressState } = useOverView();
+
     return (
         <Stack css={sx.overviewContainer}>
             <ImpacterScoreSection data={impacterSocreState} />
             <Stack direction={'row'} css={sx.CourseContainer}>
-                <CourseProgressSection />
-                <CourseScheduleSection />
+                <CourseProgressSection data={courseProgressState}/>
+                <CourseScheduleSection data={courseScheduleState} />
                 <FeturedStudentWorkSection />
             </Stack>
             <SelfScoresSection />

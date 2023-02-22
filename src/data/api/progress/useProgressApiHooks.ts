@@ -23,3 +23,7 @@ export const useGetStudentWorkbook = (studentId: string, courseId: string) => {
   return useQuery(["student-workbook", studentId], () => ProgressApiService.getStudentWorkbook(studentId, courseId));
 };
 
+export const useGetProgressReports = (studentId: string, courseId: string) => {
+  return useQuery(["progress-reports", studentId], () => ProgressApiService.getProgressReports(studentId, courseId));
+};
+

@@ -5,8 +5,15 @@ import { CourseTimeline } from './CourseTimeline';
 import Image from 'next/image';
 import FullBannerImage from '@/assets/overview/img-CourseProgress.png';
 import Link from '@mui/material/Link';
+import { CourseProgressApiType } from '@/domain/Overview/types/courseProgress.type';
+import { CustomProgress } from '@/common/components/progress';
 
-export const CourseProgress = ({ title, plain }: CourseProgressType) => {
+
+type  DataType = {
+    data: CourseProgressApiType;
+}
+export const CourseProgress = ({data}: DataType) => {
+
     return (
         <Stack css={sx.courseProgressContainer}>
             <CourseProgressImage />
@@ -20,18 +27,32 @@ export const CourseProgress = ({ title, plain }: CourseProgressType) => {
                         letterSpacing='0.3px'
                         css={sx.titleText}
                     >
-                        {title}
+                        {/* 
+                        Course Progress
+                        */}
+                        {data.result?.models.title} 
                     </Typography>
                 </Stack>
-                {plain.map((it, index) => (
-                    <CourseTimeline
-                        key={index}
-                        title={it.title}
-                        date={it.date}
-                        time={it.time}
-                        dept={it.dept}
-                    />
-                ))}
+
+                {
+                    (!data.result || data.isLoading) ?
+                    (
+                        <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
+                            <CustomProgress />
+                        </Stack>
+                    )
+                    :
+                        data.result.models.plain.map((it, index) => (
+                            <CourseTimeline
+                                key={index}
+                                title={it.title}
+                                progress={it.progress}
+                                time={it.time}
+                                dept={it.dept}
+                            />
+                        ))
+                }
+
                 <Link href='/progress' css={sx.viewAllText}>
                     View all {'>'}
                 </Link>

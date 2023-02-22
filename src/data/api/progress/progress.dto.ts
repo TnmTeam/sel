@@ -4,6 +4,8 @@ export type BannerResponse = {
   activities_completed: number;
   video_upload: number;
   hours_spent: number;
+  course_title: string;
+  course_completion: number;
 };
 
 export type CourseResponse = {
@@ -52,4 +54,8 @@ export type Unit = {
 
 export type StudentWorkbookResponse = { 
   workbook_id: string;
+};
+
+export type ProgressReportsResponse = { 
+  popupList: string[];
 };

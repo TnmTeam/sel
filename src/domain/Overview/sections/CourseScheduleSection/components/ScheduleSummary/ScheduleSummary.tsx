@@ -2,12 +2,9 @@ import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
 import dayjs, { Dayjs } from 'dayjs';
 import { ScheduleDatePicker } from './components/ScheduleDatePicker/ScheduleDatePicker';
+import { ScheduleSummaryType } from './components/ScheduleDatePicker/types/ScheduleDatePicker.type';
 
-export interface ScheduleSummaryType {
-    picDate: dayjs.Dayjs | null;
-    changeDate: (newDate: dayjs.Dayjs | null) => void;
-    handleClickOpen: () => void;
-}
+
 export const ScheduleSummary = ({picDate, changeDate, handleClickOpen}: ScheduleSummaryType) => {
 
     return (

@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import workbook from "@/assets/progress/report/workbook.png";
 import Image from "next/image";
-import { StudentWorkbookType } from "../../../types/banner.type";
+import { StudentWorkbookType } from "../../../types/report.type";
 import { CustomProgress } from "@/common/components/progress";
 import { Stack } from "@mui/material";
 import dynamic from 'next/dynamic';
