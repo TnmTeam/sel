@@ -7,6 +7,8 @@ import NativeSelect from '@mui/material/NativeSelect';
 import { StudentListType, StudentType } from './types/studentCourse.type';
 import InputBase from '@mui/material/InputBase';
 import { axiosClient } from '@/data/client/client';
+import { courseArrayState, courseMapState, studentArrayState, studentMapState } from '@/common/atom/Atom';
+import { useSetRecoilState, useRecoilValue, } from 'recoil';
 
 interface DataType {
     data: StudentListType;
@@ -19,7 +21,14 @@ export const StudentCourse = ({ data }: DataType) => {
 };
 
 const Student = ({ studentList }: StudentListType) => {
+    const studentArrayHandlerState = useSetRecoilState(studentArrayState);
+    const courseArrayHandlerState = useSetRecoilState(courseArrayState);
 
+    const studentMapHandlerState = useSetRecoilState(studentMapState);
+    const courseMapHandlerState = useSetRecoilState(courseMapState);
+    const currenCourseList = useRecoilValue(courseArrayState);
+    const currenStudentList = useRecoilValue(studentArrayState);
+    
     const [ courseList, setCourseList ] = useState<any[]>([]);
 
     const handleChange = async (event: { target: { value: string } }) => {
@@ -36,18 +45,24 @@ const Student = ({ studentList }: StudentListType) => {
             const response = await axiosClient.post(`/navigation/course-list`, param);
 
             let courseList = [];
-            localStorage.setItem('response', response.data.toString);
+            let courseHandlerList = [];
+            let studentHandlerList = [];
             
             for(let i = 0 ; i < response.data.length ; i ++){
                 
                 let course = {
-                    course : response.data[i],
                     courseId : response.data[i].course_id.toString(),
                     courseTitle : response.data[i].lw_courses.title.toString()
                 };
-
+                let courseMap = response.data[i].lw_courses;
+                let studentMap = response.data[i].students;
                 courseList.push(course);
+                courseHandlerList.push(courseMap);
+                studentHandlerList.push(studentMap);
             }
+
+            courseArrayHandlerState(courseHandlerList);
+            studentArrayHandlerState(studentHandlerList);
             
             setCourseList(response.data.length > 0 ? courseList : []); 
             console.log(response);
@@ -62,10 +77,14 @@ const Student = ({ studentList }: StudentListType) => {
 
     const handleChange2 = (event: { target: { value: string } }) => {
         
-       var test = localStorage.getItem('response');
+        let courseId = event.target.value;
+        for(var i = 0 ; i < currenCourseList.length ; i++){
+            if(currenCourseList[i].course_id == courseId){
+                courseMapHandlerState(currenCourseList[i]);
+                studentMapHandlerState(currenStudentList[i]);
+            }
+        }
 
-       console.log(test);
-       console.log(event);
 
     };
  
@@ -109,7 +128,7 @@ const Student = ({ studentList }: StudentListType) => {
                 >
                     <option aria-label="None" value=""></option>
                     {courseList.map((it, index) => (
-                        <CourseOption key={index} course={it.course} courseId={it.courseId} courseTitle={it.courseTitle}  />
+                        <CourseOption key={index} courseId={it.courseId} courseTitle={it.courseTitle}  />
                     )
                     )}
                     
@@ -124,18 +143,11 @@ const StudentOption = ({studentId, studentName}: StudentType) => {
  return <option value={studentId} > {studentName}</option>
 }
 interface courseProps {
-    course: courseProps2;
     courseTitle: string;
     courseId: string;
 }
 
-interface courseProps2 {
-    
-    courseTitle: string;
-    courseId: string;
-}
-
-const CourseOption = ({ course, courseTitle, courseId } : courseProps) => {
+const CourseOption = ({ courseTitle, courseId } : courseProps) => {
  return <option value={courseId} > {courseTitle}</option>
 }
 
