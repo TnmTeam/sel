@@ -1,9 +1,17 @@
 import { useGetSuggestedCourse } from "@/data/api/progress/useProgressApiHooks";
 import { CardType } from "../types/suggest.type";
 import { SuggestCourseUnits } from "@/data/api/progress/progress.dto";
+import { useRecoilValue } from 'recoil';
+import { courseMapState, studentMapState } from "@/common/atom/Atom";
 
 export const useSuggestSection = () => {
-  const { data, isLoading } = useGetSuggestedCourse("test001");
+  const currenCourseMap:any = useRecoilValue(courseMapState);
+  const currenStudentMap:any = useRecoilValue(studentMapState);
+
+  var studentId     = currenStudentMap.lw_id;
+  var courseId      = currenCourseMap.course_id;
+
+  const { data, isLoading } = useGetSuggestedCourse(courseId);
 
   if (!data) {
     return {
@@ -14,7 +22,8 @@ export const useSuggestSection = () => {
     };
   }
 
-  const response = data.responseData;
+  //const response = data.responseData;
+  const response = data;
   const [cards] = [response];
 
   return {
@@ -27,9 +36,12 @@ export const useSuggestSection = () => {
 
 const mappingToCards = (list: SuggestCourseUnits): CardType[] => {
   const result = list.map((it) => ({
-    title: it.title,
-    desc: it.description,
-    image: it.thumbnail,
+    id: it.id,
+    courseTitle: it.course_title,
+    courseThumbnail: it.course_thumbnail,
+    courseDescription: it.course_description,
+    numberInSequence: it.number_in_sequence,
+    courseFamily: it.course_family,
   }));
 
   return result;
