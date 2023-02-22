@@ -8,4 +8,3 @@ export type CourseProgressApiType = {
 export type CourseProgressApiData = {
     models: CourseProgressType;
 };
-

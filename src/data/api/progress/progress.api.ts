@@ -1,8 +1,10 @@
 import { axiosClient } from "@/data/client/client";
 import {
   BannerResponse,
-  CourseResponse,
-  SuggestCourseResponse,
+  //CourseResponse,
+  CourseUnitList,
+  //SuggestCourseResponse,
+  SuggestCourseUnits,
   UnitResponse,
   StudentWorkbookResponse,
   ProgressReportsResponse,
@@ -25,21 +27,44 @@ class ProgressApiService {
     return response.data;
   }
 
-  async getCourse(id: string): Promise<CourseResponse> {
-    const response = await axiosClient.post(`/getCourse?id=${id}`);
-
+  //async getCourse(id: string): Promise<CourseResponse> {
+  async getCourseUnitList(studentId: string, courseId: string): Promise<CourseUnitList> {
+    console.log("getCourseUnitList Start");
+    var param = { 
+        student_id : studentId, 
+        course_id : courseId 
+    };
+    
+    const response = await axiosClient.post(`/progress/course-unit-list`, param);
+    //console.log("getCourseUnitList response");
+    //console.log(response.data);
     return response.data;
   }
 
-  async getSuggestedCourse(id: string): Promise<SuggestCourseResponse> {
-    const response = await axiosClient.post(`/getSuggestedCourse?id=${id}`);
-
+  //async getSuggestedCourse(id: string): Promise<SuggestCourseResponse> {
+  async getSuggestedCourse(courseId: string): Promise<SuggestCourseUnits> {
+    var param = { 
+      course_id : courseId
+    };
+    //const response = await axiosClient.post(`/getSuggestedCourse?id=${id}`);
+    const response = await axiosClient.post(`/progress/suggested-courses`, param);
+    console.log("getSuggestedCourse response");
+    console.log(response.data);
     return response.data;
   }
 
-  async getUnit(index: number): Promise<UnitResponse> {
-    const response = await axiosClient.post(`/getUnit?index=${index}`);
-
+  //async getUnit(index: number): Promise<UnitResponse> {
+  async getUnitItemList(courseId: string,sectNum: string): Promise<UnitResponse> {
+    console.log("getUnitItemList Start");
+    var param = { 
+      course_id : courseId, 
+      sect_num : sectNum 
+    };
+    console.log("getUnitItemList param");
+    console.log(param);
+    const response = await axiosClient.post(`/progress/unit-item-list`, param);
+    console.log("getUnitItemList response");
+    console.log(response.data);
     return response.data;
   }
 

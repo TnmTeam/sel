@@ -27,9 +27,9 @@ export const SuggestSection = ({ data }: DataType) => {
         {data.result.map((it, index) => (
           <SuggestCard
             key={index}
-            image={it.image}
-            title={it.title}
-            desc={it.desc}
+            image={it.courseThumbnail}
+            title={it.courseTitle}
+            desc={(it.courseDescription).length > 400?(it.courseDescription).substring(0, 400)+"......":it.courseDescription}
             onClick={() => null}
           />
         ))}
