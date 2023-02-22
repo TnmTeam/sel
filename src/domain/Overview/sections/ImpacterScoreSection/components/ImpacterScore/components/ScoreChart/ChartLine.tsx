@@ -14,7 +14,7 @@ export const ChartLine = ({ rate }: ChartType) => {
     const [point, setPoint] = useState(startPoint);
 
     useEffect(() => {
-        setPoint(startPoint + (rate/10*Angle));
+        setPoint(startPoint + (rate/100*Angle));
     });
 
     return <Image css={stLine(point)} src={ChartLineImage} alt={'ChartLine'} />;

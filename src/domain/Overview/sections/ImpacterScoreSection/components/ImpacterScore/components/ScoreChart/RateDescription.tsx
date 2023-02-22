@@ -44,7 +44,7 @@ export const RateDescription = ({ rate, studentName }: ChartType) => {
                     color='white'
                     letterSpacing={'-1.75px'}
                 >
-                    {rate} / 10
+                    {rate } / 100
                 </Typography>
             </Stack>
         </Stack>

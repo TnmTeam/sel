@@ -1,7 +1,7 @@
 import { useGetImpacterScore } from "@/data/api/overview/useOverviewApiHooks";
 
 export const useImpacterScoreSection = () => {
-  const { data, isLoading } = useGetImpacterScore("6337a6e9f62401d9f405913c", "7dlcnlym");
+  const { data, isLoading } = useGetImpacterScore("6337a6e9f62401d9f405913c", "you1001");
   
   if (!data) {
     return {
@@ -23,7 +23,7 @@ export const useImpacterScoreSection = () => {
     impacterSocreState: {
       result: {
         impacterScore: {
-            rate: rate,
+            rate: rate * 10,
             studentName: studentName,
             url: url,
         },
