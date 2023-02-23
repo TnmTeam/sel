@@ -29,4 +29,25 @@ export type DetailCourseType = {
   done: boolean;
   contentUrl: string;
   unitId: string;
+  studentId: string;
+  courseId: string;
+  studentIdNum: number;
+  sectNum: string;
 };
+
+export type ContentResponse1 = {
+  contentList: ContentItem1[];
+} | null;
+
+export type ContentItem1 = {
+  id: number;
+  student_id: string;
+  course_id: string;
+  unit_id: string;
+  response_id: string;
+  block_id: string;
+  type: string;
+  question: string;
+  answer: string;
+  created_at: string;
+} | null;

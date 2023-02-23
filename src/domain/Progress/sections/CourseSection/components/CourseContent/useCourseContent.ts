@@ -1,5 +1,3 @@
-//import { Unit } from "@/data/api/progress/progress.dto";
-//import { useGetUnit } from "@/data/api/progress/useProgressApiHooks";
 import { useGetUnitItem } from "@/data/api/progress/useProgressApiHooks";
 import { UnitItem } from "@/data/api/progress/progress.dto";
 import {
@@ -11,18 +9,20 @@ import { useRecoilValue } from 'recoil';
 import { courseMapState, studentMapState } from "@/common/atom/Atom";
 
 export const useCourseContent = (models: CourseType[]) => {
+  
   const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
 
-  var studentId     = currenStudentMap.lw_id;
-  var courseId      = currenCourseMap.course_id;
-  var studentIdNum  = currenStudentMap.id;
-  var sectNum       = '';
+  const studentId     = currenStudentMap.lw_id;
+  const courseId      = currenCourseMap.course_id;
+  const studentIdNum  = currenStudentMap.id;
 
   // 강의
   const courses = models;
   const [course, setCourse] = useState<CourseType | null>(null);
   const courseIndex = course?.index ?? 0;
+
+  const sectNum       = course?.sect_num ?? '';
 
   // 소강의
   const [detailCourse, setDetailCourse] = useState<DetailCourseType | null>(
@@ -36,6 +36,7 @@ export const useCourseContent = (models: CourseType[]) => {
       //console.log("useCourseContent useEffect courseIndex : "+courseIndex);
       if (!courseIndex) return;
       //console.log("useCourseContent useEffect courseIndex2 : "+courseIndex);
+      //console.log("useCourseContent useEffect sectNum : "+sectNum);
       mutate();
       //console.log("useEffect data");
       //console.log(data);
@@ -45,15 +46,10 @@ export const useCourseContent = (models: CourseType[]) => {
   const handleSetCourse = (selectedCourse: CourseType) => {
     //console.log("useCourseContent handleSetCourse selectedCourse");
     //console.log(selectedCourse);
-    sectNum  = selectedCourse.sect_num;
-    //console.log("useCourseContent handleSetDetailCourse sectNum : "+sectNum);
     setCourse(selectedCourse);
-    //console.log("useCourseContent handleSetCourse course");
-    //console.log(course);
   };
   const handleSetCourseReset = () => {
     //console.log("useCourseContent handleSetCourseReset");
-    sectNum   = '';
     setCourse(null);
   };
 
@@ -70,7 +66,7 @@ export const useCourseContent = (models: CourseType[]) => {
       onCourseClick: handleSetCourse,
     },
     detailCourseState: {
-      courses: mappingToDetailCourses(detailCourses),
+      courses: mappingToDetailCourses(detailCourses, studentId, courseId, studentIdNum, sectNum),
       course: detailCourse,
       onCourseClick: handleSetDetailCourse,
     },
@@ -80,7 +76,7 @@ export const useCourseContent = (models: CourseType[]) => {
 
 // 소강의 대이터를 ui dto에 맞게 매핑
 const mappingToDetailCourses = (
-  list: UnitItem[] | null
+  list: UnitItem[] | null, studentId:string, courseId:string, studentIdNum:number, sectNum:string
 ): DetailCourseType[] | null => {
   //console.log("mappingToDetailCourses list");
   //console.log(list);
@@ -96,6 +92,10 @@ const mappingToDetailCourses = (
     done: it.keep_data,
     contentUrl: it.course_link,
     unitId: it.unit_id,
+    studentId: studentId,
+    courseId: courseId,
+    studentIdNum: studentIdNum,
+    sectNum: sectNum,
   }));
 
   return result;

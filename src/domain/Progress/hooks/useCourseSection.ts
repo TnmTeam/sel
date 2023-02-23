@@ -7,10 +7,9 @@ export const useCourseSection = () => {
   const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
 
-  var studentId     = currenStudentMap.lw_id;
-  var courseId      = currenCourseMap.course_id;
-  console.log("useCourseSection currenStudentMap");
-  console.log(currenStudentMap);
+  const studentId     = currenStudentMap.lw_id;
+  const courseId      = currenCourseMap.course_id;
+  
   const { data, isLoading } = useGetCourseUnitList(studentId, courseId);
 
   if (!data) {

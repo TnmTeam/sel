@@ -8,9 +8,9 @@ export const useSuggestSection = () => {
   const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
 
-  var studentId     = currenStudentMap.lw_id;
-  var courseId      = currenCourseMap.course_id;
-
+  const studentId     = currenStudentMap.lw_id;
+  const courseId      = currenCourseMap.course_id;
+  //console.log("useSuggestSection courseId "+courseId);
   const { data, isLoading } = useGetSuggestedCourse(courseId);
 
   if (!data) {
