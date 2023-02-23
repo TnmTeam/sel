@@ -13,6 +13,7 @@ import {
     courseMapState,
     studentArrayState,
     studentMapState,
+    loginInfo,
 } from '@/common/atom/Atom';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { Button } from '@mui/material';
@@ -30,12 +31,21 @@ interface DataType {
     data: StudentListType;
 }
 
-export const StudentCourse = ({ data }: DataType) => {
-    return (
-        <Stack>
-            <Student studentList={data.studentList} />
-        </Stack>
-    );
+export const StudentCourse = ({ data }: DataType) => {    
+
+    var loginInfoMap:any = useRecoilValue(loginInfo);
+    if(loginInfoMap.email == undefined )
+    {
+        location.href="/";
+    }
+    else
+    {
+        return (
+            <Stack>
+                <Student studentList={data.studentList} />
+            </Stack>
+        );
+    }
 };
 
 const Student = ({ studentList }: StudentListType) => {
