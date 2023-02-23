@@ -57,8 +57,9 @@ const dayNames = [
 
 
     return (
-        <Stack css={sx.scheduleDetailList}>
+        <Stack css={sx.scheduleDetailList}>            
             <Stack css={sx.scheduleBox}>
+            <div css={sx.comingSoon}>Coming Soon</div>
                 <Stack css={sx.popupDate}>
                     {dayNumber} {dayName}
                 </Stack>
@@ -71,7 +72,6 @@ const dayNames = [
                     />
                 ))}
                 */}
-
                 <ScheduleDetailBox
                     title={"Lesson 2 Due"}
                     time={"9:00am"}
@@ -115,5 +115,16 @@ const sx = {
         /*
         margin-top: 108px;
         */
-    `
+    `,    
+    comingSoon: css`
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 50px;
+        color: white;
+        position: absolute;
+        width: 380px;
+        line-height: 462px;
+        text-align: center;        
+        z-index: 999;
+        margin-left: -35px;
+    `,
 };
