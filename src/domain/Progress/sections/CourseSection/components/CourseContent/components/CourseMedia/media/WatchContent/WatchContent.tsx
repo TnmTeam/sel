@@ -39,11 +39,13 @@ export const WatchContent = ({ selectedDetailCourse }: CourseMediaType) => {
           {playBtnVisiblity && <VideoPlayButton />}
         </div>
         <video
+          key={url}
           ref={ref}
           css={sx.video}
           controls={!playBtnVisiblity}
           preload="auto"
           onPlay={hidePlayBtn}
+          autoPlay
         >
           <source src={url} type="video/mp4" />
         </video>
