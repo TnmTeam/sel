@@ -2,15 +2,14 @@ import { Stack } from "@mui/material";
 import { css } from "@emotion/react";
 import { ActivityContent, ReadContent, WatchContent } from "./media";
 import { DetailCourseType } from "@/domain/Progress/types/course.type";
-//import { useGetUnitItemContent1, useGetUnitItemContent2 } from "@/data/api/progress/useProgressApiHooks";
-import { useState } from "react";
-import { useRecoilValue } from 'recoil';
-import { courseMapState, studentMapState } from "@/common/atom/Atom";
+import { useEffect, useState } from "react";
+import { ContentResponse1, ContentResponse2 } from "@/data/api/progress/progress.dto";
+import { useGetUnitItemContent1, useGetUnitItemContent2 } from "@/data/api/progress/useProgressApiHooks";
 
-var studentIdNum  = 283;
-var studentId     = '636190c367b952049905f9b8';
-var courseId      = '7dlc1002';
-var sectNum       = '7dlc1002_S0';
+var studentIdNum  = 0;
+var studentId     = '';
+var courseId      = '';
+var sectNum       = '';
 var unitIds       = '';
 
 type CourseMediaType = {
@@ -18,10 +17,18 @@ type CourseMediaType = {
 };
 
 export const CourseMedia = ({ selectedDetailCourse }: CourseMediaType) => {
+
+  if(selectedDetailCourse) {
+    studentIdNum  = selectedDetailCourse.studentIdNum;
+    studentId     = selectedDetailCourse.studentId;
+    courseId      = selectedDetailCourse.courseId;
+    sectNum       = selectedDetailCourse.sectNum;
+  }
+
   return (
     <Stack css={sx.mediaContainer}>
       {selectedDetailCourse &&
-        getMediaCOntentByCourseType(
+        getMediaContentByCourseType(
           selectedDetailCourse.type,
           selectedDetailCourse.unitId
 
@@ -37,7 +44,7 @@ const sx = {
   `,
 };
 
-const getMediaCOntentByCourseType = (type: string, unitId: string) => {
+const getMediaContentByCourseType = (type: string, unitId: string) => {
   //const courseType = courseTitle.substring(0, 1);
   /*
   switch (courseType) {
@@ -55,17 +62,32 @@ const getMediaCOntentByCourseType = (type: string, unitId: string) => {
   }
   */
   unitIds = unitId
-  console.log("CourseMedia getMediaCOntentByCourseType type : "+type);
-  console.log("CourseMedia getMediaCOntentByCourseType unitId : "+unitIds);
-  switch (type) {
-    case "embed":
-      //const { data, isLoading } = useGetUnitItemContent2(studentIdNum, unitId);
-      //return <WatchContent url={url} />;
-    case "assessmentV2":
-      //mutate();
-      return <ActivityContent />;
-
-    default:
-      return <ActivityContent />;
+  //console.log("CourseMedia getMediaContentByCourseType studentIdNum : "+studentIdNum);
+  console.log("CourseMedia getMediaContentByCourseType studentId : "+studentId);
+  console.log("CourseMedia getMediaContentByCourseType courseId : "+courseId);
+  console.log("CourseMedia getMediaContentByCourseType unitId : "+unitIds);
+  if(type) {
+    switch (type) {
+      //case "embed":
+      //  console.log("CourseMedia getMediaContentByCourseType type : "+type);
+      //  var data2 = useGetUnitItemContent2(studentIdNum, unitIds);
+      //  console.log("CourseMedia getMediaContentByCourseType embed data2");
+      //  console.log(data2);
+        //return <WatchContent url={url} />;
+      case "assessmentV2":
+        //console.log("CourseMedia getMediaContentByCourseType type : "+type);
+        //const data = useGetUnitItemContent1(studentId, courseId, unitIds);
+        //console.log("CourseMedia getMediaContentByCourseType assessmentV2 data");
+        //console.log(useGetUnitItemContent1(studentId, courseId, unitIds));
+        //return <ActivityContent models={data1} />;
+        return <ActivityContent />;
+      default:
+        //console.log("CourseMedia getMediaContentByCourseType type : "+type);
+        //var data3 = useGetUnitItemContent1(studentId, courseId, unitIds);
+        //console.log("CourseMedia getMediaContentByCourseType default data3");
+        //console.log(data3);
+        //return <ActivityContent models={data1} />;
+        return <ActivityContent />;
+    }
   }
 };

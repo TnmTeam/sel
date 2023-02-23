@@ -2,10 +2,16 @@ import { Colors } from "@/common/themes/Color";
 import { css } from "@emotion/react";
 import { Stack, Typography } from "@mui/material";
 import { AnswerItem } from "./AnswerItem";
+import { ContentResponse1 } from "@/domain/Progress/types/course.type";
 
-export const ActivityContent = () => {
+//type DataType = {
+//  models: ContentResponse1;
+//};
+
+//export const ActivityContent = ({ models }: DataType) => {
+  export const ActivityContent = () => {
   const models = {
-    list: [
+    contentList: [
       {
         question: "Talents are something you're born with.",
         answer: "Growth Mindset",
@@ -30,6 +36,7 @@ export const ActivityContent = () => {
       },
     ],
   };
+
   return (
     <Stack css={sx.root}>
       <Stack css={sx.container}>
@@ -43,7 +50,7 @@ export const ActivityContent = () => {
           {"Question & Answers"}
         </Typography>
         <Stack spacing={"20px"}>
-          {models.list.map((it, index) => (
+          {models.contentList.map((it, index) => (
             <AnswerItem key={index} question={it.question} answer={it.answer} />
           ))}
         </Stack>

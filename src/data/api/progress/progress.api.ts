@@ -6,6 +6,8 @@ import {
   //SuggestCourseResponse,
   SuggestCourseUnits,
   UnitResponse,
+  ContentItem1,
+  ContentItem2,
   StudentWorkbookResponse,
   ProgressReportsResponse,
 } from "./progress.dto";
@@ -48,23 +50,20 @@ class ProgressApiService {
     };
     //const response = await axiosClient.post(`/getSuggestedCourse?id=${id}`);
     const response = await axiosClient.post(`/progress/suggested-courses`, param);
-    console.log("getSuggestedCourse response");
-    console.log(response.data);
+    //console.log("getSuggestedCourse response");
+    //console.log(response.data);
     return response.data;
   }
 
   //async getUnit(index: number): Promise<UnitResponse> {
   async getUnitItemList(courseId: string,sectNum: string): Promise<UnitResponse> {
-    console.log("getUnitItemList Start");
     var param = { 
       course_id : courseId, 
       sect_num : sectNum 
     };
-    console.log("getUnitItemList param");
-    console.log(param);
+    
     const response = await axiosClient.post(`/progress/unit-item-list`, param);
-    console.log("getUnitItemList response");
-    console.log(response.data);
+    
     return response.data;
   }
 
@@ -88,7 +87,7 @@ class ProgressApiService {
     return response.data;
   }
   
-  async getUnitItemContent1(studentId: string, courseId: string, unitId:string ): Promise<UnitResponse> {
+  async getUnitItemContent1(studentId: string, courseId: string, unitId:string ): Promise<ContentItem1> {
     console.log("getUnitItemContent1 Start");
     var param = { 
       student_id : studentId, 
@@ -103,7 +102,7 @@ class ProgressApiService {
     return response.data;
   }
 
-  async getUnitItemContent2(studentIdNum: number, unitId: string): Promise<UnitResponse> {
+  async getUnitItemContent2(studentIdNum: number, unitId: string): Promise<ContentItem2> {
     console.log("getUnitItemContent2 Start");
     var param = { 
       student_id_num : studentIdNum, 
