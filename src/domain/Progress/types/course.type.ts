@@ -36,8 +36,8 @@ export type DetailCourseType = {
 };
 
 export type ContentResponse1 = {
-  contentList: ContentItem1[];
-} | null;
+  contentList: ContentItem1;
+};
 
 export type ContentItem1 = {
   id: number;
@@ -50,4 +50,18 @@ export type ContentItem1 = {
   question: string;
   answer: string;
   created_at: string;
-} | null;
+}[];
+
+export type ContentItem2 = {
+  id: number;
+  event_id: string;
+  lw_unit: string;
+  question_id: string;
+  form_id: string;
+  created_at: string;
+  answer_type: string;
+  title: string;
+  question: string;
+  content:  string;
+  student_id: number;
+}[];

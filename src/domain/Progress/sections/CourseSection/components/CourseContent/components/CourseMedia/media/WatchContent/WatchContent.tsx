@@ -1,10 +1,31 @@
+import { useGetUnitItemContent2 } from "@/data/api/progress/useProgressApiHooks";
+import { DetailCourseType } from "@/domain/Progress/types/course.type";
 import { css } from "@emotion/react";
 import { Stack } from "@mui/material";
-import { MediaType } from "../media.type";
 import { useVideoControl } from "./useVideoControl";
 import { useVideoPlayButton, VideoPlayButton } from "./VideoPlayButton";
 
-export const WatchContent = ({ url }: MediaType) => {
+type CourseMediaType = {
+  selectedDetailCourse: DetailCourseType | null;
+};
+
+export const WatchContent = ({ selectedDetailCourse }: CourseMediaType) => {
+  var studentIdNum  = 0;
+  var unitIds       = '';
+
+  if(selectedDetailCourse) {
+    studentIdNum  = selectedDetailCourse.studentIdNum;
+    unitIds       = selectedDetailCourse.unitId;
+  }
+
+  var data = useGetUnitItemContent2(studentIdNum, unitIds);
+  var temp = data?.data;
+  
+  var url = '';
+  if(temp){
+    url = temp[0]?.content;
+  }
+  //console.log("WatchContent url : "+url);
   const { ref, toggleVideoPlay } = useVideoControl();
   const { playBtnVisiblity, hidePlayBtn } = useVideoPlayButton();
 

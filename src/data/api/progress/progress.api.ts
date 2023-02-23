@@ -93,7 +93,7 @@ class ProgressApiService {
     var param = { 
       student_id : studentId, 
       course_id : courseId, 
-      sect_num : unitId 
+      unit_id : unitId 
     };
     //console.log("getUnitItemContent1 param");
     //console.log(param);
@@ -114,6 +114,7 @@ class ProgressApiService {
     const response = await axiosClient.post(`/progress/unit-item-videoask`, param);
     //console.log("getUnitItemContent2 response");
     //console.log(response.data);
+
     return response.data;
   }
 

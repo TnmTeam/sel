@@ -25,11 +25,11 @@ export const useGetUnitItem = (courseId: string, sectNum: string) => {
 };
 
 export const useGetUnitItemContent1 = (studentId: string, courseId: string, unitId: string) => {
-  return useMutation(["unit-item-responses", unitId], () => ProgressApiService.getUnitItemContent1(studentId, courseId, unitId));
+  return useQuery(["unit-item-responses", unitId], () => ProgressApiService.getUnitItemContent1(studentId, courseId, unitId));
 };
 
 export const useGetUnitItemContent2 = (studentIdNum: number, unitId: string) => {
-  return useMutation(["unit-item-videoask", unitId], () => ProgressApiService.getUnitItemContent2(studentIdNum, unitId));
+  return useQuery(["unit-item-videoask", unitId], () => ProgressApiService.getUnitItemContent2(studentIdNum, unitId));
 };
 
 export const useGetStudentWorkbook = (studentId: string, courseId: string) => {
