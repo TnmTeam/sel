@@ -11,10 +11,30 @@ import { addDays } from 'date-fns';
 
 export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDatePickerType) => {
     
+    let startDate = picDate?.startDate;
+    let endDate = picDate?.endDate;
+    let dateFlag = false;
+
+    if( !(startDate instanceof Date && isFinite(startDate.getTime())) )
+    {
+        // API Date value null 
+        startDate = new Date();
+        dateFlag = true;
+    }
+    else
+    {
+        dateFlag = false;
+    }
+     
+
+
+
+
+
     const [state, setState] = useState(
         {
-          startDate: picDate?.startDate,
-          endDate: picDate?.endDate,
+          startDate: startDate,
+          endDate: endDate,
           key: picDate?.key
         }
     );
@@ -32,7 +52,8 @@ export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDa
     }
 
     const disabledDay = () => {
-        return disabledYN;
+        // return disabledYN;
+        return dateFlag;
     }
 
     return (
@@ -70,7 +91,7 @@ export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDa
                 rangeColors={["#147AD6"]}
                 showMonthAndYearPickers={false}
                 // showMonthArrow={false}
-                // disabledDay={disabledDay}
+                disabledDay={disabledDay}
             />
 
                 <Stack 

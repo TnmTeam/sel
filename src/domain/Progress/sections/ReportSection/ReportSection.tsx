@@ -9,9 +9,6 @@ type DataType = {
 
 export const ReportSection = ({ data }: DataType) => {
 
-  console.log("ReportSection.tsx");
-  console.log(data);
-
   return (
     <Stack css={sx.root} direction="row">
       <div>
