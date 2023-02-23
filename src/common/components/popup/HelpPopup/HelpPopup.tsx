@@ -17,11 +17,12 @@ export const HelpPopup = () => {
   const id = open ? "simple-popper" : undefined;
 
   return (
-    <Stack>
+    <Stack>            
       <Avatar aria-describedby={id} onClick={handleClick} css={sx.popup}>
         <ModeCommentIcon fontSize="large" />
       </Avatar>
       <Popper id={id} open={open} anchorEl={anchorEl} placement="top-end">
+        <div css={sx.comingSoon}>Coming Soon</div>
         <MainView />
       </Popper>
     </Stack>
@@ -41,4 +42,15 @@ const sx = {
     margin: 0 auto;
     border: 1px solid;
   `,
+    comingSoon: css`
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 50px;
+        color: white;
+        position: absolute;
+        width: 400px;
+        line-height: 600px;
+        text-align: center;
+        border-radius: 10px;
+        z-index: 999;
+    `,
 };
