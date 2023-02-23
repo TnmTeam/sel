@@ -2,16 +2,25 @@ import {
   useGetStudentWorkbook, 
   useGetProgressReports 
 } from "@/data/api/progress/useProgressApiHooks";
+import { useRecoilValue } from 'recoil';
+import { courseMapState, studentMapState } from "@/common/atom/Atom";
 
-const studentId = "636190c367b952049905f9b8";
-const courseId = "7dlc1002";
 
 export const useReportSection = () => {
+  // const studentId = "6337a6e9f62401d9f405913c";
+  // const courseId = "7dlcnlym";
+  
+  const currenCourseMap:any = useRecoilValue(courseMapState);
+  const currenStudentMap:any = useRecoilValue(studentMapState);
+  
+  const studentId = currenStudentMap.lw_id;
+  const courseId = currenCourseMap.course_id;
+
   return {
     reportState:{
-      progressReportsState: useGetProgressReportsState(),
+      progressReportsState: useGetProgressReportsState(studentId, courseId),
       recentUploadsState: null,
-      studentWrokbookState: useStudentWrokbookState()
+      studentWrokbookState: useStudentWrokbookState(studentId, courseId)
     }
   };
 
@@ -19,7 +28,7 @@ export const useReportSection = () => {
 };
 
 
-const useStudentWrokbookState = () => {
+const useStudentWrokbookState = (studentId: string, courseId: string) => {
   const { data, isLoading } = useGetStudentWorkbook(studentId, courseId);
   
   if (!data) {
@@ -31,8 +40,10 @@ const useStudentWrokbookState = () => {
 
   const response = data;
 
+  
   // workbook
   const workbookId = response?.workbook_id;
+  console.log("ProgressReports/workbookId(url) ", workbookId);
 
   return {
     result: {
@@ -43,7 +54,7 @@ const useStudentWrokbookState = () => {
 }
 
 
-const useGetProgressReportsState = () => {
+const useGetProgressReportsState = (studentId: string, courseId: string) => {
   const { data, isLoading } = useGetProgressReports(studentId, courseId);
   
   if (!data) {
@@ -55,7 +66,7 @@ const useGetProgressReportsState = () => {
 
   const popupList = data;
 
-  // console.log("list rsp ", popupList);
+  console.log("ProgressReports/popupList ", popupList);
 
   return {
     result: {

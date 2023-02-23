@@ -48,6 +48,10 @@ const sx = {
         position: relative;
         overflow: hidden;
     `,
+    notificationsContainer: css`
+        width: 450px;
+        height: 580px;
+    `
 };
 
 export interface NotificationDialogProps {
@@ -69,29 +73,31 @@ function NotificationDialog(props: NotificationDialogProps) {
             fullWidth={true}
             maxWidth={'xs'}
             scroll='paper'
-        >              
-            <DialogActions>
-                <Button onClick={handleClose}>
-                <CloseIcon></CloseIcon></Button>
-            </DialogActions>
-            <DialogTitle sx={{
-                mt: "-55px",
-                fontSize: "18pt",
-                }}>Notifications</DialogTitle>
-            <DialogContent>
-                <DialogContentText ml = {-2}>
-                    <NotificationDialogContent/>
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button sx={{
-                    mt : "-20px",
-                    color: "#147AD6",
-                    textTransform: "initial", 
-                    fontSize: "14pt",
-                    marginRight: "250pt"
-                }}  href="/account">View All</Button>
-            </DialogActions>
+        >
+            <Stack css={sx.notificationsContainer}>
+                <DialogActions>
+                    <Button onClick={handleClose}>
+                    <CloseIcon></CloseIcon></Button>
+                </DialogActions>
+                <DialogTitle sx={{
+                    mt: "-55px",
+                    fontSize: "18pt",
+                    }}>Notifications</DialogTitle>
+                <DialogContent>
+                    <DialogContentText ml = {-2}>
+                        <NotificationDialogContent/>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button sx={{
+                        mt : "-20px",
+                        color: "#147AD6",
+                        textTransform: "initial", 
+                        fontSize: "14pt",
+                        marginRight: "250pt"
+                    }}  href="/account">View All</Button>
+                </DialogActions>
+            </Stack>
         </Dialog>
     );
 }

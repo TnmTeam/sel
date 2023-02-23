@@ -20,7 +20,7 @@ export const StudentWorkbook = ({data}: DataType) => {
   return (
     <Stack css={sx.container}>
       <Typography css={sx.title}>Student Workbook</Typography>
-      
+
       {
         !data.result || data.isLoading ?
         (
@@ -30,20 +30,41 @@ export const StudentWorkbook = ({data}: DataType) => {
         )
         : 
         (
-          <ReactGoogleSlides
-            width={675} 
-            height={990}
-            slidesLink={data.result.workbookId}
-            position={1}
-            slideDuration={10}
-            showControls={true}     // Toggles the slideshow controls at the bottom of the screen 
-          />
+          data.result?.workbookId == undefined ?
+          (
+            <Stack 
+              style={{
+                width: "675px", 
+                height: "990px",
+                backgroundColor: "#efefef",
+                fontFamily: "DM Sans",
+                fontWeight: "400",
+                fontSize: "20px",
+                textAlign: "center",
+              }}
+            >
+              No Presentation
+            </Stack>
+          )
+          :
+          (
+            <ReactGoogleSlides
+              width={675} 
+              height={990}
+              slidesLink={data.result.workbookId}
+              position={1}
+              slideDuration={10}
+              showControls={true}     // Toggles the slideshow controls at the bottom of the screen 
+            />
+          )
         )
       }
       
     </Stack>
   );
+  
 };
+
 
 const sx = {
   title: css`
