@@ -5,36 +5,85 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box, Stack } from '@mui/system';
 import { Avatar, Divider, IconButton, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
+import { useProfileSection } from "../../hooks/useProfileSection";
+import { StudentProfileResponse } from '@/data/api/account/account.dto';
+import { useRecoilValue } from 'recoil';
+import { studentMapState } from "@/common/atom/Atom";
 
 export interface profileProps {
     photoTitle:string;
     photoUrl:string;
     isEdit: boolean;
+    parentIndex?: number;
+    infomation: StudentProfileResponse;
 }
-
-export interface profileInfoProps{
-    firstName:string;
-    lastName:string;
-    email:string;
-    address:string;
-    country:string;
-    state:string;
-    city:string;
-    zipCode:string;
-    phone:string;
-}
-
-export interface studentInfoProps extends profileInfoProps{
-    school:string;
-    grade:string;
-    facebook:string;
-    instagram:string;
-    tiktok:string;
-}
-
 
 export const ProfileSection = () => {
     const [isEdit, setIsEdit] = React.useState(false);
+    const currenStudentMap: any = useRecoilValue(studentMapState);
+    const parentEmail = currenStudentMap.parent_email;
+    const data = useProfileSection(parentEmail);
+
+    const fnMakeList = function(data: any) {
+        if(data.length === 0) {
+            return '';
+        } else if(data.length === 1) {
+            return (
+                <>
+                    <StudentProfileSection 
+                        isEdit={isEdit} 
+                        photoTitle='Student'
+                        photoUrl=''
+                        infomation={data[0]}
+                    />
+    
+                    <Divider />
+
+                    {
+                        data.parent_email !== null
+                            ? (
+                                <>
+                                    <ParentProfileSection 
+                                        isEdit={isEdit} 
+                                        photoTitle='Parent'
+                                        photoUrl=''
+                                        parentIndex={1}
+                                        infomation={data[0]}
+                                    />
+                
+                                    <Divider />
+                                </>
+                            )
+                            : ''
+                    }
+
+                    {
+                        data.parent_email2 !== null
+                            ? (
+                                <>
+                                    <ParentProfileSection 
+                                        isEdit={isEdit} 
+                                        photoTitle='Parent'
+                                        photoUrl=''
+                                        parentIndex={2}
+                                        infomation={data[0]}
+                                    />
+                
+                                    <Divider />
+                                </>
+                            )
+                            : ''
+                    }
+
+                    {/* <GuardianProfileSection 
+                        isEdit={isEdit} 
+                        photoTitle='Guardian'
+                        photoUrl=''
+                    /> */}
+                </>
+            );
+        }
+    }
 
     const handleChangeIsEdit = () => {
         setIsEdit( prev => !prev);
@@ -73,28 +122,8 @@ export const ProfileSection = () => {
                 </Stack>
 
                 <Divider />
-                
-                <StudentProfileSection 
-                    isEdit={isEdit} 
-                    photoTitle='Student'
-                    photoUrl='/assets/navigation/img-profile.png'
-                />
 
-                <Divider />
-
-                <ParentProfileSection 
-                    isEdit={isEdit} 
-                    photoTitle='Parent'
-                    photoUrl=''
-                />
-
-                <Divider />
-
-                <GuardianProfileSection 
-                    isEdit={isEdit} 
-                    photoTitle='Guardian'
-                    photoUrl=''
-                />
+                {fnMakeList(data)}
             </Box>
         </>
     );

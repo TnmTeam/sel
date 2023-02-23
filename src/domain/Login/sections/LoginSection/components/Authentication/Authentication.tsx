@@ -28,8 +28,11 @@ import { loginInfo } from '@/common/atom/Atom';
 export const Authentication = () => {
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
 
+    const [abc, setAbc] = useState<string>('');
+
     useEffect(() => {
         localStorage.removeItem('accessToken');
+        localStorage.clear();
     }, []);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -76,10 +79,12 @@ export const Authentication = () => {
         const response = await axiosClient('/auth/login');
         if (response.data.status_code == 500) {
             // Expired toekn
+            console.log('111');
             console.log(response.data.message);
         } else if (response.data.status_code == 400) {
             // 로그인 시도 성공
             // Account Already Exists!
+            console.log('222');
             console.log(response.data.message);
 
             const authEmail = await response.data.email;
@@ -88,17 +93,25 @@ export const Authentication = () => {
                 // 회원 가입 성공
                 localStorage.setItem('role', await response.data.role);
                 //location.href = '/overview';  // 페이지 이동
-                location.href = '/select'; // 학생/코스 선택 화면 이동
+                //location.href = '/select'; // 학생/코스 선택 화면 이동
+                authSignup();
             } else {
                 localStorage.setItem('role', await response.data.role);
                 //location.href = '/overview';  // 페이지 이동
-                location.href = '/select'; // 학생/코스 선택 화면 이동
+                //location.href = '/select'; // 학생/코스 선택 화면 이동
             }
         } else {
-            // 자동으로 회원 가입( 2.23 임시)
-            authSignup();
-            // 회원 가입 페이지 자동 이동
-            //location.href='/signup';
+            // 정상 로그인
+            console.log('333');
+            console.log(localStorage);
+
+            var email_param = {
+                email: response.data.email,
+            };
+
+            setAbc(() => response.data.email);
+
+            loginInfoHandlerState(email_param);
         }
     };
 
@@ -130,6 +143,19 @@ export const Authentication = () => {
     };
 
     const MoveSelectView = () => {
+        console.log('MoveSelectView');
+        console.log(localStorage.getItem('email'));
+
+        if (localStorage.getItem('email') == null)
+            alert('google account link!');
+
+        var email_param = {
+            email: localStorage.getItem('email'),
+        };
+        loginInfoHandlerState(email_param);
+    };
+
+    const MoveSelectView_demo = () => {
         var email_param = {
             email: 'josharnold@gmail.com',
         };
@@ -177,33 +203,66 @@ export const Authentication = () => {
                         </Avatar>
                     </Link>
                 </Grid>
-
-                <Link
-                    type='submit'
-                    onClick={MoveSelectView}
-                    href='/select'
-                    style={{ textDecoration: 'none' }}
-                >
-                    <Button
+                {abc == "" ? (
+                    <></>
+                ) : (
+                    <Link
+                        id='loginBtn'
                         type='submit'
-                        fullWidth
-                        variant='contained'
-                        sx={{
-                            mt: 3,
-                            mb: 2,
-                            fontSize: '18pt',
-                            width: '300px',                            
-                            background: FlexBlueButtons.ButtonColor,
-                            color: FlexBlueButtons.TextColor,
-                            ':hover': {
-                                background: FlexBlueButtons.onHoverButtonColor,
-                                color: FlexBlueButtons.OnHoverTextColor,
-                            },
-                        }}
+                        onClick={MoveSelectView}
+                        href='/select'
+                        style={{ textDecoration: 'none' }}
                     >
-                        Login
-                    </Button>
-                </Link>
+                        <Button
+                            type='submit'
+                            fullWidth
+                            variant='contained'
+                            sx={{
+                                mt: 3,
+                                mb: 2,
+                                fontSize: '18pt',
+                                width: '300px',
+                                background: FlexBlueButtons.ButtonColor,
+                                color: FlexBlueButtons.TextColor,
+                                ':hover': {
+                                    background:
+                                        FlexBlueButtons.onHoverButtonColor,
+                                    color: FlexBlueButtons.OnHoverTextColor,
+                                },
+                            }}
+                        >
+                            Start
+                        </Button>
+                    </Link>
+                )}
+                <Link
+                        id='loginBtn'
+                        type='submit'
+                        onClick={MoveSelectView_demo}
+                        href='/select'
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <Button
+                            type='submit'
+                            fullWidth
+                            variant='contained'
+                            sx={{
+                                mt: 3,
+                                mb: 2,
+                                fontSize: '12pt',
+                                width: '300px',
+                                background: FlexBlueButtons.ButtonColor,
+                                color: FlexBlueButtons.TextColor,
+                                ':hover': {
+                                    background:
+                                        FlexBlueButtons.onHoverButtonColor,
+                                    color: FlexBlueButtons.OnHoverTextColor,
+                                },
+                            }}
+                        >
+                            josharnold@gmail.com
+                        </Button>
+                    </Link>                    
             </Box>
         </Grid>
     );

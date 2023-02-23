@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 export const StudentVideo = ({ url }: VideoType) => {
     return (
         <video autoPlay loop muted css={sx.video}>
-            <source src={url} type='video/mp4' />
+            <source src='assets/videos/video-intro.mov' type='video/mp4' />
         </video>
     );
 };
