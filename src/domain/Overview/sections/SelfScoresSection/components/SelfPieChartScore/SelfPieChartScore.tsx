@@ -10,6 +10,7 @@ export const SelfPieChartScore = () => {
         <Stack css={sx.mainContainer}>
             <Box css={sx.itemContainer} flexDirection={'row'}>
                 <Box css={sx.itemWrapper}>
+                    <div css={sx.comingSoon}>Coming Soon</div>
                     <ChartScoreItem
                         progress={3}
                         progressDesc={'Self-Control'}
@@ -17,6 +18,7 @@ export const SelfPieChartScore = () => {
                     />
                 </Box>
                 <Box css={sx.itemWrapper}>
+                    <div css={sx.comingSoon}>Coming Soon</div>
                     <ChartScoreItem
                         progress={4}
                         progressDesc={'Purpose'}
@@ -24,6 +26,7 @@ export const SelfPieChartScore = () => {
                     />
                 </Box>
                 <Box css={sx.itemWrapper}>
+                    <div css={sx.comingSoon}>Coming Soon</div>
                     <ChartScoreItem
                         progress={3}
                         progressDesc={'Gratitude'}
@@ -59,5 +62,15 @@ const sx = {
         flex-direction: column;
         font-size: 50pt;
         align-items: center;
+    `,
+    comingSoon: css`
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 60px;
+        color: white;
+        position: absolute;
+        width: 415.77px;
+        height: 449px;
+        border-radius: 10px;
+        z-index: 999;
     `,
 };

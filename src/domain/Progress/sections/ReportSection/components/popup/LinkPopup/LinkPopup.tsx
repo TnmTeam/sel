@@ -26,24 +26,21 @@ export const LinkPopup = ({popupUrl, closeHandle}: LinkPopupType) => {
 
 const sx = {
   popContainer: css`
-        width: 1056px;
-        height: 773px;
-        padding: 47px;
+        width: 1030px;
+        height: 900px;
+        padding: 20px;
     `
 };
 
 
 const popupIframe = (popupUrl: string) => {
-    const studentId = "6361a258c971619d5b03c0f9";
-    const courseId = "7dlc1002";
-    const count = 1;
-
+    
     // const url = "https://data.impacterpathway.com:88/progress_report/";
     // const subUrl = courseId + "/" + studentId + "/" + count;
     
     // const html = '<iframe src="' + url + subUrl + '" width="961px" height="620px"></iframe>';
     // API URL 
-    const html = '<iframe src="' + popupUrl + '" width="961px" height="620px"></iframe>';
+    const html = '<iframe src="' + popupUrl + '" width="961px" height="780px"></iframe>';
 
     return {
       __html: html

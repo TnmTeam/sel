@@ -10,7 +10,7 @@ const ResourcesPage: NextPage = () => {
         fontSize : '50pt'        
     }}
     >
-        coming soon
+        Coming Soon
     </Stack>;
     //return <ResourcesView />;
 };

@@ -15,13 +15,13 @@ export const CourseProgressList = ({ models }: CourseProgressListDataType) => {
         hoursSpent={models.plain.hoursSpent}
         videosUploaded={models.plain.videosUploaded}
         wordsWritten={models.plain.wordsWritten}
-      />
-      {/* <ChartProgressList
-        selfControl={models.chart.selfControl}
-        purpose={models.chart.purpose}
-        gratitude={models.chart.gratitude}
-        grit={models.chart.grit}
-      /> */}
+      />      
+      <ChartProgressList
+        selfControl={1}
+        purpose={2}
+        gratitude={3}
+        grit={4}
+      />    
     </Stack>
   );
 };
@@ -29,7 +29,7 @@ export const CourseProgressList = ({ models }: CourseProgressListDataType) => {
 const sx = {
   courseProgressListContainer: css`
     width: 100%;
-    height: 430px;
+    height: 430px; 
     padding: 0 120px;
     display: flex;
     flex-direction: column;
