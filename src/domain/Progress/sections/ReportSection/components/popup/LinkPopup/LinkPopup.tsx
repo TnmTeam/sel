@@ -38,8 +38,8 @@ const popupIframe = (popupUrl: string) => {
     const courseId = "7dlc1002";
     const count = 1;
 
-    const url = "https://data.impacterpathway.com:88/progress_report/";
-    const subUrl = courseId + "/" + studentId + "/" + count;
+    // const url = "https://data.impacterpathway.com:88/progress_report/";
+    // const subUrl = courseId + "/" + studentId + "/" + count;
     
     // const html = '<iframe src="' + url + subUrl + '" width="961px" height="620px"></iframe>';
     // API URL 

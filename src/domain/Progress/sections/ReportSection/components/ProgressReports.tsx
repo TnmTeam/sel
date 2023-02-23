@@ -19,7 +19,13 @@ type DataType = {
 };
 
 export const ProgressReports = ({data}: DataType) => {
-  const models = [report, report];
+  
+  let models: string[] = [];
+  if( !(!data.result || data.isLoading) )
+  {
+      models = data.result.popupList;
+  }
+
   const { modalState } = useModalHooks();
 
   const [popupUrl, setPopupUrl] = useState("");
@@ -57,7 +63,8 @@ export const ProgressReports = ({data}: DataType) => {
                   key={index}
                   onClick={(e)=>{handleClickOpen( data.result.popupList[index] )}}
                 >
-                  <Image src={it} alt="report" width={169} height={308} />
+                  {/* <Image src={it} alt="report" width={169} height={308} /> */}
+                  <Image src={report} alt="report" width={169} height={308} />
                 </div>
               ))}
             </div>
@@ -100,6 +107,7 @@ const sx = {
     border: 5px solid black;
     */
     width: 450px;
+    height: 310px;
     overflow: auto;
     white-space: nowrap;
   `,

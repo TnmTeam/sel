@@ -1,12 +1,22 @@
 import { useGetBanner } from "@/data/api/progress/useProgressApiHooks";
+import { useRecoilValue } from 'recoil';
+import { courseMapState, studentMapState } from "@/common/atom/Atom";
+
 
 export const useBannerSection = () => {
-  const studentId = "636190c367b952049905f9b8";
-  const courseId = "7dlc1002";
-  const studentIdNumber = 283;
+  // const studentId = "636190c367b952049905f9b8";
+  // const courseId = "7dlc1002";
+  // const studentIdNumber = 283;
+  
+  const currenCourseMap:any = useRecoilValue(courseMapState);
+  const currenStudentMap:any = useRecoilValue(studentMapState);
+  
+  const studentId = currenStudentMap.lw_id;
+  const studentIdNumber = currenStudentMap.id;
+  const courseId = currenCourseMap.course_id;
 
+  console.log("/progress/banner API ", studentId, " ", studentIdNumber, " ", courseId );
   const { data, isLoading } = useGetBanner(studentIdNumber, studentId, courseId);
-  // console.log("banner data ", data);
 
   if (!data) {
     return {
@@ -18,7 +28,8 @@ export const useBannerSection = () => {
   }
 
   const response = data;
-  // const progressResponse = data.responseData!!.courseProgressItem;
+
+  console.log("progress/banner ", response );
 
   // banner
   const [title, desc, rate] = [
