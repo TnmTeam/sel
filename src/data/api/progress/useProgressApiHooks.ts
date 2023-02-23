@@ -39,3 +39,8 @@ export const useGetStudentWorkbook = (studentId: string, courseId: string) => {
 export const useGetProgressReports = (studentId: string, courseId: string) => {
   return useQuery(["progress-reports", studentId], () => ProgressApiService.getProgressReports(studentId, courseId));
 };
+
+export const useGetStudentSuccessJourney = (courseId: string) => {
+  return useQuery(["student-journey", courseId], () =>  ProgressApiService.getStudentSuccessJourneyList(courseId)
+  );
+};

@@ -1,15 +1,27 @@
 import { Colors } from "@/common/themes/Color";
 import { css } from "@emotion/react";
 import { Box } from "@mui/material";
+import { CustomProgress } from "@/common/components/progress";
+import { Stack } from '@mui/material';
 import { JourneyMap, JourneyTitle } from "./components";
-import { useJourneySection } from "./useJourneySection";
+import { JourneyItemType } from "../../types/journey.type";
 
-export const JourneySection = () => {
-  //const {} = useJourneySection();
+type DataType = {
+  data: JourneyItemType;
+};
+
+export const JourneySection = ({ data }: DataType) => {
+  if (!data.result || data.isLoading) {
+    return (
+        <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
+            <CustomProgress />
+        </Stack>
+    );
+  }
   return (
     <Box css={sx.root}>
       <JourneyTitle />
-      <JourneyMap />
+      <JourneyMap data={data.result} />
     </Box>
   );
 };

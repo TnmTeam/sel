@@ -1,4 +1,4 @@
-export type RepoertStateType = {
+export type ReportStateType = {
   progressReportsState: any;
   recentUploadsState: any;
   studentWrokbookState: StudentWorkbookType;

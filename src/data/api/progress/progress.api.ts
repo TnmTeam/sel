@@ -10,6 +10,7 @@ import {
   ContentItem2,
   StudentWorkbookResponse,
   ProgressReportsResponse,
+  StudentJourneyListResponse,
 } from "./progress.dto";
 
 class ProgressApiService {
@@ -112,6 +113,17 @@ class ProgressApiService {
     console.log(param);
     const response = await axiosClient.post(`/progress/unit-item-videoask`, param);
     console.log("getUnitItemContent2 response");
+    console.log(response.data);
+    return response.data;
+  }
+
+  async getStudentSuccessJourneyList(courseId: string): Promise<StudentJourneyListResponse> {
+    var param = { 
+      course_id : courseId
+    };
+    //const response = await axiosClient.post(`/getSuggestedCourse?id=${id}`);
+    const response = await axiosClient.post(`/progress/student-success-journey`, param);
+    console.log("getStudentSuccessJourney response");
     console.log(response.data);
     return response.data;
   }

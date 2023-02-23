@@ -14,8 +14,8 @@ export const StudentCourseSection = ({ data }: DataType) => {
                 <CustomProgress />
             </Stack>
         );
-      }
-      return (
+    }
+    return (
             <StudentCourse data={data.result} />
-      );
+    );
 };

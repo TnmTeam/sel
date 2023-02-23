@@ -7,7 +7,3 @@ export const useStudentList = () => {
     studentListState: studentListState,
   };
 };
-
-interface student {
-  studentId : string
-}

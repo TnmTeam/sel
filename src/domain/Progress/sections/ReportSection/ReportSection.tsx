@@ -1,10 +1,10 @@
 import { css } from "@emotion/react";
 import { Stack } from "@mui/material";
 import { ProgressReports, RecentUploads, StudentWorkbook } from "./components";
-import { RepoertStateType } from "../../types/report.type";
+import { ReportStateType } from "../../types/report.type";
 
 type DataType = {
-  data: RepoertStateType;
+  data: ReportStateType;
 };
 
 export const ReportSection = ({ data }: DataType) => {
