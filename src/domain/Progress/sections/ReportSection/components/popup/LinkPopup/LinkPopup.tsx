@@ -5,16 +5,17 @@ import { ButtonContainer } from "../components";
 
 
 export interface LinkPopupType {
-    popupIndex: number;
+    popupUrl: string;
     closeHandle: () => void;
 }
-export const LinkPopup = ({popupIndex, closeHandle}: LinkPopupType) => {
+export const LinkPopup = ({popupUrl, closeHandle}: LinkPopupType) => {
 
   return (
     <Stack >
         <ClosePopupBtn closeHandle={closeHandle} />
+        {/* <Stack>{popupUrl}</Stack> */}
         <Stack css={sx.popContainer}>
-            <Stack dangerouslySetInnerHTML={popupIframe()}></Stack>
+            <Stack dangerouslySetInnerHTML={popupIframe(popupUrl)}></Stack>
             <br/>
             <br/>
             <ButtonContainer saveBtnClick={() => null} />
@@ -32,15 +33,17 @@ const sx = {
 };
 
 
-const popupIframe = () => {
+const popupIframe = (popupUrl: string) => {
     const studentId = "6361a258c971619d5b03c0f9";
     const courseId = "7dlc1002";
     const count = 1;
 
     const url = "https://data.impacterpathway.com:88/progress_report/";
     const subUrl = courseId + "/" + studentId + "/" + count;
-
-    const html = '<iframe src="' + url + subUrl + '" width="961px" height="620px"></iframe>';
+    
+    // const html = '<iframe src="' + url + subUrl + '" width="961px" height="620px"></iframe>';
+    // API URL 
+    const html = '<iframe src="' + popupUrl + '" width="961px" height="620px"></iframe>';
 
     return {
       __html: html

@@ -1,6 +1,11 @@
 import { Stack } from '@mui/system';
+import { CourseProgressApiType } from '../../types/courseProgress.type';
 import { ProgressSummary } from './components';
 
-export const CourseProgressSection = () => {
-    return <ProgressSummary />;
+
+type  DataType = {
+    data: CourseProgressApiType;
+}
+export const CourseProgressSection = ({data}: DataType) => {
+    return <ProgressSummary data={data} />;
 };
