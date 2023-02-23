@@ -2,13 +2,17 @@ import { useState} from 'react';
 import { Stack } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { styled } from '@mui/material/styles';
+import { css, styled } from '@mui/material/styles';
 import NativeSelect from '@mui/material/NativeSelect';
 import { StudentListType, StudentType } from './types/studentCourse.type';
 import InputBase from '@mui/material/InputBase';
 import { axiosClient } from '@/data/client/client';
 import { courseArrayState, courseMapState, studentArrayState, studentMapState } from '@/common/atom/Atom';
 import { useSetRecoilState, useRecoilValue, } from 'recoil';
+import { Button } from '@mui/material';
+import { useRouter } from 'next/router';
+import { NavigationItems } from '@/common/themes/Color';
+import Link from 'next/link';
 
 interface DataType {
     data: StudentListType;
@@ -21,6 +25,7 @@ export const StudentCourse = ({ data }: DataType) => {
 };
 
 const Student = ({ studentList }: StudentListType) => {
+
     const studentArrayHandlerState = useSetRecoilState(studentArrayState);
     const courseArrayHandlerState = useSetRecoilState(courseArrayState);
 
@@ -28,6 +33,8 @@ const Student = ({ studentList }: StudentListType) => {
     const courseMapHandlerState = useSetRecoilState(courseMapState);
     const currenCourseList = useRecoilValue(courseArrayState);
     const currenStudentList = useRecoilValue(studentArrayState);
+    const currenCourseMap:any = useRecoilValue(courseMapState);
+    const currenStudentMap:any = useRecoilValue(studentMapState);
     
     const [ courseList, setCourseList ] = useState<any[]>([]);
 
@@ -82,62 +89,112 @@ const Student = ({ studentList }: StudentListType) => {
             if(currenCourseList[i].course_id == courseId){
                 courseMapHandlerState(currenCourseList[i]);
                 studentMapHandlerState(currenStudentList[i]);
+            }else if( courseId == ''){
+                courseMapHandlerState({});
+                studentMapHandlerState({});
             }
         }
 
 
     };
+
+    const IsButton= () => {
+        if(currenCourseMap != null){
+            return (
+                <Link href='/overview' css={sx.link}>
+                    <Button
+                    color='primary'
+                    variant="outlined"
+                    >
+                        확인
+                    </Button>
+                </Link>
+            );
+        }else{
+            return (
+                <Button
+                color='primary'
+                variant="outlined"
+                >
+                    확인
+                </Button>
+            );
+        }
+        
+        
+    }
  
     return (
-        <div>
-            <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5}}>
-                <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                    Student
-                </InputLabel>
-                <NativeSelect
-                    inputProps={{
-                        name: 'Student',
-                        id: 'selectStudent',
-                    }}
-                    onChange={handleChange}
-                    input={<BootstrapInput />}
-                >
-                    <option aria-label="None" value=""></option>
-                    
-                    {studentList.map((it, index) => (
-                        <StudentOption key={index} id={it.id} studentId={it.studentId} 
-                            studentName={it.studentName} studentEmail={it.studentEmail}
-                            parentEmail={it.parentEmail} grade={it.grade} school={it.school}
-                            role={it.role} createdAt={it.createdAt} lastLogin={it.lastLogin} />
-                    )
-                    )}
-                    
-                </NativeSelect>
-            </FormControl>
-            <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5}}>
-                <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                    Course
-                </InputLabel>    
-                <NativeSelect
-                    inputProps={{
-                        name: 'Course',
-                        id: 'selectCourse',
-                    }}
-                    onChange={handleChange2}
-                    input={<BootstrapInput />}
-                >
-                    <option aria-label="None" value=""></option>
-                    {courseList.map((it, index) => (
-                        <CourseOption key={index} courseId={it.courseId} courseTitle={it.courseTitle}  />
-                    )
-                    )}
-                    
-                </NativeSelect>
-            </FormControl>
-        </div>
+        <Stack css={sx.centerDiv}>
+            <Stack css={sx.inline}>
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5}}>
+                    <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                        Student
+                    </InputLabel>
+                    <NativeSelect
+                        inputProps={{
+                            name: 'Student',
+                            id: 'selectStudent',
+                        }}
+                        onChange={handleChange}
+                        input={<BootstrapInput />}
+                    >
+                        <option aria-label="None" value=""></option>
+                        
+                        {studentList.map((it, index) => (
+                            <StudentOption key={index} id={it.id} studentId={it.studentId} 
+                                studentName={it.studentName} studentEmail={it.studentEmail}
+                                parentEmail={it.parentEmail} grade={it.grade} school={it.school}
+                                role={it.role} createdAt={it.createdAt} lastLogin={it.lastLogin} />
+                        )
+                        )}
+                        
+                    </NativeSelect>
+                </FormControl>
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5}}>
+                    <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                        Course
+                    </InputLabel>    
+                    <NativeSelect
+                        inputProps={{
+                            name: 'Course',
+                            id: 'selectCourse',
+                        }}
+                        onChange={handleChange2}
+                        input={<BootstrapInput />}
+                    >
+                        <option aria-label="None" value=""></option>
+                        {courseList.map((it, index) => (
+                            <CourseOption key={index} courseId={it.courseId} courseTitle={it.courseTitle}  />
+                        )
+                        )}
+                        
+                    </NativeSelect>
+                </FormControl>
+                <IsButton />
+            </Stack>
+            
+        </Stack>
     );
     
 };
+
+const sx = {
+    centerDiv: css`
+        min-height: 100vh;
+    `,
+    inline: css`
+        display: inline-block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 30px;
+    `,
+    link: css`
+    text-decoration-line: none;
+    `
+}
 
 const StudentOption = ({studentId, studentName}: StudentType) => {
  return <option value={studentId} > {studentName}</option>
