@@ -25,12 +25,20 @@ export const CourseMedia = ({ selectedDetailCourse }: CourseMediaType) => {
 
   return (
     <Stack css={sx.mediaContainer}>
-      {selectedDetailCourse &&
+      {/* {selectedDetailCourse &&
         useMediaContentByCourseType(
           selectedDetailCourse.type,
           selectedDetailCourse.contentType,
           selectedDetailCourse.unitId
-        )}
+        )} */}
+
+      {
+        selectedDetailCourse &&
+        selectedDetailCourse?.type == 'assessmentV2' ?
+        <ActivityContent selectedDetailCourse={selectedDetailCourse} />
+        :
+        <WatchContent selectedDetailCourse={selectedDetailCourse} />
+      }
     </Stack>
   );
 };
@@ -42,34 +50,32 @@ const sx = {
   `,
 };
 
-const useMediaContentByCourseType = (type: string, contentType: string, unitId: string) => {
-  unitIds = unitId
-  //console.log("CourseMedia useMediaContentByCourseType studentIdNum : "+studentIdNum);
-  //console.log("CourseMedia useMediaContentByCourseType studentId : "+studentId);
-  //console.log("CourseMedia useMediaContentByCourseType courseId : "+courseId);
-  //console.log("CourseMedia useMediaContentByCourseType unitId : "+unitIds);
-  //console.log("CourseMedia useMediaContentByCourseType type : "+type);
+// const useMediaContentByCourseType = (type: string, contentType: string, unitId: string) => {
+//   unitIds = unitId
+//   //console.log("CourseMedia useMediaContentByCourseType studentIdNum : "+studentIdNum);
+//   //console.log("CourseMedia useMediaContentByCourseType studentId : "+studentId);
+//   //console.log("CourseMedia useMediaContentByCourseType courseId : "+courseId);
+//   //console.log("CourseMedia useMediaContentByCourseType unitId : "+unitIds);
+//   //console.log("CourseMedia useMediaContentByCourseType type : "+type);
 
-  if(type) {
-    switch (type) {
-      case "embed":
-        //console.log("CourseMedia useMediaContentByCourseType embed useGetUnitItemContent2");
-        var data2 = useGetUnitItemContent2(studentIdNum, unitIds);
-        var data  = data2?.data;
-        var content = '';
-        if(data)
-        content = data[0].content;
-        //console.log("CourseMedia useMediaContentByCourseType embed data2");
-        //console.log(content);
-        return <WatchContent url={content} />;
-        //return <ReadContent url={content} />;
-      case "assessmentV2":
-        var data1 = useGetUnitItemContent1(studentId, courseId, unitIds);
-        //console.log("CourseMedia useMediaContentByCourseType type : "+type);
-        //console.log(data1);
-        return <ActivityContent models={data1.data} />;
-      default:
-        return <></>;
-    }
-  }
-};
+//     switch (type) {
+//       case "embed":
+//         //console.log("CourseMedia useMediaContentByCourseType embed useGetUnitItemContent2");
+//         var data2 = useGetUnitItemContent2(studentIdNum, unitIds);
+//         var data  = data2?.data;
+//         var content = '';
+//         if(data)
+//         content = data[0].content;
+//         //console.log("CourseMedia useMediaContentByCourseType embed data2");
+//         //console.log(content);
+//         return <WatchContent url={content} />;
+//         //return <ReadContent url={content} />;
+//       case "assessmentV2":
+//         var data1 = useGetUnitItemContent1(studentId, courseId, unitIds);
+//         //console.log("CourseMedia useMediaContentByCourseType type : "+type);
+//         //console.log(data1);
+//         return <ActivityContent models={data1.data} />;
+//       default:
+//         return <></>;
+//     }
+// };
