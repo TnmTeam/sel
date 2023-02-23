@@ -1,96 +1,102 @@
 import {
-   List,
-   ListItem,
-   ListItemText,
-   ListItemAvatar,
-   Avatar,
-   Typography,
-   Link,
-   Stack
-  } from '@mui/material';
-import profile from "@/assets/navigation/img-profile.png";
-import noprofile from "@/assets/navigation/img-profile-nophoto.png";
-import ImpacterPathwayprofile from "@/assets/navigation/img-profile-ImpacterPathway.png";
+    List,
+    ListItem,
+    ListItemText,
+    ListItemAvatar,
+    Avatar,
+    Typography,
+    Link,
+    Stack,
+} from '@mui/material';
+import profile from '@/assets/navigation/img-profile.png';
+import noprofile from '@/assets/navigation/img-profile-nophoto.png';
+import ImpacterPathwayprofile from '@/assets/navigation/img-profile-ImpacterPathway.png';
 import Image from 'next/image';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { useNavigationView } from '@/domain/Navigation/views/useNavigationView';
 import { CustomProgress } from '@/common/components/progress';
 
-
 export const NotificationDialogContent = () => {
+    const { notificationState } = useNavigationView();
+    // console.log("notificationState", {notificationState} );
 
-  const { notificationState } = useNavigationView();
-  // console.log("notificationState", {notificationState} );
+    const colorData = {
+        Basic: '#147AD6',
+        Late: '#EA4848',
+        Submit: '#53B232',
+    };
 
+    if (!notificationState?.result || notificationState?.isLoading) {
+        return (
+            <Stack>
+                <Stack
+                    height={'452px'}
+                    justifyContent='center'
+                    alignItems={'center'}
+                >
+                    <CustomProgress />
+                </Stack>
+            </Stack>
+        );
+    }
 
-  const colorData = {
-    "Basic": "#147AD6",
-    "Late": "#EA4848",
-    "Submit": "#53B232",
-  };
-  
-  if (!notificationState?.result || notificationState?.isLoading) {
+    const Content = [
+        {
+            title: '',
+            name: '',
+            date: '',
+            icon: ImpacterPathwayprofile,
+            Type: '',
+        },
+    ];
+
+    notificationState?.result.models.map((it, index) => {
+        Content[index] = {
+            title: it.content,
+            name: '',
+            date: it.createdAt,
+            icon: ImpacterPathwayprofile,
+            Type: colorData.Basic,
+        };
+    });
+
     return (
         <Stack>
-            <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
-                <CustomProgress />
-            </Stack>
+            {Content.map((it, index) => (
+                <Link style={{ textDecoration: 'none' }} key={index}>
+                    {/*<Link href='/account' style={{textDecoration:"none"}} key={index}>*/}
+                    <List>
+                        <ListItem>
+                            <FiberManualRecordIcon
+                                sx={{ color: `${it.Type}` }}
+                            />
+                            <ListItemText sx={{ ml: '10px' }}>
+                                <Typography fontWeight='bold' color='black'>
+                                    {it.title}
+                                </Typography>
+                                <Typography
+                                    fontSize='11pt'
+                                    color='gray'
+                                >{`${it.name}ㆍ${it.date}`}</Typography>
+                            </ListItemText>
+                            <ListItemAvatar sx={{ mr: '-20pt' }}>
+                                <Avatar>
+                                    <Image
+                                        src={it.icon}
+                                        alt={'img'}
+                                        width='40'
+                                        height='40'
+                                    />
+                                </Avatar>
+                            </ListItemAvatar>
+                        </ListItem>
+                    </List>
+                </Link>
+            ))}
         </Stack>
     );
-  }
 
-  
-  const Content =[
-    {
-      title: "",
-      name: "",
-      date: "",
-      icon: ImpacterPathwayprofile,
-      Type: "",
-    }
-  ];
-
-  notificationState?.result.models.map((it, index) => {
-      Content[index] = {
-        title: it.content,
-        name: "",
-        date: it.createdAt,
-        icon: ImpacterPathwayprofile, 
-        Type: colorData.Basic
-      }
-    }
-  );
-
-
-  
-
-  return (
-    <Stack>
-      {
-        Content.map((it, index) => (
-          <Link href="/account" style={{textDecoration:"none"}} key={index}>
-            <List>
-              <ListItem>
-                <FiberManualRecordIcon sx={{color:`${it.Type}`}}/>
-                <ListItemText sx={{ml : "10px"}}>
-                <Typography fontWeight="bold" color="black">{it.title}</Typography>
-                <Typography fontSize="11pt" color="gray">{`${it.name}ㆍ${it.date}`}</Typography>
-                </ListItemText>
-                <ListItemAvatar sx={{mr : "-20pt"}}>
-                  <Avatar>
-                    <Image src={it.icon} alt={"img"} width="40" height="40"/>
-                  </Avatar>
-                </ListItemAvatar>
-              </ListItem>
-            </List>
-          </Link>
-        ))
-      }
-    </Stack>
-  );
-
-  
-/*
+    /*
   const Content = [
     { title: "Highlights",      name: "Impacter Support",    date: "Dec 20, 2022 at 1:20PM", icon: ImpacterPathwayprofile, Type:"Basic"},
     { title: "New Work Added!", name: "Jaime Doe",           date: "Dec 20, 2022 at 1:20PM", icon: profile, Type:"Basic"},
@@ -127,4 +133,4 @@ export const NotificationDialogContent = () => {
   }
    return <div> { ContentList() }</div>;
 */
-}   
+};

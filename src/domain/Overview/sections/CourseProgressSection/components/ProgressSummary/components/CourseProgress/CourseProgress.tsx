@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
-import { Stack, Typography } from '@mui/material';
+import { Stack, Typography, Button } from '@mui/material';
 import { CourseProgressType } from './types/CourseProgress.type';
 import { CourseTimeline } from './CourseTimeline';
 import Image from 'next/image';
 import FullBannerImage from '@/assets/overview/img-CourseProgress.png';
-import Link from '@mui/material/Link';
+import Link from 'next/link';
 import { CourseProgressApiType } from '@/domain/Overview/types/courseProgress.type';
 import { CustomProgress } from '@/common/components/progress';
 
@@ -53,9 +53,14 @@ export const CourseProgress = ({data}: DataType) => {
                         ))
                 }
 
-                <Link href='/progress' css={sx.viewAllText}>
-                    View all {'>'}
-                </Link>
+                <Link href='/progress' css={{ textDecoration: 'none'}}>
+                        <Button
+                            css={sx.viewAllText}
+                        >
+                            View all {'>'}
+                        </Button>
+                    </Link>
+
             </Stack>
         </Stack>
     );

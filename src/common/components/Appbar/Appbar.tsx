@@ -18,7 +18,7 @@ export const Appbar = () => {
         {
             menuType: 'button',
             url: '/select',
-            title: '-Student Select-',
+            title: '- Student Select -',
             buttonType: 'text',
         },
         {

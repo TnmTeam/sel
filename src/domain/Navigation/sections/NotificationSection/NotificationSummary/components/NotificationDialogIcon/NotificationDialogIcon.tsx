@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { css } from '@emotion/react';
+import Link from 'next/link';
 import {
     Stack,
     IconButton,
@@ -49,9 +50,9 @@ const sx = {
         overflow: hidden;
     `,
     notificationsContainer: css`
-        width: 450px;
+        width: 440px;
         height: 580px;
-    `
+    `,
 };
 
 export interface NotificationDialogProps {
@@ -77,25 +78,37 @@ function NotificationDialog(props: NotificationDialogProps) {
             <Stack css={sx.notificationsContainer}>
                 <DialogActions>
                     <Button onClick={handleClose}>
-                    <CloseIcon></CloseIcon></Button>
+                        <CloseIcon></CloseIcon>
+                    </Button>
                 </DialogActions>
-                <DialogTitle sx={{
-                    mt: "-55px",
-                    fontSize: "18pt",
-                    }}>Notifications</DialogTitle>
+                <DialogTitle
+                    sx={{
+                        mt: '-55px',
+                        fontSize: '18pt',
+                    }}
+                >
+                    Notifications
+                </DialogTitle>
                 <DialogContent>
-                    <DialogContentText ml = {-2}>
-                        <NotificationDialogContent/>
+                    <DialogContentText ml={-2}>
+                        <NotificationDialogContent />
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button sx={{
-                        mt : "-20px",
-                        color: "#147AD6",
-                        textTransform: "initial", 
-                        fontSize: "14pt",
-                        marginRight: "250pt"
-                    }}  href="/account">View All</Button>
+                    <Link href='/account' css={{ textDecoration: 'none'}}>
+                        <Button
+                            sx={{
+                                mt: '-20px',
+                                color: '#147AD6',
+                                textTransform: 'initial',                               
+                                fontSize: '14pt',
+                                marginRight: '250pt',
+                            }}
+                            onClick={handleClose}
+                        >
+                            View All
+                        </Button>
+                    </Link>
                 </DialogActions>
             </Stack>
         </Dialog>
