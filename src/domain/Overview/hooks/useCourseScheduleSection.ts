@@ -24,6 +24,11 @@ export const useCourseScheduleSection = () => {
     data?.start_date,
     data?.end_date
   ];
+
+
+  // console.log("startDate ", startDate);
+  // console.log("startDate() ", new Date(startDate));
+  // console.log("endDate ", endDate);
   
   return {
     courseScheduleState: {
