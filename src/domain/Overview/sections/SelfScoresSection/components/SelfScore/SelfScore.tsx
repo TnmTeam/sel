@@ -8,6 +8,7 @@ export const SelfScore = () => {
         <Stack css={sx.mainContainer}>
             <Box css={sx.itemContainer} flexDirection={'row'}>
                 <Box css={sx.itemWrapper}>
+                <div css={sx.comingSoon}>Coming Soon</div>
                     <SelfScoreItem
                         selfCnt={1}
                         selfValue={3}
@@ -16,6 +17,7 @@ export const SelfScore = () => {
                     />
                 </Box>
                 <Box css={sx.itemWrapper}>
+                <div css={sx.comingSoon}>Coming Soon</div>
                     <SelfScoreItem
                         selfCnt={2}
                         selfValue={2}
@@ -23,7 +25,8 @@ export const SelfScore = () => {
                         progressDesc={'Compassion'}
                     />
                 </Box>
-                <Box css={sx.itemWrapper}>
+                <Box css={sx.itemWrapper}>    
+                <div css={sx.comingSoon}>Coming Soon</div>                
                     <SelfScoreItem
                         selfCnt={3}
                         selfValue={3}
@@ -58,5 +61,15 @@ const sx = {
         border-radius: 10px;
         flex-direction: column;
         font-size: 50pt;
+    `,
+    comingSoon: css`
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 60px;
+        color: white;
+        position: absolute;
+        width: 415.77px;
+        height: 250px;
+        border-radius: 10px;
+        z-index: 999;
     `,
 };

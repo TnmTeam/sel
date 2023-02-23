@@ -12,8 +12,8 @@ export const SelfSplineChartScore = () => {
     return (
         <Stack css={sx.mainContainer}>
             <Box css={sx.itemContainer} flexDirection={'row'}>
+                <div css={sx.comingSoon}>Coming Soon</div>
                 <Box css={sx.itemWrapper}>
-                    {/* Spline */}
                     <ApexChart css={sx.apexChart}
                         type={"line"}
                         width={"100%"}
@@ -156,5 +156,17 @@ const sx = {
         letter-spacing: 1.5px;
         text-transform: capitalize;
         color: #000000;
-    `
+    `,
+    comingSoon: css`
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 100px;
+        color: white;
+        position: absolute;
+        width: 1322px;
+        line-height: 632px;
+        border-radius: 10px;
+        z-index: 999;
+        text-align: center;
+    `,
+    
 };

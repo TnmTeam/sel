@@ -113,10 +113,22 @@ function InsightsDialog(props: InsightsDialogProps) {
         flex-direction: column;
         justify-content: space-between;
       }
+    `,    
+    comingSoon: css`
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 100px;
+        color: white;
+        position: absolute;
+        width: 1180px;
+        line-height: 800px;
+        text-align: center;
+        border-radius: 5px;
+        z-index: 999;
     `,
   };
 
   return (
+    
     <Dialog
       onClose={handleClose}
       open={open}
@@ -125,6 +137,7 @@ function InsightsDialog(props: InsightsDialogProps) {
       scroll="paper"
       css={sx.dialog}
     >
+      <div css={sx.comingSoon}>Coming Soon</div>
       <DialogTitle
         sx={{
           width: "100%",

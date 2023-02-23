@@ -41,6 +41,7 @@ export const RecentUploads = () => {
   const { modalState } = useModalHooks();
   return (
     <div>
+      <div css={sx.comingSoon}>Coming Soon</div>
       <Typography css={sx.title}>Recent Uploads</Typography>
       <div css={sx.boxWrapper}>
         {models.items.map((it, index) => (
@@ -88,6 +89,16 @@ const sx = {
     align-items: center;
     gap: 15px;
     cursor: pointer;
+  `,
+  comingSoon: css`
+    background: rgba(0,0,0,0.7);
+    font-size: 50px;
+    color: white;
+    text-align: center;
+    border-radius: 10px;    
+    position: absolute;    
+    width: 400px;
+    line-height: 400px;    
   `,
 };
 

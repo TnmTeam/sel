@@ -9,8 +9,9 @@ export const ChartProgressList = ({
   gratitude,
   grit,
 }: ChartRateType) => {
-  return (
+  return (    
     <Stack direction={"row"} css={sx.wrapper}>
+      <div css={sx.comingSoon}>Coming Soon</div>
       <ChartProgressItem progress={selfControl} progressDesc={"Self-Control"} />
       <ChartProgressItem progress={purpose} progressDesc={"Purpose"} />
       <ChartProgressItem progress={gratitude} progressDesc={"Gratitude"} />
@@ -25,4 +26,16 @@ const sx = {
     justify-content: space-between;
     align-items: center;
   `,
+  comingSoon: css`      
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 60px;
+        color: white;
+        position: absolute;
+        width: 1440px;        
+        line-height: 200px;
+        border-radius: 10px;
+        text-align: center;
+        z-index: 999;
+        left: 235px;
+    `,
 };

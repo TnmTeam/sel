@@ -28,6 +28,7 @@ export const FeturedStudentWork = () => {
 
     return (
         <div css={sx.FeturedContainer}>
+            <div css={sx.comingSoon}>Coming Soon</div>
             <CircleIcon css = {sx.CircleOut}></CircleIcon>
             <CircleIcon css = {sx.CircleIn}></CircleIcon>
             <SendIcon css = {sx.SendIcon}></SendIcon>
@@ -93,5 +94,16 @@ const sx = {
         top: 91.04%;
         bottom: 3.94%;
         color: #EA4848;
-    `
+    `,
+    comingSoon: css`
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 40px;
+        color: white;
+        position: absolute;
+        width: 289px;
+        line-height: 427px;
+        border-radius: 26px;
+        z-index: 999;
+        text-align: center;
+    `,
 }
