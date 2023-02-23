@@ -31,15 +31,12 @@ interface DataType {
     data: StudentListType;
 }
 
-export const StudentCourse = ({ data }: DataType) => {    
-
-    var loginInfoMap:any = useRecoilValue(loginInfo);
-    if(loginInfoMap.email == undefined )
-    {
-        location.href="/";
-    }
-    else
-    {
+export const StudentCourse = ({ data }: DataType) => {
+    var loginInfoMap: any = useRecoilValue(loginInfo);
+    if (loginInfoMap.email == undefined) {
+        location.href = '/';
+        return <></>;
+    } else {
         return (
             <Stack>
                 <Student studentList={data.studentList} />
