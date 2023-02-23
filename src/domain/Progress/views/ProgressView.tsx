@@ -4,18 +4,18 @@ import {
   CourseSection,
   ReportSection,
   SuggestSection,
+  JourneySection,
 } from "../sections";
-import { JourneySection } from "../sections/JourneySection/JourneySection";
 import { useProgressView } from "./useProgressView";
 
 export const ProgressView = () => {
-  const { bannerState, courseState, suggestState, reportState } = useProgressView();
+  const { bannerState, courseState, suggestState, journeyState, reportState } = useProgressView();
   return (
     <Stack>
       <BannerSection data={bannerState} />
       <CourseSection data={courseState} />
       <ReportSection data={reportState} />
-      <JourneySection />
+      <JourneySection data={journeyState} />
       <SuggestSection data={suggestState} />
     </Stack>
   );

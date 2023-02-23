@@ -17,7 +17,6 @@ export type CardType = {
   image: any;
   title: string;
   desc: string;
-  btnText: string;
 };
 
 export type ItemType = {
@@ -26,3 +25,10 @@ export type ItemType = {
   isHere: boolean;
   cardState: CardType;
 };
+
+export type MapItemListType = {
+  x: string;
+  y: string;
+  circleXPosition: XPosition;
+  textYPosition: YPosition;
+}

@@ -16,7 +16,7 @@ export const MapItems: MapItemType[] = [
       image: ImageCard,
       title: "Finding Your Role to Make Team Work",
       desc: "Being on a team isn't easy. Especially when the stakes are high and results really matter. In this course, you'll learn how to listen and empower others; and you'll gain an appreciation for the importance of roles and responsibilities when completing large-scale tasks.",
-      btnText: "Enroll $1495",
+      // btnText: "Enroll $1495",
     },
   },
   {
@@ -32,7 +32,7 @@ export const MapItems: MapItemType[] = [
       image: ImageCard,
       title: "Finding Your Role to Make Team Work",
       desc: "Being on a team isn't easy. Especially when the stakes are high and results really matter. In this course, you'll learn how to listen and empower others; and you'll gain an appreciation for the importance of roles and responsibilities when completing large-scale tasks.",
-      btnText: "Enroll $1495",
+      //btnText: "Enroll $1495",
     },
   },
   {
@@ -48,7 +48,7 @@ export const MapItems: MapItemType[] = [
       image: ImageCard,
       title: "Finding Your Role to Make Team Work",
       desc: "Being on a team isn't easy. Especially when the stakes are high and results really matter. In this course, you'll learn how to listen and empower others; and you'll gain an appreciation for the importance of roles and responsibilities when completing large-scale tasks.",
-      btnText: "Enroll $1495",
+      //btnText: "Enroll $1495",
     },
   },
   {
@@ -64,7 +64,7 @@ export const MapItems: MapItemType[] = [
       image: ImageCard,
       title: "Finding Your Role to Make Team Work",
       desc: "Being on a team isn't easy. Especially when the stakes are high and results really matter. In this course, you'll learn how to listen and empower others; and you'll gain an appreciation for the importance of roles and responsibilities when completing large-scale tasks.",
-      btnText: "Enroll $1495",
+      //btnText: "Enroll $1495",
     },
   },
   {
@@ -80,7 +80,7 @@ export const MapItems: MapItemType[] = [
       image: ImageCard,
       title: "Finding Your Role to Make Team Work",
       desc: "Being on a team isn't easy. Especially when the stakes are high and results really matter. In this course, you'll learn how to listen and empower others; and you'll gain an appreciation for the importance of roles and responsibilities when completing large-scale tasks.",
-      btnText: "Enroll $1495",
+      //btnText: "Enroll $1495",
     },
   },
   {
@@ -96,7 +96,7 @@ export const MapItems: MapItemType[] = [
       image: ImageCard,
       title: "Finding Your Role to Make Team Work",
       desc: "Being on a team isn't easy. Especially when the stakes are high and results really matter. In this course, you'll learn how to listen and empower others; and you'll gain an appreciation for the importance of roles and responsibilities when completing large-scale tasks.",
-      btnText: "Enroll $1495",
+      //btnText: "Enroll $1495",
     },
   },
   {
@@ -112,7 +112,7 @@ export const MapItems: MapItemType[] = [
       image: ImageCard,
       title: "Finding Your Role to Make Team Work",
       desc: "Being on a team isn't easy. Especially when the stakes are high and results really matter. In this course, you'll learn how to listen and empower others; and you'll gain an appreciation for the importance of roles and responsibilities when completing large-scale tasks.",
-      btnText: "Enroll $1495",
+      //btnText: "Enroll $1495",
     },
   },
 ];

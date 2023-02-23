@@ -134,3 +134,13 @@ export type StudentWorkbookResponse = {
 export type ProgressReportsResponse = { 
   popupList: string[];
 };
+
+export type StudentJourneyListResponse = [{
+  id: number;
+  course_title: string;
+  course_description: string;
+  course_thumbnail: string;
+  number_in_sequence: number;
+  course_family: string;
+  is_here: boolean;
+}];

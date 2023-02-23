@@ -1,10 +1,15 @@
 import { css } from "@emotion/react";
 import { Stack, Typography } from "@mui/material";
+import { useRecoilValue } from 'recoil';
+import { courseMapState, studentMapState } from "@/common/atom/Atom";
 
 export const JourneyTitle = () => {
+  const currenStudentMap:any = useRecoilValue(studentMapState);
+  
   const models = {
-    name: "Jamie",
+    name: currenStudentMap.name,
   };
+  
   return (
     <Stack spacing="10px" css={sx.title}>
       <Typography
