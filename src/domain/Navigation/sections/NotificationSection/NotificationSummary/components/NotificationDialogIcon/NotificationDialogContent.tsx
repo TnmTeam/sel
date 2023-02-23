@@ -62,37 +62,42 @@ export const NotificationDialogContent = () => {
 
     return (
         <Stack>
-            {Content.map((it, index) => (
-                <Link style={{ textDecoration: 'none' }} key={index}>
-                    {/*<Link href='/account' style={{textDecoration:"none"}} key={index}>*/}
-                    <List>
-                        <ListItem>
-                            <FiberManualRecordIcon
-                                sx={{ color: `${it.Type}` }}
-                            />
-                            <ListItemText sx={{ ml: '10px' }}>
-                                <Typography fontWeight='bold' color='black'>
-                                    {it.title}
-                                </Typography>
-                                <Typography
-                                    fontSize='11pt'
-                                    color='gray'
-                                >{`${it.name}ㆍ${it.date}`}</Typography>
-                            </ListItemText>
-                            <ListItemAvatar sx={{ mr: '-20pt' }}>
-                                <Avatar>
-                                    <Image
-                                        src={it.icon}
-                                        alt={'img'}
-                                        width='40'
-                                        height='40'
+            {
+                (notificationState?.result.models.length > 0) ?
+                    Content.map((it, index) => (
+                        <Link style={{ textDecoration: 'none' }} key={index}>
+                            {/*<Link href='/account' style={{textDecoration:"none"}} key={index}>*/}
+                            <List>
+                                <ListItem>
+                                    <FiberManualRecordIcon
+                                        sx={{ color: `${it.Type}` }}
                                     />
-                                </Avatar>
-                            </ListItemAvatar>
-                        </ListItem>
-                    </List>
-                </Link>
-            ))}
+                                    <ListItemText sx={{ ml: '10px' }}>
+                                        <Typography fontWeight='bold' color='black'>
+                                            {it.title}
+                                        </Typography>
+                                        <Typography
+                                            fontSize='11pt'
+                                            color='gray'
+                                        >{`${it.name}ㆍ${it.date}`}</Typography>
+                                    </ListItemText>
+                                    <ListItemAvatar sx={{ mr: '-20pt' }}>
+                                        <Avatar>
+                                            <Image
+                                                src={it.icon}
+                                                alt={'img'}
+                                                width='40'
+                                                height='40'
+                                            />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                </ListItem>
+                            </List>
+                        </Link>
+                    ))
+                :
+                    null
+            }
         </Stack>
     );
 
