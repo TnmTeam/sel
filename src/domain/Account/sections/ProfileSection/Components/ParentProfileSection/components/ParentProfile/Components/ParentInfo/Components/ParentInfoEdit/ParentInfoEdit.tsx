@@ -1,8 +1,17 @@
-import { profileInfoProps } from "@/domain/Account/sections/ProfileSection/ProfileSection"
 import { MenuItem, TextField } from "@mui/material"
 import { Box } from "@mui/system"
 
-export const ParentInfoEdit = (model:profileInfoProps) => {
+type DataType = {
+    parent_email: string;
+    parent_name: string;
+    parent_phone: string;
+    parent_email2: string;
+    parent_name2: string;
+    parent_phone2: string;
+    parentIndex?: number;
+};
+
+export const ParentInfoEdit = (model: DataType) => {
     return (
         <Box
             component="form"
@@ -15,41 +24,38 @@ export const ParentInfoEdit = (model:profileInfoProps) => {
             <div>
                 <TextField
                     id="outlined-basic"
-                    label="First Name"
-                    defaultValue={model.firstName}
+                    label="Name"
+                    defaultValue={model.parentIndex === 1 ? model.parent_name : model.parent_name2}
                 />
-                <TextField
+                {/* <TextField
                     id="outlined-basic"
                     label="Last Name"
                     defaultValue={model.lastName}
-                />
-            </div>
-            <div>
+                /> */}
                 <TextField
                     id="outlined-basic"
                     label="Email Address"
-                    defaultValue={model.email}
+                    defaultValue={model.parentIndex === 1 ? model.parent_email : model.parent_email2}
                 />
+            </div>
+            <div>
                 <TextField
                     id="outlined-basic"
                     label="Phone Number"
-                    defaultValue={model.phone}
+                    defaultValue={model.parentIndex === 1 ? model.parent_phone : model.parent_phone2}
                 />
             </div>
-            <div>
-                <TextField
+                {/* <TextField
                     id="outlined-basic"
                     label="Contact Preference"
                     defaultValue={model.firstName}
-                />
-                <TextField
+                /> */}
+                {/* <TextField
                     id="outlined-basic"
                     label="Address"
                     defaultValue={model.address}
-                />
-            </div>
-            <div>
-                <TextField
+                /> */}
+                {/* <TextField
                     id="outlined-select-currency"
                     select
                     label="Country"
@@ -63,10 +69,8 @@ export const ParentInfoEdit = (model:profileInfoProps) => {
                     id="outlined-basic"
                     label="State/Region"
                     defaultValue={model.state}
-                />
-            </div>
-            <div>
-                <TextField
+                /> */}
+                {/* <TextField
                     id="outlined-basic"
                     label="City"
                     defaultValue={model.city}
@@ -75,8 +79,7 @@ export const ParentInfoEdit = (model:profileInfoProps) => {
                     id="outlined-basic"
                     label="Zip Code"
                     defaultValue={model.zipCode}
-                />
-            </div>
+                /> */}
         </Box>
     )
 }
