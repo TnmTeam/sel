@@ -20,4 +20,9 @@ const studentArrayState = atom({
     default: [studentMapState],
 });
 
-export { courseArrayState, courseMapState, studentArrayState, studentMapState };
+const loginInfo:any = atom({
+    key: 'loginInfo',
+    default: {},
+});
+
+export { courseArrayState, courseMapState, studentArrayState, studentMapState, loginInfo };

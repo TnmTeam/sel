@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import Link from 'next/link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -22,8 +22,14 @@ import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 
 import { axiosClient } from '@/data/client/client';
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
+import { loginInfo } from '@/common/atom/Atom';
+
 
 export const Authentication = () => {
+   
+    const loginInfoHandlerState = useSetRecoilState(loginInfo);
+
     useEffect(() => {
         localStorage.removeItem('accessToken');
     }, []);
@@ -46,7 +52,7 @@ export const Authentication = () => {
                 console.log(data.user);
                 const accessToken = await data.user.getIdToken();
                 // 만료되었거나 5분 이내 완료이면 새로 발급해오는 듯?
-                console.log( localStorage );
+                console.log(localStorage);
                 localStorage.setItem('accessToken', accessToken);
                 if (data.user.email != null)
                     localStorage.setItem('email', await data.user.email);
@@ -73,29 +79,28 @@ export const Authentication = () => {
         if (response.data.status_code == 500) {
             // Expired toekn
             console.log(response.data.message);
-        } else if (response.data.status_code == 400) {  // 로그인 시도 성공
+        } else if (response.data.status_code == 400) {
+            // 로그인 시도 성공
             // Account Already Exists!
             console.log(response.data.message);
 
             const authEmail = await response.data.email;
-            
+
             if (localStorage.getItem('email') == authEmail) {
                 // 회원 가입 성공
                 localStorage.setItem('role', await response.data.role);
-                location.href = '/overview'; // 페이지 이동
-            }
-            else
-            {
+                //location.href = '/overview';  // 페이지 이동
+                location.href = '/select'; // 학생/코스 선택 화면 이동
+            } else {
                 localStorage.setItem('role', await response.data.role);
-                location.href = '/overview'; // 페이지 이동
+                //location.href = '/overview';  // 페이지 이동
+                location.href = '/select'; // 학생/코스 선택 화면 이동
             }
-            
-        }
-        else {
-             // 자동으로 회원 가입( 2.23 임시)
-             authSignup();
-             // 회원 가입 페이지 자동 이동
-             //location.href='/signup';
+        } else {
+            // 자동으로 회원 가입( 2.23 임시)
+            authSignup();
+            // 회원 가입 페이지 자동 이동
+            //location.href='/signup';
         }
     };
 
@@ -119,20 +124,18 @@ export const Authentication = () => {
         if (localStorage.getItem('email') == authEmail) {
             // 회원 가입 성공
             localStorage.setItem('role', await response.data.role);
-            location.href = '/overview'; // 페이지 이동
+            //location.href = '/overview';  // 페이지 이동
+            location.href = '/select'; // 학생/코스 선택 화면 이동
         }
-        
-        //location.href = '/signup';
 
-        
+        //location.href = '/signup';
     };
 
-    const moveOverview = async () => {
-        localStorage.setItem('accessToken', '');
-        localStorage.setItem('email', 'bessietsang@hotmail.com');
-        localStorage.setItem('displayName', 'test');
-        localStorage.setItem('uid', '');
-        location.href = '/overview';
+    const MoveSelectView = () => {
+        var email_param = {
+            email: 'josharnold@gmail.com',
+        };
+        loginInfoHandlerState(email_param);
     };
 
     return (
@@ -177,26 +180,22 @@ export const Authentication = () => {
                     </Link>
                 </Grid>
 
-                <Button
+                <Link
                     type='submit'
-                    fullWidth
-                    variant='contained'
-                    sx={{
-                        mt: 3,
-                        mb: 2,
+                    style={{
+                        marginTop: 3,
+                        marginBottom: 2,
                         fontSize: '18pt',
                         background: FlexBlueButtons.ButtonColor,
                         color: FlexBlueButtons.TextColor,
-                        ':hover': {
-                            background: FlexBlueButtons.onHoverButtonColor,
-                            color: FlexBlueButtons.OnHoverTextColor,
-                        },
+                        width: '200px',
+                        textAlign: 'center',
                     }}
-                    onClick={moveOverview}
-                    //href='/overview'
+                    onClick={MoveSelectView}
+                    href='/select'
                 >
                     Login
-                </Button>
+                </Link>
             </Box>
         </Grid>
     );
