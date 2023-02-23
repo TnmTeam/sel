@@ -63,9 +63,9 @@ const getMediaContentByCourseType = (type: string, unitId: string) => {
   */
   unitIds = unitId
   //console.log("CourseMedia getMediaContentByCourseType studentIdNum : "+studentIdNum);
-  console.log("CourseMedia getMediaContentByCourseType studentId : "+studentId);
-  console.log("CourseMedia getMediaContentByCourseType courseId : "+courseId);
-  console.log("CourseMedia getMediaContentByCourseType unitId : "+unitIds);
+  //console.log("CourseMedia getMediaContentByCourseType studentId : "+studentId);
+  //console.log("CourseMedia getMediaContentByCourseType courseId : "+courseId);
+  //console.log("CourseMedia getMediaContentByCourseType unitId : "+unitIds);
   if(type) {
     switch (type) {
       //case "embed":

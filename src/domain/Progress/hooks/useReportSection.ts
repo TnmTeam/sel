@@ -43,7 +43,7 @@ const useStudentWrokbookState = (studentId: string, courseId: string) => {
   
   // workbook
   const workbookId = response?.workbook_id;
-  console.log("ProgressReports/workbookId(url) ", workbookId);
+  //console.log("ProgressReports/workbookId(url) ", workbookId);
 
   return {
     result: {
@@ -66,7 +66,7 @@ const useGetProgressReportsState = (studentId: string, courseId: string) => {
 
   const popupList = data;
 
-  console.log("ProgressReports/popupList ", popupList);
+  //console.log("ProgressReports/popupList ", popupList);
 
   return {
     result: {

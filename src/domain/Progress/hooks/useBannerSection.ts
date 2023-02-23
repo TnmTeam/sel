@@ -15,7 +15,7 @@ export const useBannerSection = () => {
   const studentIdNumber = currenStudentMap.id;
   const courseId = currenCourseMap.course_id;
 
-  console.log("/progress/banner API ", studentId, " ", studentIdNumber, " ", courseId );
+  //console.log("/progress/banner API ", studentId, " ", studentIdNumber, " ", courseId );
   const { data, isLoading } = useGetBanner(studentIdNumber, studentId, courseId);
 
   if (!data) {
@@ -29,7 +29,7 @@ export const useBannerSection = () => {
 
   const response = data;
 
-  console.log("progress/banner ", response );
+  //console.log("progress/banner ", response );
 
   // banner
   const [title, desc, rate] = [
