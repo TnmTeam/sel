@@ -162,6 +162,13 @@ export const Authentication = () => {
         loginInfoHandlerState(email_param);
     };
 
+    const MoveSelectView_admin = () => {
+        var email_param = {
+            email: 'admin',
+        };
+        loginInfoHandlerState(email_param);
+    };
+
     return (
         <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} square>
             <Box
@@ -263,6 +270,34 @@ export const Authentication = () => {
                             josharnold@gmail.com
                         </Button>
                     </Link>                    
+                    <Link
+                        id='loginBtn'
+                        type='submit'
+                        onClick={MoveSelectView_admin}
+                        href='/select'
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <Button
+                            type='submit'
+                            fullWidth
+                            variant='contained'
+                            sx={{
+                                mt: 3,
+                                mb: 2,
+                                fontSize: '12pt',
+                                width: '300px',
+                                background: FlexBlueButtons.ButtonColor,
+                                color: FlexBlueButtons.TextColor,
+                                ':hover': {
+                                    background:
+                                        FlexBlueButtons.onHoverButtonColor,
+                                    color: FlexBlueButtons.OnHoverTextColor,
+                                },
+                            }}
+                        >
+                            admin
+                        </Button>
+                    </Link>  
             </Box>
         </Grid>
     );
