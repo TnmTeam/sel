@@ -1,7 +1,10 @@
+import { loginInfo } from "@/common/atom/Atom";
 import { useGetStudentList } from "@/data/api/studentCourse/useStudentCourseApiHooks";
+import { useRecoilValue } from "recoil";
+
 export const useStudentSection = () => {
-  
-  const { data, isLoading } = useGetStudentList("josharnold@gmail.com");
+  var loginInfoMap:any = useRecoilValue(loginInfo);
+  const { data, isLoading } = useGetStudentList(loginInfoMap.email);
   
   if (!data) {
     return {
