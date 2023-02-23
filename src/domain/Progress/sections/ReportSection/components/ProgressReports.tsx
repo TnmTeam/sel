@@ -20,14 +20,7 @@ type DataType = {
 
 export const ProgressReports = ({data}: DataType) => {
   
-  let models: string[] = [];
-  if( !(!data.result || data.isLoading) )
-  {
-      models = data.result.popupList;
-  }
-
   const { modalState } = useModalHooks();
-
   const [popupUrl, setPopupUrl] = useState("");
 
   const theme = useTheme();
@@ -55,13 +48,14 @@ export const ProgressReports = ({data}: DataType) => {
         )
         : 
         (
+          
           <>
             <div css={sx.imageContainer}>
-              {models.map((it, index) => (
+              {data.result.popupList.map((it, index) => (
                 <div
                   css={sx.image}
                   key={index}
-                  onClick={(e)=>{handleClickOpen( data.result.popupList[index] )}}
+                  onClick={(e)=>{handleClickOpen( it )}}
                 >
                   {/* <Image src={it} alt="report" width={169} height={308} /> */}
                   <Image src={report} alt="report" width={169} height={308} />
