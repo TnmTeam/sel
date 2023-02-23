@@ -32,7 +32,7 @@ class ProgressApiService {
 
   //async getCourse(id: string): Promise<CourseResponse> {
   async getCourseUnitList(studentId: string, courseId: string): Promise<CourseUnitList> {
-    console.log("getCourseUnitList Start");
+    //console.log("getCourseUnitList Start");
     var param = { 
         student_id : studentId, 
         course_id : courseId 
@@ -89,31 +89,31 @@ class ProgressApiService {
   }
   
   async getUnitItemContent1(studentId: string, courseId: string, unitId:string ): Promise<ContentItem1> {
-    console.log("getUnitItemContent1 Start");
+    //console.log("getUnitItemContent1 Start");
     var param = { 
       student_id : studentId, 
       course_id : courseId, 
       sect_num : unitId 
     };
-    console.log("getUnitItemContent1 param");
-    console.log(param);
+    //console.log("getUnitItemContent1 param");
+    //console.log(param);
     const response = await axiosClient.post(`/progress/unit-item-responses`, param);
-    console.log("getUnitItemContent1 response");
-    console.log(response.data);
+    //console.log("getUnitItemContent1 response");
+    //console.log(response.data);
     return response.data;
   }
 
   async getUnitItemContent2(studentIdNum: number, unitId: string): Promise<ContentItem2> {
-    console.log("getUnitItemContent2 Start");
+    //console.log("getUnitItemContent2 Start");
     var param = { 
       student_id_num : studentIdNum, 
       unit_id : unitId 
     };
-    console.log("getUnitItemContent2 param");
-    console.log(param);
+    //console.log("getUnitItemContent2 param");
+    //console.log(param);
     const response = await axiosClient.post(`/progress/unit-item-videoask`, param);
-    console.log("getUnitItemContent2 response");
-    console.log(response.data);
+    //console.log("getUnitItemContent2 response");
+    //console.log(response.data);
     return response.data;
   }
 
@@ -123,8 +123,8 @@ class ProgressApiService {
     };
     //const response = await axiosClient.post(`/getSuggestedCourse?id=${id}`);
     const response = await axiosClient.post(`/progress/student-success-journey`, param);
-    console.log("getStudentSuccessJourney response");
-    console.log(response.data);
+    //console.log("getStudentSuccessJourney response");
+    //console.log(response.data);
     return response.data;
   }
 }

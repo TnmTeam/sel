@@ -30,10 +30,12 @@ export const SignupSection = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        /*
         console.log({
             email: data.get('email'),
             password: data.get('password'),
         });
+        */
     };
 
     const authLogin = async () => {
@@ -74,7 +76,7 @@ export const SignupSection = () => {
 
         // 자동으로 회원 가입( 2.23 임시)
         const response = await axiosClient.post('/auth/signup', params);
-        console.log(response);
+        //console.log(response);
 
         const authEmail = await response.data.email;
         if (localStorage.getItem('email') == authEmail) {

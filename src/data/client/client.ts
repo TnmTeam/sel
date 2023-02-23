@@ -9,7 +9,7 @@ const axiosClient = axios.create({
 // instasnce에 Authorization token 추가 위한 interceptor 추가
 axiosClient.interceptors.request.use(
   function(config) {
-    console.log('axios request interceptor', config);
+    //console.log('axios request interceptor', config);
     const token = localStorage.getItem('accessToken');
     config.headers.Authorization =  token ? `Bearer ${token}` : '';
     return config;

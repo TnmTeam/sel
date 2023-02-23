@@ -38,10 +38,12 @@ export const Authentication = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        /*
         console.log({
             email: data.get('email'),
             password: data.get('password'),
         });
+        */
     };
 
     const [userData, setUserData] = useState(null);
@@ -49,11 +51,11 @@ export const Authentication = () => {
         const provider = new GoogleAuthProvider(); // provider를 구글로 설정
         signInWithPopup(auth, provider) // popup을 이용한 signup
             .then(async (data) => {
-                console.log(data);
-                console.log(data.user);
+                //console.log(data);
+                //console.log(data.user);
                 const accessToken = await data.user.getIdToken();
                 // 만료되었거나 5분 이내 완료이면 새로 발급해오는 듯?
-                console.log(localStorage);
+                //console.log(localStorage);
                 localStorage.setItem('accessToken', accessToken);
                 if (data.user.email != null)
                     localStorage.setItem('email', await data.user.email);
@@ -64,7 +66,7 @@ export const Authentication = () => {
                     );
                 if (data.user.displayName != null)
                     localStorage.setItem('uid', await data.user.uid);
-                console.log('localStorage', localStorage);
+                //console.log('localStorage', localStorage);
 
                 // 로그인 API 연동
                 authLogin();
@@ -79,12 +81,12 @@ export const Authentication = () => {
         const response = await axiosClient('/auth/login');
         if (response.data.status_code == 500) {
             // Expired toekn
-            console.log('111');
+            //console.log('111');
             console.log(response.data.message);
         } else if (response.data.status_code == 400) {
             // 로그인 시도 성공
             // Account Already Exists!
-            console.log('222');
+            //console.log('222');
             console.log(response.data.message);
 
             const authEmail = await response.data.email;
@@ -102,8 +104,8 @@ export const Authentication = () => {
             }
         } else {
             // 정상 로그인
-            console.log('333');
-            console.log(localStorage);
+            //console.log('333');
+            //console.log(localStorage);
 
             var email_param = {
                 email: response.data.email,
@@ -129,7 +131,7 @@ export const Authentication = () => {
 
         // 자동으로 회원 가입( 2.23 임시)
         const response = await axiosClient.post('/auth/signup', params);
-        console.log(response);
+        //console.log(response);
 
         const authEmail = await response.data.email;
         if (localStorage.getItem('email') == authEmail) {
@@ -143,8 +145,8 @@ export const Authentication = () => {
     };
 
     const MoveSelectView = () => {
-        console.log('MoveSelectView');
-        console.log(localStorage.getItem('email'));
+        //console.log('MoveSelectView');
+        //console.log(localStorage.getItem('email'));
 
         if (localStorage.getItem('email') == null)
             alert('google account link!');
@@ -158,6 +160,13 @@ export const Authentication = () => {
     const MoveSelectView_demo = () => {
         var email_param = {
             email: 'josharnold@gmail.com',
+        };
+        loginInfoHandlerState(email_param);
+    };
+
+    const MoveSelectView_admin = () => {
+        var email_param = {
+            email: 'admin',
         };
         loginInfoHandlerState(email_param);
     };
@@ -263,6 +272,34 @@ export const Authentication = () => {
                             josharnold@gmail.com
                         </Button>
                     </Link>                    
+                    <Link
+                        id='loginBtn'
+                        type='submit'
+                        onClick={MoveSelectView_admin}
+                        href='/select'
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <Button
+                            type='submit'
+                            fullWidth
+                            variant='contained'
+                            sx={{
+                                mt: 3,
+                                mb: 2,
+                                fontSize: '12pt',
+                                width: '300px',
+                                background: FlexBlueButtons.ButtonColor,
+                                color: FlexBlueButtons.TextColor,
+                                ':hover': {
+                                    background:
+                                        FlexBlueButtons.onHoverButtonColor,
+                                    color: FlexBlueButtons.OnHoverTextColor,
+                                },
+                            }}
+                        >
+                            admin
+                        </Button>
+                    </Link>  
             </Box>
         </Grid>
     );

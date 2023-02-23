@@ -14,9 +14,9 @@ class AccountApiService {
         var param = { 
             parent_email : parentEmail
         };
-        console.log('getStudentProfile param', param);
+        //console.log('getStudentProfile param', param);
         const response = await axiosClient.post(`/account/student`, param);
-        console.log('getStudentProfile response', response);
+        //console.log('getStudentProfile response', response);
         return response.data;
     }
 }
