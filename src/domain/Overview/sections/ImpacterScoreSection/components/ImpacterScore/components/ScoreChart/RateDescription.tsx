@@ -40,7 +40,7 @@ export const RateDescription = ({ rate, studentName }: ChartType) => {
                 </Typography>
                 <Typography
                     fontSize='45px'
-                    fontWeight={700}
+                    fontWeight={1200}
                     color='white'
                     letterSpacing={'-1.75px'}
                 >
