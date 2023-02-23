@@ -5,8 +5,9 @@ import ReadContentSampleImage from "@/assets/progress/img-read-content.png";
 import { MediaType } from "../media.type";
 
 export const ReadContent = ({ url }: MediaType) => {
+  //console.log("ReadContent url : "+url);
   const imageUrl = url.startsWith("") ? ReadContentSampleImage : url;
-
+  
   return (
     <Stack css={sx.root}>
       <div css={sx.image}>

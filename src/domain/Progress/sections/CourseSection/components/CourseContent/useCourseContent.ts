@@ -54,8 +54,8 @@ export const useCourseContent = (models: CourseType[]) => {
   };
 
   const handleSetDetailCourse = (selectedDetailCourse: DetailCourseType) => {
-    console.log("useCourseContent handleSetDetailCourse selectedDetailCourse");
-    console.log(selectedDetailCourse);
+    //console.log("useCourseContent handleSetDetailCourse selectedDetailCourse");
+    //console.log(selectedDetailCourse);
     setDetailCourse(selectedDetailCourse);
   };
 

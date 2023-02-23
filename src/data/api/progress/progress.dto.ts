@@ -96,8 +96,8 @@ export type UnitItem = {
 };
 
 export type ContentResponse1 = {
-  contentList: ContentItem1[];
-} | null;
+  contentList: ContentItem1;
+};
 
 export type ContentItem1 = {
   id: number;
@@ -110,22 +110,25 @@ export type ContentItem1 = {
   question: string;
   answer: string;
   created_at: string;
-} | null;
+}[];
 
 export type ContentResponse2 = {
-  contentList: ContentItem2[];
-} | null;
+  contentList: ContentItem2;
+};
 
 export type ContentItem2 = {
   id: number;
-  student_id: string;
-  course_id: string;
-  unit_id: string;
-  response_id: string;
-  block_id: string;
-  type: string;
-  course_link: string;
-} | null;
+  event_id: string;
+  lw_unit: string;
+  question_id: string;
+  form_id: string;
+  created_at: string;
+  answer_type: string;
+  title: string;
+  question: string;
+  content:  string;
+  student_id: number;
+}[];
 
 export type StudentWorkbookResponse = { 
   workbook_id: string;

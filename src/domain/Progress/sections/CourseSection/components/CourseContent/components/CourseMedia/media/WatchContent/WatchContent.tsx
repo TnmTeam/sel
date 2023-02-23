@@ -5,6 +5,7 @@ import { useVideoControl } from "./useVideoControl";
 import { useVideoPlayButton, VideoPlayButton } from "./VideoPlayButton";
 
 export const WatchContent = ({ url }: MediaType) => {
+  //console.log("WatchContent url : "+url);
   const { ref, toggleVideoPlay } = useVideoControl();
   const { playBtnVisiblity, hidePlayBtn } = useVideoPlayButton();
 
