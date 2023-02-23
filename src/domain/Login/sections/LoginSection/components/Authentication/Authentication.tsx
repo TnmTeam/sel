@@ -25,9 +25,7 @@ import { axiosClient } from '@/data/client/client';
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import { loginInfo } from '@/common/atom/Atom';
 
-
 export const Authentication = () => {
-   
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
 
     useEffect(() => {
@@ -182,19 +180,29 @@ export const Authentication = () => {
 
                 <Link
                     type='submit'
-                    style={{
-                        marginTop: 3,
-                        marginBottom: 2,
-                        fontSize: '18pt',
-                        background: FlexBlueButtons.ButtonColor,
-                        color: FlexBlueButtons.TextColor,
-                        width: '200px',
-                        textAlign: 'center',
-                    }}
                     onClick={MoveSelectView}
                     href='/select'
+                    style={{ textDecoration: 'none' }}
                 >
-                    Login
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        sx={{
+                            mt: 3,
+                            mb: 2,
+                            fontSize: '18pt',
+                            width: '300px',                            
+                            background: FlexBlueButtons.ButtonColor,
+                            color: FlexBlueButtons.TextColor,
+                            ':hover': {
+                                background: FlexBlueButtons.onHoverButtonColor,
+                                color: FlexBlueButtons.OnHoverTextColor,
+                            },
+                        }}
+                    >
+                        Login
+                    </Button>
                 </Link>
             </Box>
         </Grid>
