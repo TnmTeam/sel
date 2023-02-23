@@ -1,5 +1,6 @@
 import { useGetStudentList } from "@/data/api/studentCourse/useStudentCourseApiHooks";
 export const useStudentSection = () => {
+  
   const { data, isLoading } = useGetStudentList("josharnold@gmail.com");
   
   if (!data) {

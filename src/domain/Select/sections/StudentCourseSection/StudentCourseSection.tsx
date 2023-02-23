@@ -1,9 +1,21 @@
-import { Stack } from '@mui/system';
+import { CustomProgress } from "@/common/components/progress";
+import { Stack } from '@mui/material';
+import { StudentItemType } from './components/types/studentCourse.type'
+import { StudentCourse } from "./components/StudentCourse";
 
-export const StudentCourseSection = () => {
-    return (
-        <Stack>
-           student / course
-        </Stack>
-    );
+type DataType = {
+    data: StudentItemType;
+  };
+
+export const StudentCourseSection = ({ data }: DataType) => {
+    if (!data.result || data.isLoading) {
+        return (
+            <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
+                <CustomProgress />
+            </Stack>
+        );
+      }
+      return (
+            <StudentCourse data={data.result} />
+      );
 };
