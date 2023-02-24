@@ -36,21 +36,21 @@ const sx = {
     width: 60px;
     height: 60px;
     right: 280px;
-    z-index: 99;
+    z-index: 1200;
     background: #4a7199;
     max-width: 1440px;
     margin: 0 auto;
     border: 1px solid;
   `,
-    comingSoon: css`
-        background: rgba(0, 0, 0, 0.7);
-        font-size: 50px;
-        color: white;
-        position: absolute;
-        width: 400px;
-        line-height: 600px;
-        text-align: center;
-        border-radius: 10px;
-        z-index: 999;
-    `,
+  comingSoon: css`
+      background: rgba(0, 0, 0, 0.7);
+      font-size: 50px;
+      color: white;
+      position: absolute;
+      width: 400px;
+      line-height: 600px;
+      text-align: center;
+      border-radius: 10px;
+      z-index: 999;
+  `,
 };
