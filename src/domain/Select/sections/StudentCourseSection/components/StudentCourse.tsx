@@ -80,10 +80,8 @@ const Student = ({ studentList }: StudentListType) => {
                 let courseHandlerList = [];
                 let studentHandlerList = [];
 
-
                 setButtonHidden(() => response.data.length);
                 if (response.data.length > 0) {
-                    
                     for (let i = 0; i < response.data.length; i++) {
                         let course = {
                             courseId: response.data[i].course_id.toString(),
@@ -205,7 +203,7 @@ const Student = ({ studentList }: StudentListType) => {
                     </FormControl>
 
                     {buttonHidden == 0 ? (
-                        <></>
+                        <Stack sx={{ marginTop: '30px' }}>No courses.</Stack>
                     ) : (
                         <FormControl fullWidth style={{ marginTop: '30px' }}>
                             <InputLabel>Course</InputLabel>
