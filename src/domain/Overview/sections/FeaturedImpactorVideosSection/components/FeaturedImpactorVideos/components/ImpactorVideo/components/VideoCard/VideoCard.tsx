@@ -13,7 +13,7 @@ export const VideoCard = ({ item, index }: VideoCardItemType) => {
     const title = item.snippet.title;
     const publishedAt = item.snippet.publishedAt.split('T');
     const description = item.snippet.description;
-    const thumbnails = item.snippet.thumbnails.default.url;
+    const thumbnails = item.snippet.thumbnails.high.url;
 
     var titleSummary = '';
     var descriptionSummary = '';

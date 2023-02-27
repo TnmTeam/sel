@@ -92,15 +92,15 @@ const sx = {
         font-weight: bold;
     `,
     viewAllText: css`
-        font-family: 'Poppins';
-        font-style: normal;
+        font-family: 'DM Sans';
         font-weight: bold;
-        font-size: 16px;
+        font-size: 18px;
         line-height: 24px;
         letter-spacing: 0.01em;
         color: #147ad6;
         margin-left: 15px;
         text-decoration-line: none;
+        text-transform: none;
     `,
 };
 
