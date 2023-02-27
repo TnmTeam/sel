@@ -4,6 +4,7 @@ import { Stack, Typography } from "@mui/material";
 import { AnswerItem } from "./AnswerItem";
 import { ContentItem1, DetailCourseType } from "@/domain/Progress/types/course.type";
 import { useGetUnitItemContent1 } from "@/data/api/progress/useProgressApiHooks";
+import { NoContent } from "../NoContent/NoContent";
 
 type CourseMediaType = {
   selectedDetailCourse: DetailCourseType | null;
@@ -36,11 +37,17 @@ export const ActivityContent = ({ selectedDetailCourse }: CourseMediaType) => {
         >
           {"Question & Answers"}
         </Typography>
-        <Stack spacing={"20px"}>
-          {models?.map((it, index) => (
-            <AnswerItem key={index} question={it.question} answer={it.answer} />
-          ))}
-        </Stack>
+        {
+          models && models?.length > 0 
+          ? 
+            <Stack spacing={"20px"}>
+              {models?.map((it, index) => (
+                <AnswerItem key={index} question={it.question} answer={it.answer} />
+              ))}
+            </Stack>
+          :
+            <NoContent />
+        }
       </Stack>
     </Stack>
   );

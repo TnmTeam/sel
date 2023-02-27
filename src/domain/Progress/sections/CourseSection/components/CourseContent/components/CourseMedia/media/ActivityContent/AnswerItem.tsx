@@ -8,7 +8,7 @@ type AnswerItemType = {
 
 export const AnswerItem = ({ question, answer }: AnswerItemType) => {
   return (
-    <Stack>
+    <Stack style={{wordBreak:"break-all"}}>
       <Typography
         variant="body2"
         fontWeight={700}
