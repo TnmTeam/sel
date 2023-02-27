@@ -10,10 +10,16 @@ import { InsightsDialogButton } from '@/domain/Navigation/sections/AddInsightsSe
 import { NotificationDialogIcon } from '@/domain/Navigation/sections/NotificationSection/NotificationSummary/components';
 import { useRecoilValue } from 'recoil';
 import { studentMapState } from '@/common/atom/Atom';
+import { useEffect, useState } from 'react';
 
 export const Appbar = () => {
     const currenStudentMap: any = useRecoilValue(studentMapState);
-    const studentName = currenStudentMap.name;
+
+    console.log(currenStudentMap);
+    const [studentName , setStudentName]= useState("");
+    useEffect(()=> {
+        setStudentName(currenStudentMap.name)  ;
+    },[])
     const router = useRouter();
     const currentRoute = router.pathname;
     const menu = [
@@ -22,7 +28,7 @@ export const Appbar = () => {
         {
             menuType: 'button',
             url: '/select',
-            title: '- Student Select -',
+            title: studentName,
             buttonType: 'text',
         },
         {
