@@ -36,6 +36,7 @@
     "react-query": "^3.39.3",
     "react-simple-image-slider": "^2.4.1",
     "recoil": "^0.7.6",
+    "recoil-persist": "^4.2.0",
     "typescript": "4.9.5"
   },
   "devDependencies": {

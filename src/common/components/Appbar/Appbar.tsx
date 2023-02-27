@@ -8,8 +8,12 @@ import { useRouter } from 'next/router';
 import { TextMenu } from './components/TextMenu/TextMenu';
 import { InsightsDialogButton } from '@/domain/Navigation/sections/AddInsightsSection/components';
 import { NotificationDialogIcon } from '@/domain/Navigation/sections/NotificationSection/NotificationSummary/components';
+import { useRecoilValue } from 'recoil';
+import { studentMapState } from '@/common/atom/Atom';
 
 export const Appbar = () => {
+    const currenStudentMap: any = useRecoilValue(studentMapState);
+    const studentName = currenStudentMap.name;
     const router = useRouter();
     const currentRoute = router.pathname;
     const menu = [
@@ -45,12 +49,12 @@ export const Appbar = () => {
             title: 'Resources',
             buttonType: 'text',
         },
-        {
-            menuType: 'buttonPopup',
-            url: '/addinsights',
-            title: 'Add Insights',
-            buttonType: 'outline',
-        },
+        // {
+        //     menuType: 'buttonPopup',
+        //     url: '/addinsights',
+        //     title: 'Add Insights',
+        //     buttonType: 'outline',
+        // },
         { menuType: 'icon', url: '', title: '', buttonType: '' },
         {
             menuType: 'button',
