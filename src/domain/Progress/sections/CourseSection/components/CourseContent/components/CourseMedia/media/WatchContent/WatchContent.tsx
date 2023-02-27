@@ -2,6 +2,7 @@ import { useGetUnitItemContent2 } from "@/data/api/progress/useProgressApiHooks"
 import { DetailCourseType } from "@/domain/Progress/types/course.type";
 import { css } from "@emotion/react";
 import { Stack } from "@mui/material";
+import { NoContent } from "../NoContent/NoContent";
 import { useVideoControl } from "./useVideoControl";
 import { useVideoPlayButton, VideoPlayButton } from "./VideoPlayButton";
 
@@ -31,25 +32,32 @@ export const WatchContent = ({ selectedDetailCourse }: CourseMediaType) => {
 
   return (
     <Stack css={sx.root}>
-      <div css={sx.videoFrame(!playBtnVisiblity)}>
-        <div
-          css={sx.videoControlContainer(!playBtnVisiblity)}
-          onClick={toggleVideoPlay}
-        >
-          {playBtnVisiblity && <VideoPlayButton />}
-        </div>
-        <video
-          key={url}
-          ref={ref}
-          css={sx.video}
-          controls={!playBtnVisiblity}
-          preload="auto"
-          onPlay={hidePlayBtn}
-          autoPlay
-        >
-          <source src={url} type="video/mp4" />
-        </video>
-      </div>
+      {
+        url && isValidHttpUrl(url)
+        ? 
+          <div css={sx.videoFrame(!playBtnVisiblity)}>
+            <div
+              css={sx.videoControlContainer(!playBtnVisiblity)}
+              onClick={toggleVideoPlay}
+            >
+              {playBtnVisiblity && <VideoPlayButton />}
+            </div>
+            <video
+              key={url}
+              ref={ref}
+              css={sx.video(isUrlContentType(url))}
+              controls={!playBtnVisiblity}
+              preload="auto"
+              onPlay={hidePlayBtn}
+              autoPlay
+            >
+              <source src={url} type="video/mp4" />
+            </video>
+          </div>
+        : 
+          <NoContent />
+      }
+
     </Stack>
   );
 };
@@ -71,9 +79,9 @@ const sx = {
     transform: translateX(-50%);
     z-index: ${isPlaying ? "1" : "0"};
   `,
-  video: css`
+  video: (isType: boolean) => css`
     width: 100%;
-    height: 100%;
+    ${isType ? "" : "height: 100%"};    /* mp4 only */
     object-fit: cover;
   `,
   videoControlContainer: (isPlaying: boolean) => css`
@@ -88,3 +96,25 @@ const sx = {
     z-index: ${isPlaying ? "0" : "1"};
   `,
 };
+
+const isValidHttpUrl = (testUrl: string) => {
+  let tempUrl;
+  
+  try {
+    tempUrl = new URL(testUrl);
+  } catch (_) {
+    return false;  
+  }
+
+  return tempUrl.protocol === "http:" || tempUrl.protocol === "https:";
+}
+
+const isUrlContentType = (testUrl: string) => {
+  if ( testUrl.includes('audio') || testUrl.includes('mp3'))
+  {
+    return true;
+  }
+  else {  // mp4
+    return false;
+  }
+}
