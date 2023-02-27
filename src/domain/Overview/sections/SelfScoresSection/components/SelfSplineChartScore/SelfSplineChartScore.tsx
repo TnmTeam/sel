@@ -2,18 +2,16 @@ import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
 import { Box } from '@mui/system';
 
-// import ApexChart from "react-apexcharts";
-import dynamic from 'next/dynamic'
-const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
-
+//import dynamic from 'next/dynamic'
+//const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export const SelfSplineChartScore = () => {
-    
     return (
         <Stack css={sx.mainContainer}>
             <Box css={sx.itemContainer} flexDirection={'row'}>
                 <div css={sx.comingSoon}>Coming Soon</div>
                 <Box css={sx.itemWrapper}>
+                    {/*
                     <ApexChart css={sx.apexChart}
                         type={"line"}
                         width={"100%"}
@@ -102,6 +100,7 @@ export const SelfSplineChartScore = () => {
                             ]
                         }
                     />
+                    */}
                     <h1 css={sx.lessons}>Lessons</h1>
                 </Box>
             </Box>
@@ -137,9 +136,7 @@ const sx = {
         */
         padding: 40px;
     `,
-    apexChart: css`
-        
-    `,
+    apexChart: css``,
     lessons: css`
         margin-top: 30px;
         /*
@@ -168,5 +165,4 @@ const sx = {
         z-index: 999;
         text-align: center;
     `,
-    
 };
