@@ -35,6 +35,7 @@
     "react-minimal-pie-chart": "^8.4.0",
     "react-query": "^3.39.3",
     "react-simple-image-slider": "^2.4.1",
+    "react-use-intercom": "^4.0.0",
     "recoil": "^0.7.6",
     "recoil-persist": "^4.2.0",
     "typescript": "4.9.5"
