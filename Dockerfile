@@ -1,6 +1,6 @@
-# Node.js 기반의 프로젝트를 빌드해야 하므로 Node 16 버전을 alpine 이미지로 사용합니다.
+# Node.js 기반의 프로젝트를 빌드해야 하므로 Node 18 버전을 alpine 이미지로 사용합니다.
 # alpine 이미지: 엔진 구동에 필요한 최소한의 패키지만 모아 놓은 형태의 이미지로, 빌드 속도를 최적화하기 위해 사용합니다.
-FROM node:16-alpine AS builder
+FROM node:18-alpine AS builder
 
 # 작업 디렉토리를 Root 경로로 설정합니다.
 WORKDIR /
