@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material';
 import type { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
+import { IntercomProvider, useIntercom } from 'react-use-intercom';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -13,21 +14,32 @@ const queryClient = new QueryClient({
         },
     },
 });
+
 export default function App({ Component, pageProps }: AppProps) {
+    const INTERCOM_APP_ID = `${process.env.NEXT_PUBLIC_INTERCOM_APP_ID}`;
+
     return (
         <QueryClientProvider client={queryClient}>
             <RecoilRoot>
                 <ThemeProvider theme={theme}>
-                    {(pageProps && pageProps.pathname) === '/' ||
-                    (pageProps && pageProps.pathname) === '/login' ||
-                    (pageProps && pageProps.pathname) === '/signup' ||
-                    (pageProps && pageProps.pathname) === '/select' ? (
-                        <Component {...pageProps} />
-                    ) : (
-                        <Layout>
+                    <IntercomProvider
+                        appId={INTERCOM_APP_ID}
+                        autoBoot={false}
+                        onUnreadCountChange={IntercomOnUnreadCountChange}
+                        onHide={IntercomOnHide}
+                        onShow={IntercomOnShow}
+                    >
+                        {(pageProps && pageProps.pathname) === '/' ||
+                        (pageProps && pageProps.pathname) === '/login' ||
+                        (pageProps && pageProps.pathname) === '/signup' ||
+                        (pageProps && pageProps.pathname) === '/select' ? (
                             <Component {...pageProps} />
-                        </Layout>
-                    )}
+                        ) : (
+                            <Layout>
+                                <Component {...pageProps} />
+                            </Layout>
+                        )}
+                    </IntercomProvider>
                 </ThemeProvider>
             </RecoilRoot>
         </QueryClientProvider>
@@ -46,4 +58,32 @@ App.getInitialProps = async (context: any) => {
     } else {
         return {};
     }
+};
+
+export const IntercomBoot = (studentName: string) => {
+    const { boot } = useIntercom();
+    boot({ name: studentName });
+};
+
+export const IntercomBootProps = (studentName: string) => {
+    const { boot } = useIntercom();
+    boot({ name: studentName });
+};
+
+export const IntercomBootUpdate = (studentName: string) => {
+    const { boot } = useIntercom();
+    boot({ name: studentName });
+};
+
+export const IntercomShutdown = () => {
+    const { shutdown } = useIntercom();
+    shutdown();
+};
+
+export const IntercomOnHide = () =>
+    console.log('Intercom did hide the Messenger');
+export const IntercomOnShow = () =>
+    console.log('Intercom did show the Messenger');
+export const IntercomOnUnreadCountChange = (amount: number) => {
+    console.log('Intercom has a new unread message');
 };

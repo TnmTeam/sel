@@ -11,8 +11,19 @@ import { FeaturedImpactorVideosSection } from '../sections';
 import { SelfScoresSection } from '../sections';
 import { FeturedStudentWorkSection } from '../sections/FeturedStudentWorkSection/FeturedStudentWorkSection';
 import { useOverView } from "./useOverView";
+import { useRecoilValue } from 'recoil';
+import { IntercomBoot } from '@/pages/_app';
+import { studentMapState } from "@/common/atom/Atom";
+
 
 export const OverviewView = () => {
+
+    const currenStudentMap: any = useRecoilValue(studentMapState);
+    const studentName = currenStudentMap.name;
+    
+    IntercomBoot(studentName);
+
+
     const { impacterSocreState, courseScheduleState, courseProgressState } = useOverView();
 
     return (

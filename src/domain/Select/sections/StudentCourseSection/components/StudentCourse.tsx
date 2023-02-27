@@ -26,12 +26,15 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
+import { IntercomShutdown } from '@/pages/_app';
 
 interface DataType {
     data: StudentListType;
 }
 
 export const StudentCourse = ({ data }: DataType) => {
+    IntercomShutdown();
+
     var loginInfoMap: any = useRecoilValue(loginInfo);
     if (loginInfoMap.email == undefined) {
         location.href = '/';
@@ -121,7 +124,7 @@ const Student = ({ studentList }: StudentListType) => {
     };
 
     const IsButton = () => {
-        if (currenCourseMap != null) {
+        if (buttonHidden != 0) {
             return (
                 <Link href='/overview' css={sx.link}>
                     <Button

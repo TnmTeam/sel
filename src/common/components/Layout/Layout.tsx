@@ -27,7 +27,6 @@ export const Layout = ({ children }: LayoutProps) => {
             <Stack direction='row' width='100%' height='100%'>
                 <main css={st.main}>{children}</main>
             </Stack>
-            <HelpPopup />
         </Stack>
     );
 };
