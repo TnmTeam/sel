@@ -18,10 +18,10 @@ export const useGetSuggestedCourse = (courseId: string) => {
 };
 
 //export const useGetUnit = () => {
-export const useGetUnitItem = (courseId: string, sectNum: string) => {
+export const useGetUnitItem = (studentIdNum:number, studentId:string, courseId: string, sectNum: string) => {
   //var courseId = (sectNum.substring(0, sectNum.indexOf( "_" )));
   //return useMutation((index: number) => ProgressApiService.getUnit(index));
-  return useMutation(["unit-item-list", sectNum], () => ProgressApiService.getUnitItemList(courseId, sectNum));
+  return useMutation(["unit-item-list", sectNum], () => ProgressApiService.getUnitItemList(studentIdNum, studentId, courseId, sectNum));
 };
 
 export const useGetUnitItemContent1 = (studentId: string, courseId: string, unitId: string) => {
