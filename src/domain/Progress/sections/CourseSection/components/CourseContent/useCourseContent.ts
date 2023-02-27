@@ -28,7 +28,7 @@ export const useCourseContent = (models: CourseType[]) => {
   const [detailCourse, setDetailCourse] = useState<DetailCourseType | null>(
     null
   );
-  const { data, mutate } = useGetUnitItem(courseId, sectNum);
+  const { data, mutate } = useGetUnitItem(studentIdNum, studentId, courseId, sectNum);
   const detailCourses = data ? data.unitList : null;
 
   // 대강의의 index 가 바뀔 때마다 소강의 api 호출

@@ -12,6 +12,7 @@ import {
   ProgressReportsResponse,
   StudentJourneyListResponse,
 } from "./progress.dto";
+import { StudentInfoEdit } from "@/domain/Account/sections/ProfileSection/Components/StudentProfileSection/components/StudentProfile/Components/StudentInfo/Components";
 
 class ProgressApiService {
   private static instance: ProgressApiService;
@@ -57,8 +58,10 @@ class ProgressApiService {
   }
 
   //async getUnit(index: number): Promise<UnitResponse> {
-  async getUnitItemList(courseId: string,sectNum: string): Promise<UnitResponse> {
+  async getUnitItemList(studentIdNum:number, studentId:string, courseId: string,sectNum: string): Promise<UnitResponse> {
     var param = { 
+      student_id_num : studentIdNum,
+      student_id : studentId,
       course_id : courseId, 
       sect_num : sectNum 
     };
