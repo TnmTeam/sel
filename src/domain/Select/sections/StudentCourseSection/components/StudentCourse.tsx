@@ -46,6 +46,8 @@ export const StudentCourse = ({ data }: DataType) => {
 };
 
 const Student = ({ studentList }: StudentListType) => {
+    const [buttonHidden, setButtonHidden] = useState<number>(0);
+
     const studentArrayHandlerState = useSetRecoilState(studentArrayState);
     const courseArrayHandlerState = useSetRecoilState(courseArrayState);
 
@@ -78,24 +80,29 @@ const Student = ({ studentList }: StudentListType) => {
                 let courseHandlerList = [];
                 let studentHandlerList = [];
 
-                for (let i = 0; i < response.data.length; i++) {
-                    let course = {
-                        courseId: response.data[i].course_id.toString(),
-                        courseTitle:
-                            response.data[i].lw_courses.title.toString(),
-                    };
-                    let courseMap = response.data[i].lw_courses;
-                    let studentMap = response.data[i].students;
-                    courseList.push(course);
-                    courseHandlerList.push(courseMap);
-                    studentHandlerList.push(studentMap);
+
+                setButtonHidden(() => response.data.length);
+                if (response.data.length > 0) {
+                    
+                    for (let i = 0; i < response.data.length; i++) {
+                        let course = {
+                            courseId: response.data[i].course_id.toString(),
+                            courseTitle:
+                                response.data[i].lw_courses.title.toString(),
+                        };
+                        let courseMap = response.data[i].lw_courses;
+                        let studentMap = response.data[i].students;
+                        courseList.push(course);
+                        courseHandlerList.push(courseMap);
+                        studentHandlerList.push(studentMap);
+                    }
+
+                    courseArrayHandlerState(courseHandlerList);
+                    studentArrayHandlerState(studentHandlerList);
+
+                    setCourseList(response.data.length > 0 ? courseList : []);
+                    //console.log(response);
                 }
-
-                courseArrayHandlerState(courseHandlerList);
-                studentArrayHandlerState(studentHandlerList);
-
-                setCourseList(response.data.length > 0 ? courseList : []);
-                //console.log(response);
             } else {
                 setCourseList([]);
             }
@@ -197,26 +204,30 @@ const Student = ({ studentList }: StudentListType) => {
                         </NativeSelect>
                     </FormControl>
 
-                    <FormControl fullWidth style={{ marginTop: '30px' }}>
-                        <InputLabel>Course</InputLabel>
-                        <NativeSelect
-                            inputProps={{
-                                name: 'Course',
-                                id: 'selectCourse',
-                            }}
-                            onChange={handleChange2}
-                            input={<BootstrapInput />}
-                        >
-                            <option aria-label='None' value=''></option>
-                            {courseList.map((it, index) => (
-                                <CourseOption
-                                    key={index}
-                                    courseId={it.courseId}
-                                    courseTitle={it.courseTitle}
-                                />
-                            ))}
-                        </NativeSelect>
-                    </FormControl>
+                    {buttonHidden == 0 ? (
+                        <></>
+                    ) : (
+                        <FormControl fullWidth style={{ marginTop: '30px' }}>
+                            <InputLabel>Course</InputLabel>
+                            <NativeSelect
+                                inputProps={{
+                                    name: 'Course',
+                                    id: 'selectCourse',
+                                }}
+                                onChange={handleChange2}
+                                input={<BootstrapInput />}
+                            >
+                                <option aria-label='None' value=''></option>
+                                {courseList.map((it, index) => (
+                                    <CourseOption
+                                        key={index}
+                                        courseId={it.courseId}
+                                        courseTitle={it.courseTitle}
+                                    />
+                                ))}
+                            </NativeSelect>
+                        </FormControl>
+                    )}
                     <IsButton />
                 </Box>
             </Box>

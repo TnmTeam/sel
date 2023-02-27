@@ -28,7 +28,7 @@ import { loginInfo } from '@/common/atom/Atom';
 export const Authentication = () => {
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
 
-    const [abc, setAbc] = useState<string>('');
+    const [buttonHidden, setButtonHidden] = useState<string>('');
 
     useEffect(() => {
         localStorage.removeItem('accessToken');
@@ -85,12 +85,16 @@ export const Authentication = () => {
             console.log(response.data.message);
         } else if (response.data.status_code == 400) {
             // 로그인 시도 성공
-            // Account Already Exists!
-            //console.log('222');
+            // Account Already Exists!!
+            // or
+            // Account Does Not Exist!!
+
             console.log(response.data.message);
 
             const authEmail = await response.data.email;
 
+            authSignup();
+            /*
             if (localStorage.getItem('email') == authEmail) {
                 // 회원 가입 성공
                 localStorage.setItem('role', await response.data.role);
@@ -102,17 +106,14 @@ export const Authentication = () => {
                 //location.href = '/overview';  // 페이지 이동
                 //location.href = '/select'; // 학생/코스 선택 화면 이동
             }
+            */
         } else {
             // 정상 로그인
-            //console.log('333');
-            //console.log(localStorage);
-
             var email_param = {
                 email: response.data.email,
             };
 
-            setAbc(() => response.data.email);
-
+            setButtonHidden(() => response.data.email);
             loginInfoHandlerState(email_param);
         }
     };
@@ -138,7 +139,8 @@ export const Authentication = () => {
             // 회원 가입 성공
             localStorage.setItem('role', await response.data.role);
             //location.href = '/overview';  // 페이지 이동
-            location.href = '/select'; // 학생/코스 선택 화면 이동
+            //location.href = '/select'; // 학생/코스 선택 화면 이동
+            setButtonHidden(() => response.data.email);
         }
 
         //location.href = '/signup';
@@ -212,7 +214,7 @@ export const Authentication = () => {
                         </Avatar>
                     </Link>
                 </Grid>
-                {abc == "" ? (
+                {buttonHidden == '' ? (
                     <></>
                 ) : (
                     <Link
@@ -229,8 +231,8 @@ export const Authentication = () => {
                             sx={{
                                 mt: 3,
                                 mb: 2,
-                                fontSize: '18pt',
-                                width: '300px',
+                                fontSize: '12pt',
+                                width: '400px',
                                 background: FlexBlueButtons.ButtonColor,
                                 color: FlexBlueButtons.TextColor,
                                 ':hover': {
@@ -240,11 +242,14 @@ export const Authentication = () => {
                                 },
                             }}
                         >
-                            Start
+                            {buttonHidden}
                         </Button>
                     </Link>
                 )}
-                <Link
+                {buttonHidden != '' ? (
+                    <></>
+                ) : (
+                    <Link
                         id='loginBtn'
                         type='submit'
                         onClick={MoveSelectView_demo}
@@ -259,7 +264,7 @@ export const Authentication = () => {
                                 mt: 3,
                                 mb: 2,
                                 fontSize: '12pt',
-                                width: '300px',
+                                width: '400px',
                                 background: FlexBlueButtons.ButtonColor,
                                 color: FlexBlueButtons.TextColor,
                                 ':hover': {
@@ -271,7 +276,11 @@ export const Authentication = () => {
                         >
                             josharnold@gmail.com
                         </Button>
-                    </Link>                    
+                    </Link>
+                )}
+                {buttonHidden != '' ? (
+                    <></>
+                ) : (
                     <Link
                         id='loginBtn'
                         type='submit'
@@ -287,7 +296,7 @@ export const Authentication = () => {
                                 mt: 3,
                                 mb: 2,
                                 fontSize: '12pt',
-                                width: '300px',
+                                width: '400px',
                                 background: FlexBlueButtons.ButtonColor,
                                 color: FlexBlueButtons.TextColor,
                                 ':hover': {
@@ -299,7 +308,8 @@ export const Authentication = () => {
                         >
                             admin
                         </Button>
-                    </Link>  
+                    </Link>
+                )}
             </Box>
         </Grid>
     );
