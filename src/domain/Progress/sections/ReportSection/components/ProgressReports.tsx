@@ -101,7 +101,7 @@ const sx = {
     border: 5px solid black;
     */
     width: 450px;
-    height: 310px;
+    height: 315px;
     overflow: auto;
     white-space: nowrap;
   `,
