@@ -10,31 +10,35 @@ import {
 import { FeaturedImpactorVideosSection } from '../sections';
 import { SelfScoresSection } from '../sections';
 import { FeturedStudentWorkSection } from '../sections/FeturedStudentWorkSection/FeturedStudentWorkSection';
-import { useOverView } from "./useOverView";
+import { useOverView } from './useOverView';
 import { useRecoilValue } from 'recoil';
 import { IntercomBoot } from '@/pages/_app';
-import { studentMapState } from "@/common/atom/Atom";
-
+import { studentMapState } from '@/common/atom/Atom';
 
 export const OverviewView = () => {
-
     const currenStudentMap: any = useRecoilValue(studentMapState);
     const studentName = currenStudentMap.name;
-    
+
     IntercomBoot(studentName);
 
-
-    const { impacterSocreState, courseScheduleState, courseProgressState } = useOverView();
+    const { impacterSocreState, courseScheduleState, courseProgressState } =
+        useOverView();
 
     return (
         <Stack css={sx.overviewContainer}>
             <ImpacterScoreSection data={impacterSocreState} />
             <Stack direction={'row'} css={sx.CourseContainer}>
-                <CourseProgressSection data={courseProgressState}/>
+                <CourseProgressSection data={courseProgressState} />
                 <CourseScheduleSection data={courseScheduleState} />
+                {/*
+                // TO DO: Phase 1. demo hide
                 <FeturedStudentWorkSection />
+                */}
             </Stack>
+            {/*
+                // TO DO: Phase 1. demo hide
             <SelfScoresSection />
+            */}
             <FeaturedImpactorVideosSection />
         </Stack>
     );

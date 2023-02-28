@@ -64,6 +64,7 @@ const sx = {
     background-color: #fff;
     border: none;
     text-transform: none;
+    font-size : 15pt;
 
     &:hover {
       background-color: #fff;
@@ -74,7 +75,7 @@ const sx = {
 const ViewButton = () => (
   <div css={sx.btnWrap}>
     <Button onClick={() => null} css={sx.viewBtn}>
-      Veiw all
+      View all
     </Button>
   </div>
 );
