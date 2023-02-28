@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { TextMenu } from './components/TextMenu/TextMenu';
 import { InsightsDialogButton } from '@/domain/Navigation/sections/AddInsightsSection/components';
 import { NotificationDialogIcon } from '@/domain/Navigation/sections/NotificationSection/NotificationSummary/components';
+import { Logout } from '@/domain/Navigation/sections/LogoutSection/components';
 import { useRecoilValue } from 'recoil';
 import { studentMapState } from '@/common/atom/Atom';
 import { useEffect, useState } from 'react';
@@ -82,7 +83,7 @@ export const Appbar = () => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar
                 position='static'
-                sx={{ height: 89, background: Colors.BackBlue, position: 'fixed', zIndex:9999, width: '1440px' }}
+                sx={{ height: 89, background: Colors.BackBlue, position: 'fixed', zIndex:999, width: '1440px' }}
             >
                 <Toolbar component='div' sx={{ height: 89 }}>
                     {menu.map((item, index) => {
@@ -123,15 +124,7 @@ export const Appbar = () => {
                         } else if (item.menuType === 'icon') {
                             return <NotificationDialogIcon key={index} />;
                         } else if (item.menuType === 'logout') {
-                            return (
-                                <TextMenu
-                                    key={index}
-                                    url={item.url}
-                                    currentRoute={currentRoute}
-                                    title={item.title}
-                                    buttonType={item.buttonType}
-                                />
-                            );
+                            return <Logout key={index} />;
                         }
                     })}
                 </Toolbar>

@@ -24,7 +24,7 @@ export const Layout = ({ children }: LayoutProps) => {
     return (
         <Stack css={st.root}>
             <Appbar/>
-            <Stack direction='row' width='100%' height='100%'>
+            <Stack direction='row' width='100%' height='100%' mt={11}>
                 <main css={st.main}>{children}</main>
             </Stack>
         </Stack>
