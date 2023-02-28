@@ -14,10 +14,14 @@ import { useOverView } from './useOverView';
 import { useRecoilValue } from 'recoil';
 import { IntercomBoot } from '@/pages/_app';
 import { studentMapState } from '@/common/atom/Atom';
+import { useEffect, useState } from 'react';
 
 export const OverviewView = () => {
     const currenStudentMap: any = useRecoilValue(studentMapState);
-    const studentName = currenStudentMap.name;
+    const [studentName , setStudentName]= useState("");
+    useEffect(()=> {
+        setStudentName(currenStudentMap.name);
+    },[currenStudentMap])
 
     IntercomBoot(studentName);
 

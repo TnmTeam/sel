@@ -62,17 +62,24 @@ App.getInitialProps = async (context: any) => {
 
 export const IntercomBoot = (studentName: string) => {
     const { boot } = useIntercom();
-    boot({ name: studentName });
+    if(studentName != ''){
+        boot({ name: studentName });
+    }
+    
 };
 
 export const IntercomBootProps = (studentName: string) => {
     const { boot } = useIntercom();
+    if(studentName != ''){
     boot({ name: studentName });
+    }
 };
 
 export const IntercomBootUpdate = (studentName: string) => {
     const { boot } = useIntercom();
-    boot({ name: studentName });
+    if(studentName != ''){
+        boot({ name: studentName });
+    }
 };
 
 export const IntercomShutdown = () => {

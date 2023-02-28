@@ -14,12 +14,10 @@ import { useEffect, useState } from 'react';
 
 export const Appbar = () => {
     const currenStudentMap: any = useRecoilValue(studentMapState);
-
-    console.log(currenStudentMap);
     const [studentName , setStudentName]= useState("");
     useEffect(()=> {
         setStudentName(currenStudentMap.name)  ;
-    },[])
+    },[currenStudentMap])
     const router = useRouter();
     const currentRoute = router.pathname;
     const menu = [
