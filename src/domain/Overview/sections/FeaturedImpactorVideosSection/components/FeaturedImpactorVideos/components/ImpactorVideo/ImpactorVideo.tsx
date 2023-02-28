@@ -50,7 +50,7 @@ export const ImpactorVideo = () => {
     return (
         <Stack css={sx.ImpactorVideo}>
             <Typography variant='h2' color={Colors.Text100} ml={8} mt={15}>
-                Fetured Impactor Videos
+                Featured Impactor Videos
             </Typography>
             <Grid
                 container

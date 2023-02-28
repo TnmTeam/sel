@@ -9,7 +9,7 @@ import {
 } from '../sections';
 import { FeaturedImpactorVideosSection } from '../sections';
 import { SelfScoresSection } from '../sections';
-import { FeturedStudentWorkSection } from '../sections/FeturedStudentWorkSection/FeturedStudentWorkSection';
+import { FeaturedStudentWorkSection } from '../sections/FeaturedStudentWorkSection/FeaturedStudentWorkSection';
 import { useOverView } from './useOverView';
 import { useRecoilValue } from 'recoil';
 import { IntercomBoot } from '@/pages/_app';
@@ -36,7 +36,7 @@ export const OverviewView = () => {
                 <CourseScheduleSection data={courseScheduleState} />
                 {/*
                 // TO DO: Phase 1. demo hide
-                <FeturedStudentWorkSection />
+                <FeaturedStudentWorkSection />
                 */}
             </Stack>
             {/*

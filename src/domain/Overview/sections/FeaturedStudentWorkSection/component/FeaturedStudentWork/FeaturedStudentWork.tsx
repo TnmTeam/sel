@@ -7,10 +7,10 @@ import {
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CircleIcon from '@mui/icons-material/Circle';
 import SendIcon from '@mui/icons-material/Send';
-import img from '@/assets/overview/img-FeturedStudentWork.png'
+import img from '@/assets/overview/img-FeaturedStudentWork.png'
 import Image from 'next/image';
 
-export const FeturedStudentWork = () => {
+export const FeaturedStudentWork = () => {
 
     const content = [
         { title: "Roller Skates", date: "11/14/22", img: Image, detail: "My mode of transportation is abcde"}
@@ -27,7 +27,7 @@ export const FeturedStudentWork = () => {
     else descriptionSummary = content[0].detail;
 
     return (
-        <div css={sx.FeturedContainer}>
+        <div css={sx.FeaturedContainer}>
             <div css={sx.comingSoon}>Coming Soon</div>
             <CircleIcon css = {sx.CircleOut}></CircleIcon>
             <CircleIcon css = {sx.CircleIn}></CircleIcon>
@@ -52,7 +52,7 @@ export const FeturedStudentWork = () => {
 };
 
 const sx = {
-    FeturedContainer: css`
+    FeaturedContainer: css`
         position: absolute;
         width: 289px;
         height: 427px;

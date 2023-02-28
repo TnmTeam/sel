@@ -14,10 +14,12 @@ import { useEffect, useState } from 'react';
 
 export const Appbar = () => {
     const currenStudentMap: any = useRecoilValue(studentMapState);
+
+    console.log(currenStudentMap);
     const [studentName , setStudentName]= useState("");
     useEffect(()=> {
         setStudentName(currenStudentMap.name)  ;
-    },[currenStudentMap])
+    },[])
     const router = useRouter();
     const currentRoute = router.pathname;
     const menu = [
@@ -68,13 +70,19 @@ export const Appbar = () => {
             title: 'Account',
             buttonType: 'text',
         },
+        {
+            menuType: 'logout',
+            url: '/',
+            title: 'Logout',
+            buttonType: 'text',
+        },
     ];
     
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar
                 position='static'
-                sx={{ height: 89, background: Colors.BackBlue }}
+                sx={{ height: 89, background: Colors.BackBlue, position: 'fixed', zIndex:9999, width: '1440px' }}
             >
                 <Toolbar component='div' sx={{ height: 89 }}>
                     {menu.map((item, index) => {
@@ -114,6 +122,16 @@ export const Appbar = () => {
                             );
                         } else if (item.menuType === 'icon') {
                             return <NotificationDialogIcon key={index} />;
+                        } else if (item.menuType === 'logout') {
+                            return (
+                                <TextMenu
+                                    key={index}
+                                    url={item.url}
+                                    currentRoute={currentRoute}
+                                    title={item.title}
+                                    buttonType={item.buttonType}
+                                />
+                            );
                         }
                     })}
                 </Toolbar>
