@@ -2,12 +2,18 @@ import { css } from "@emotion/react";
 import { Stack, Typography } from "@mui/material";
 import { useRecoilValue } from 'recoil';
 import { courseMapState, studentMapState } from "@/common/atom/Atom";
+import { useEffect, useState } from "react";
 
 export const JourneyTitle = () => {
   const currenStudentMap:any = useRecoilValue(studentMapState);
+
+  const [studentName , setStudentName]= useState("");
+  useEffect(()=> {
+    setStudentName(currenStudentMap.name);
+  },[ currenStudentMap])
   
   const models = {
-    name: currenStudentMap.name,
+    name: studentName,
   };
   
   return (

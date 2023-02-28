@@ -11,13 +11,33 @@ import { FeaturedImpactorVideosSection } from '../sections';
 import { SelfScoresSection } from '../sections';
 import { FeaturedStudentWorkSection } from '../sections/FeaturedStudentWorkSection/FeaturedStudentWorkSection';
 import { useOverView } from './useOverView';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { IntercomBoot } from '@/pages/_app';
-import { studentMapState } from '@/common/atom/Atom';
+import { courseMapState, studentMapState } from '@/common/atom/Atom';
 import { useEffect, useState } from 'react';
 
 export const OverviewView = () => {
-    const currenStudentMap: any = useRecoilValue(studentMapState);
+    const currenCourseMap:any = useRecoilValue(courseMapState);
+    const currenStudentMap:any = useRecoilValue(studentMapState);
+
+    const studentMapHandlerState = useSetRecoilState(studentMapState);
+    const courseMapHandlerState = useSetRecoilState(courseMapState);
+    
+   
+   
+    
+    useEffect(() =>{   
+    if(Object.keys(currenStudentMap).length == 0){
+        console.log("gd");
+        
+        console.log(window.sessionStorage);
+        var jsonObj = JSON.parse(window.sessionStorage.persistAtom);
+        console.log(jsonObj);
+        studentMapHandlerState(jsonObj.studentMap);
+        courseMapHandlerState(jsonObj.courseMap);
+        
+    }
+    });
     const [studentName , setStudentName]= useState("");
     useEffect(()=> {
         setStudentName(currenStudentMap.name);

@@ -2,13 +2,18 @@
 import { useGetCourseUnitList } from "@/data/api/progress/useProgressApiHooks";
 import { useRecoilValue } from 'recoil';
 import { courseMapState, studentMapState } from "@/common/atom/Atom";
+import { useEffect, useState } from "react";
 
 export const useCourseSection = () => {
   const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
 
-  const studentId     = currenStudentMap.lw_id;
-  const courseId      = currenCourseMap.course_id;
+  const [courseId , setCourseId]= useState("");
+  const [studentId , setStudentId]= useState("");
+  useEffect(()=> {
+    setCourseId(currenCourseMap.course_id);
+    setStudentId(currenStudentMap.lw_id);
+  },[currenCourseMap, currenStudentMap])
   
   const { data, isLoading } = useGetCourseUnitList(studentId, courseId);
 

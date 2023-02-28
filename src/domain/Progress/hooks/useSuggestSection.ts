@@ -3,13 +3,16 @@ import { CardType } from "../types/suggest.type";
 import { SuggestCourseUnits } from "@/data/api/progress/progress.dto";
 import { useRecoilValue } from 'recoil';
 import { courseMapState, studentMapState } from "@/common/atom/Atom";
+import { useEffect, useState } from "react";
 
 export const useSuggestSection = () => {
   const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
 
-  const studentId     = currenStudentMap.lw_id;
-  const courseId      = currenCourseMap.course_id;
+  const [courseId , setCourseId]= useState("");
+  useEffect(()=> {
+    setCourseId(currenCourseMap.course_id);
+  },[currenCourseMap, currenStudentMap])
   //console.log("useSuggestSection courseId "+courseId);
   const { data, isLoading } = useGetSuggestedCourse(courseId);
 
