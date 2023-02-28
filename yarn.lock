@@ -3015,12 +3015,22 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
+react-use-intercom@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-use-intercom/-/react-use-intercom-4.0.0.tgz#b2d16d1ccfee914ade8edaf7c2563a9c95d0de1d"
+  integrity sha512-JTMRQ2BiMt8HfHzcW9uoU8gMHXKvz4tsRt+SkeFR0/tm+gWpUF1kMEQJKA1BfTXb2AgFA1pINwmAbuDa5efmYw==
+
 react@18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
+
+recoil-persist@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/recoil-persist/-/recoil-persist-4.2.0.tgz#9fbb4a8c158cbb83ceb9dedf795aee24ed15395d"
+  integrity sha512-MHVfML9GxJP3RpkKR4F5rp7DtvzIvjWhowtMao/b7h2k4afMio/4sMAdUtltIrDaeVegH0Iga8Sx5XQ3oD7CzA==
 
 recoil@^0.7.6:
   version "0.7.6"
