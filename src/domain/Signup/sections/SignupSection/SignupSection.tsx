@@ -1,71 +1,47 @@
 import { css } from '@emotion/react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
-
-import React, { useState, useEffect } from 'react';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-
-import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import GoogleIcon from '@mui/icons-material/Google';
-import AppleIcon from '@mui/icons-material/Apple';
-
 import { axiosClient } from '@/data/client/client';
+import React, { useCallback, useEffect } from 'react';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { waitForAll } from 'recoil';
 
 export const SignupSection = () => {
     useEffect(() => {
         localStorage.removeItem('accessToken');
     }, []);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        /*
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-        */
-    };
+    const handleSubmit = useCallback(
+        (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            console.log(event.currentTarget);
+            const name = event.currentTarget.user_name.value;
+            const email = event.currentTarget.email.value;
+            const role = event.currentTarget.user_role.value;
+            const password = event.currentTarget.password.value;
+            console.log(name, email, role, password);
 
-    const authLogin = async () => {
-        const response = await axiosClient('/auth/login');
-        if (response.data.status_code == 500) {
-            // Expired toekn
-            console.log(response.data.message);
-        } else if (response.data.status_code == 400) {
-            // Account Does Not Exist
-            console.log(response.data.message);
+            // firebase 회원가입 진행
 
-            // 자동으로 회원 가입( 2.23 임시)
-            authSignup();
-            // 회원 가입 페이지 자동 이동
-            //location.href='/signup';
-        } // 로그인 성공
-        else {
-            const authEmail = await response.data.email;
-            if (localStorage.getItem('email') == authEmail) {
-                // 회원 가입 성공
-                localStorage.setItem('role', await response.data.role);
-                location.href = '/overview'; // 페이지 이동
-            }
-        }
-    };
+            // 가입성공 -> DB signup 진행
+            const accessToken = '';
+            //authSignup(accessToken, name, email, role);
+        },
+        []
+    );
 
-    const authSignup = async () => {
-        const name = localStorage.getItem('displayName');
-        const email = localStorage.getItem('email');
-        const role = 'parent';
+    const authSignup = async (
+        accessToken: string,
+        name: string,
+        email: string,
+        role: string
+    ) => {
+        localStorage.setItem('accessToken', accessToken);
         const password = '';
         var params = {
             name,
@@ -74,31 +50,18 @@ export const SignupSection = () => {
             password,
         };
 
-        // 자동으로 회원 가입( 2.23 임시)
+        // 회원 가입 성공
         const response = await axiosClient.post('/auth/signup', params);
         //console.log(response);
 
         const authEmail = await response.data.email;
-        if (localStorage.getItem('email') == authEmail) {
-            // 회원 가입 성공
-            localStorage.setItem('role', await response.data.role);
-            location.href = '/overview'; // 페이지 이동
+        if (email == authEmail) {
+            location.href = '/';
         }
-
-        // 회원 가입 페이지 자동 이동 2.23 이후 제작 예정
-        // location.href='/signup';
-    };
-
-    const moveOverview = async () => {
-        localStorage.setItem('accessToken', '');
-        localStorage.setItem('email', 'bessietsang@hotmail.com');
-        localStorage.setItem('displayName', 'test');
-        localStorage.setItem('uid', '');
-        location.href = '/overview';
     };
 
     return (
-        <Grid item xs={12} sm={6} md={6} >
+        <Grid item xs={12} sm={6} md={6}>
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}
@@ -117,7 +80,7 @@ export const SignupSection = () => {
                 >
                     Welcome Parents!
                 </Typography>
-                
+
                 <Typography component='h1' variant='h6' sx={{ mb: 3 }}>
                     - Sign Up -
                 </Typography>
@@ -126,72 +89,84 @@ export const SignupSection = () => {
                         margin='normal'
                         required
                         fullWidth
-                        id='email'
-                        label='Email'
-                        name='email'
-                        autoComplete='email'
+                        id='user_name'
+                        label='Name'
+                        name='user_name'
+                        autoComplete='user_name'
                         autoFocus
                     />
                     <TextField
                         margin='normal'
                         required
                         fullWidth
-                        id='name'
-                        label='Name'
-                        name='name'
-                        autoComplete='name'
-                        autoFocus
+                        id='email'
+                        label='Email'
+                        name='email'
+                        autoComplete='email'
                     />
-
-                    <Button
-                        type='submit'                        
-                        variant='contained'
-                        sx={{
-                            mt: 3,
-                            mb: 2,
-                            fontSize: '18pt',
-                            background: FlexBlueButtons.ButtonColor,
-                            color: FlexBlueButtons.TextColor,
-                            ':hover': {
-                                background: FlexBlueButtons.onHoverButtonColor,
-                                color: FlexBlueButtons.OnHoverTextColor,
-                            },
-                        }}
-                        href='/'
-                    >
-                        Cancle
-                    </Button>
-                    <Button
-                        type='submit'
-                        variant='contained'
-                        sx={{
-                            mt: 3,
-                            mb: 2,
-                            fontSize: '18pt',
-                            background: FlexBlueButtons.ButtonColor,
-                            color: FlexBlueButtons.TextColor,
-                            ':hover': {
-                                background: FlexBlueButtons.onHoverButtonColor,
-                                color: FlexBlueButtons.OnHoverTextColor,
-                            },
-                        }}
-                        href='/overview'
-                    >
-                        Sign Up
-                    </Button>
-                    
+                    <TextField
+                        margin='normal'
+                        required
+                        fullWidth
+                        name='password'
+                        label='Password'
+                        type='password'
+                        id='password'
+                        autoComplete='current-password'
+                    />
+                    <Box>
+                        Role
+                        <TextField
+                            margin='normal'
+                            required
+                            fullWidth
+                            name='user_role'
+                            label='Role'
+                            id='user_role'
+                            value={'parent'}
+                            aria-readonly
+                        />
+                    </Box>
+                    <Box flexDirection={'row'} textAlign={'center'}>
+                        <Button
+                            variant='contained'
+                            sx={{
+                                margin: 'auto',
+                                mr: 3,
+                                fontSize: '18pt',
+                                width: '200px',
+                                background: WhiteButtons.ButtonColor,
+                                color: WhiteButtons.TextColor,
+                                ':hover': {
+                                    background: WhiteButtons.onHoverButtonColor,
+                                    color: WhiteButtons.OnHoverTextColor,
+                                },
+                            }}
+                            href='/'
+                        >
+                            Cancle
+                        </Button>
+                        <Button
+                            type='submit'
+                            variant='contained'
+                            sx={{
+                                margin: 'auto',
+                                ml: 3,
+                                fontSize: '18pt',
+                                width: '200px',
+                                background: FlexBlueButtons.ButtonColor,
+                                color: FlexBlueButtons.TextColor,
+                                ':hover': {
+                                    background:
+                                        FlexBlueButtons.onHoverButtonColor,
+                                    color: FlexBlueButtons.OnHoverTextColor,
+                                },
+                            }}
+                        >
+                            Sign Up
+                        </Button>
+                    </Box>
                 </Box>
-            </Box>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <Link href='#' style={{ marginTop: 10 }}>
-                    {"Don't have an account yet? Signup for a course."}
-                </Link>
             </Box>
         </Grid>
     );

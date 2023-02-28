@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
 
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 
@@ -35,16 +35,24 @@ export const Authentication = () => {
         localStorage.clear();
     }, []);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        /*
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-        */
-    };
+    const handleLoginSubmit = useCallback(
+        (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            console.log(event.currentTarget);
+            const email = event.currentTarget.email.value;
+            const password = event.currentTarget.password.value;
+            console.log(email, password);
+
+            // firebase 로그인 진행
+            // firebase 일반 로그인 시도
+            const accessToken = '';
+            localStorage.setItem('accessToken', accessToken);
+
+            // 로그인 성공
+            //generalLogin();
+        },
+        []
+    );
 
     const [userData, setUserData] = useState(null);
     function handleGoogleLogin() {
@@ -77,12 +85,33 @@ export const Authentication = () => {
             });
     }
 
+    // 일반 firebase 로그인
+    const generalLogin = async () => {
+        const response = await axiosClient('/auth/login');
+        if (response.data.status_code == 500) {
+            // Expired toekn
+            console.log(response.data.message);
+            alert(response.data.message);
+        } else if (response.data.status_code == 400) {
+            // Account Does Not Exist!!
+            console.log(response.data.message);
+            alert(response.data.message);
+        } else {
+            // 정상 로그인
+            var email_param = {
+                email: response.data.email,
+            };
+
+            // overview 화면 이동
+        }
+    };
+
     const authLogin = async () => {
         const response = await axiosClient('/auth/login');
         if (response.data.status_code == 500) {
             // Expired toekn
-            //console.log('111');
             console.log(response.data.message);
+            alert(response.data.message);
         } else if (response.data.status_code == 400) {
             // 로그인 시도 성공
             // Account Already Exists!!
@@ -181,8 +210,8 @@ export const Authentication = () => {
                 display={'flex'}
                 sx={{
                     mx: 25,
-                    mt: 40,
-                    mb: 25,
+                    mt: 20,
+                    mb: 15,
                 }}
             >
                 <Typography
@@ -310,6 +339,73 @@ export const Authentication = () => {
                         </Button>
                     </Link>
                 )}
+
+                <Box
+                    component='form'
+                    noValidate
+                    onSubmit={handleLoginSubmit}
+                    width={'400px'}
+                >
+                    <TextField
+                        margin='normal'
+                        required
+                        fullWidth
+                        id='email'
+                        label='Email'
+                        name='email'
+                        autoComplete='email'
+                        autoFocus
+                    />
+                    <TextField
+                        margin='normal'
+                        required
+                        fullWidth
+                        name='password'
+                        label='Password'
+                        type='password'
+                        id='password'
+                        autoComplete='current-password'
+                    />
+
+                    <FormControlLabel
+                        control={<Checkbox value='remember' color='primary' />}
+                        label='Remember me'
+                    />
+                    <Link href='#' style={{ marginLeft: '100px' }}>
+                        Forgot password?
+                    </Link>
+
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        sx={{
+                            mt: 3,
+                            mb: 2,
+                            fontSize: '12pt',
+                            width: '400px',
+                            background: FlexBlueButtons.ButtonColor,
+                            color: FlexBlueButtons.TextColor,
+                            ':hover': {
+                                background: FlexBlueButtons.onHoverButtonColor,
+                                color: FlexBlueButtons.OnHoverTextColor,
+                            },
+                        }}
+                    >
+                        LOGIN
+                    </Button>
+                </Box>
+            </Box>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Link href='/signup'>
+                    {"Don't have an account yet? Signup for a course."}
+                </Link>
             </Box>
         </Grid>
     );
