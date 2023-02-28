@@ -27,7 +27,7 @@ export const WatchContent = ({ selectedDetailCourse }: CourseMediaType) => {
     if (temp) {
         url = temp[0]?.content;
     }
-    // console.log("WatchContent url : "+url);
+    //console.log("WatchContent url : "+url);
     const { ref, toggleVideoPlay } = useVideoControl();
     const { playBtnVisiblity, hidePlayBtn } = useVideoPlayButton();
 
@@ -53,7 +53,7 @@ export const WatchContent = ({ selectedDetailCourse }: CourseMediaType) => {
                         <source src={url} type='video/mp4' />
                     </video>
                 </div>
-            ) : url == undefined ? (              
+            ) : url == undefined ? (
                 <NoContent />
             ) : (
                 <Stack css={sx.noUrlContentRoot}>

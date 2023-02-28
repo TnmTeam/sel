@@ -20,6 +20,7 @@ export const JourneyTitle = () => {
     <Stack spacing="10px" css={sx.title}>
       <Typography
         variant="h3"
+        fontSize={'30px'}
         lineHeight="46px"
         color=" #0A0B26"
         letterSpacing={"0.02em"}
@@ -28,6 +29,7 @@ export const JourneyTitle = () => {
       </Typography>
       <Typography
         variant="h2"
+        fontSize={'40px'}
         lineHeight="52px"
         color=" #0A0B26"
         letterSpacing={"0.02em"}
