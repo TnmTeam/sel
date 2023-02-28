@@ -13,9 +13,14 @@ export const useCourseContent = (models: CourseType[]) => {
   const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
 
-  const studentId     = currenStudentMap.lw_id;
-  const courseId      = currenCourseMap.course_id;
-  const studentIdNum  = currenStudentMap.id;
+  const [courseId , setCourseId]= useState("");
+  const [studentId , setStudentId]= useState("");
+  const [studentIdNumber , setStudentIdNumber]= useState(0);
+  useEffect(()=> {
+    setCourseId(currenCourseMap.course_id);
+    setStudentId(currenStudentMap.lw_id);
+    setStudentIdNumber(currenStudentMap.id);
+  },[currenCourseMap, currenStudentMap])
 
   // 강의
   const courses = models;
@@ -28,7 +33,7 @@ export const useCourseContent = (models: CourseType[]) => {
   const [detailCourse, setDetailCourse] = useState<DetailCourseType | null>(
     null
   );
-  const { data, mutate } = useGetUnitItem(studentIdNum, studentId, courseId, sectNum);
+  const { data, mutate } = useGetUnitItem(studentIdNumber, studentId, courseId, sectNum);
   const detailCourses = data ? data.unitList : null;
 
   // 대강의의 index 가 바뀔 때마다 소강의 api 호출
@@ -66,7 +71,7 @@ export const useCourseContent = (models: CourseType[]) => {
       onCourseClick: handleSetCourse,
     },
     detailCourseState: {
-      courses: mappingToDetailCourses(detailCourses, studentId, courseId, studentIdNum, sectNum),
+      courses: mappingToDetailCourses(detailCourses, studentId, courseId, studentIdNumber, sectNum),
       course: detailCourse,
       onCourseClick: handleSetDetailCourse,
     },

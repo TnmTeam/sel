@@ -2,15 +2,20 @@ import { useRecoilValue } from 'recoil';
 import { courseMapState, studentMapState } from "@/common/atom/Atom";
 import { useGetNotificationPopup } from '@/data/api/navigation/useNavigationApiHooks';
 import { NotificationType } from '../type/notification.type';
+import { useEffect, useState } from 'react';
 
 
 export const useNotificationSection = () => {
   
   const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
+  const [courseId , setCourseId]= useState("");
+  const [studentId , setStudentId]= useState("");
+  useEffect(()=> {
+    setCourseId(currenCourseMap.course_id);
+    setStudentId(currenStudentMap.lw_id);
+  },[currenCourseMap, currenStudentMap])
   
-  const studentId = currenStudentMap.lw_id;
-  const courseId = currenCourseMap.course_id;
 
   const { data, isLoading } = useGetNotificationPopup(studentId, courseId);
   

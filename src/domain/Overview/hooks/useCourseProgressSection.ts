@@ -2,6 +2,7 @@ import { useGetCourseProgress } from "@/data/api/overview/useOverviewApiHooks";
 import { CourseItemType } from "../sections/CourseProgressSection/components/ProgressSummary/components/CourseProgress/types/CourseProgress.type";
 import { useRecoilValue } from 'recoil';
 import { courseMapState, studentMapState } from "@/common/atom/Atom";
+import { useEffect, useState } from "react";
 
 
 export const useCourseProgressSection = () => {
@@ -9,8 +10,12 @@ export const useCourseProgressSection = () => {
   const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
   
-  const studentId = currenStudentMap.lw_id;
-  const courseId = currenCourseMap.course_id;
+  const [courseId , setCourseId]= useState("");
+  const [studentId , setStudentId]= useState("");
+  useEffect(()=> {
+    setCourseId(currenCourseMap.course_id);
+    setStudentId(currenStudentMap.lw_id);
+  },[currenCourseMap, currenStudentMap])
 
   const { data, isLoading } = useGetCourseProgress(studentId, courseId);
   

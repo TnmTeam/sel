@@ -1,6 +1,7 @@
 import { useGetBanner } from "@/data/api/progress/useProgressApiHooks";
 import { useRecoilValue } from 'recoil';
 import { courseMapState, studentMapState } from "@/common/atom/Atom";
+import { useEffect, useState } from "react";
 
 
 export const useBannerSection = () => {
@@ -11,9 +12,14 @@ export const useBannerSection = () => {
   const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
   
-  const studentId = currenStudentMap.lw_id;
-  const studentIdNumber = currenStudentMap.id;
-  const courseId = currenCourseMap.course_id;
+  const [courseId , setCourseId]= useState("");
+  const [studentId , setStudentId]= useState("");
+  const [studentIdNumber , setStudentIdNumber]= useState(0);
+  useEffect(()=> {
+    setCourseId(currenCourseMap.course_id);
+    setStudentId(currenStudentMap.lw_id);
+    setStudentIdNumber(currenStudentMap.id);
+  },[currenCourseMap, currenStudentMap])
 
   //console.log("/progress/banner API ", studentId, " ", studentIdNumber, " ", courseId );
   const { data, isLoading } = useGetBanner(studentIdNumber, studentId, courseId);

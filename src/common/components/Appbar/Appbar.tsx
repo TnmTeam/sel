@@ -19,7 +19,7 @@ export const Appbar = () => {
     const [studentName , setStudentName]= useState("");
     useEffect(()=> {
         setStudentName(currenStudentMap.name)  ;
-    },[])
+    },[currenStudentMap])
     const router = useRouter();
     const currentRoute = router.pathname;
     const menu = [
