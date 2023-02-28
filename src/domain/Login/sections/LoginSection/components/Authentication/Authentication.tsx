@@ -24,6 +24,10 @@ import AppleIcon from '@mui/icons-material/Apple';
 import { axiosClient } from '@/data/client/client';
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import { loginInfo } from '@/common/atom/Atom';
+import Image from "next/image";
+import GoogleLogo from '@/assets/login/google_logo_icon.png';
+
+
 
 export const Authentication = () => {
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
@@ -37,7 +41,7 @@ export const Authentication = () => {
 
     const handleLoginSubmit = useCallback(
         (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
+        event.preventDefault();
             console.log(event.currentTarget);
             const email = event.currentTarget.email.value;
             const password = event.currentTarget.password.value;
@@ -234,12 +238,20 @@ export const Authentication = () => {
                         <Avatar
                             sx={{
                                 m: 1,
-                                bgcolor: 'secondary.main',
+                                // bgcolor: 'secondary.main',
+                                bgcolor: 'transparent',
                                 width: '50px',
                                 height: '50px',
+                                border: '1px solid #d3d3d3',
                             }}
                         >
-                            <GoogleIcon />
+                            {/* <GoogleIcon /> */}
+                            <Image src={GoogleLogo}
+                            alt="googleIcon"
+                            width={35}
+                            height={35}
+                            />
+
                         </Avatar>
                     </Link>
                 </Grid>

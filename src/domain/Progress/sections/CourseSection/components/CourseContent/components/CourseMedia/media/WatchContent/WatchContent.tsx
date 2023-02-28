@@ -53,7 +53,7 @@ export const WatchContent = ({ selectedDetailCourse }: CourseMediaType) => {
                         <source src={url} type='video/mp4' />
                     </video>
                 </div>
-            ) : url == undefined ? (              
+            ) : url == undefined ? (
                 <NoContent />
             ) : (
                 <Stack css={sx.noUrlContentRoot}>

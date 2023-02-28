@@ -45,7 +45,7 @@ export const CourseTimeline = ({title, progress, time, dept}: CourseItemType) =>
                 <TimelineItem>
                     <Separator dept={dept}/>
                     <TimelineContent>
-                        <Typography variant="subtitle1" component="span" style={{fontSize:'17px'}}>
+                        <Typography variant="subtitle1" component="span" style={{fontSize:'15px'}}>
                             {title}
                         </Typography>
                         <Typography css={sx.date}>
