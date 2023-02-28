@@ -28,7 +28,7 @@ export const Appbar = () => {
         {
             menuType: 'button',
             url: '/select',
-            title: studentName,
+            title: '- ' + studentName + ' -',
             buttonType: 'text',
         },
         {
@@ -43,6 +43,7 @@ export const Appbar = () => {
             title: 'Progress',
             buttonType: 'text',
         },
+        /*
         {
             menuType: 'button',
             url: '/growth',
@@ -55,12 +56,13 @@ export const Appbar = () => {
             title: 'Resources',
             buttonType: 'text',
         },
-        // {
-        //     menuType: 'buttonPopup',
-        //     url: '/addinsights',
-        //     title: 'Add Insights',
-        //     buttonType: 'outline',
-        // },
+        {
+            menuType: 'buttonPopup',
+            url: '/addinsights',
+            title: 'Add Insights',
+            buttonType: 'outline',
+        },
+        */
         { menuType: 'icon', url: '', title: '', buttonType: '' },
         {
             menuType: 'button',
