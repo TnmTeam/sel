@@ -63,7 +63,7 @@ export const Appbar = () => {
             title: 'Add Insights',
             buttonType: 'outline',
         },
-        */
+        
         { menuType: 'icon', url: '', title: '', buttonType: '' },
         {
             menuType: 'button',
@@ -71,6 +71,7 @@ export const Appbar = () => {
             title: 'Account',
             buttonType: 'text',
         },
+        */
         {
             menuType: 'logout',
             url: '/',

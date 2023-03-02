@@ -26,6 +26,7 @@ import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import { loginInfo } from '@/common/atom/Atom';
 import Image from "next/image";
 import GoogleLogo from '@/assets/login/google_logo_icon.png';
+import router from 'next/router';
 
 
 
@@ -148,6 +149,8 @@ export const Authentication = () => {
 
             setButtonHidden(() => response.data.email);
             loginInfoHandlerState(email_param);
+
+            router.push({pathname: "/select"});
         }
     };
 
