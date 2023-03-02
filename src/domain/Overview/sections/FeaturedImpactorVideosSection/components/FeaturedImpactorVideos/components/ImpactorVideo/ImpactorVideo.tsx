@@ -49,7 +49,7 @@ export const ImpactorVideo = () => {
 
     return (
         <Stack css={sx.ImpactorVideo}>
-            <Typography variant='h2' color={Colors.Text100} ml={8} mt={15}>
+            <Typography variant='h2' color={Colors.Text100} ml={8} mt={15} css={sx.title}>
                 Featured Impactor Videos
             </Typography>
             <Grid
@@ -71,7 +71,7 @@ export const ImpactorVideo = () => {
 
             <Button
                 sx={{
-                    fontSize: '15pt',
+                    fontSize: '16pt',
                     backgroundColor: WhiteButtons.ButtonColor,
                     color: WhiteButtons.TextColor,
                     width: '264px',
@@ -91,6 +91,7 @@ export const ImpactorVideo = () => {
                         '_blank'
                     )
                 }
+                css={sx.button}
             >
                 View All
             </Button>
@@ -103,5 +104,14 @@ const sx = {
         position: relative;
         background-color: #4a7199;
         padding-bottom: 100px;
+    `,
+    title: css`
+        font-size:30px;
+        line-height: 28px;
+        margin-top: 10px;
+    `,
+    button: css`
+        font-size:16px;
+        line-height: 21px;
     `,
 };

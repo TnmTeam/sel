@@ -90,6 +90,7 @@ const sx = {
     `,
     titleText: css`
         font-weight: bold;
+        font-size: 24px;
     `,
     viewAllText: css`
         font-family: 'DM Sans';

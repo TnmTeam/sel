@@ -64,6 +64,5 @@ const sx = {
         left: 24px;
         top: 20px;
         border-radius: 28px;
-        padding: 25px;
     `
 };
