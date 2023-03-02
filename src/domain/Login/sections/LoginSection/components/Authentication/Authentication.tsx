@@ -210,7 +210,7 @@ export const Authentication = () => {
     };
 
     return (
-        <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} square height={'100%'}>
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}

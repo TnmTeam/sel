@@ -3,10 +3,16 @@ import { Stack } from "@mui/material";
 import Image from "next/image";
 import ReadContentSampleImage from "@/assets/progress/img-read-content.png";
 import { MediaType } from "../media.type";
+import { DetailCourseType } from '@/domain/Progress/types/course.type';
 
-export const ReadContent = ({ url }: MediaType) => {
+type CourseMediaType = {
+  selectedDetailCourse: DetailCourseType | null;
+};
+
+export const ReadContent = ({ selectedDetailCourse }: CourseMediaType) => {
   //console.log("ReadContent url : "+url);
-  const imageUrl = url.startsWith("") ? ReadContentSampleImage : url;
+  //const imageUrl = (url).startsWith("") ? ReadContentSampleImage : url;
+  const imageUrl = (selectedDetailCourse?.contentUrl)? selectedDetailCourse.contentUrl : ReadContentSampleImage;
   
   return (
     <Stack css={sx.root}>

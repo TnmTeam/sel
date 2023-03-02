@@ -11,7 +11,7 @@ export const AnswerItem = ({ question, answer }: AnswerItemType) => {
     <Stack style={{wordBreak:"break-all"}}>
       <Typography
         variant="body2"
-        fontWeight={700}
+        fontWeight={400}
         color={Colors.BasicText}
         letterSpacing="0.02em"
       >
@@ -19,7 +19,7 @@ export const AnswerItem = ({ question, answer }: AnswerItemType) => {
       </Typography>
       <Typography
         variant="body2"
-        fontWeight={400}
+        fontWeight={700}
         color={Colors.BasicText}
         letterSpacing="0.02em"
       >

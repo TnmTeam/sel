@@ -9,7 +9,8 @@ export const useCourseDetailItem = () => {
     return v ? IconDone : IconNotDone;
   };
 
-  const getIconByCourseType = (courseTitle: string) => {
+  const getIconByCourseType = (type: string) => {
+    /*
     const courseType = courseTitle.substring(0, 1);
     switch (courseType) {
       case "W":
@@ -19,6 +20,21 @@ export const useCourseDetailItem = () => {
         return IconRead;
 
       case "A":
+        return IconActivity;
+      default:
+        return IconActivity;
+    }
+    */
+    switch (type) {
+      case "embed":
+        return IconWatch;
+      case "ivideo":
+        return IconWatch;
+      case "pdf":
+        return IconRead;
+      case "ebook":
+        return IconRead;
+      case "assessmentV2":
         return IconActivity;
       default:
         return IconActivity;
