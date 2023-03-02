@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 import { css } from '@emotion/react';
-import { ActivityContent, ReadContent, WatchContent } from './media';
+import { ActivityContent, ReadContent, WatchContent, NoContent } from './media';
 import { DetailCourseType } from '@/domain/Progress/types/course.type';
 
 var studentIdNum = 0;
@@ -34,7 +34,15 @@ export const CourseMedia = ({ selectedDetailCourse }: CourseMediaType) => {
             selectedDetailCourse?.type == 'assessmentV2' ? (
                 <ActivityContent selectedDetailCourse={selectedDetailCourse} />
             ) : (
-                <WatchContent selectedDetailCourse={selectedDetailCourse} />
+                selectedDetailCourse?.type == 'embed' ? (
+                    <WatchContent selectedDetailCourse={selectedDetailCourse} />
+                ) : (
+                    selectedDetailCourse?.type == 'pdf' ? (
+                        <ReadContent selectedDetailCourse={selectedDetailCourse} />
+                    ) : (
+                        <NoContent></NoContent>
+                    )
+                )
             )}
         </Stack>
     );

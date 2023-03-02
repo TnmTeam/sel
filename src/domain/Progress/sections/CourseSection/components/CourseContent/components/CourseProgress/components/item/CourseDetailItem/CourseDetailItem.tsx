@@ -16,7 +16,8 @@ export const DetailCourseItem = ({
   isSelected,
 }: DetailCourseItemType) => {
   const { getCompletionIcon, getCourseTypeIcon } = useCourseDetailItem();
-
+  console.log("DetailCourseItem");
+  console.log( item );
   return (
     <Stack direction="row" spacing="20px" css={sx.courseDetailItem(isSelected)}>
       <Image

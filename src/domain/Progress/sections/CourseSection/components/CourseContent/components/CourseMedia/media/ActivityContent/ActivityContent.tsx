@@ -26,19 +26,12 @@ export const ActivityContent = ({ selectedDetailCourse }: CourseMediaType) => {
 
     var data1 = useGetUnitItemContent1(studentId, courseId, unitIds);
     var models = data1.data;
+   //console.log("ActivityContent");
+    //console.log( models );
     //export const ActivityContent = () => {
     return (
         <Stack css={sx.root}>
             <Stack css={sx.container}>
-                <Typography
-                    variant='h1'
-                    fontSize='30px'
-                    fontWeight={700}
-                    color={Colors.BasicText}
-                    letterSpacing='0.02em'
-                >
-                    {models && models?.length > 0 ? 'Question & Answers' : ''}
-                </Typography>
                 {models && models?.length > 0 ? (
                     <Stack spacing={'20px'}>
                         {models?.map((it, index) => (
