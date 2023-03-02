@@ -96,6 +96,8 @@ const sx = {
         /*
         cursor: pointer;
         */
+
+        display: none;
     `,
     popupAddBtn: css`
         position: absolute;

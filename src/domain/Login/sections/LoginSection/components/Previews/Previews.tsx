@@ -7,9 +7,9 @@ import SimpleImageSlider from 'react-simple-image-slider';
 export const Previews = () => {
 
     const images = [
-        "/assets/login/slide1.png",
-        "/assets/login/slide2.png",
-        "/assets/login/slide3.png"
+        "/assets/login/slide1_4x.png",
+        "/assets/login/slide2_4x.png",
+        "/assets/login/slide3_4x.png"
     ]
 
     return (
@@ -32,15 +32,15 @@ export const Previews = () => {
                 style={{
                     position: "relative",
                     background: Colors.BackBlue,
-                    width: "80.86%",
-                    height: "98.93%",
+                    width: "100%",
+                    height: "100%",
                     margin: "auto",
                 }}
                 images={images}
                 showNavs={true}        // left and right arrows
                 showBullets={true}     // Toggle Bullets
-                autoPlay={true}
-                autoPlayDelay={3}
+                autoPlay={false}
+                // autoPlayDelay={3}
             />
         </Grid>
     );
