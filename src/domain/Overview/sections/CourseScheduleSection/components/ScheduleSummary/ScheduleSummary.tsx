@@ -26,8 +26,8 @@ const sx = {
         position: relative;
         width: 226.27px;
         height: 39px;
-        left: 24.07px;
-        top: 25px;
+        left: 20px;
+        top: 35px;
         margin-bottom: 20px;
         font-family: 'DM Sans';
         font-style: normal;
@@ -38,8 +38,7 @@ const sx = {
         color: #5E6C84;
     ` ,
     pickerTest: css`
-        padding: 25px;
-
+        padding: 0px;
     `
 
 };

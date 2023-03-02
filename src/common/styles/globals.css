@@ -18,3 +18,17 @@ body {
   height: 100%;
   font-family: "DM Sans", sans-serif;
 }
+
+.rdrMonthAndYearWrapper {
+  align-items: center;
+  height: 60px;
+  padding-top: 10px;
+  font-size:24px;
+  font-family: "DM Sans", sans-serif;
+}
+
+.rdrMonthsVertical {
+  font-size: 14px;
+  margin-left: -5px;
+  font-family: "DM Sans", sans-serif;
+}
