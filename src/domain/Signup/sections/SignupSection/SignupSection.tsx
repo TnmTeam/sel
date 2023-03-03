@@ -22,6 +22,7 @@ export const SignupSection = () => {
         localStorage.removeItem('accessToken');
     }, []);
 
+    const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState<string>('');
     const [passwordConfirm, setPasswordConfirm] = useState<string>('');
     const [isPassword, setIsPassword] = useState<boolean>(false);
@@ -56,6 +57,7 @@ export const SignupSection = () => {
 
     const handleSubmit = useCallback(
         (event: React.FormEvent<HTMLFormElement>) => {
+            setLoading(true);   // loading bar start
             event.preventDefault();
             //console.log(event.currentTarget);
             const name = event.currentTarget.user_name.value;
@@ -66,16 +68,19 @@ export const SignupSection = () => {
 
             if (name == '') {
                 alert('Please check your name.');
+                setLoading(false);  // loading bar stop
                 return;
             }
 
             if (email == '') {
                 alert('Please check your email.');
+                setLoading(false);  // loading bar stop
                 return;
             }
-            
+
             if (password != password_confirm) {
                 alert('Please check your password again.');
+                setLoading(false);  // loading bar stop
                 return;
             }
 
@@ -91,20 +96,17 @@ export const SignupSection = () => {
                     // 가입성공 -> DB signup 진행
                     authSignup(accessToken, name, email, role);
 
-                    localStorage.setItem('accessToken', accessToken);
-                    localStorage.setItem('email', email);
-                    localStorage.setItem('displayName', name);
-
-                    // 로그인 API 연동
-                    authLogin();
                 })
                 .catch((e) => {
+                    
                     switch (e.code) {
                         case 'auth/weak-password':
                             alert('Password should be at least 6 characters.');
+                            setLoading(false);  // loading bar stop
                             break;
                         case 'auth/invalid-email':
                             alert('Invalid email address.');
+                            setLoading(false);  // loading bar stop
                             break;
                         case 'auth/email-already-in-use':
                             //alert('This email is already subscribed.');
@@ -115,8 +117,9 @@ export const SignupSection = () => {
                             alert(
                                 'Login failed. Please check your ID and password.'
                             );
+                            setLoading(false);  // loading bar stop
                             break;
-                    }
+                    }                    
                 });
         },
         []
@@ -159,6 +162,7 @@ export const SignupSection = () => {
                         );
                         break;
                 }
+                setLoading(false);  // loading bar stop
                 console.log(err);
             });
     };
@@ -175,6 +179,8 @@ export const SignupSection = () => {
             // or
             // Account Does Not Exist!!
             //console.log(response.data.message);
+            // 이미 가입되어 있는 계정입니다.
+            alert(response.data.message);
             const authEmail = await response.data.email;
         } else {
             // 정상 로그인
@@ -203,11 +209,29 @@ export const SignupSection = () => {
         const response = await axiosClient.post('/auth/signup', params);
         //console.log(response);
 
-        const authEmail = await response.data.email;
-        if (email == authEmail) {
-            alert('[' + email + ']' + ' Signed up Complete.');
-            location.href = '/';
+        if (response.data.status_code == 500) {
+            // Expired toekn
+            //console.log(response.data.message);
+            alert(response.data.message);
+            setLoading(false);  // loading bar stop
+        } else if (response.data.status_code == 400) {
+            // 이미 가입되어 있는 계정입니다.
+            alert(response.data.message);
+            setLoading(false);  // loading bar stop
+        } else {
+            // 정상 로그인
+
+            //alert(response.data.message);
+
+            const authEmail = await response.data.email;
+            if (email == authEmail) {
+                alert('[' + email + ']' + ' Signed up Complete.');
+                
+                location.href = '/';
+            }
+            setLoading(false);  // loading bar stop
         }
+        
     };
 
     return (
@@ -236,6 +260,7 @@ export const SignupSection = () => {
                 </Typography>
                 <Box component='form' noValidate onSubmit={handleSubmit}>
                     <TextField
+                        disabled={loading}
                         margin='normal'
                         required
                         fullWidth
@@ -246,7 +271,8 @@ export const SignupSection = () => {
                         autoFocus
                     />
                     <TextField
-                        margin='normal'
+                        disabled={loading}
+                        margin='normal'                        
                         required
                         fullWidth
                         id='email'
@@ -255,6 +281,7 @@ export const SignupSection = () => {
                         autoComplete='email'
                     />
                     <TextField
+                        disabled={loading}
                         margin='normal'
                         required
                         fullWidth
@@ -297,9 +324,11 @@ export const SignupSection = () => {
                     <Box flexDirection={'row'} textAlign={'center'}>
                         <Button
                             variant='contained'
+                            disabled={loading}
                             sx={{
                                 margin: 'auto',
                                 mr: 3,
+                                mt : 5,
                                 fontSize: '18pt',
                                 width: '200px',
                                 background: WhiteButtons.ButtonColor,
@@ -316,9 +345,11 @@ export const SignupSection = () => {
                         <Button
                             type='submit'
                             variant='contained'
+                            disabled={loading}
                             sx={{
                                 margin: 'auto',
                                 ml: 3,
+                                mt : 5,
                                 fontSize: '18pt',
                                 width: '200px',
                                 background: FlexBlueButtons.ButtonColor,
@@ -332,6 +363,19 @@ export const SignupSection = () => {
                         >
                             Sign Up
                         </Button>
+                        {loading && (
+                            <CircularProgress
+                                size={24}
+                                sx={{
+                                    color: 'red',
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    marginTop: '-12px',
+                                    marginLeft: '-12px',
+                                }}
+                            />
+                        )}
                     </Box>
                 </Box>
             </Box>
