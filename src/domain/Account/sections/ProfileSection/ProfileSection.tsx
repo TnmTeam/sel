@@ -99,6 +99,8 @@ export const ProfileSection = () => {
                     <Typography style={{margin: '50px'}} variant='h4'>Profile</Typography>
                     {
                         !isEdit ?
+                        <></>
+                        /* ToDo : Phase 1.
                         <IconButton
                             onClick={handleChangeIsEdit}
                         >
@@ -112,6 +114,7 @@ export const ProfileSection = () => {
                                 <EditIcon color="secondary"/>
                             </Avatar>
                         </IconButton>
+                        */
                         :
                         <Stack spacing={2} direction="row">
                             <Button variant="outlined" size="medium" onClick={handleChangeIsEdit} >Cancel</Button>
