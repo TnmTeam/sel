@@ -116,6 +116,7 @@ const Student =  () => {
                         }}
                         onChange={handleChange}
                         input={<BootstrapInput />}
+                        disabled={studentList2.length == 1 ? true : false}
                     >
                         {studentList2.map((it:any, index:any) => (
                             <StudentOption key={index} id={it.id} lw_id={it.lw_id} name={it.name} email={it.email} parent_email={it.parent_email}
@@ -138,6 +139,7 @@ const Student =  () => {
                         }}
                         onChange={handleChange2}
                         input={<BootstrapInput />}
+                        disabled={courseList.length == 1 ? true : false}
                     >
                         {courseList.map((it, index) => (
                             <CourseOption key={index} course_id={it.course_id} title={it.title}  />
