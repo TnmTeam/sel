@@ -42,4 +42,11 @@ const loginInfo:any = atom({
     effects_UNSTABLE: [persistAtom]
 });
 
-export { courseArrayState, courseMapState, studentArrayState, studentMapState, loginInfo };
+const focusInfo:any = atom({
+    key: 'focusInfo',
+    default: {},
+    effects_UNSTABLE: [persistAtom]
+});
+
+export { courseArrayState, courseMapState, studentArrayState, studentMapState, loginInfo, focusInfo };
+
