@@ -10,11 +10,14 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
-
+import CircularProgress from '@mui/material/CircularProgress';
 import React, { useCallback, useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth, signInWithEmailAndPassword, sendPasswordResetEmail } from '../../firebaseConfig';
-
+import {
+    auth,
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail,
+} from '../../firebaseConfig';
 
 import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -25,14 +28,14 @@ import AppleIcon from '@mui/icons-material/Apple';
 import { axiosClient } from '@/data/client/client';
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import { loginInfo } from '@/common/atom/Atom';
-import Image from "next/image";
+import Image from 'next/image';
 import GoogleLogo from '@/assets/login/google_logo_icon.png';
 import router from 'next/router';
 
-
-
 export const Authentication = () => {
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
+
+    const [loading, setLoading] = useState(false);
 
     const [findEmail, setFindEmail] = useState('');
 
@@ -43,36 +46,43 @@ export const Authentication = () => {
         localStorage.clear();
     }, []);
 
+    // email
+    const onChangeEmail = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {            
+            setFindEmail(e.target.value);
+        },
+        []
+    );
+
     // reset password
     const triggerResetEmail = async () => {
-
-        if( findEmail != '')
-        {
+        setLoading(true);
+        if (findEmail != '') {
             await sendPasswordResetEmail(auth, findEmail);
-            alert( '[ ' + findEmail + ' ] ' + 'Password reset email sent')
+            alert('[ ' + findEmail + ' ] ' + 'Password reset email sent');
             console.log('Password reset email sent');
-        }
-        else
-        {
+            setLoading(false);
+        } else {
             alert('Please enter your email.');
+            setLoading(false);
         }
     };
 
     // General Login ////////////////////////////////////////////////////////////////////////////////////
     const handleLoginSubmit = useCallback(
         (event: React.FormEvent<HTMLFormElement>) => {
-
+            setLoading(true);
             event.preventDefault();
             //console.log(event.currentTarget);
             const email = event.currentTarget.email.value;
             const password = event.currentTarget.password.value;
-            
-            if( email != '')
-                setFindEmail(email);
-            else
-                return;
-            
 
+            if (email != '') {
+                setFindEmail(email);
+            } else {
+                setLoading(false);
+                return;
+            }
 
             //console.log(email, password);
             // firebase 로그인 진행
@@ -100,9 +110,12 @@ export const Authentication = () => {
                             alert('This email does not exist.');
                             break;
                         default:
-                            alert('Login failed. Please check your ID and password.');
+                            alert(
+                                'Login failed. Please check your ID and password.'
+                            );
                             break;
                     }
+                    setLoading(false);
                     console.log(err);
                 });
         },
@@ -111,6 +124,7 @@ export const Authentication = () => {
 
     const [userData, setUserData] = useState(null);
     function handleGoogleLogin() {
+        setLoading(true);
         const provider = new GoogleAuthProvider(); // provider를 구글로 설정
         signInWithPopup(auth, provider) // popup을 이용한 signup
             .then(async (data) => {
@@ -137,6 +151,7 @@ export const Authentication = () => {
             })
             .catch((err) => {
                 console.log(err);
+                setLoading(false);
             });
     }
 
@@ -147,10 +162,12 @@ export const Authentication = () => {
             // Expired toekn
             //console.log(response.data.message);
             alert(response.data.message);
+            setLoading(false);
         } else if (response.data.status_code == 400) {
             // Account Does Not Exist!!
             //console.log(response.data.message);
             alert(response.data.message);
+            setLoading(false);
         } else {
             // 정상 로그인
             var email_param = {
@@ -160,6 +177,7 @@ export const Authentication = () => {
             loginInfoHandlerState(email_param);
 
             router.push({ pathname: '/select' });
+            setLoading(false);
 
             // overview 화면 이동
             //            location.href='/overview';
@@ -172,6 +190,7 @@ export const Authentication = () => {
             // Expired toekn
             console.log(response.data.message);
             alert(response.data.message);
+            setLoading(false);
         } else if (response.data.status_code == 400) {
             // 로그인 시도 성공
             // Account Already Exists!!
@@ -205,7 +224,8 @@ export const Authentication = () => {
             setButtonHidden(() => response.data.email);
             loginInfoHandlerState(email_param);
 
-            router.push({pathname: "/select"});
+            router.push({ pathname: '/select' });
+            setLoading(false);
         }
     };
 
@@ -232,6 +252,9 @@ export const Authentication = () => {
             //location.href = '/overview';  // 페이지 이동
             //location.href = '/select'; // 학생/코스 선택 화면 이동
             setButtonHidden(() => response.data.email);
+            setLoading(false);
+        } else {
+            setLoading(false);
         }
 
         //location.href = '/signup';
@@ -265,7 +288,15 @@ export const Authentication = () => {
     };
 
     return (
-        <Grid item xs={12} sm={6} component={Paper} elevation={6} square height={'100%'}>
+        <Grid
+            item
+            xs={12}
+            sm={6}
+            component={Paper}
+            elevation={6}
+            square
+            height={'100%'}
+        >
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}
@@ -304,12 +335,12 @@ export const Authentication = () => {
                             }}
                         >
                             {/* <GoogleIcon /> */}
-                            <Image src={GoogleLogo}
-                            alt="googleIcon"
-                            width={30}
-                            height={30}
+                            <Image
+                                src={GoogleLogo}
+                                alt='googleIcon'
+                                width={30}
+                                height={30}
                             />
-
                         </Avatar>
                     </Link>
                 </Grid>
@@ -423,6 +454,7 @@ export const Authentication = () => {
                         name='email'
                         autoComplete='email'
                         autoFocus
+                        onChange={onChangeEmail}
                     />
                     <TextField
                         margin='normal'
@@ -440,7 +472,12 @@ export const Authentication = () => {
                         label={<Typography css={sx.rememberLabel}>Remember me</Typography>}
                     />
                     */}
-                    <Link href='#' css={sx.forgotButton} onClick={triggerResetEmail} style={{ marginLeft: '225px' }}>
+                    <Link
+                        href='#'
+                        css={sx.forgotButton}
+                        onClick={triggerResetEmail}
+                        style={{ marginLeft: '225px' }}
+                    >
                         Forgot password?
                     </Link>
 
@@ -448,6 +485,7 @@ export const Authentication = () => {
                         type='submit'
                         fullWidth
                         variant='contained'
+                        disabled={loading}
                         sx={{
                             mt: 1,
                             mb: 2,
@@ -464,6 +502,17 @@ export const Authentication = () => {
                     >
                         Login
                     </Button>
+                    {loading && (
+                        <CircularProgress
+                            size={40}
+                            sx={{
+                                color: 'red',
+                                position: 'absolute',
+                                top: '59%',
+                                right: '24%',
+                            }}
+                        />
+                    )}
                 </Box>
             </Box>
             <Box
@@ -474,7 +523,11 @@ export const Authentication = () => {
                 }}
             >
                 <Link href='/signup' css={sx.forgotButton}>
-                    <span css={sx.SignupBf}>Don&apos;t have an account yet?</span>&nbsp;&nbsp;<span css={sx.SignupAf}>Signup for a course.</span>
+                    <span css={sx.SignupBf}>
+                        Don&apos;t have an account yet?
+                    </span>
+                    &nbsp;&nbsp;
+                    <span css={sx.SignupAf}>Signup for a course.</span>
                 </Link>
             </Box>
         </Grid>
@@ -614,7 +667,7 @@ const sx = {
         font-size: 14px;
         line-height: 24px;
         /* identical to box height, or 171% */
-        color: #4F5B70;
+        color: #4f5b70;
     `,
     forgotButton: css`
         font-family: 'DM Sans';
@@ -622,7 +675,7 @@ const sx = {
         font-weight: 500;
         font-size: 14px;
         line-height: 24px;
-        color: #6787B7;
+        color: #6787b7;
         text-decoration-line: none;
         text-transform: none;
     `,
@@ -632,21 +685,21 @@ const sx = {
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
-        color: #4F5B70;
+        color: #4f5b70;
     `,
     SignupBf: css`
         font-family: 'DM Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
-        line-height: 22px;        
-        color: #4F5B70;
+        line-height: 22px;
+        color: #4f5b70;
     `,
     SignupAf: css`
         font-family: 'DM Sans';
         font-style: normal;
         font-size: 14px;
-        line-height: 22px;        
+        line-height: 22px;
     `,
 };
 
