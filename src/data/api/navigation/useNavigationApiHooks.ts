@@ -3,5 +3,5 @@ import OverviewApiService from "./navigation.api";
 
 
 export const useGetNotificationPopup = (studentId: string, courseId: string) => {
-  return useQuery(["notifications-popup", studentId], () => OverviewApiService.getNotificationPopup(studentId, courseId));
+  return useQuery(["notifications-popup", studentId, courseId], () => OverviewApiService.getNotificationPopup(studentId, courseId));
 };
