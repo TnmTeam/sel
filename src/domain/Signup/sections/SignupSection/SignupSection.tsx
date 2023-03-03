@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
 import { axiosClient } from '@/data/client/client';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { waitForAll } from 'recoil';
 import {
@@ -22,6 +22,38 @@ export const SignupSection = () => {
         localStorage.removeItem('accessToken');
     }, []);
 
+    const [password, setPassword] = useState<string>('');
+    const [passwordConfirm, setPasswordConfirm] = useState<string>('');
+    const [isPassword, setIsPassword] = useState<boolean>(false);
+
+    const onChangePassword = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            const password = e.target.value;
+            setPassword(password);
+        },
+        []
+    );
+
+    const onChangePasswordConfirm = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            const passwordConfirm = e.target.value;
+            setPasswordConfirm(passwordConfirm);
+        },
+        []
+    );
+
+    useEffect(() => {
+        // checkPswd의 길이가 0을 넘어갔을 때부터 실행되게 함
+        // 그렇지 않으면 첫 랜더링때부터 checkPswdMessage가 보이게됨.
+        if (password === passwordConfirm) {
+            setIsPassword(true);
+            //console.log('ok');
+        } else {
+            setIsPassword(false);
+            //console.log('no');
+        }
+    }, [password, passwordConfirm, isPassword]);
+
     const handleSubmit = useCallback(
         (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
@@ -30,6 +62,22 @@ export const SignupSection = () => {
             const email = event.currentTarget.email.value;
             const role = event.currentTarget.user_role.value;
             const password = event.currentTarget.password.value;
+            const password_confirm = event.currentTarget.password_confirm.value;
+
+            if (name == '') {
+                alert('Please check your name.');
+                return;
+            }
+
+            if (email == '') {
+                alert('Please check your email.');
+                return;
+            }
+            
+            if (password != password_confirm) {
+                alert('Please check your password again.');
+                return;
+            }
 
             //console.log(name, email, role, password);
 
@@ -50,7 +98,7 @@ export const SignupSection = () => {
                     // 로그인 API 연동
                     authLogin();
                 })
-                .catch((e) => {                    
+                .catch((e) => {
                     switch (e.code) {
                         case 'auth/weak-password':
                             alert('Password should be at least 6 characters.');
@@ -61,7 +109,7 @@ export const SignupSection = () => {
                         case 'auth/email-already-in-use':
                             //alert('This email is already subscribed.');
                             // 이미 존재할경우 SEL DB에 회원가입 진행
-                            firebaseLogin( name, email, password, role);
+                            firebaseLogin(name, email, password, role);
                             break;
                         default:
                             alert(
@@ -74,45 +122,45 @@ export const SignupSection = () => {
         []
     );
 
-
-    const firebaseLogin = (name:string, email:string, password:string, role:string) => {
-
+    const firebaseLogin = (
+        name: string,
+        email: string,
+        password: string,
+        role: string
+    ) => {
         //console.log(email, password);
-            // firebase 로그인 진행
-            signInWithEmailAndPassword(auth, email, password)
-                .then(async (data) => {
-                    // firebase 일반 로그인 시도
-                    //console.log(data);
-                    const accessToken = await data.user.getIdToken();
-                    // console.log(accessToken);
-                    localStorage.setItem('accessToken', accessToken);
-                    if (data.user.email != null)
-                        localStorage.setItem('email', await data.user.email);
-                    //displayName 이름 정보를 어떻게 가져올것인지..
-                    //console.log('localStorage', localStorage);
+        // firebase 로그인 진행
+        signInWithEmailAndPassword(auth, email, password)
+            .then(async (data) => {
+                // firebase 일반 로그인 시도
+                //console.log(data);
+                const accessToken = await data.user.getIdToken();
+                // console.log(accessToken);
+                localStorage.setItem('accessToken', accessToken);
+                if (data.user.email != null)
+                    localStorage.setItem('email', await data.user.email);
+                //displayName 이름 정보를 어떻게 가져올것인지..
+                //console.log('localStorage', localStorage);
 
-                    // firebase 로그인 -> DB signup 진행
-                    authSignup(accessToken, name, email, role);
-                    
-                })
-                .catch((err) => {
-                    switch (err.code) {
-                        case 'auth/user-disabled':
-                            alert('This email has been deprecated.');
-                            break;
-                        case 'auth/user-not-found':
-                            alert('This email does not exist.');
-                            break;
-                        default:
-                            alert(
-                                'Login failed. Please check your ID and password.'
-                            );
-                            break;
-                    }
-                    console.log(err);
-                });
-
-
+                // firebase 로그인 -> DB signup 진행
+                authSignup(accessToken, name, email, role);
+            })
+            .catch((err) => {
+                switch (err.code) {
+                    case 'auth/user-disabled':
+                        alert('This email has been deprecated.');
+                        break;
+                    case 'auth/user-not-found':
+                        alert('This email does not exist.');
+                        break;
+                    default:
+                        alert(
+                            'Login failed. Please check your ID and password.'
+                        );
+                        break;
+                }
+                console.log(err);
+            });
     };
 
     const authLogin = async () => {
@@ -161,7 +209,6 @@ export const SignupSection = () => {
             location.href = '/';
         }
     };
-
 
     return (
         <Grid item xs={12} sm={6} md={6}>
@@ -216,9 +263,25 @@ export const SignupSection = () => {
                         type='password'
                         id='password'
                         autoComplete='current-password'
+                        onChange={onChangePassword}
+                    />
+                    <TextField
+                        margin='normal'
+                        required
+                        fullWidth
+                        name='password_confirm'
+                        label='Password_confirm'
+                        type='password'
+                        id='password_confirm'
+                        autoComplete='current-password'
+                        onChange={onChangePasswordConfirm}
+                        style={
+                            isPassword
+                                ? { backgroundColor: 'rgba(0,0,0,0.5)' }
+                                : {}
+                        }
                     />
                     <Box>
-                        Role
                         <TextField
                             margin='normal'
                             required
@@ -228,6 +291,7 @@ export const SignupSection = () => {
                             id='user_role'
                             value={'parent'}
                             aria-readonly
+                            hidden
                         />
                     </Box>
                     <Box flexDirection={'row'} textAlign={'center'}>
@@ -247,7 +311,7 @@ export const SignupSection = () => {
                             }}
                             href='/'
                         >
-                            Cancle
+                            Cancel
                         </Button>
                         <Button
                             type='submit'
