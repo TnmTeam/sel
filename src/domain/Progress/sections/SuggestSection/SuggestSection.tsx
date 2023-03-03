@@ -1,10 +1,9 @@
 import { Button, Stack, Typography } from '@mui/material';
 import { css } from '@emotion/react';
-import { Colors } from '@/common/themes/Color';
+import { Colors,WhiteButtons } from '@/common/themes/Color';
 import { SuggestCard } from './SuggestCard';
 import { SuggestStateType } from '../../types/suggest.type';
 import { CustomProgress } from '@/common/components/progress';
-
 type DataType = {
     data: SuggestStateType;
 };
@@ -61,25 +60,33 @@ const sx = {
     `,
     viewBtn: css`
         width: 264px;
-        height: 58px;
+        height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #6394c7;
-        background-color: #fff;
         border: none;
         text-transform: none;
-        font-size: 15pt;
-
-        &:hover {
-            background-color: #fff;
-        }
+        font-size: 14pt;
     `,
 };
 
 const ViewButton = () => (
     <div css={sx.btnWrap}>
         <Button
+            sx={{
+                fontSize: '16pt',
+                backgroundColor: WhiteButtons.ButtonColor,
+                color: WhiteButtons.TextColor,
+                width: '264px',
+                ':hover': {
+                    backgroundColor: WhiteButtons.onHoverButtonColor,
+                    color: WhiteButtons.OnHoverTextColor,
+                    border: '0',
+                },
+                border: '0',
+                textAlign: 'center',
+                margin: '50px auto auto auto',
+            }}
             onClick={() =>
                 window.open('https://www.impacterpathway.com/', '_black')
             }

@@ -18,7 +18,7 @@ export const LoginSection = () => {
     
     
     return (
-        <Grid container height={'100%'}>
+        <Grid container height={'100%'} minHeight={'800px'}>
             <Previews />
             <Authentication />
         </Grid>

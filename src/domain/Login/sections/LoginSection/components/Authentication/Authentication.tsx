@@ -13,7 +13,11 @@ import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
 
 import React, { useCallback, useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
+import {
+    auth,
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail,
+} from '../../firebaseConfig';
 
 import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -24,14 +28,14 @@ import AppleIcon from '@mui/icons-material/Apple';
 import { axiosClient } from '@/data/client/client';
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import { loginInfo } from '@/common/atom/Atom';
-import Image from "next/image";
+import Image from 'next/image';
 import GoogleLogo from '@/assets/login/google_logo_icon.png';
 import router from 'next/router';
 
-
-
 export const Authentication = () => {
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
+
+    const [findEmail, setFindEmail] = useState('');
 
     const [buttonHidden, setButtonHidden] = useState<string>('');
 
@@ -40,21 +44,72 @@ export const Authentication = () => {
         localStorage.clear();
     }, []);
 
+    const onChangeEmail = (e:any) => {        
+        if(isEmail(e.target.value))
+            setFindEmail( e.target.value);
+      };
+
+    const isEmail = (email:string) => {
+        const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+      
+        return emailRegex.test(email);
+      };
+
+    // reset password
+    const triggerResetEmail = async () => {        
+        if ( isEmail(findEmail) && findEmail != '') {
+            await sendPasswordResetEmail(auth, findEmail);
+            alert('[ ' + findEmail + ' ] ' + 'Password reset email sent');
+            console.log('Password reset email sent');
+        } else {
+            alert('Please enter your email.');
+        }
+    };
+
+    // General Login ////////////////////////////////////////////////////////////////////////////////////
     const handleLoginSubmit = useCallback(
         (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-            console.log(event.currentTarget);
+            event.preventDefault();
+            //console.log(event.currentTarget);
             const email = event.currentTarget.email.value;
             const password = event.currentTarget.password.value;
-            console.log(email, password);
 
+            if (email != '') setFindEmail(email);
+            else return;
+
+            //console.log(email, password);
             // firebase 로그인 진행
-            // firebase 일반 로그인 시도
-            const accessToken = '';
-            localStorage.setItem('accessToken', accessToken);
+            signInWithEmailAndPassword(auth, email, password)
+                .then(async (data) => {
+                    // firebase 일반 로그인 시도
+                    //console.log(data);
+                    const accessToken = await data.user.getIdToken();
+                    // console.log(accessToken);
+                    localStorage.setItem('accessToken', accessToken);
+                    if (data.user.email != null)
+                        localStorage.setItem('email', await data.user.email);
+                    //displayName 이름 정보를 어떻게 가져올것인지..
+                    //console.log('localStorage', localStorage);
 
-            // 로그인 성공
-            //generalLogin();
+                    // 로그인 성공
+                    generalLogin();
+                })
+                .catch((err) => {
+                    switch (err.code) {
+                        case 'auth/user-disabled':
+                            alert('This email has been deprecated.');
+                            break;
+                        case 'auth/user-not-found':
+                            alert('This email does not exist.');
+                            break;
+                        default:
+                            alert(
+                                'Login failed. Please check your ID and password.'
+                            );
+                            break;
+                    }
+                    console.log(err);
+                });
         },
         []
     );
@@ -95,11 +150,11 @@ export const Authentication = () => {
         const response = await axiosClient('/auth/login');
         if (response.data.status_code == 500) {
             // Expired toekn
-            console.log(response.data.message);
+            //console.log(response.data.message);
             alert(response.data.message);
         } else if (response.data.status_code == 400) {
             // Account Does Not Exist!!
-            console.log(response.data.message);
+            //console.log(response.data.message);
             alert(response.data.message);
         } else {
             // 정상 로그인
@@ -107,7 +162,12 @@ export const Authentication = () => {
                 email: response.data.email,
             };
 
+            loginInfoHandlerState(email_param);
+
+            router.push({ pathname: '/select' });
+
             // overview 화면 이동
+            //            location.href='/overview';
         }
     };
 
@@ -150,7 +210,7 @@ export const Authentication = () => {
             setButtonHidden(() => response.data.email);
             loginInfoHandlerState(email_param);
 
-            router.push({pathname: "/select"});
+            router.push({ pathname: '/select' });
         }
     };
 
@@ -210,14 +270,22 @@ export const Authentication = () => {
     };
 
     return (
-        <Grid item xs={12} sm={6} component={Paper} elevation={6} square height={'100%'}>
+        <Grid
+            item
+            xs={12}
+            sm={6}
+            component={Paper}
+            elevation={6}
+            square
+            height={'100%'}
+        >
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}
                 display={'flex'}
                 sx={{
                     mx: 25,
-                    mt: 20,
+                    mt: 30,
                     //mb: 15,
                 }}
             >
@@ -225,7 +293,7 @@ export const Authentication = () => {
                     component='h1'
                     variant='h3'
                     textAlign='center'
-                    //sx={{ mb: 3 }}
+                    sx={{ mb: 2, fontSize: 25 }}
                 >
                     Welcome Parents!
                 </Typography>
@@ -235,12 +303,12 @@ export const Authentication = () => {
                     flexDirection={'row'}
                     alignItems={'center'}
                     display={'flex'}
-                    //sx={{ mb: 3 }}
+                    sx={{ mb: 2 }}
                 >
                     <Link href='#' onClick={handleGoogleLogin}>
                         <Avatar
                             sx={{
-                                m: 1,
+                                mb: 1,
                                 // bgcolor: 'secondary.main',
                                 bgcolor: 'transparent',
                                 width: '50px',
@@ -249,15 +317,16 @@ export const Authentication = () => {
                             }}
                         >
                             {/* <GoogleIcon /> */}
-                            <Image src={GoogleLogo}
-                            alt="googleIcon"
-                            width={35}
-                            height={35}
+                            <Image
+                                src={GoogleLogo}
+                                alt='googleIcon'
+                                width={30}
+                                height={30}
                             />
-
                         </Avatar>
                     </Link>
                 </Grid>
+                {/*
                 {buttonHidden == '' ? (
                     <></>
                 ) : (
@@ -273,10 +342,9 @@ export const Authentication = () => {
                             fullWidth
                             variant='contained'
                             sx={{
-                                mt: 3,
-                                mb: 2,
+                                mb: 1,
                                 fontSize: '12pt',
-                                width: '400px',
+                                width: '350px',
                                 background: FlexBlueButtons.ButtonColor,
                                 color: FlexBlueButtons.TextColor,
                                 ':hover': {
@@ -305,10 +373,9 @@ export const Authentication = () => {
                             fullWidth
                             variant='contained'
                             sx={{
-                                mt: 3,
-                                mb: 2,
-                                fontSize: '12pt',
-                                width: '400px',
+                                mb: 3,
+                                fontSize: '16px',
+                                width: '350px',
                                 background: FlexBlueButtons.ButtonColor,
                                 color: FlexBlueButtons.TextColor,
                                 ':hover': {
@@ -337,10 +404,9 @@ export const Authentication = () => {
                             fullWidth
                             variant='contained'
                             sx={{
-                                mt: 3,
-                                mb: 2,
-                                fontSize: '12pt',
-                                width: '400px',
+                                mb: 1,
+                                fontSize: '16px',
+                                width: '350px',
                                 background: FlexBlueButtons.ButtonColor,
                                 color: FlexBlueButtons.TextColor,
                                 ':hover': {
@@ -354,21 +420,22 @@ export const Authentication = () => {
                         </Button>
                     </Link>
                 )}
-
+                        */}
                 <Box
                     component='form'
                     noValidate
                     onSubmit={handleLoginSubmit}
-                    width={'400px'}
+                    width={'350px'}
                 >
                     <TextField
                         margin='normal'
                         required
                         fullWidth
                         id='email'
-                        label='Email'
+                        label={<span css={sx.inputbox}>Email</span>}
                         name='email'
                         autoComplete='email'
+                        onChange={onChangeEmail}
                         autoFocus
                     />
                     <TextField
@@ -376,17 +443,23 @@ export const Authentication = () => {
                         required
                         fullWidth
                         name='password'
-                        label='Password'
+                        label={<span css={sx.inputbox}>Password</span>}
                         type='password'
                         id='password'
                         autoComplete='current-password'
                     />
-
+                    {/*
                     <FormControlLabel
                         control={<Checkbox value='remember' color='primary' />}
-                        label='Remember me'
+                        label={<Typography css={sx.rememberLabel}>Remember me</Typography>}
                     />
-                    <Link href='#' style={{ marginLeft: '100px' }}>
+                    */}
+                    <Link
+                        href='#'
+                        css={sx.forgotButton}
+                        onClick={triggerResetEmail}
+                        style={{ marginLeft: '225px' }}
+                    >
                         Forgot password?
                     </Link>
 
@@ -395,19 +468,20 @@ export const Authentication = () => {
                         fullWidth
                         variant='contained'
                         sx={{
-                            mt: 3,
+                            mt: 1,
                             mb: 2,
-                            fontSize: '12pt',
-                            width: '400px',
+                            fontSize: '16px',
+                            width: '350px',
                             background: FlexBlueButtons.ButtonColor,
                             color: FlexBlueButtons.TextColor,
                             ':hover': {
                                 background: FlexBlueButtons.onHoverButtonColor,
                                 color: FlexBlueButtons.OnHoverTextColor,
                             },
+                            textTransform: 'none',
                         }}
                     >
-                        LOGIN
+                        Login
                     </Button>
                 </Box>
             </Box>
@@ -418,10 +492,70 @@ export const Authentication = () => {
                     alignItems: 'center',
                 }}
             >
-                <Link href='/signup'>
-                    {"Don't have an account yet? Signup for a course."}
+                <Link href='/signup' css={sx.forgotButton}>
+                    <span css={sx.SignupBf}>
+                        Don&apos;t have an account yet?
+                    </span>
+                    &nbsp;&nbsp;
+                    <span css={sx.SignupAf}>Create an account.</span>
                 </Link>
             </Box>
+            {/*
+            <Box sx={{position:'fixed', bottom : 0, right: 0}}>
+                <Link
+                    id='loginBtn'
+                    type='submit'
+                    onClick={MoveSelectView_demo}
+                    href='/select'
+                    style={{ textDecoration: 'none' }}
+                >
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        sx={{                          
+                            fontSize: '16px',
+                            mb : 1,                            
+                            background: FlexBlueButtons.ButtonColor,
+                            color: FlexBlueButtons.TextColor,
+                            ':hover': {
+                                background: FlexBlueButtons.onHoverButtonColor,
+                                color: FlexBlueButtons.OnHoverTextColor,
+                            },
+                        }}
+                    >
+                        josharnold@gmail.com
+                    </Button>
+                </Link>
+
+                <Link
+                    id='loginBtn'
+                    type='submit'
+                    onClick={MoveSelectView_admin}
+                    href='/select'
+                    style={{ textDecoration: 'none' }}
+                >
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        sx={{
+                         
+                            fontSize: '16px',
+                           
+                            background: FlexBlueButtons.ButtonColor,
+                            color: FlexBlueButtons.TextColor,
+                            ':hover': {
+                                background: FlexBlueButtons.onHoverButtonColor,
+                                color: FlexBlueButtons.OnHoverTextColor,
+                            },
+                        }}
+                    >
+                        admin
+                    </Button>
+                </Link>
+            </Box>
+            */}
         </Grid>
     );
 
@@ -552,7 +686,47 @@ export const Authentication = () => {
 };
 
 const sx = {
-    sample: css``,
+    rememberLabel: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 24px;
+        /* identical to box height, or 171% */
+        color: #4f5b70;
+    `,
+    forgotButton: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 24px;
+        color: #6787b7;
+        text-decoration-line: none;
+        text-transform: none;
+    `,
+    inputbox: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #4f5b70;
+    `,
+    SignupBf: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+        color: #4f5b70;
+    `,
+    SignupAf: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-size: 14px;
+        line-height: 22px;
+    `,
 };
 
 const Copyright = () => {
