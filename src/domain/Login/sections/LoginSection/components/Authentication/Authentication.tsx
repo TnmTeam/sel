@@ -500,7 +500,7 @@ export const Authentication = () => {
                     <span css={sx.SignupAf}>Create an account.</span>
                 </Link>
             </Box>
-            
+            {/*
             <Box sx={{position:'fixed', bottom : 0, right: 0}}>
                 <Link
                     id='loginBtn'
@@ -555,7 +555,7 @@ export const Authentication = () => {
                     </Button>
                 </Link>
             </Box>
-            
+            */}
         </Grid>
     );
 
