@@ -10,9 +10,9 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 
 export const CourseTimeline = ({title, progress, time, dept}: CourseItemType) => {
-    // var titleSummary = '';
-    // if(title.length > 19)titleSummary = title.substr(0, 19) + ' ...';
-    // else titleSummary = title;
+    var titleSummary = '';
+    if(title.length > 38)titleSummary = title.substr(0, 38) + ' ...';
+    else titleSummary = title;
 
     const Separator =( {dept} : {dept:number;} ) => {
         if(dept == 0){
@@ -48,7 +48,7 @@ export const CourseTimeline = ({title, progress, time, dept}: CourseItemType) =>
                     <Separator dept={dept}/>
                     <TimelineContent>
                         <Typography variant="subtitle1" component="span" css={sx.subtitle} style={{fontSize:'16px'}}>
-                            {title}
+                            {titleSummary}
                         </Typography>
                         <Typography css={sx.date}>
                             {progress}

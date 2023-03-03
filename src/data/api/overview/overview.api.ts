@@ -13,6 +13,9 @@ class OverviewApiService {
 
   async getImpacterScore(studentId: string, courseId: string): Promise<ImpacterScoreResponse> {
 
+    console.log( "=====");
+    console.log( studentId);
+    console.log( courseId);
     var param = { 
       student_id : studentId, 
       course_id : courseId 

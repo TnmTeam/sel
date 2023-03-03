@@ -1,8 +1,11 @@
 import { css } from '@emotion/react';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Stack } from '@mui/material';
 import { Appbar } from '../Appbar';
 import { HelpPopup } from '../popup/HelpPopup';
+import { useRecoilValue } from 'recoil';
+import { loginInfo } from '@/common/atom/Atom';
+import { axiosClient } from '@/data/client/client';
 
 export interface LayoutProps {
     children: ReactNode;
@@ -20,7 +23,8 @@ export interface LayoutProps {
 // ];
 
 export const Layout = ({ children }: LayoutProps) => {
-
+    
+    
     return (
         <Stack css={st.root}>
             <Appbar/>
@@ -30,6 +34,8 @@ export const Layout = ({ children }: LayoutProps) => {
         </Stack>
     );
 };
+
+
 
 const st = {
     root: css`
