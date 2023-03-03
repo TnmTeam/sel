@@ -72,7 +72,6 @@ const Student =  () => {
         studentArrayHandlerState(studentList2);
     })
     useEffect(() => {
-        //console.log( studentList2 );
         setCourseList(studentList2[0].courses_list);
         courseArrayHandlerState(studentList2[0].courses_list);
         courseMapHandlerState(studentList2[0].courses_list[0]);
@@ -85,8 +84,13 @@ const Student =  () => {
             const list = studentList2.filter((item: any) => item.lw_id === event.target.value);
             //console.log(list);
             courseArrayHandlerState(list[0].courses_list);
+
+            setCourseList([]);
+
             setCourseList(list[0].courses_list);
             studentMapHandlerState(list[0]);
+            courseMapHandlerState(list[0].courses_list[0]);
+            console.log(currenCourseMap);
         }
     }
 
