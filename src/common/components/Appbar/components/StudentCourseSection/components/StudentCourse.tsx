@@ -35,7 +35,6 @@ interface DataType {
 
 export const StudentCourse = ({ data }: DataType) => {
     IntercomShutdown();
-
     var loginInfoMap: any = useRecoilValue(loginInfo);
     console.log(loginInfoMap);
     if (loginInfoMap.email == undefined) {
@@ -65,6 +64,61 @@ const Student =  ({ studentList }: StudentListType) => {
 
     const [courseList, setCourseList] = useState<any[]>([]);
 
+    const testData = [
+        {
+            id: 94,
+            lw_id: "6337a6e9f62401d9f405913c",
+            name: "Isabella Arnold",
+            email: "isabellajarnold@gmail.com",
+            parent_email: "josharnold@gmail.com",
+            parent_name: null,
+            parent_phone: null,
+            parent_email2: "clairebruinbear@gmail.com",
+            parent_name2: null,
+            parent_phone2: null,
+            grade: "5",
+            school: "Hopkinson Elementary School",
+            role: "user",
+            created_at: "2022-10-01 02:33:13.763088",
+            last_login: "2023-02-27 00:32:40.591623",
+            folder_id: null,
+            courses_list: [
+                {
+                    id: 421,
+                    created_at: "2022-10-25 00:35:31",
+                    student_id: "6337a6e9f62401d9f405913c",
+                    course_id: "7dlcnlym",
+                    workbook_id: "1eLwKXZ3mqdk53gltoJrk7xHLfMb_VksU_KIq5on0uGA",
+                    video_link: null,
+                    title: "THE 7-DAY LEADERSHIP CHALLENGE - NLYM"
+                },
+              {
+                id: 613,
+                created_at: "2022-11-29 00:20:17",
+                student_id: "6337a6e9f62401d9f405913c",
+                course_id: "you1001",
+                workbook_id: "1b035cq2ngQYiGIMW0-xAirVo3w5YKxAmNRl3ZrBGzfk",
+                video_link: null,
+                title: "University of YOU: Know Thyself - 1001"
+              },
+              {
+                id: 368,
+                created_at: "2022-10-01 02:33:15",
+                student_id: "6337a6e9f62401d9f405913c",
+                course_id: "7dlc1001",
+                workbook_id: "13V3pbZu8sbc35uDJkym5tlKNkT15TV1Sk0lBQQzGNZU",
+                video_link: null,
+                title: "THE 7-DAY LEADERSHIP CHALLENGE - 1001"
+              }
+            ]
+          }
+    ];
+    const studentList2 = testData;
+    const courseList2 = [];
+
+    for( var i = 0 ; i < studentList2.length ; i++){
+        //studentList2[i]
+    }
 
     
     const Test = async () => {
@@ -92,7 +146,6 @@ const Student =  ({ studentList }: StudentListType) => {
                 let courseList = [];
                 let courseHandlerList = [];
                 let studentHandlerList = [];
-
 
                 if (response.data.length > 0) {
                     for (let i = 0; i < response.data.length; i++) {
@@ -259,14 +312,16 @@ async function SelectSetting(studentList: StudentType[]) {
     const currenCourseMap: any = useRecoilValue(courseMapState);
     const currenStudentMap: any = useRecoilValue(studentMapState);
     const [courseList, setCourseList] = useState<any[]>([]);
-    if (studentList != null) {
+
         var param = {
             student_id: studentList[0].studentId,
         };
+        useEffect(() => {
 
+        },[])
         const response = await axiosClient.post(`/navigation/course-list`, param);
 
-        let courseList = [];
+        let courseList2 = [];
         let courseHandlerList = [];
         let studentHandlerList = [];
 
@@ -278,7 +333,7 @@ async function SelectSetting(studentList: StudentType[]) {
                 };
                 let courseMap = response.data[i].lw_courses;
                 let studentMap = response.data[i].students;
-                courseList.push(course);
+                courseList2.push(course);
                 courseHandlerList.push(courseMap);
                 studentHandlerList.push(studentMap);
             }
@@ -287,12 +342,12 @@ async function SelectSetting(studentList: StudentType[]) {
             studentArrayHandlerState(studentHandlerList);
 
             
-            setCourseList(response.data.length > 0 ? courseList : []);;
+            setCourseList(response.data.length > 0 ? courseList2 : []);;
             //console.log(response);
         }else {
             setCourseList([]);
         }
-    }
+    
 
     return courseList;
 }
