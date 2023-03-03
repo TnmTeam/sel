@@ -27,13 +27,14 @@ export const Previews = () => {
             }}
         >
             <SimpleImageSlider
+                
                 width={"100%"}
                 height={"100%"}
                 style={{
                     position: "relative",
                     background: Colors.BackBlue,
-                    width: "85%",
-                    height: "85%",
+                    width: "75%",
+                    height: "95%",
                     margin: "auto",
                 }}
                 images={images}
