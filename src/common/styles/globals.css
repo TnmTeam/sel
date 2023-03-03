@@ -19,6 +19,9 @@ body {
   font-family: "DM Sans", sans-serif;
 }
 
+.rdrCalendarWrapper {
+  background: transparent !important;
+}
 .rdrMonthAndYearWrapper {
   align-items: center;
   height: 60px;
