@@ -62,10 +62,10 @@ const Student =  () => {
     // const currenStudentList = useRecoilValue(studentArrayState);
     const currenCourseMap: any = useRecoilValue(courseMapState);
     const currenStudentMap: any = useRecoilValue(studentMapState);
-    const fuckerList: any = useRecoilValue(studentCourseArray);
+    const studentCourseList: any = useRecoilValue(studentCourseArray);
 
     const [courseList, setCourseList] = useState<any[]>([]);
-    let studentList2 = fuckerList;
+    let studentList2 = studentCourseList;
     let courseList2 = [];
 
     useEffect(() => {
