@@ -2,12 +2,21 @@ import Link from 'next/link';
 import { Button } from '@mui/material';
 import { NavigationItems, WhiteButtons } from '@/common/themes/Color';
 import { TextMenuType } from './types/textMenu.types';
+import { useSetRecoilState } from 'recoil';
+import { focusInfo } from '@/common/atom/Atom';
 
 export const TextMenu = ({ url, currentRoute, title, buttonType }: TextMenuType) => {
+    const focusState:any = useSetRecoilState(focusInfo);
+    // 포커스 콤포넌트 초기화후 이동
+    function goMenu() {
+        focusState({});
+    };
+
     return (
         <Link
             css={{ textDecoration: 'none' }}
-            href={ url }
+            href={ url } 
+            onClick={goMenu}
         >
             <Button
                 sx={ buttonType === 'text' ? stTextButton(url, currentRoute) : stOutlineButton }
