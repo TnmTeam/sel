@@ -497,10 +497,10 @@ export const Authentication = () => {
                         Don&apos;t have an account yet?
                     </span>
                     &nbsp;&nbsp;
-                    <span css={sx.SignupAf}>Signup for a course.</span>
+                    <span css={sx.SignupAf}>Create an account.</span>
                 </Link>
             </Box>
-            {/*
+            
             <Box sx={{position:'fixed', bottom : 0, right: 0}}>
                 <Link
                     id='loginBtn'
@@ -555,7 +555,7 @@ export const Authentication = () => {
                     </Button>
                 </Link>
             </Box>
-            */}
+            
         </Grid>
     );
 
