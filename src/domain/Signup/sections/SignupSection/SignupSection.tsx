@@ -10,6 +10,10 @@ import { axiosClient } from '@/data/client/client';
 import React, { useCallback, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { waitForAll } from 'recoil';
+import {
+    auth,
+    createUserWithEmailAndPassword,
+} from '@/domain/Login/sections/LoginSection/firebaseConfig';
 
 export const SignupSection = () => {
     useEffect(() => {
@@ -19,21 +23,73 @@ export const SignupSection = () => {
     const handleSubmit = useCallback(
         (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
-            console.log(event.currentTarget);
+            //console.log(event.currentTarget);
             const name = event.currentTarget.user_name.value;
             const email = event.currentTarget.email.value;
             const role = event.currentTarget.user_role.value;
             const password = event.currentTarget.password.value;
-            console.log(name, email, role, password);
+
+            //console.log(name, email, role, password);
 
             // firebase 회원가입 진행
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(async (data) => {
+                    // console.log(data);
+                    const accessToken = await data.user.getIdToken();
+                    // console.log(accessToken);
 
-            // 가입성공 -> DB signup 진행
-            const accessToken = '';
-            //authSignup(accessToken, name, email, role);
+                    // 가입성공 -> DB signup 진행
+                    authSignup(accessToken, name, email, role);
+
+                    localStorage.setItem('accessToken', accessToken);
+                    localStorage.setItem('email', email);
+                    localStorage.setItem('displayName', name);
+
+                    // 로그인 API 연동
+                    authLogin();
+                })
+                .catch((e) => {
+                    switch (e.code) {
+                        case 'auth/weak-password':
+                            alert('Password should be at least 6 characters.');
+                            break;
+                        case 'auth/invalid-email':
+                            alert('Invalid email address.');
+                            break;
+                        case 'auth/email-already-in-use':
+                            alert('This email is already subscribed.');
+                            break;
+                        default:
+                            alert(
+                                'Login failed. Please check your ID and password.'
+                            );
+                            break;
+                    }
+                });
         },
         []
     );
+
+    const authLogin = async () => {
+        const response = await axiosClient('/auth/login');
+        if (response.data.status_code == 500) {
+            // Expired toekn
+            //console.log(response.data.message);
+            alert(response.data.message);
+        } else if (response.data.status_code == 400) {
+            // 로그인 시도 성공
+            // Account Already Exists!!
+            // or
+            // Account Does Not Exist!!
+            //console.log(response.data.message);
+            const authEmail = await response.data.email;
+        } else {
+            // 정상 로그인
+            var email_param = {
+                email: response.data.email,
+            };
+        }
+    };
 
     const authSignup = async (
         accessToken: string,
@@ -56,6 +112,7 @@ export const SignupSection = () => {
 
         const authEmail = await response.data.email;
         if (email == authEmail) {
+            alert('[' + email + ']' + 'Signed up.');
             location.href = '/';
         }
     };
