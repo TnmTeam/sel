@@ -49,7 +49,7 @@ const focusInfo:any = atom({
 });
 
 const studentCourseArray:any = atom({
-    key: 'fucker',
+    key: 'studentCourse',
     default: [],
     effects_UNSTABLE: [persistAtom]
 })
