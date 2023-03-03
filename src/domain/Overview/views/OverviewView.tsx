@@ -67,12 +67,10 @@ export const OverviewView = () => {
                 <CourseProgressSection data={courseProgressState} />
                 <CourseScheduleSection data={courseScheduleState} />
                 
-                // TO DO: Phase 1. demo hide
                 <FeaturedStudentWorkSection />
                 <CircleImage />
             </Stack>
             
-                // TO DO: Phase 1. demo hide
             <SelfScoresSection />
             <FeaturedImpactorVideosSection />
         </Stack>
