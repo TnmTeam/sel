@@ -3,9 +3,11 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, Stack } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { VideoCardItemType } from './types/VideoCard.type';
+import Image from 'next/image';
+import UbeButtonImage from '@/assets/overview/img-utubeButton.png';
 
 export const VideoCard = ({ item, index }: VideoCardItemType) => {
     const videoId = item.snippet.resourceId.videoId;
@@ -28,6 +30,7 @@ export const VideoCard = ({ item, index }: VideoCardItemType) => {
     return (
         <Card sx={{ maxWidth: 409.69, height: 424, borderRadius: 5 }}>
             <CardActionArea onClick={() => window.open(videoUrl, '_blank')}>
+                <CourseProgressImage />
                 <CardMedia component='img' height='308' image={thumbnails} />
                 <CardContent>
                     <Typography color='text.secondary' css={sx.date}>
@@ -82,4 +85,25 @@ const sx = {
         line-height: 20px;
         letter-spacing: 0.25px;
     `,
+    img: css`
+        border-top-left-radius: 28px;
+        border-top-right-radius: 28px;
+    `,
+    imageUbeButton: css`
+      position: absolute;
+      width: 25%;
+      height: 25%;      
+      margin-top: 25%;
+      margin-left: 35%;
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+      z-index: 999;
+      opacity:0.7;
+  `,
 };
+
+const CourseProgressImage = () => (
+    <Stack>
+        <Image objectFit='cover' src={UbeButtonImage} css={sx.imageUbeButton} alt={'img'} />
+    </Stack>
+);
