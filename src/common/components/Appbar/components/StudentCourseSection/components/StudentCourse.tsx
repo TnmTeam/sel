@@ -35,7 +35,7 @@ interface DataType {
 }
 
 export const StudentCourse = ({ data }: DataType) => {
-    IntercomShutdown();
+    //IntercomShutdown();
     var loginInfoMap: any = useRecoilValue(loginInfo);
     //console.log('`````', loginInfoMap);
     if (loginInfoMap.email == undefined) {

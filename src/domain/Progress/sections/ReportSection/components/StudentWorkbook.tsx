@@ -58,31 +58,31 @@ export const StudentWorkbook = ({data}: DataType) => {
   };
 
   const handleValue = (val : number) => {
-    console.log("select val " , val);
+    //console.log("select val " , val);
     setPosition(val);
     handleClose();
   }
 
 
   const getGoogleSlides = async () => {
-    console.log("api get");
+    //console.log("api get");
     const response = await axiosClient.get('https://docs.google.com/presentation/d/1L7tJTJHxAdVCJkQ3lpZkShk1SbNJnjOfuLRkIFUFdAE/embed?loop=false&start=true&delayms=10000&slide=1');
     
     const innerHtml = response.data;
     
-    console.log( "includes ", innerHtml.includes("slidePageCount") );
+    //console.log( "includes ", innerHtml.includes("slidePageCount") );
     if (innerHtml.includes("slidePageCount"))
     {
       const idx = innerHtml.indexOf('slidePageCount');
       const end = innerHtml.indexOf(',', idx);
   
       const getStr = innerHtml.substring(idx, end);
-      console.log("getStr", getStr);
+      //console.log("getStr", getStr);
 
       const tempArr = getStr.split(":");
       const totalPage = +tempArr[1].trim();
 
-      console.log("totalPage ", totalPage);
+      //console.log("totalPage ", totalPage);
       setEndPage(totalPage);
     }
   };
