@@ -25,8 +25,8 @@ export const OverviewView = () => {
     const courseMapHandlerState = useSetRecoilState(courseMapState);
     
     
-    console.log( "/overview" );
-    console.log( currenStudentMap );
+    //console.log( "/overview" );
+    //console.log( currenStudentMap );
    
    
     
