@@ -72,9 +72,11 @@ const Student =  () => {
         studentArrayHandlerState(studentList2);
     })
     useEffect(() => {
+        console.log( studentList2 );
         setCourseList(studentList2[0].courses_list);
         courseArrayHandlerState(studentList2[0].courses_list);
         courseMapHandlerState(studentList2[0].courses_list[0]);
+        studentMapHandlerState(studentList2[0]);
     }, [])
 
     const handleChange = (event: { target: { value: string } }) => {

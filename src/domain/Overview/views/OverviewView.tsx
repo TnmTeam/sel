@@ -67,12 +67,14 @@ export const OverviewView = () => {
                 <CourseProgressSection data={courseProgressState} />
                 <CourseScheduleSection data={courseScheduleState} />
                 
-                <FeaturedStudentWorkSection />
+                { /* <FeaturedStudentWorkSection /> */}
                 <CircleImage />
             </Stack>
-            
+            {/*
             <SelfScoresSection />
+            */}
             <FeaturedImpactorVideosSection />
+            
         </Stack>
     );
 };

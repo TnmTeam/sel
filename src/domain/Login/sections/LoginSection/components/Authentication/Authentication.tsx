@@ -43,7 +43,7 @@ export const Authentication = () => {
 
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
 
-    // const studentMapHandlerState = useSetRecoilState(studentMapState);
+    //const studentMapHandlerState = useSetRecoilState(studentMapState);
     const studentMapHandlerState = useSetRecoilState(studentCourseArray);
 
     const [loading, setLoading] = useState(false);
@@ -120,7 +120,7 @@ export const Authentication = () => {
                         case 'auth/user-not-found':
                             alert('This email does not exist.');
                             break;
-                        default:
+                        default:                           
                             alert(
                                 'Login failed. Please check your ID and password.'
                             );
@@ -378,12 +378,12 @@ export const Authentication = () => {
 
     return (
         <Grid
-            item
-            xs={12}
-            sm={6}
+            item            
+            xs={12}            
+            sm={12}            
+            md={12}
+            xl={6}
             component={Paper}
-            elevation={6}
-            square
             height={'100%'}
         >
             <Box
@@ -407,7 +407,7 @@ export const Authentication = () => {
 
                 <Grid
                     item
-                    flexDirection={'row'}
+                    flexDirection={'column'}
                     alignItems={'center'}
                     display={'flex'}
                     sx={{ mb: 2 }}
@@ -415,7 +415,7 @@ export const Authentication = () => {
                     <Link href='#' onClick={handleGoogleLogin}>
                         <Avatar
                             sx={{
-                                mb: 1,
+                                mb: 3,
                                 // bgcolor: 'secondary.main',
                                 bgcolor: 'transparent',
                                 width: '50px',
@@ -431,7 +431,10 @@ export const Authentication = () => {
                                 height={30}
                             />
                         </Avatar>
-                    </Link>
+                    </Link>   
+                    <Box>
+                    - OR -
+                   </Box>                                           
                 </Grid>
                 {/*
                 {buttonHidden == '' ? (
@@ -544,6 +547,7 @@ export const Authentication = () => {
                         autoComplete='email'
                         autoFocus
                         onChange={onChangeEmail}
+                        disabled={loading}
                     />
                     <TextField
                         margin='normal'
@@ -554,6 +558,7 @@ export const Authentication = () => {
                         type='password'
                         id='password'
                         autoComplete='current-password'
+                        disabled={loading}
                     />
                     {/*
                     <FormControlLabel
@@ -597,7 +602,7 @@ export const Authentication = () => {
                             sx={{
                                 color: 'red',
                                 position: 'absolute',
-                                top: '59%',
+                                top: '62%',
                                 right: '24%',
                             }}
                         />
