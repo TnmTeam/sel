@@ -96,14 +96,12 @@ export const ProfileSection = () => {
                     direction="row"
                     justifyContent="space-between"
                 >
-                    {/* ToDo : Phase 1.
                     <Typography style={{margin: '50px'}} variant='h4'>Profile</Typography>
                     {
                         !isEdit ?
                         <IconButton
                             onClick={handleChangeIsEdit}
                         >
-                       
                             <Avatar 
                                 style={{
                                     background: '#fff',
@@ -120,7 +118,6 @@ export const ProfileSection = () => {
                             <Button variant="contained" size="medium" color="secondary" >Save</Button>
                         </Stack>
                     }
-                    */}
 
                 </Stack>
 
