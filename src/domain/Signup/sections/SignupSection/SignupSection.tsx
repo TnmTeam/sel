@@ -64,7 +64,7 @@ export const SignupSection = () => {
             //console.log(event.currentTarget);
             const name = event.currentTarget.user_name.value;
             const email = event.currentTarget.email.value;
-            const role = event.currentTarget.user_role.value;
+            const role = 'parent';
             const password = event.currentTarget.password.value;
             const password_confirm = event.currentTarget.password_confirm.value;
 
@@ -329,17 +329,6 @@ export const SignupSection = () => {
                                 ? { backgroundColor: 'rgba(0,0,0,0.5)' }
                                 : {}
                         }
-                    />
-                    <TextField
-                        margin='normal'
-                        required
-                        fullWidth
-                        name='user_role'
-                        label='Role'
-                        id='user_role'
-                        value={'parent'}
-                        aria-readonly
-                        hidden
                     />
 
                     <Button
