@@ -4,6 +4,8 @@ import { CourseMedia } from "./components/CourseMedia/CourseMedia";
 import { CourseProgress } from "./components/CourseProgress/CourseProgress";
 import { useCourseContent } from "./useCourseContent";
 import { CourseType } from "@/domain/Progress/types/course.type";
+import { useRecoilValue } from 'recoil';
+import { focusInfo } from "@/common/atom/Atom";
 
 type CourseContentType = {
   models: CourseType[];
@@ -12,6 +14,13 @@ type CourseContentType = {
 export const CourseContent = ({ models }: CourseContentType) => {
   const { courseState, detailCourseState, onListBack } =
     useCourseContent(models);
+
+  const focusInfoMap:any  = useRecoilValue(focusInfo);
+  const focusComponents   = focusInfoMap?.focusComponents ?? '';
+  
+  if(focusComponents){
+    location.href='#'+focusComponents;
+  }
 
   return (
     <Stack direction={"row"} css={sx.root}>
@@ -23,6 +32,7 @@ export const CourseContent = ({ models }: CourseContentType) => {
       <CourseMedia selectedDetailCourse={detailCourseState.course} />
     </Stack>
   );
+
 };
 
 const sx = {

@@ -7,12 +7,23 @@ import FullBannerImage from '@/assets/overview/img-CourseProgress.png';
 import Link from 'next/link';
 import { CourseProgressApiType } from '@/domain/Overview/types/courseProgress.type';
 import { CustomProgress } from '@/common/components/progress';
-
+import { useSetRecoilState } from 'recoil';
+import { focusInfo } from '@/common/atom/Atom';
 
 type  DataType = {
     data: CourseProgressApiType;
 }
 export const CourseProgress = ({data}: DataType) => {
+    const focusState:any = useSetRecoilState(focusInfo);
+    
+    function goViewAll() {
+        // focusComponents 세팅
+        var focus_param = {
+            focusComponents: 'focusCourseProgress',
+        };
+        //console.log("CourseProgress goViewAll : ");
+        focusState(focus_param);
+    };
 
     return (
         <Stack css={sx.courseProgressContainer}>
@@ -53,7 +64,11 @@ export const CourseProgress = ({data}: DataType) => {
                         ))
                 }
 
-                <Link href='/progress' css={{ textDecoration: 'none'}}>
+                <Link 
+                    href='/progress' 
+                    onClick={goViewAll}
+                    css={{ textDecoration: 'none'}}
+                >
                         <Button
                             css={sx.viewAllText}
                         >

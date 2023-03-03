@@ -5,13 +5,15 @@ import {
   DetailCourseType,
 } from "@/domain/Progress/types/course.type";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { courseMapState, studentMapState } from "@/common/atom/Atom";
+import { focusInfo } from "@/common/atom/Atom";
 
 export const useCourseContent = (models: CourseType[]) => {
   
   const currenCourseMap:any = useRecoilValue(courseMapState);
   const currenStudentMap:any = useRecoilValue(studentMapState);
+  const focusState:any = useSetRecoilState(focusInfo);
 
   const [courseId , setCourseId]= useState("");
   const [studentId , setStudentId]= useState("");
@@ -45,6 +47,7 @@ export const useCourseContent = (models: CourseType[]) => {
       mutate();
       //console.log("useEffect data");
       //console.log(data);
+      focusState({});
   }, [courseIndex, mutate]);
 
   // funcstions
