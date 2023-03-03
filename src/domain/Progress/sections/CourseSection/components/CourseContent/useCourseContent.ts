@@ -22,6 +22,7 @@ export const useCourseContent = (models: CourseType[]) => {
     setCourseId(currenCourseMap.course_id);
     setStudentId(currenStudentMap.lw_id);
     setStudentIdNumber(currenStudentMap.id);
+    setCourse(null);
   },[currenCourseMap, currenStudentMap])
 
   // 강의
@@ -58,7 +59,7 @@ export const useCourseContent = (models: CourseType[]) => {
     setCourse(selectedCourse);
   };
   const handleSetCourseReset = () => {
-    //console.log("useCourseContent handleSetCourseReset");
+    console.log("useCourseContent handleSetCourseReset");
     setCourse(null);
   };
 
