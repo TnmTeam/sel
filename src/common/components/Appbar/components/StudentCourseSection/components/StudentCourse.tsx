@@ -14,6 +14,7 @@ import {
     studentArrayState,
     studentMapState,
     loginInfo,
+    studentCourseArray
 } from '@/common/atom/Atom';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { Colors} from '@/common/themes/Color';
@@ -60,60 +61,11 @@ const Student =  () => {
 
     // const currenStudentList = useRecoilValue(studentArrayState);
     const currenCourseMap: any = useRecoilValue(courseMapState);
-    // const currenStudentMap: any = useRecoilValue(studentMapState);
+    const currenStudentMap: any = useRecoilValue(studentMapState);
+    const fuckerList: any = useRecoilValue(studentCourseArray);
 
     const [courseList, setCourseList] = useState<any[]>([]);
-
-    const testData = [
-        {
-            id: 94,
-            lw_id: "6337a6e9f62401d9f405913c",
-            name: "Isabella Arnold",
-            email: "isabellajarnold@gmail.com",
-            parent_email: "josharnold@gmail.com",
-            parent_name: null,
-            parent_phone: null,
-            parent_email2: "clairebruinbear@gmail.com",
-            parent_name2: null,
-            parent_phone2: null,
-            grade: "5",
-            school: "Hopkinson Elementary School",
-            role: "user",
-            created_at: "2022-10-01 02:33:13.763088",
-            last_login: "2023-02-27 00:32:40.591623",
-            folder_id: null,
-            courses_list: [
-                {
-                    id: 421,
-                    created_at: "2022-10-25 00:35:31",
-                    student_id: "6337a6e9f62401d9f405913c",
-                    course_id: "7dlcnlym",
-                    workbook_id: "1eLwKXZ3mqdk53gltoJrk7xHLfMb_VksU_KIq5on0uGA",
-                    video_link: null,
-                    title: "THE 7-DAY LEADERSHIP CHALLENGE - NLYM"
-                },
-              {
-                id: 613,
-                created_at: "2022-11-29 00:20:17",
-                student_id: "6337a6e9f62401d9f405913c",
-                course_id: "you1001",
-                workbook_id: "1b035cq2ngQYiGIMW0-xAirVo3w5YKxAmNRl3ZrBGzfk",
-                video_link: null,
-                title: "University of YOU: Know Thyself - 1001"
-              },
-              {
-                id: 368,
-                created_at: "2022-10-01 02:33:15",
-                student_id: "6337a6e9f62401d9f405913c",
-                course_id: "7dlc1001",
-                workbook_id: "13V3pbZu8sbc35uDJkym5tlKNkT15TV1Sk0lBQQzGNZU",
-                video_link: null,
-                title: "THE 7-DAY LEADERSHIP CHALLENGE - 1001"
-              }
-            ]
-          }
-    ];
-    let studentList2 = testData;
+    let studentList2 = fuckerList;
     let courseList2 = [];
 
     useEffect(() => {
@@ -125,53 +77,16 @@ const Student =  () => {
         courseMapHandlerState(studentList2[0].courses_list[0]);
     }, [])
 
-/*
-    const handleChange = async (event: { target: { value: string } }) => {
-        if (studentList != null) {
-            if (event.target.value != '') {
-                const list = studentList.filter(
-                    (item) => item.studentId === event.target.value
-                );
-
-                var param = {
-                    student_id: list[0].studentId,
-                };
-
-                const response = await axiosClient.post(
-                    `/navigation/course-list`,
-                    param
-                );
-
-                let courseList = [];
-                let courseHandlerList = [];
-                let studentHandlerList = [];
-
-                if (response.data.length > 0) {
-                    for (let i = 0; i < response.data.length; i++) {
-                        let course = {
-                            courseId: response.data[i].course_id.toString(),
-                            courseTitle:
-                                response.data[i].lw_courses.title.toString(),
-                        };
-                        let courseMap = response.data[i].lw_courses;
-                        let studentMap = response.data[i].students;
-                        courseList.push(course);
-                        courseHandlerList.push(courseMap);
-                        studentHandlerList.push(studentMap);
-                    }
-
-                    courseArrayHandlerState(courseHandlerList);
-                    studentArrayHandlerState(studentHandlerList);
-
-                    setCourseList(response.data.length > 0 ? courseList : []);
-                    //console.log(response);
-                }
-            } else {
-                setCourseList([]);
-            }
+    const handleChange = (event: { target: { value: string } }) => {
+        // recoil에 studentMap
+        if(event.target.value != '') {
+            const list = studentList2.filter((item: any) => item.lw_id === event.target.value);
+            console.log(list);
+            courseArrayHandlerState(list[0].courses_list);
+            setCourseList(list[0].courses_list);
+            studentMapHandlerState(list[0]);
         }
-    };
-*/
+    }
 
     const handleChange2 = (event: { target: { value: string } }) => {
         let courseId = event.target.value;
@@ -197,10 +112,10 @@ const Student =  () => {
                             name: 'Student',
                             id: 'selectStudent',
                         }}
-                        //onChange={handleChange}
+                        onChange={handleChange}
                         input={<BootstrapInput />}
                     >
-                        {studentList2.map((it, index) => (
+                        {studentList2.map((it:any, index:any) => (
                             <StudentOption key={index} id={it.id} lw_id={it.lw_id} name={it.name} email={it.email} parent_email={it.parent_email}
                             parent_name={it.parent_name} parent_phone={it.parent_phone} parent_email2={it.parent_email2} parent_name2={it.parent_name2}
                             parent_phone2={it.parent_phone2} grade={it.grade} school={it.school} role={it.role} created_at={it.created_at}  last_login={it.last_login}

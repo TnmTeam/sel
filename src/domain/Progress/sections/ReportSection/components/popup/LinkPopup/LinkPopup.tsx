@@ -27,7 +27,7 @@ export const LinkPopup = ({popupUrl, closeHandle}: LinkPopupType) => {
 const sx = {
   popContainer: css`
         width: 1030px;
-        height: 900px;
+        height: 1000px;
         padding: 20px;
     `
 };
@@ -40,7 +40,7 @@ const popupIframe = (popupUrl: string) => {
     
     // const html = '<iframe src="' + url + subUrl + '" width="961px" height="620px"></iframe>';
     // API URL 
-    const html = '<iframe src="' + popupUrl + '" width="961px" height="780px"></iframe>';
+    const html = '<iframe src="' + popupUrl + '" width="961px" height="940px"></iframe>';
 
     return {
       __html: html

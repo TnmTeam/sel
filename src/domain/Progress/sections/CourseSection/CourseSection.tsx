@@ -17,10 +17,9 @@ export const CourseSection = ({ data }: DataType) => {
       </Stack>
     );
   }
-  //console.log("CourseSection");
-  //console.log(data.result);
+  
   return (
-    <Stack css={sx.root}>
+    <Stack id="focusCourseProgress" css={sx.root}>
       <CourseDescription description={data.result.courseDesc!!} />
       <CourseContent models={data.result.units} />
     </Stack>
