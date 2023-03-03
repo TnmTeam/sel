@@ -225,7 +225,7 @@ export const Authentication = () => {
                     component='h1'
                     variant='h3'
                     textAlign='center'
-                    //sx={{ mb: 3 }}
+                    sx={{ mb: 2, fontSize: 25 }}
                 >
                     Welcome Parents!
                 </Typography>
@@ -235,12 +235,12 @@ export const Authentication = () => {
                     flexDirection={'row'}
                     alignItems={'center'}
                     display={'flex'}
-                    //sx={{ mb: 3 }}
+                    sx={{ mb: 2 }}
                 >
                     <Link href='#' onClick={handleGoogleLogin}>
                         <Avatar
                             sx={{
-                                m: 1,
+                                mb: 1,
                                 // bgcolor: 'secondary.main',
                                 bgcolor: 'transparent',
                                 width: '50px',
@@ -251,8 +251,8 @@ export const Authentication = () => {
                             {/* <GoogleIcon /> */}
                             <Image src={GoogleLogo}
                             alt="googleIcon"
-                            width={35}
-                            height={35}
+                            width={30}
+                            height={30}
                             />
 
                         </Avatar>
@@ -273,10 +273,9 @@ export const Authentication = () => {
                             fullWidth
                             variant='contained'
                             sx={{
-                                mt: 3,
-                                mb: 2,
+                                mb: 1,
                                 fontSize: '12pt',
-                                width: '400px',
+                                width: '350px',
                                 background: FlexBlueButtons.ButtonColor,
                                 color: FlexBlueButtons.TextColor,
                                 ':hover': {
@@ -305,10 +304,9 @@ export const Authentication = () => {
                             fullWidth
                             variant='contained'
                             sx={{
-                                mt: 3,
-                                mb: 2,
-                                fontSize: '12pt',
-                                width: '400px',
+                                mb: 3,
+                                fontSize: '16px',
+                                width: '350px',
                                 background: FlexBlueButtons.ButtonColor,
                                 color: FlexBlueButtons.TextColor,
                                 ':hover': {
@@ -337,10 +335,9 @@ export const Authentication = () => {
                             fullWidth
                             variant='contained'
                             sx={{
-                                mt: 3,
-                                mb: 2,
-                                fontSize: '12pt',
-                                width: '400px',
+                                mb: 1,
+                                fontSize: '16px',
+                                width: '350px',
                                 background: FlexBlueButtons.ButtonColor,
                                 color: FlexBlueButtons.TextColor,
                                 ':hover': {
@@ -359,14 +356,14 @@ export const Authentication = () => {
                     component='form'
                     noValidate
                     onSubmit={handleLoginSubmit}
-                    width={'400px'}
+                    width={'350px'}
                 >
                     <TextField
                         margin='normal'
                         required
                         fullWidth
                         id='email'
-                        label='Email'
+                        label={<span css={sx.inputbox}>Email</span>}
                         name='email'
                         autoComplete='email'
                         autoFocus
@@ -376,7 +373,7 @@ export const Authentication = () => {
                         required
                         fullWidth
                         name='password'
-                        label='Password'
+                        label={<span css={sx.inputbox}>Password</span>}
                         type='password'
                         id='password'
                         autoComplete='current-password'
@@ -384,9 +381,9 @@ export const Authentication = () => {
 
                     <FormControlLabel
                         control={<Checkbox value='remember' color='primary' />}
-                        label='Remember me'
+                        label={<Typography css={sx.rememberLabel}>Remember me</Typography>}
                     />
-                    <Link href='#' style={{ marginLeft: '100px' }}>
+                    <Link href='#' css={sx.forgotButton} style={{ marginLeft: '85px' }}>
                         Forgot password?
                     </Link>
 
@@ -395,19 +392,20 @@ export const Authentication = () => {
                         fullWidth
                         variant='contained'
                         sx={{
-                            mt: 3,
+                            mt: 1,
                             mb: 2,
-                            fontSize: '12pt',
-                            width: '400px',
+                            fontSize: '16px',
+                            width: '350px',
                             background: FlexBlueButtons.ButtonColor,
                             color: FlexBlueButtons.TextColor,
                             ':hover': {
                                 background: FlexBlueButtons.onHoverButtonColor,
                                 color: FlexBlueButtons.OnHoverTextColor,
                             },
+                            textTransform: 'none',
                         }}
                     >
-                        LOGIN
+                        Login
                     </Button>
                 </Box>
             </Box>
@@ -418,8 +416,8 @@ export const Authentication = () => {
                     alignItems: 'center',
                 }}
             >
-                <Link href='/signup'>
-                    {"Don't have an account yet? Signup for a course."}
+                <Link href='/signup' css={sx.forgotButton}>
+                    <span css={sx.SignupBf}>Don&apos;t have an account yet?</span>&nbsp;&nbsp;<span css={sx.SignupAf}>Signup for a course.</span>
                 </Link>
             </Box>
         </Grid>
@@ -552,7 +550,47 @@ export const Authentication = () => {
 };
 
 const sx = {
-    sample: css``,
+    rememberLabel: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 24px;
+        /* identical to box height, or 171% */
+        color: #4F5B70;
+    `,
+    forgotButton: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 24px;
+        color: #6787B7;
+        text-decoration-line: none;
+        text-transform: none;
+    `,
+    inputbox: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #4F5B70;
+    `,
+    SignupBf: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;        
+        color: #4F5B70;
+    `,
+    SignupAf: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-size: 14px;
+        line-height: 22px;        
+    `,
 };
 
 const Copyright = () => {
