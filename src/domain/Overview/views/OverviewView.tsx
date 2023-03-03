@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/material';
 import Image from 'next/image';
-import OverViewBackgroundImage from '@/assets/overview/img-background.png';
+import CircleImagePng from '@/assets/overview/img-circle.png';
 import {
     CourseProgressSection,
     ImpacterScoreSection,
@@ -23,6 +23,9 @@ export const OverviewView = () => {
     const studentMapHandlerState = useSetRecoilState(studentMapState);
     const courseMapHandlerState = useSetRecoilState(courseMapState);
     
+    
+    console.log( "/overview" );
+    console.log( currenStudentMap );
    
    
     
@@ -58,6 +61,7 @@ export const OverviewView = () => {
                 // TO DO: Phase 1. demo hide
                 <FeaturedStudentWorkSection />
                 */}
+                <CircleImage />
             </Stack>
             {/*
                 // TO DO: Phase 1. demo hide
@@ -86,14 +90,75 @@ const sx = {
         height: 470px;
         background: #4a7199;
     `,
+
+
+
+    FeaturedContainer: css`
+        position: absolute;
+        width: 289px;
+        height: 427px;
+        right: 59px;
+        background: #FFFFFF;
+        border-radius: 28px;
+    `,
+    CircleOut: css`
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        left: 200.22px;
+        top: 265.5px;
+        color: #FFF;
+    `,
+    CircleIn: css`
+        position: absolute;
+        width: 65px;
+        height: 65px;
+        left: 207.72px;
+        top: 273px;
+        color: #6787B7;
+    `,
+    SendIcon: css`
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        left: 230px;
+        top: 292px;
+        transform: matrix(0.74, -0.67, 0.65, 0.76, 0, 0);
+        color: #FFF;
+`,
+    FavoriteIcon: css`
+        width: 250px;
+        height: 250px;
+        position: absolute;
+        left: 6.5%;        
+        top: 22%;        
+        color: #EA4848;
+    `,
+    comingSoon: css`
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 40px;
+        color: white;
+        position: absolute;
+        width: 289px;
+        line-height: 427px;
+        border-radius: 26px;
+        z-index: 999;
+        text-align: center;
+    `,
+
+
+
 };
 
-const OverViewImage = () => (
-    <Stack css={sx.backgroundImage}>
+
+
+const CircleImage = () => (
+    <Stack css={sx.FeaturedContainer}>
         <Image
+            css={sx.FavoriteIcon}
             objectFit='cover'
-            src={OverViewBackgroundImage}
-            alt={'overview'}
+            src={CircleImagePng}
+            alt={'CircleImage'}
         />
     </Stack>
 );

@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
-
+import CircularProgress from '@mui/material/CircularProgress';
 import React, { useCallback, useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import {
@@ -18,6 +18,13 @@ import {
     signInWithEmailAndPassword,
     sendPasswordResetEmail,
 } from '../../firebaseConfig';
+import {
+    courseArrayState,
+    courseMapState,
+    studentArrayState,
+    studentMapState,
+    loginInfo
+} from '@/common/atom/Atom';
 
 import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -27,13 +34,17 @@ import AppleIcon from '@mui/icons-material/Apple';
 
 import { axiosClient } from '@/data/client/client';
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
-import { loginInfo } from '@/common/atom/Atom';
 import Image from 'next/image';
 import GoogleLogo from '@/assets/login/google_logo_icon.png';
 import router from 'next/router';
 
 export const Authentication = () => {
+
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
+
+    const studentMapHandlerState = useSetRecoilState(studentMapState);
+
+    const [loading, setLoading] = useState(false);
 
     const [findEmail, setFindEmail] = useState('');
 
@@ -44,38 +55,43 @@ export const Authentication = () => {
         localStorage.clear();
     }, []);
 
-    const onChangeEmail = (e:any) => {        
-        if(isEmail(e.target.value))
-            setFindEmail( e.target.value);
-      };
-
-    const isEmail = (email:string) => {
-        const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-      
-        return emailRegex.test(email);
-      };
+    // email
+    const onChangeEmail = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setFindEmail(e.target.value);
+        },
+        []
+    );
 
     // reset password
-    const triggerResetEmail = async () => {        
-        if ( isEmail(findEmail) && findEmail != '') {
+    const triggerResetEmail = async () => {
+        setLoading(true);
+        if (findEmail != '') {
             await sendPasswordResetEmail(auth, findEmail);
             alert('[ ' + findEmail + ' ] ' + 'Password reset email sent');
             console.log('Password reset email sent');
+            setLoading(false);
         } else {
             alert('Please enter your email.');
+            setLoading(false);
         }
     };
 
     // General Login ////////////////////////////////////////////////////////////////////////////////////
     const handleLoginSubmit = useCallback(
         (event: React.FormEvent<HTMLFormElement>) => {
+            setLoading(true);
             event.preventDefault();
             //console.log(event.currentTarget);
             const email = event.currentTarget.email.value;
             const password = event.currentTarget.password.value;
 
-            if (email != '') setFindEmail(email);
-            else return;
+            if (email != '') {
+                setFindEmail(email);
+            } else {
+                setLoading(false);
+                return;
+            }
 
             //console.log(email, password);
             // firebase 로그인 진행
@@ -108,6 +124,7 @@ export const Authentication = () => {
                             );
                             break;
                     }
+                    setLoading(false);
                     console.log(err);
                 });
         },
@@ -116,6 +133,7 @@ export const Authentication = () => {
 
     const [userData, setUserData] = useState(null);
     function handleGoogleLogin() {
+        setLoading(true);
         const provider = new GoogleAuthProvider(); // provider를 구글로 설정
         signInWithPopup(auth, provider) // popup을 이용한 signup
             .then(async (data) => {
@@ -142,6 +160,7 @@ export const Authentication = () => {
             })
             .catch((err) => {
                 console.log(err);
+                setLoading(false);
             });
     }
 
@@ -152,10 +171,12 @@ export const Authentication = () => {
             // Expired toekn
             //console.log(response.data.message);
             alert(response.data.message);
+            setLoading(false);
         } else if (response.data.status_code == 400) {
             // Account Does Not Exist!!
             //console.log(response.data.message);
             alert(response.data.message);
+            setLoading(false);
         } else {
             // 정상 로그인
             var email_param = {
@@ -164,7 +185,34 @@ export const Authentication = () => {
 
             loginInfoHandlerState(email_param);
 
-            router.push({ pathname: '/select' });
+            // 학생 코스 정보 가져오기
+            var param = {
+                parent_email: response.data.email,
+            };
+            const student_course_list = await axiosClient.post(
+                `/navigation/student-course-list`,
+                param
+            );
+
+            if( student_course_list.data.length == 0 )
+            {
+                alert('No students.');                
+                location.href="/";
+                setLoading(false);
+            }
+            else
+            {                
+                console.log(student_course_list.data);
+                studentMapHandlerState(student_course_list.data);
+                router.push({ pathname: '/overview' });
+            }
+
+
+            
+
+
+            //router.push({ pathname: '/select' });
+            setLoading(false);
 
             // overview 화면 이동
             //            location.href='/overview';
@@ -177,6 +225,7 @@ export const Authentication = () => {
             // Expired toekn
             console.log(response.data.message);
             alert(response.data.message);
+            setLoading(false);
         } else if (response.data.status_code == 400) {
             // 로그인 시도 성공
             // Account Already Exists!!
@@ -210,9 +259,36 @@ export const Authentication = () => {
             setButtonHidden(() => response.data.email);
             loginInfoHandlerState(email_param);
 
-            router.push({ pathname: '/select' });
+            //router.push({ pathname: '/select' });
+            setLoading(false);
+
+            // student-course-list 정보 가져오기
+
+            var param = {
+                parent_email: response.data.email,
+            };
+            const student_course_list = await axiosClient.post(
+                `/navigation/student-course-list`,
+                param
+            );
+
+            if( student_course_list.data.length == 0 )
+            {
+                alert('No students.');
+                location.href="/";
+                setLoading(false);
+            }
+            else
+            {
+                //console.log(student_course_list.data );
+                studentMapHandlerState(student_course_list.data);
+                router.push({ pathname: '/overview' });
+                setLoading(false);
+            }
+            return;
         }
     };
+
 
     const authSignup = async () => {
         const name = localStorage.getItem('displayName');
@@ -237,6 +313,35 @@ export const Authentication = () => {
             //location.href = '/overview';  // 페이지 이동
             //location.href = '/select'; // 학생/코스 선택 화면 이동
             setButtonHidden(() => response.data.email);
+
+            // 학생 코스 정보 가져오기
+            var param = {
+                parent_email: response.data.email,
+            };
+            const student_course_list = await axiosClient.post(
+                `/navigation/student-course-list`,
+                param
+            );
+            
+            if( student_course_list.data.length == 0 )
+            {
+                alert('No students.');
+                location.href="/";
+                setLoading(false);
+            }
+            else
+            {                
+                //console.log(student_course_list.data );                
+                studentMapHandlerState(student_course_list.data);
+                router.push({ pathname: '/overview' });
+                setLoading(false);
+            }
+
+            
+
+            
+        } else {
+            setLoading(false);
         }
 
         //location.href = '/signup';
@@ -435,8 +540,8 @@ export const Authentication = () => {
                         label={<span css={sx.inputbox}>Email</span>}
                         name='email'
                         autoComplete='email'
-                        onChange={onChangeEmail}
                         autoFocus
+                        onChange={onChangeEmail}
                     />
                     <TextField
                         margin='normal'
@@ -467,6 +572,7 @@ export const Authentication = () => {
                         type='submit'
                         fullWidth
                         variant='contained'
+                        disabled={loading}
                         sx={{
                             mt: 1,
                             mb: 2,
@@ -483,6 +589,17 @@ export const Authentication = () => {
                     >
                         Login
                     </Button>
+                    {loading && (
+                        <CircularProgress
+                            size={40}
+                            sx={{
+                                color: 'red',
+                                position: 'absolute',
+                                top: '59%',
+                                right: '24%',
+                            }}
+                        />
+                    )}
                 </Box>
             </Box>
             <Box
@@ -497,65 +614,9 @@ export const Authentication = () => {
                         Don&apos;t have an account yet?
                     </span>
                     &nbsp;&nbsp;
-                    <span css={sx.SignupAf}>Create an account.</span>
+                    <span css={sx.SignupAf}>Signup for a course.</span>
                 </Link>
             </Box>
-            {/*
-            <Box sx={{position:'fixed', bottom : 0, right: 0}}>
-                <Link
-                    id='loginBtn'
-                    type='submit'
-                    onClick={MoveSelectView_demo}
-                    href='/select'
-                    style={{ textDecoration: 'none' }}
-                >
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        sx={{                          
-                            fontSize: '16px',
-                            mb : 1,                            
-                            background: FlexBlueButtons.ButtonColor,
-                            color: FlexBlueButtons.TextColor,
-                            ':hover': {
-                                background: FlexBlueButtons.onHoverButtonColor,
-                                color: FlexBlueButtons.OnHoverTextColor,
-                            },
-                        }}
-                    >
-                        josharnold@gmail.com
-                    </Button>
-                </Link>
-
-                <Link
-                    id='loginBtn'
-                    type='submit'
-                    onClick={MoveSelectView_admin}
-                    href='/select'
-                    style={{ textDecoration: 'none' }}
-                >
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        sx={{
-                         
-                            fontSize: '16px',
-                           
-                            background: FlexBlueButtons.ButtonColor,
-                            color: FlexBlueButtons.TextColor,
-                            ':hover': {
-                                background: FlexBlueButtons.onHoverButtonColor,
-                                color: FlexBlueButtons.OnHoverTextColor,
-                            },
-                        }}
-                    >
-                        admin
-                    </Button>
-                </Link>
-            </Box>
-            */}
         </Grid>
     );
 

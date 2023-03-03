@@ -11,8 +11,10 @@ type ButtonContainerType = {
 export const ButtonContainer = ({ saveBtnClick }: ButtonContainerType) => {
   const { shareBtnState } = useButtonContainerHook();
 
-  return (
-    <Stack direction="row" justifyContent={"center"} spacing="26px">
+  return <></>;
+  /*
+  return (    
+    <Stack direction="row" justifyContent={"center"} spacing="26px">      
       <Button onClick={saveBtnClick} css={sx.saveBtn}>
         {"Save"}
       </Button>
@@ -32,8 +34,9 @@ export const ButtonContainer = ({ saveBtnClick }: ButtonContainerType) => {
           onClose={shareBtnState.onClose}
         />
       </div>
-    </Stack>
+    </Stack>    
   );
+  */
 };
 
 const sx = {

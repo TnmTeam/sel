@@ -21,7 +21,7 @@ export const ScheduleDetailPopup = ({picDate, changeDate, closeHandle}: Schedule
                 />
             </Stack>
 
-            {/*<Stack css={sx.popupCenterLine}></Stack>*/}        {/* Center Line */}
+            <Stack css={sx.popupCenterLine}></Stack>        {/* Center Line */}
 
             <ClosePopupBtn closeHandle={closeHandle} />     {/* Close Btn */}
 
@@ -51,7 +51,7 @@ const sx = {
         flex-direction: column;
         align-items: center;
         padding: 0px;
-        width: 449px;
+        width: 859px;
         height: 469px;
         background: #FFFFFF;
         box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.1), 0px 8px 8px -4px rgba(16, 24, 40, 0.04);
