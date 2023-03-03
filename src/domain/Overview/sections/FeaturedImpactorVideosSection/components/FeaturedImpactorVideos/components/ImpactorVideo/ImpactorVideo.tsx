@@ -112,6 +112,6 @@ const sx = {
     `,
     button: css`
         font-size:16px;
-        line-height: 21px;
+        line-height: 51px;
     `,
 };

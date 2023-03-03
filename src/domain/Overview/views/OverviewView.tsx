@@ -28,11 +28,11 @@ export const OverviewView = () => {
     
     useEffect(() =>{   
     if(Object.keys(currenStudentMap).length == 0){
-        console.log("gd");
+        //console.log("gd");
         
-        console.log(window.sessionStorage);
+        //console.log(window.sessionStorage);
         var jsonObj = JSON.parse(window.sessionStorage.persistAtom);
-        console.log(jsonObj);
+        //console.log(jsonObj);
         studentMapHandlerState(jsonObj.studentMap);
         courseMapHandlerState(jsonObj.courseMap);
         
