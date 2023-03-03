@@ -18,6 +18,13 @@ import {
     signInWithEmailAndPassword,
     sendPasswordResetEmail,
 } from '../../firebaseConfig';
+import {
+    courseArrayState,
+    courseMapState,
+    studentArrayState,
+    studentMapState,
+    loginInfo
+} from '@/common/atom/Atom';
 
 import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -27,13 +34,15 @@ import AppleIcon from '@mui/icons-material/Apple';
 
 import { axiosClient } from '@/data/client/client';
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
-import { loginInfo } from '@/common/atom/Atom';
 import Image from 'next/image';
 import GoogleLogo from '@/assets/login/google_logo_icon.png';
 import router from 'next/router';
 
 export const Authentication = () => {
+
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
+
+    const studentMapHandlerState = useSetRecoilState(studentMapState);
 
     const [loading, setLoading] = useState(false);
 
@@ -48,7 +57,7 @@ export const Authentication = () => {
 
     // email
     const onChangeEmail = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {            
+        (e: React.ChangeEvent<HTMLInputElement>) => {
             setFindEmail(e.target.value);
         },
         []
@@ -176,7 +185,33 @@ export const Authentication = () => {
 
             loginInfoHandlerState(email_param);
 
-            router.push({ pathname: '/select' });
+            // 학생 코스 정보 가져오기
+            var param = {
+                parent_email: response.data.email,
+            };
+            const student_course_list = await axiosClient.post(
+                `/navigation/student-course-list`,
+                param
+            );
+
+            if( student_course_list.data.length == 0 )
+            {
+                alert('No students.');                
+                location.href="/";
+                setLoading(false);
+            }
+            else
+            {                
+                console.log(student_course_list.data);
+                studentMapHandlerState(student_course_list.data);
+                router.push({ pathname: '/overview' });
+            }
+
+
+            
+
+
+            //router.push({ pathname: '/select' });
             setLoading(false);
 
             // overview 화면 이동
@@ -224,10 +259,36 @@ export const Authentication = () => {
             setButtonHidden(() => response.data.email);
             loginInfoHandlerState(email_param);
 
-            router.push({ pathname: '/select' });
+            //router.push({ pathname: '/select' });
             setLoading(false);
+
+            // student-course-list 정보 가져오기
+
+            var param = {
+                parent_email: response.data.email,
+            };
+            const student_course_list = await axiosClient.post(
+                `/navigation/student-course-list`,
+                param
+            );
+
+            if( student_course_list.data.length == 0 )
+            {
+                alert('No students.');
+                location.href="/";
+                setLoading(false);
+            }
+            else
+            {
+                //console.log(student_course_list.data );
+                studentMapHandlerState(student_course_list.data);
+                router.push({ pathname: '/overview' });
+                setLoading(false);
+            }
+            return;
         }
     };
+
 
     const authSignup = async () => {
         const name = localStorage.getItem('displayName');
@@ -252,7 +313,33 @@ export const Authentication = () => {
             //location.href = '/overview';  // 페이지 이동
             //location.href = '/select'; // 학생/코스 선택 화면 이동
             setButtonHidden(() => response.data.email);
-            setLoading(false);
+
+            // 학생 코스 정보 가져오기
+            var param = {
+                parent_email: response.data.email,
+            };
+            const student_course_list = await axiosClient.post(
+                `/navigation/student-course-list`,
+                param
+            );
+            
+            if( student_course_list.data.length == 0 )
+            {
+                alert('No students.');
+                location.href="/";
+                setLoading(false);
+            }
+            else
+            {                
+                //console.log(student_course_list.data );                
+                studentMapHandlerState(student_course_list.data);
+                router.push({ pathname: '/overview' });
+                setLoading(false);
+            }
+
+            
+
+            
         } else {
             setLoading(false);
         }
