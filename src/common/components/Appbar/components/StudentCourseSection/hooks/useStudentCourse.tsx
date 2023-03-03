@@ -12,7 +12,7 @@ export const useStudentSection = () => {
     setEmail(loginInfoMap.email);
   },[loginInfoMap])
   
-  console.log(email);
+  //console.log(email);
   var { data, isLoading } = useGetStudentList(email);
   
   if (!data) {
