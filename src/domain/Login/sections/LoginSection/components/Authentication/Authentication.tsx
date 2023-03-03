@@ -210,7 +210,7 @@ export const Authentication = () => {
     };
 
     return (
-        <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} square height={'100%'}>
+        <Grid item xs={12} sm={6} component={Paper} elevation={6} square height={'100%'}>
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}
@@ -218,14 +218,14 @@ export const Authentication = () => {
                 sx={{
                     mx: 25,
                     mt: 20,
-                    mb: 15,
+                    //mb: 15,
                 }}
             >
                 <Typography
                     component='h1'
                     variant='h3'
                     textAlign='center'
-                    sx={{ mb: 3 }}
+                    //sx={{ mb: 3 }}
                 >
                     Welcome Parents!
                 </Typography>
@@ -235,7 +235,7 @@ export const Authentication = () => {
                     flexDirection={'row'}
                     alignItems={'center'}
                     display={'flex'}
-                    sx={{ mb: 3 }}
+                    //sx={{ mb: 3 }}
                 >
                     <Link href='#' onClick={handleGoogleLogin}>
                         <Avatar
