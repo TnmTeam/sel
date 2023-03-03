@@ -37,7 +37,7 @@ interface DataType {
 export const StudentCourse = ({ data }: DataType) => {
     IntercomShutdown();
     var loginInfoMap: any = useRecoilValue(loginInfo);
-    console.log('`````', loginInfoMap);
+    //console.log('`````', loginInfoMap);
     if (loginInfoMap.email == undefined) {
         location.href = '/';
         return <></>;
@@ -72,7 +72,7 @@ const Student =  () => {
         studentArrayHandlerState(studentList2);
     })
     useEffect(() => {
-        console.log( studentList2 );
+        //console.log( studentList2 );
         setCourseList(studentList2[0].courses_list);
         courseArrayHandlerState(studentList2[0].courses_list);
         courseMapHandlerState(studentList2[0].courses_list[0]);
@@ -83,7 +83,7 @@ const Student =  () => {
         // recoil에 studentMap
         if(event.target.value != '') {
             const list = studentList2.filter((item: any) => item.lw_id === event.target.value);
-            console.log(list);
+            //console.log(list);
             courseArrayHandlerState(list[0].courses_list);
             setCourseList(list[0].courses_list);
             studentMapHandlerState(list[0]);
