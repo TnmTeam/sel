@@ -49,8 +49,8 @@ export const StudentWorkbook = ({data}: DataType) => {
           :
           (
             <ReactGoogleSlides
-              width={675} 
-              height={990}
+              width={590} 
+              height={800}
               slidesLink={data.result.workbookId}
               position={1}
               slideDuration={10}
