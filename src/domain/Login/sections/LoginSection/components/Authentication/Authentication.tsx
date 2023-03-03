@@ -13,11 +13,8 @@ import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
 
 import React, { useCallback, useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import {
-    auth,
-    signInWithEmailAndPassword,
-    sendPasswordResetEmail,
-} from '../../firebaseConfig';
+import { auth, signInWithEmailAndPassword, sendPasswordResetEmail } from '../../firebaseConfig';
+
 
 import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -28,9 +25,11 @@ import AppleIcon from '@mui/icons-material/Apple';
 import { axiosClient } from '@/data/client/client';
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import { loginInfo } from '@/common/atom/Atom';
-import Image from 'next/image';
+import Image from "next/image";
 import GoogleLogo from '@/assets/login/google_logo_icon.png';
 import router from 'next/router';
+
+
 
 export const Authentication = () => {
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
@@ -44,24 +43,17 @@ export const Authentication = () => {
         localStorage.clear();
     }, []);
 
-    const onChangeEmail = (e:any) => {        
-        if(isEmail(e.target.value))
-            setFindEmail( e.target.value);
-      };
-
-    const isEmail = (email:string) => {
-        const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-      
-        return emailRegex.test(email);
-      };
-
     // reset password
-    const triggerResetEmail = async () => {        
-        if ( isEmail(findEmail) && findEmail != '') {
+    const triggerResetEmail = async () => {
+
+        if( findEmail != '')
+        {
             await sendPasswordResetEmail(auth, findEmail);
-            alert('[ ' + findEmail + ' ] ' + 'Password reset email sent');
+            alert( '[ ' + findEmail + ' ] ' + 'Password reset email sent')
             console.log('Password reset email sent');
-        } else {
+        }
+        else
+        {
             alert('Please enter your email.');
         }
     };
@@ -69,13 +61,18 @@ export const Authentication = () => {
     // General Login ////////////////////////////////////////////////////////////////////////////////////
     const handleLoginSubmit = useCallback(
         (event: React.FormEvent<HTMLFormElement>) => {
+
             event.preventDefault();
             //console.log(event.currentTarget);
             const email = event.currentTarget.email.value;
             const password = event.currentTarget.password.value;
+            
+            if( email != '')
+                setFindEmail(email);
+            else
+                return;
+            
 
-            if (email != '') setFindEmail(email);
-            else return;
 
             //console.log(email, password);
             // firebase 로그인 진행
@@ -103,9 +100,7 @@ export const Authentication = () => {
                             alert('This email does not exist.');
                             break;
                         default:
-                            alert(
-                                'Login failed. Please check your ID and password.'
-                            );
+                            alert('Login failed. Please check your ID and password.');
                             break;
                     }
                     console.log(err);
@@ -210,7 +205,7 @@ export const Authentication = () => {
             setButtonHidden(() => response.data.email);
             loginInfoHandlerState(email_param);
 
-            router.push({ pathname: '/select' });
+            router.push({pathname: "/select"});
         }
     };
 
@@ -270,15 +265,7 @@ export const Authentication = () => {
     };
 
     return (
-        <Grid
-            item
-            xs={12}
-            sm={6}
-            component={Paper}
-            elevation={6}
-            square
-            height={'100%'}
-        >
+        <Grid item xs={12} sm={6} component={Paper} elevation={6} square height={'100%'}>
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}
@@ -317,12 +304,12 @@ export const Authentication = () => {
                             }}
                         >
                             {/* <GoogleIcon /> */}
-                            <Image
-                                src={GoogleLogo}
-                                alt='googleIcon'
-                                width={30}
-                                height={30}
+                            <Image src={GoogleLogo}
+                            alt="googleIcon"
+                            width={30}
+                            height={30}
                             />
+
                         </Avatar>
                     </Link>
                 </Grid>
@@ -435,7 +422,6 @@ export const Authentication = () => {
                         label={<span css={sx.inputbox}>Email</span>}
                         name='email'
                         autoComplete='email'
-                        onChange={onChangeEmail}
                         autoFocus
                     />
                     <TextField
@@ -454,12 +440,7 @@ export const Authentication = () => {
                         label={<Typography css={sx.rememberLabel}>Remember me</Typography>}
                     />
                     */}
-                    <Link
-                        href='#'
-                        css={sx.forgotButton}
-                        onClick={triggerResetEmail}
-                        style={{ marginLeft: '225px' }}
-                    >
+                    <Link href='#' css={sx.forgotButton} onClick={triggerResetEmail} style={{ marginLeft: '225px' }}>
                         Forgot password?
                     </Link>
 
@@ -493,69 +474,9 @@ export const Authentication = () => {
                 }}
             >
                 <Link href='/signup' css={sx.forgotButton}>
-                    <span css={sx.SignupBf}>
-                        Don&apos;t have an account yet?
-                    </span>
-                    &nbsp;&nbsp;
-                    <span css={sx.SignupAf}>Create an account.</span>
+                    <span css={sx.SignupBf}>Don&apos;t have an account yet?</span>&nbsp;&nbsp;<span css={sx.SignupAf}>Signup for a course.</span>
                 </Link>
             </Box>
-            {/*
-            <Box sx={{position:'fixed', bottom : 0, right: 0}}>
-                <Link
-                    id='loginBtn'
-                    type='submit'
-                    onClick={MoveSelectView_demo}
-                    href='/select'
-                    style={{ textDecoration: 'none' }}
-                >
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        sx={{                          
-                            fontSize: '16px',
-                            mb : 1,                            
-                            background: FlexBlueButtons.ButtonColor,
-                            color: FlexBlueButtons.TextColor,
-                            ':hover': {
-                                background: FlexBlueButtons.onHoverButtonColor,
-                                color: FlexBlueButtons.OnHoverTextColor,
-                            },
-                        }}
-                    >
-                        josharnold@gmail.com
-                    </Button>
-                </Link>
-
-                <Link
-                    id='loginBtn'
-                    type='submit'
-                    onClick={MoveSelectView_admin}
-                    href='/select'
-                    style={{ textDecoration: 'none' }}
-                >
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        sx={{
-                         
-                            fontSize: '16px',
-                           
-                            background: FlexBlueButtons.ButtonColor,
-                            color: FlexBlueButtons.TextColor,
-                            ':hover': {
-                                background: FlexBlueButtons.onHoverButtonColor,
-                                color: FlexBlueButtons.OnHoverTextColor,
-                            },
-                        }}
-                    >
-                        admin
-                    </Button>
-                </Link>
-            </Box>
-            */}
         </Grid>
     );
 
@@ -693,7 +614,7 @@ const sx = {
         font-size: 14px;
         line-height: 24px;
         /* identical to box height, or 171% */
-        color: #4f5b70;
+        color: #4F5B70;
     `,
     forgotButton: css`
         font-family: 'DM Sans';
@@ -701,7 +622,7 @@ const sx = {
         font-weight: 500;
         font-size: 14px;
         line-height: 24px;
-        color: #6787b7;
+        color: #6787B7;
         text-decoration-line: none;
         text-transform: none;
     `,
@@ -711,21 +632,21 @@ const sx = {
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
-        color: #4f5b70;
+        color: #4F5B70;
     `,
     SignupBf: css`
         font-family: 'DM Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
-        line-height: 22px;
-        color: #4f5b70;
+        line-height: 22px;        
+        color: #4F5B70;
     `,
     SignupAf: css`
         font-family: 'DM Sans';
         font-style: normal;
         font-size: 14px;
-        line-height: 22px;
+        line-height: 22px;        
     `,
 };
 
