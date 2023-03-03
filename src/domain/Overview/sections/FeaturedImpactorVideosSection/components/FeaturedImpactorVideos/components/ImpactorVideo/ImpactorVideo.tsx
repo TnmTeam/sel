@@ -74,6 +74,7 @@ export const ImpactorVideo = () => {
                     fontSize: '16pt',
                     backgroundColor: WhiteButtons.ButtonColor,
                     color: WhiteButtons.TextColor,
+                    textDecoration: 'none',
                     width: '264px',
                     ':hover': {
                         backgroundColor: WhiteButtons.onHoverButtonColor,
@@ -87,7 +88,7 @@ export const ImpactorVideo = () => {
                 variant='outlined'
                 onClick={() =>
                     window.open(
-                        'https://www.youtube.com/@impacterpathway/playlists',
+                        'https://www.youtube.com/playlist?list=PL_Fk-rxNO8-v4H7y_liullznJ7xFZgViv',
                         '_blank'
                     )
                 }
@@ -112,6 +113,7 @@ const sx = {
     `,
     button: css`
         font-size:16px;
-        line-height: 21px;
+        line-height: 51px;
+        text-transform: none;
     `,
 };
