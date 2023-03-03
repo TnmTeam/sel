@@ -17,6 +17,8 @@ import { courseMapState, studentMapState } from '@/common/atom/Atom';
 import { useEffect, useState } from 'react';
 
 export const OverviewView = () => {
+
+    /*
     const currenCourseMap:any = useRecoilValue(courseMapState);
     const currenStudentMap:any = useRecoilValue(studentMapState);
 
@@ -47,19 +49,26 @@ export const OverviewView = () => {
 
     const { impacterSocreState, courseScheduleState, courseProgressState } =
         useOverView();
+*/
+    return (
+        <Stack css={sx.overviewContainer}>
+            
+        </Stack>
+    );
 
     return (
         <Stack css={sx.overviewContainer}>
+            {/*
             <ImpacterScoreSection data={impacterSocreState} />
             <Stack direction={'row'} css={sx.CourseContainer}>
                 <CourseProgressSection data={courseProgressState} />
                 <CourseScheduleSection data={courseScheduleState} />
-                {/*
+                
                 // TO DO: Phase 1. demo hide
-                <FeaturedStudentWorkSection />
-                */}
+                //<FeaturedStudentWorkSection />
+                
             </Stack>
-            {/*
+            
                 // TO DO: Phase 1. demo hide
             <SelfScoresSection />
             */}

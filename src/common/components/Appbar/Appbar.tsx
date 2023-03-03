@@ -12,26 +12,32 @@ import { Logout } from '@/domain/Navigation/sections/LogoutSection/components';
 import { useRecoilValue } from 'recoil';
 import { studentMapState } from '@/common/atom/Atom';
 import { useEffect, useState } from 'react';
+import { ST } from 'next/dist/shared/lib/utils';
+import { StudentCourseSection } from './components/StudentCourseSection/StudentCourseSection';
+import { useStudentList } from './components/StudentCourseSection/useStudentCourse';
 
 export const Appbar = () => {
-    const currenStudentMap: any = useRecoilValue(studentMapState);
+    const {studentListState} = useStudentList();
 
-    //(currenStudentMap);
-    const [studentName , setStudentName]= useState("");
-    useEffect(()=> {
-        setStudentName(currenStudentMap.name)  ;
-    },[currenStudentMap])
+    
+    // const currenStudentMap: any = useRecoilValue(studentMapState);
+
+    // //(currenStudentMap);
+    // const [studentName , setStudentName]= useState("");
+    // useEffect(()=> {
+    //     setStudentName(currenStudentMap.name)  ;
+    // },[currenStudentMap])
     const router = useRouter();
     const currentRoute = router.pathname;
     const menu = [
         { menuType: 'logo', url: '', title: '', buttonType: '' },
         { menuType: 'blank', url: '', title: '', buttonType: '' },
-        {
-            menuType: 'button',
-            url: '/select',
-            title: '- ' + studentName + ' -',
-            buttonType: 'text',
-        },
+        // {
+        //     menuType: 'button',
+        //     url: '/select',
+        //     title: '- ' + studentName + ' -',
+        //     buttonType: 'text',
+        // },
         {
             menuType: 'button',
             url: '/overview',
@@ -129,6 +135,7 @@ export const Appbar = () => {
                         }
                     })}
                 </Toolbar>
+                <StudentCourseSection data={studentListState}/>
             </AppBar>
         </Box>
     );

@@ -159,7 +159,7 @@ export const Authentication = () => {
 
             loginInfoHandlerState(email_param);
 
-            router.push({ pathname: '/select' });
+            router.push({ pathname: '/overview' });
 
             // overview 화면 이동
             //            location.href='/overview';
@@ -205,7 +205,7 @@ export const Authentication = () => {
             setButtonHidden(() => response.data.email);
             loginInfoHandlerState(email_param);
 
-            router.push({pathname: "/select"});
+            router.push({pathname: "/overview"});
         }
     };
 
