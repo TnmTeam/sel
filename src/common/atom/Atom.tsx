@@ -48,5 +48,11 @@ const focusInfo:any = atom({
     effects_UNSTABLE: [persistAtom]
 });
 
-export { courseArrayState, courseMapState, studentArrayState, studentMapState, loginInfo, focusInfo };
+const studentCourseArray:any = atom({
+    key: 'studentCourse',
+    default: [],
+    effects_UNSTABLE: [persistAtom]
+})
+
+export { courseArrayState, courseMapState, studentArrayState, studentMapState, loginInfo, focusInfo, studentCourseArray };
 

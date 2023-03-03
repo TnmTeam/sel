@@ -15,9 +15,10 @@ export const Previews = () => {
     return (
         <Grid
             item
-            xs={false}
-            sm={6}
-            md={6}
+            xs={false}            
+            sm={false}            
+            md={false}
+            xl={6}            
             sx={{
                 background: Colors.BackBlue,
                 // backgroundImage: 'url(https://source.unsplash.com/random)',

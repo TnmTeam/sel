@@ -11,11 +11,13 @@ import { axiosClient } from '@/data/client/client';
 import React, { useCallback, useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { waitForAll } from 'recoil';
+import Paper from '@mui/material/Paper';
 import {
     auth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
 } from '@/domain/Login/sections/LoginSection/firebaseConfig';
+import router from 'next/router';
 
 export const SignupSection = () => {
     useEffect(() => {
@@ -57,7 +59,7 @@ export const SignupSection = () => {
 
     const handleSubmit = useCallback(
         (event: React.FormEvent<HTMLFormElement>) => {
-            setLoading(true);   // loading bar start
+            setLoading(true); // loading bar start
             event.preventDefault();
             //console.log(event.currentTarget);
             const name = event.currentTarget.user_name.value;
@@ -66,21 +68,21 @@ export const SignupSection = () => {
             const password = event.currentTarget.password.value;
             const password_confirm = event.currentTarget.password_confirm.value;
 
-            if (name == '') {
+            if (name == '') {                
                 alert('Please check your name.');
-                setLoading(false);  // loading bar stop
+                setLoading(false); // loading bar stop
                 return;
             }
 
             if (email == '') {
                 alert('Please check your email.');
-                setLoading(false);  // loading bar stop
+                setLoading(false); // loading bar stop
                 return;
             }
 
             if (password != password_confirm) {
                 alert('Please check your password again.');
-                setLoading(false);  // loading bar stop
+                setLoading(false); // loading bar stop
                 return;
             }
 
@@ -95,31 +97,29 @@ export const SignupSection = () => {
 
                     // 가입성공 -> DB signup 진행
                     authSignup(accessToken, name, email, role);
-
                 })
                 .catch((e) => {
-                    
                     switch (e.code) {
                         case 'auth/weak-password':
                             alert('Password should be at least 6 characters.');
-                            setLoading(false);  // loading bar stop
+                            setLoading(false); // loading bar stop
                             break;
                         case 'auth/invalid-email':
                             alert('Invalid email address.');
-                            setLoading(false);  // loading bar stop
+                            setLoading(false); // loading bar stop
                             break;
                         case 'auth/email-already-in-use':
                             //alert('This email is already subscribed.');
                             // 이미 존재할경우 SEL DB에 회원가입 진행
                             firebaseLogin(name, email, password, role);
                             break;
-                        default:
+                        default: // loading bar stop
                             alert(
                                 'Login failed. Please check your ID and password.'
                             );
-                            setLoading(false);  // loading bar stop
+                            setLoading(false);
                             break;
-                    }                    
+                    }
                 });
         },
         []
@@ -162,7 +162,7 @@ export const SignupSection = () => {
                         );
                         break;
                 }
-                setLoading(false);  // loading bar stop
+                setLoading(false); // loading bar stop
                 console.log(err);
             });
     };
@@ -213,11 +213,11 @@ export const SignupSection = () => {
             // Expired toekn
             //console.log(response.data.message);
             alert(response.data.message);
-            setLoading(false);  // loading bar stop
+            setLoading(false); // loading bar stop
         } else if (response.data.status_code == 400) {
             // 이미 가입되어 있는 계정입니다.
             alert(response.data.message);
-            setLoading(false);  // loading bar stop
+            setLoading(false); // loading bar stop
         } else {
             // 정상 로그인
 
@@ -226,57 +226,79 @@ export const SignupSection = () => {
             const authEmail = await response.data.email;
             if (email == authEmail) {
                 alert('[' + email + ']' + ' Signed up Complete.');
-                
-                location.href = '/';
+
+                //location.href = '/';
+                localStorage.clear();
+                router.push({pathname: "/"});
             }
-            setLoading(false);  // loading bar stop
+            setLoading(false); // loading bar stop
         }
-        
     };
 
     return (
-        <Grid item xs={12} sm={6} md={6}>
+        <Grid
+            item
+            xs={12}            
+            sm={12}            
+            md={12}
+            xl={6}
+            component={Paper}
+            elevation={6}
+            square
+            height={'100%'}
+        >
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}
                 display={'flex'}
                 sx={{
                     mx: 25,
-                    mt: 20,
-                    mb: 25,
+                    mt: 30,
+                    //mb: 15,
                 }}
             >
                 <Typography
                     component='h1'
                     variant='h3'
                     textAlign='center'
-                    sx={{ mb: 3 }}
+                    sx={{ mb: 2, fontSize: 25 }}
                 >
                     Welcome Parents!
                 </Typography>
 
-                <Typography component='h1' variant='h6' sx={{ mb: 3 }}>
-                    - Sign Up -
-                </Typography>
-                <Box component='form' noValidate onSubmit={handleSubmit}>
+                <Grid
+                    item
+                    flexDirection={'row'}
+                    alignItems={'center'}
+                    display={'flex'}
+                    sx={{ mb: 2 }}
+                >
+                   - Sign Up -
+                </Grid>                
+                <Box
+                    component='form'
+                    noValidate
+                    onSubmit={handleSubmit}
+                    width={'350px'}
+                >
                     <TextField
                         disabled={loading}
                         margin='normal'
                         required
                         fullWidth
                         id='user_name'
-                        label='Name'
+                        label={<span css={sx.inputbox}>Name</span>}
                         name='user_name'
                         autoComplete='user_name'
                         autoFocus
                     />
                     <TextField
                         disabled={loading}
-                        margin='normal'                        
+                        margin='normal'
                         required
                         fullWidth
                         id='email'
-                        label='Email'
+                        label={<span css={sx.inputbox}>Email</span>}
                         name='email'
                         autoComplete='email'
                     />
@@ -286,7 +308,7 @@ export const SignupSection = () => {
                         required
                         fullWidth
                         name='password'
-                        label='Password'
+                        label={<span css={sx.inputbox}>Password</span>}
                         type='password'
                         id='password'
                         autoComplete='current-password'
@@ -297,7 +319,7 @@ export const SignupSection = () => {
                         required
                         fullWidth
                         name='password_confirm'
-                        label='Password_confirm'
+                        label={<span css={sx.inputbox}>Password_confirm</span>}
                         type='password'
                         id='password_confirm'
                         autoComplete='current-password'
@@ -308,83 +330,85 @@ export const SignupSection = () => {
                                 : {}
                         }
                     />
-                    <Box>
-                        <TextField
-                            margin='normal'
-                            required
-                            fullWidth
-                            name='user_role'
-                            label='Role'
-                            id='user_role'
-                            value={'parent'}
-                            aria-readonly
-                            hidden
+                    <TextField
+                        margin='normal'
+                        required
+                        fullWidth
+                        name='user_role'
+                        label='Role'
+                        id='user_role'
+                        value={'parent'}
+                        aria-readonly
+                        hidden
+                    />
+
+                    <Button
+                        variant='contained'
+                        disabled={loading}
+                        sx={{
+                            mt: 3,
+                            fontSize: '16px',
+                            width: '50%',
+                            background: WhiteButtons.ButtonColor,
+                            color: WhiteButtons.TextColor,
+                            ':hover': {
+                                background: WhiteButtons.onHoverButtonColor,
+                                color: WhiteButtons.OnHoverTextColor,
+                            },
+                            textTransform: 'none',
+                        }}
+                        href='/'
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        type='submit'
+                        variant='contained'
+                        disabled={loading}
+                        sx={{
+                            mt: 3,
+                            fontSize: '16px',
+                            width: '50%',
+                            background: FlexBlueButtons.ButtonColor,
+                            color: FlexBlueButtons.TextColor,
+                            ':hover': {
+                                background: FlexBlueButtons.onHoverButtonColor,
+                                color: FlexBlueButtons.OnHoverTextColor,
+                            },
+                            textTransform: 'none',
+                        }}
+                    >
+                        Sign Up
+                    </Button>
+                    {loading && (
+                        <CircularProgress
+                            size={40}
+                            sx={{
+                                color: 'red',
+                                position: 'absolute',
+                                top: '72%',
+                                right: '19.5%',
+                                marginTop: '-12px',
+                                marginLeft: '-12px',
+                            }}
                         />
-                    </Box>
-                    <Box flexDirection={'row'} textAlign={'center'}>
-                        <Button
-                            variant='contained'
-                            disabled={loading}
-                            sx={{
-                                margin: 'auto',
-                                mr: 3,
-                                mt : 5,
-                                fontSize: '18pt',
-                                width: '200px',
-                                background: WhiteButtons.ButtonColor,
-                                color: WhiteButtons.TextColor,
-                                ':hover': {
-                                    background: WhiteButtons.onHoverButtonColor,
-                                    color: WhiteButtons.OnHoverTextColor,
-                                },
-                            }}
-                            href='/'
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            type='submit'
-                            variant='contained'
-                            disabled={loading}
-                            sx={{
-                                margin: 'auto',
-                                ml: 3,
-                                mt : 5,
-                                fontSize: '18pt',
-                                width: '200px',
-                                background: FlexBlueButtons.ButtonColor,
-                                color: FlexBlueButtons.TextColor,
-                                ':hover': {
-                                    background:
-                                        FlexBlueButtons.onHoverButtonColor,
-                                    color: FlexBlueButtons.OnHoverTextColor,
-                                },
-                            }}
-                        >
-                            Sign Up
-                        </Button>
-                        {loading && (
-                            <CircularProgress
-                                size={24}
-                                sx={{
-                                    color: 'red',
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    marginTop: '-12px',
-                                    marginLeft: '-12px',
-                                }}
-                            />
-                        )}
-                    </Box>
+                    )}
                 </Box>
-            </Box>
+            </Box>            
         </Grid>
     );
 };
 
 const sx = {
     sample: css``,
+    inputbox: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #4f5b70;
+    `,
 };
 
 const Copyright = () => {
