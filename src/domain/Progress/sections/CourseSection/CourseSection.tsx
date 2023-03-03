@@ -17,6 +17,7 @@ export const CourseSection = ({ data }: DataType) => {
       </Stack>
     );
   }
+  
   return (
     <Stack id="focusCourseProgress" css={sx.root}>
       <CourseDescription description={data.result.courseDesc!!} />

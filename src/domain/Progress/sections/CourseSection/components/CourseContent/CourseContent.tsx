@@ -18,6 +18,7 @@ export const CourseContent = ({ models }: CourseContentType) => {
   const focusInfoMap:any  = useRecoilValue(focusInfo);
   const focusComponents   = focusInfoMap?.focusComponents ?? '';
   
+  // Component포커스이동
   if(focusComponents){
     location.href='#'+focusComponents;
   }

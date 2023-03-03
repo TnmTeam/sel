@@ -47,6 +47,7 @@ export const useCourseContent = (models: CourseType[]) => {
       mutate();
       //console.log("useEffect data");
       //console.log(data);
+      // 포커스 초기화
       focusState({});
   }, [courseIndex, mutate]);
 

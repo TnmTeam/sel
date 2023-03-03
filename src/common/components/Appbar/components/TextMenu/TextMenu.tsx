@@ -9,7 +9,6 @@ export const TextMenu = ({ url, currentRoute, title, buttonType }: TextMenuType)
     const focusState:any = useSetRecoilState(focusInfo);
     // 포커스 콤포넌트 초기화후 이동
     function goMenu() {
-        //console.log("TextMenu goMenu : ");
         focusState({});
     };
 

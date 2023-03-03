@@ -21,7 +21,7 @@ export const CourseProgress = ({data}: DataType) => {
         var focus_param = {
             focusComponents: 'focusCourseProgress',
         };
-        //console.log("CourseProgress goViewAll : ");
+        
         focusState(focus_param);
     };
 
