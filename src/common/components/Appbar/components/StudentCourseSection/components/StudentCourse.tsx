@@ -5,7 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { css, styled } from '@mui/material/styles';
 import NativeSelect from '@mui/material/NativeSelect';
-import { StudentListType, StudentType } from './types/studentCourse.type';
+import { StudentListType, StudentType, StudentType2 } from './types/studentCourse.type';
 import InputBase from '@mui/material/InputBase';
 import { axiosClient } from '@/data/client/client';
 import {
@@ -43,20 +43,23 @@ export const StudentCourse = ({ data }: DataType) => {
     } else {
         return (
             <Stack>
-                <Student studentList={data.studentList} />
+                {/* <Student studentList={data.studentList} /> */}
+                <Student />
             </Stack>
         );
     }
 };
 
-const Student =  ({ studentList }: StudentListType) => {
-
+//const Student =  ({ studentList }: StudentListType) => {
+    const Student =  () => {
 
     const studentArrayHandlerState = useSetRecoilState(studentArrayState);
     const courseArrayHandlerState = useSetRecoilState(courseArrayState);
 
     const studentMapHandlerState = useSetRecoilState(studentMapState);
     const courseMapHandlerState = useSetRecoilState(courseMapState);
+
+
     const currenCourseList = useRecoilValue(courseArrayState);
     const currenStudentList = useRecoilValue(studentArrayState);
     const currenCourseMap: any = useRecoilValue(courseMapState);
@@ -113,20 +116,20 @@ const Student =  ({ studentList }: StudentListType) => {
             ]
           }
     ];
-    const studentList2 = testData;
-    const courseList2 = [];
+    let studentList2 = testData;
+    let courseList2 = [];
+    //studentArrayHandlerState(studentList2);
+    //studentMapHandlerState(studentList2[0]);
 
-    for( var i = 0 ; i < studentList2.length ; i++){
-        //studentList2[i]
-    }
+    setCourseList(studentList2[0].courses_list);
 
     
-    const Test = async () => {
-        setCourseList(await SelectSetting(studentList)) ;
-    }
-    //useEffect(() => {Test();});
-    Test();
-
+    // const Test = async () => {
+    //     setCourseList(await SelectSetting(studentList)) ;
+    // }
+    // //useEffect(() => {Test();});
+    // Test();
+/*
     const handleChange = async (event: { target: { value: string } }) => {
         if (studentList != null) {
             if (event.target.value != '') {
@@ -186,7 +189,7 @@ const Student =  ({ studentList }: StudentListType) => {
         }
     };
 
-
+*/
     return (
         <Stack sx={{display:"inline-block"}}>
             <Stack position='static'
@@ -200,14 +203,14 @@ const Student =  ({ studentList }: StudentListType) => {
                         name: 'Student',
                         id: 'selectStudent',
                     }}
-                    onChange={handleChange}
+                    //onChange={handleChange}
                     input={<BootstrapInput />}
                 >
-                    {studentList.map((it, index) => (
-                        <StudentOption key={index} id={it.id} studentId={it.studentId} 
-                            studentName={it.studentName} studentEmail={it.studentEmail}
-                            parentEmail={it.parentEmail} grade={it.grade} school={it.school}
-                            role={it.role} createdAt={it.createdAt} lastLogin={it.lastLogin} />
+                    {studentList2.map((it, index) => (
+                        <StudentOption key={index} id={it.id} lw_id={it.lw_id} name={it.name} email={it.email} parent_email={it.parent_email}
+                        parent_name={it.parent_name} parent_phone={it.parent_phone} parent_email2={it.parent_email2} parent_name2={it.parent_name2}
+                        parent_phone2={it.parent_phone2} grade={it.grade} school={it.school} role={it.role} created_at={it.created_at}  last_login={it.last_login}
+                        folder_id={it.folder_id} courses_list={it.courses_list}/>
                     )
                     )}
                     
@@ -222,11 +225,11 @@ const Student =  ({ studentList }: StudentListType) => {
                         name: 'Course',
                         id: 'selectCourse',
                     }}
-                    onChange={handleChange2}
+                   // onChange={handleChange2}
                     input={<BootstrapInput />}
                 >
-                    {courseList.map((it, index) => (
-                        <CourseOption key={index} courseId={it.courseId} courseTitle={it.courseTitle}  />
+                     {courseList.map((it, index) => (
+                        <CourseOption key={index} course_id={it.course_id} title={it.title}  />
                     )
                     )}
                     
@@ -257,16 +260,16 @@ const sx = {
     `,
 };
 
-const StudentOption = ({ studentId, studentName }: StudentType) => {
-    return <option value={studentId}> {studentName}</option>;
+const StudentOption = ({ lw_id, name }: StudentType2) => {
+    return <option value={lw_id}> {name}</option>;
 };
 interface courseProps {
-    courseTitle: string;
-    courseId: string;
+    title: string;
+    course_id: string;
 }
 
-const CourseOption = ({ courseTitle, courseId }: courseProps) => {
-    return <option value={courseId}> {courseTitle}</option>;
+const CourseOption = ({ title, course_id }: courseProps) => {
+    return <option value={course_id}> {title}</option>;
 };
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -300,55 +303,4 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
-async function SelectSetting(studentList: StudentType[]) {
-
-    const studentArrayHandlerState = useSetRecoilState(studentArrayState);
-    const courseArrayHandlerState = useSetRecoilState(courseArrayState);
-
-    const studentMapHandlerState = useSetRecoilState(studentMapState);
-    const courseMapHandlerState = useSetRecoilState(courseMapState);
-    const currenCourseList = useRecoilValue(courseArrayState);
-    const currenStudentList = useRecoilValue(studentArrayState);
-    const currenCourseMap: any = useRecoilValue(courseMapState);
-    const currenStudentMap: any = useRecoilValue(studentMapState);
-    const [courseList, setCourseList] = useState<any[]>([]);
-
-        var param = {
-            student_id: studentList[0].studentId,
-        };
-        useEffect(() => {
-
-        },[])
-        const response = await axiosClient.post(`/navigation/course-list`, param);
-
-        let courseList2 = [];
-        let courseHandlerList = [];
-        let studentHandlerList = [];
-
-        if (response.data.length > 0) {
-            for (let i = 0; i < response.data.length; i++) {
-                let course = {
-                    courseId: response.data[i].course_id.toString(),
-                    courseTitle: response.data[i].lw_courses.title.toString(),
-                };
-                let courseMap = response.data[i].lw_courses;
-                let studentMap = response.data[i].students;
-                courseList2.push(course);
-                courseHandlerList.push(courseMap);
-                studentHandlerList.push(studentMap);
-            }
-
-            courseArrayHandlerState(courseHandlerList);
-            studentArrayHandlerState(studentHandlerList);
-
-            
-            setCourseList(response.data.length > 0 ? courseList2 : []);;
-            //console.log(response);
-        }else {
-            setCourseList([]);
-        }
-    
-
-    return courseList;
-}
 
