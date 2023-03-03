@@ -17,8 +17,8 @@ export const CourseSection = ({ data }: DataType) => {
       </Stack>
     );
   }
-  console.log("CourseSection");
-  console.log(data.result);
+  //console.log("CourseSection");
+  //console.log(data.result);
   return (
     <Stack css={sx.root}>
       <CourseDescription description={data.result.courseDesc!!} />

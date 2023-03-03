@@ -13,7 +13,8 @@ import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
 
 import React, { useCallback, useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
+import { auth, signInWithEmailAndPassword, sendPasswordResetEmail } from '../../firebaseConfig';
+
 
 import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -33,6 +34,8 @@ import router from 'next/router';
 export const Authentication = () => {
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
 
+    const [findEmail, setFindEmail] = useState('');
+
     const [buttonHidden, setButtonHidden] = useState<string>('');
 
     useEffect(() => {
@@ -40,21 +43,68 @@ export const Authentication = () => {
         localStorage.clear();
     }, []);
 
+    // reset password
+    const triggerResetEmail = async () => {
+
+        if( findEmail != '')
+        {
+            await sendPasswordResetEmail(auth, findEmail);
+            alert( '[ ' + findEmail + ' ] ' + 'Password reset email sent')
+            console.log('Password reset email sent');
+        }
+        else
+        {
+            alert('Please enter your email.');
+        }
+    };
+
+    // General Login ////////////////////////////////////////////////////////////////////////////////////
     const handleLoginSubmit = useCallback(
         (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-            console.log(event.currentTarget);
+
+            event.preventDefault();
+            //console.log(event.currentTarget);
             const email = event.currentTarget.email.value;
             const password = event.currentTarget.password.value;
-            console.log(email, password);
+            
+            if( email != '')
+                setFindEmail(email);
+            else
+                return;
+            
 
+
+            //console.log(email, password);
             // firebase 로그인 진행
-            // firebase 일반 로그인 시도
-            const accessToken = '';
-            localStorage.setItem('accessToken', accessToken);
+            signInWithEmailAndPassword(auth, email, password)
+                .then(async (data) => {
+                    // firebase 일반 로그인 시도
+                    //console.log(data);
+                    const accessToken = await data.user.getIdToken();
+                    // console.log(accessToken);
+                    localStorage.setItem('accessToken', accessToken);
+                    if (data.user.email != null)
+                        localStorage.setItem('email', await data.user.email);
+                    //displayName 이름 정보를 어떻게 가져올것인지..
+                    //console.log('localStorage', localStorage);
 
-            // 로그인 성공
-            //generalLogin();
+                    // 로그인 성공
+                    generalLogin();
+                })
+                .catch((err) => {
+                    switch (err.code) {
+                        case 'auth/user-disabled':
+                            alert('This email has been deprecated.');
+                            break;
+                        case 'auth/user-not-found':
+                            alert('This email does not exist.');
+                            break;
+                        default:
+                            alert('Login failed. Please check your ID and password.');
+                            break;
+                    }
+                    console.log(err);
+                });
         },
         []
     );
@@ -95,11 +145,11 @@ export const Authentication = () => {
         const response = await axiosClient('/auth/login');
         if (response.data.status_code == 500) {
             // Expired toekn
-            console.log(response.data.message);
+            //console.log(response.data.message);
             alert(response.data.message);
         } else if (response.data.status_code == 400) {
             // Account Does Not Exist!!
-            console.log(response.data.message);
+            //console.log(response.data.message);
             alert(response.data.message);
         } else {
             // 정상 로그인
@@ -107,7 +157,12 @@ export const Authentication = () => {
                 email: response.data.email,
             };
 
+            loginInfoHandlerState(email_param);
+
+            router.push({ pathname: '/select' });
+
             // overview 화면 이동
+            //            location.href='/overview';
         }
     };
 
@@ -217,7 +272,7 @@ export const Authentication = () => {
                 display={'flex'}
                 sx={{
                     mx: 25,
-                    mt: 20,
+                    mt: 30,
                     //mb: 15,
                 }}
             >
@@ -258,6 +313,7 @@ export const Authentication = () => {
                         </Avatar>
                     </Link>
                 </Grid>
+                {/*
                 {buttonHidden == '' ? (
                     <></>
                 ) : (
@@ -351,7 +407,7 @@ export const Authentication = () => {
                         </Button>
                     </Link>
                 )}
-
+                        */}
                 <Box
                     component='form'
                     noValidate
@@ -378,12 +434,13 @@ export const Authentication = () => {
                         id='password'
                         autoComplete='current-password'
                     />
-
+                    {/*
                     <FormControlLabel
                         control={<Checkbox value='remember' color='primary' />}
                         label={<Typography css={sx.rememberLabel}>Remember me</Typography>}
                     />
-                    <Link href='#' css={sx.forgotButton} style={{ marginLeft: '85px' }}>
+                    */}
+                    <Link href='#' css={sx.forgotButton} onClick={triggerResetEmail} style={{ marginLeft: '225px' }}>
                         Forgot password?
                     </Link>
 

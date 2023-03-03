@@ -32,8 +32,8 @@ export const Previews = () => {
                 style={{
                     position: "relative",
                     background: Colors.BackBlue,
-                    width: "100%",
-                    height: "100%",
+                    width: "85%",
+                    height: "85%",
                     margin: "auto",
                 }}
                 images={images}
