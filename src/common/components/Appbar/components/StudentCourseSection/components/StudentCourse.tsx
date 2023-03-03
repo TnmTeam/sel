@@ -36,22 +36,20 @@ interface DataType {
 export const StudentCourse = ({ data }: DataType) => {
     IntercomShutdown();
     var loginInfoMap: any = useRecoilValue(loginInfo);
-    console.log(loginInfoMap);
+    console.log('`````', loginInfoMap);
     if (loginInfoMap.email == undefined) {
         location.href = '/';
         return <></>;
     } else {
         return (
             <Stack>
-                {/* <Student studentList={data.studentList} /> */}
                 <Student />
             </Stack>
         );
     }
 };
 
-//const Student =  ({ studentList }: StudentListType) => {
-    const Student =  () => {
+const Student =  () => {
 
     const studentArrayHandlerState = useSetRecoilState(studentArrayState);
     const courseArrayHandlerState = useSetRecoilState(courseArrayState);
@@ -60,10 +58,9 @@ export const StudentCourse = ({ data }: DataType) => {
     const courseMapHandlerState = useSetRecoilState(courseMapState);
 
 
-    const currenCourseList = useRecoilValue(courseArrayState);
-    const currenStudentList = useRecoilValue(studentArrayState);
+    // const currenStudentList = useRecoilValue(studentArrayState);
     const currenCourseMap: any = useRecoilValue(courseMapState);
-    const currenStudentMap: any = useRecoilValue(studentMapState);
+    // const currenStudentMap: any = useRecoilValue(studentMapState);
 
     const [courseList, setCourseList] = useState<any[]>([]);
 
@@ -118,17 +115,16 @@ export const StudentCourse = ({ data }: DataType) => {
     ];
     let studentList2 = testData;
     let courseList2 = [];
-    //studentArrayHandlerState(studentList2);
-    //studentMapHandlerState(studentList2[0]);
 
-    setCourseList(studentList2[0].courses_list);
+    useEffect(() => {
+        studentArrayHandlerState(studentList2);
+    })
+    useEffect(() => {
+        setCourseList(studentList2[0].courses_list);
+        courseArrayHandlerState(studentList2[0].courses_list);
+        courseMapHandlerState(studentList2[0].courses_list[0]);
+    }, [])
 
-    
-    // const Test = async () => {
-    //     setCourseList(await SelectSetting(studentList)) ;
-    // }
-    // //useEffect(() => {Test();});
-    // Test();
 /*
     const handleChange = async (event: { target: { value: string } }) => {
         if (studentList != null) {
@@ -175,71 +171,66 @@ export const StudentCourse = ({ data }: DataType) => {
             }
         }
     };
+*/
 
     const handleChange2 = (event: { target: { value: string } }) => {
         let courseId = event.target.value;
-        for (var i = 0; i < currenCourseList.length; i++) {
-            if (currenCourseList[i].course_id == courseId) {
-                courseMapHandlerState(currenCourseList[i]);
-                studentMapHandlerState(currenStudentList[i]);
+        for (var i = 0; i < courseList.length; i++) {
+            if (courseList[i].course_id == courseId) {
+                courseMapHandlerState(courseList[i]);
             } else if (courseId == '') {
                 courseMapHandlerState({});
-                studentMapHandlerState({});
             }
         }
     };
 
-*/
     return (
         <Stack sx={{display:"inline-block"}}>
             <Stack position='static'
-        sx={{ height: 89, background: Colors.BackBlue, zIndex:999, width: '1440px', display:'inline-block' }}>
-            <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5}}>
-                <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                    Student
-                </InputLabel>
-                <NativeSelect
-                    inputProps={{
-                        name: 'Student',
-                        id: 'selectStudent',
-                    }}
-                    //onChange={handleChange}
-                    input={<BootstrapInput />}
-                >
-                    {studentList2.map((it, index) => (
-                        <StudentOption key={index} id={it.id} lw_id={it.lw_id} name={it.name} email={it.email} parent_email={it.parent_email}
-                        parent_name={it.parent_name} parent_phone={it.parent_phone} parent_email2={it.parent_email2} parent_name2={it.parent_name2}
-                        parent_phone2={it.parent_phone2} grade={it.grade} school={it.school} role={it.role} created_at={it.created_at}  last_login={it.last_login}
-                        folder_id={it.folder_id} courses_list={it.courses_list}/>
-                    )
-                    )}
-                    
-                </NativeSelect>
-            </FormControl>
-            <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5}}>
-                <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                    Course
-                </InputLabel>    
-                <NativeSelect
-                    inputProps={{
-                        name: 'Course',
-                        id: 'selectCourse',
-                    }}
-                   // onChange={handleChange2}
-                    input={<BootstrapInput />}
-                >
-                     {courseList.map((it, index) => (
-                        <CourseOption key={index} course_id={it.course_id} title={it.title}  />
-                    )
-                    )}
-                    
-                </NativeSelect>
-            </FormControl>
+            sx={{ height: 89, background: Colors.BackBlue, zIndex:999, width: '1440px', display:'inline-block' }}>
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5}}>
+                    <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                        Student
+                    </InputLabel>
+                    <NativeSelect
+                        inputProps={{
+                            name: 'Student',
+                            id: 'selectStudent',
+                        }}
+                        //onChange={handleChange}
+                        input={<BootstrapInput />}
+                    >
+                        {studentList2.map((it, index) => (
+                            <StudentOption key={index} id={it.id} lw_id={it.lw_id} name={it.name} email={it.email} parent_email={it.parent_email}
+                            parent_name={it.parent_name} parent_phone={it.parent_phone} parent_email2={it.parent_email2} parent_name2={it.parent_name2}
+                            parent_phone2={it.parent_phone2} grade={it.grade} school={it.school} role={it.role} created_at={it.created_at}  last_login={it.last_login}
+                            folder_id={it.folder_id} courses_list={it.courses_list}/>
+                        )
+                        )}
+                        
+                    </NativeSelect>
+                </FormControl>
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5}}>
+                    <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                        Course
+                    </InputLabel>    
+                    <NativeSelect
+                        inputProps={{
+                            name: 'Course',
+                            id: 'selectCourse',
+                        }}
+                        onChange={handleChange2}
+                        input={<BootstrapInput />}
+                    >
+                        {courseList.map((it, index) => (
+                            <CourseOption key={index} course_id={it.course_id} title={it.title}  />
+                        )
+                        )}
+                        
+                    </NativeSelect>
+                </FormControl>
+            </Stack>
         </Stack>
-        </Stack>
-        
-            
-        
     );
 };
 
