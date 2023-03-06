@@ -23,12 +23,12 @@ export const VideoCard = ({ item, index }: VideoCardItemType) => {
     if (title.length > 23) titleSummary = title.substr(0, 23) + ' ...';
     else titleSummary = title;
 
-    if (description.length > 45)
-        descriptionSummary = description.substr(0, 45) + ' ...';
+    if (description.length > 160)
+        descriptionSummary = description.substr(0, 160) + ' ...';
     else descriptionSummary = description;
 
     return (
-        <Card sx={{ maxWidth: 409.69, height: 424, borderRadius: 5 }}>
+        <Card sx={{ maxWidth: 409.69, height: 450, borderRadius: 5 }}>
             <CardActionArea onClick={() => window.open(videoUrl, '_blank')}>
                 <CourseProgressImage />
                 <CardMedia component='img' height='308' image={thumbnails} />
@@ -42,7 +42,7 @@ export const VideoCard = ({ item, index }: VideoCardItemType) => {
                     <Typography color='text.secondary' css={sx.desc}>
                         {descriptionSummary}
                     </Typography>
-
+                    {/* ToDo : Phase 1. Hidden
                     <FavoriteIcon
                         fontSize='large'
                         style={{
@@ -52,6 +52,7 @@ export const VideoCard = ({ item, index }: VideoCardItemType) => {
                             color: 'red',
                         }}
                     />
+                    */}
                 </CardContent>
             </CardActionArea>
         </Card>
@@ -64,9 +65,9 @@ const sx = {
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
-        line-height: 20px;
+        line-height: 15px;
         margin-bottom: 5px;
-        margin-top: 3px;
+        margin-top: 0px;
 
     `,
     title: css`
