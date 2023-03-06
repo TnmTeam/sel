@@ -37,18 +37,24 @@ export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDa
           key: picDate?.key
         }
     );
-        
+    
+    const [tempDate, setTempDate] = useState<any>();
     
     useEffect(() => {
 
-        setState(
-            {
-                // startDate: startDate,
-                startDate: startDate ? startDate : new Date(),
-                endDate: endDate,
-                key: picDate?.key
-            }
-        );
+        if( tempDate != startDate )
+        {
+            setTempDate(startDate);
+
+            setState(
+                {
+                    // startDate: startDate,
+                    startDate: startDate ? startDate : new Date(),
+                    endDate: endDate,
+                    key: picDate?.key
+                }
+            );
+        }
 
     }, [picDate]);
     
