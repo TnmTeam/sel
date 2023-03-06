@@ -62,6 +62,7 @@ export const useCourseContent = (models: CourseType[]) => {
   const handleSetCourseReset = () => {
     //console.log("useCourseContent handleSetCourseReset");
     setCourse(null);
+    setDetailCourse(null);
   };
 
   const handleSetDetailCourse = (selectedDetailCourse: DetailCourseType) => {
