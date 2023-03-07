@@ -51,16 +51,26 @@ export const ProgressReports = ({data}: DataType) => {
           
           <>
             <div css={sx.imageContainer}>
-              {data.result.popupList.map((it, index) => (
-                <div
-                  css={sx.image}
-                  key={index}
-                  onClick={(e)=>{handleClickOpen( it )}}
-                >
-                  {/* <Image src={it} alt="report" width={169} height={308} /> */}
-                  <Image src={report} alt="report" width={169} height={308} />
-                </div>
-              ))}
+              {
+                data.result.popupList.length == 0 ? 
+                <>
+                  <Image src={report} alt="report" width={169} height={308} style={{opacity: 0.4}} />
+                  <div css={sx.noReport}>
+                    no report
+                  </div>
+                </>
+                :
+                data.result.popupList.map((it, index) => (
+                  <div
+                    css={sx.image}
+                    key={index}
+                    onClick={(e)=>{handleClickOpen( it )}}
+                  >
+                    {/* <Image src={it} alt="report" width={169} height={308} /> */}
+                    <Image src={report} alt="report" width={169} height={308} />
+                  </div>
+                ))
+              }
             </div>
             
             <Dialog
@@ -108,4 +118,13 @@ const sx = {
   image: css`
     cursor: pointer;
   `,
+  noReport: css`
+    position: absolute;
+    text-align: center;
+    width: 169px;
+    height: 300px;
+    line-height: 150px;
+    font-weight: bold;
+    font-size: 15px;
+  `
 };
