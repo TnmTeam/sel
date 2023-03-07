@@ -58,15 +58,15 @@ const Student =  () => {
     const studentMapHandlerState = useSetRecoilState(studentMapState);
     const courseMapHandlerState = useSetRecoilState(courseMapState);
 
-
-    // const currenStudentList = useRecoilValue(studentArrayState);
     const currenCourseMap: any = useRecoilValue(courseMapState);
     const currenStudentMap: any = useRecoilValue(studentMapState);
     const studentCourseList: any = useRecoilValue(studentCourseArray);
 
     const [courseList, setCourseList] = useState<any[]>([]);
     let studentList2 = studentCourseList;
-    let courseList2 = [];
+
+    const [selectedStudentValue, setSelectedStudentValue] = useState('');
+    const [selectedCourseValue, setSelectedCourseValue] = useState('');
 
     useEffect(() => {
         studentArrayHandlerState(studentList2);
@@ -76,6 +76,8 @@ const Student =  () => {
         courseArrayHandlerState(studentList2[0].courses_list);
         courseMapHandlerState(studentList2[0].courses_list[0]);
         studentMapHandlerState(studentList2[0]);
+        setSelectedStudentValue(studentList2[0].lw_id);
+        setSelectedCourseValue(studentList2[0].courses_list[0].course_id);
     }, [])
 
     const handleChange = (event: { target: { value: string } }) => {
@@ -90,7 +92,9 @@ const Student =  () => {
             setCourseList(list[0].courses_list);
             studentMapHandlerState(list[0]);
             courseMapHandlerState(list[0].courses_list[0]);
-            console.log(currenCourseMap);
+            setSelectedStudentValue(list[0].lw_id);
+            setSelectedCourseValue(list[0].courses_list[0].course_id);
+            console.log(selectedCourseValue);
         }
     }
 
@@ -99,6 +103,7 @@ const Student =  () => {
         for (var i = 0; i < courseList.length; i++) {
             if (courseList[i].course_id == courseId) {
                 courseMapHandlerState(courseList[i]);
+                setSelectedCourseValue(courseList[i].course_id);
             } else if (courseId == '') {
                 courseMapHandlerState({});
             }
@@ -108,8 +113,8 @@ const Student =  () => {
     return (
         <Stack sx={{display:"inline-block"}}>
             <Stack position='static'
-            sx={{ height: 89, background: Colors.BackBlue, zIndex:999, width: '1440px', display:'inline-block' }}>
-                <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5}}>
+            sx={{ height: 79, background: Colors.BackBlue, zIndex:999, width: '1440px', display:'inline-block', boxShadow: '0 4px 4px -4px black' }}>
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5, ml:2}}>
                     <InputLabel variant="standard" htmlFor="uncontrolled-native">
                         Student
                     </InputLabel>
@@ -121,6 +126,7 @@ const Student =  () => {
                         onChange={handleChange}
                         input={<BootstrapInput />}
                         disabled={studentList2.length == 1 ? true : false}
+                        value={selectedStudentValue}
                     >
                         {studentList2.map((it:any, index:any) => (
                             <StudentOption key={index} id={it.id} lw_id={it.lw_id} name={it.name} email={it.email} parent_email={it.parent_email}
@@ -144,6 +150,7 @@ const Student =  () => {
                         onChange={handleChange2}
                         input={<BootstrapInput />}
                         disabled={courseList.length == 1 ? true : false}
+                        value={selectedCourseValue}
                     >
                         {courseList.map((it, index) => (
                             <CourseOption key={index} course_id={it.course_id} title={it.title}  />
@@ -195,25 +202,19 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
         borderRadius: 4,
         position: 'relative',
         backgroundColor: theme.palette.background.paper,
-        border: '1px solid #ced4da',
-        padding: '10px 26px 10px 12px',
+        border: '1px solid #7ab6f1',
+        fontSize: 18,
+        padding: '5px 26px 5px 10px',
         transition: theme.transitions.create(['border-color', 'box-shadow']),
         // Use the system font instead of the default Roboto font.
         fontFamily: [
-            '-apple-system',
-            'BlinkMacSystemFont',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
+            'DM Sans'
         ].join(','),
         '&:focus': {
             borderRadius: 4,
-            borderColor: '#80bdff',
+            backgroundColor: '#e0edff',
+            borderColor: '#46a3ff',
+            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
         },
     },
 }));
