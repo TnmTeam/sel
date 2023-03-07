@@ -17,6 +17,8 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import dynamic from 'next/dynamic';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const ReactGoogleSlides = dynamic(
   () => import('react-google-slides'),
@@ -28,6 +30,7 @@ const ReactGoogleSlides = dynamic(
 type DataType = {
   data: StudentWorkbookType;
 };
+
 
 export const StudentWorkbook = ({data}: DataType) => {
 
@@ -71,8 +74,7 @@ export const StudentWorkbook = ({data}: DataType) => {
     //console.log("select val " , val);
     setPosition(val);
     handleClose();
-  }
-
+  };
 
   const [workbookId, setWorkbootId] = useState("");
 
@@ -134,7 +136,7 @@ export const StudentWorkbook = ({data}: DataType) => {
     setPopupOpen(false);
   };
   
-
+  
 
   
 
@@ -318,6 +320,18 @@ export const StudentWorkbook = ({data}: DataType) => {
                 open={popupOpen}
                 onClose={handlePopupClose}
               >
+                <IconButton
+                  aria-label="close"
+                  onClick={handlePopupClose}
+                  sx={{
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    color: (theme) => theme.palette.grey[500],
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
                 <ReactGoogleSlides
                   width={window.innerWidth - 100} 
                   height={window.innerHeight}
