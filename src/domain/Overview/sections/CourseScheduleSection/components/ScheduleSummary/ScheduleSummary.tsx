@@ -8,8 +8,8 @@ import { ScheduleSummaryType } from './components/ScheduleDatePicker/types/Sched
 export const ScheduleSummary = ({picDate, changeDate, handleClickOpen}: ScheduleSummaryType) => {
 
     return (
-            <Stack onClick={handleClickOpen}>
-                <Stack css={sx.scheduleTitle}> COURSE SCHEDULE </Stack>
+            <Stack >
+                <Stack css={sx.scheduleTitle} onClick={handleClickOpen} > COURSE SCHEDULE </Stack>
                 <Stack css={sx.pickerTest}>
                     <ScheduleDatePicker
                         picDate={picDate}
@@ -17,6 +17,22 @@ export const ScheduleSummary = ({picDate, changeDate, handleClickOpen}: Schedule
                         disabledYN={true}
                     />
                 </Stack>
+
+                {/* 임시 클릭 금지 */}
+                <Stack 
+                    onClick={handleClickOpen}
+                    style={{
+                        //top:"110px",
+                        bottom: "0px",
+                        width: "100%",
+                        height: "300px",
+                        position: "absolute",
+                        cursor: "pointer",
+                        // border: "3px solid red",
+                    }}
+                >
+                </Stack>
+
             </Stack>
     );
 };
@@ -36,6 +52,7 @@ const sx = {
         line-height: 21px;
         letter-spacing: 0.02em;
         color: #5E6C84;
+        cursor: pointer;
     ` ,
     pickerTest: css`
         padding: 0px;

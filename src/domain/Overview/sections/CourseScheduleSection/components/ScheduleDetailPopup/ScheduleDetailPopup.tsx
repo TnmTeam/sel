@@ -19,6 +19,17 @@ export const ScheduleDetailPopup = ({picDate, changeDate, closeHandle}: Schedule
                     changeDate={changeDate}
                     disabledYN={false}
                 />
+                {/* 임시 클릭 금지 */}
+                <Stack 
+                    style={{
+                        bottom: "0px",
+                        width: "100%",
+                        height: "350px",
+                        position: "absolute",
+                        // border: "3px solid red",
+                    }}
+                >
+                </Stack>
             </Stack>
 
             <Stack css={sx.popupCenterLine}></Stack>        {/* Center Line */}
