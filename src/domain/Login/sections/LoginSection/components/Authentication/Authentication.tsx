@@ -60,8 +60,8 @@ export const Authentication = () => {
     const [cookies, setCookie, removeCookie]    = useCookies(['remRogId'])
 
     const [rememberId, setRemember] = useState(false);
-    console.log('Authentication cookies');
-    console.log(cookies);
+    //console.log('Authentication cookies');
+    //console.log(cookies);
     useEffect(() => {
         localStorage.removeItem('accessToken');
         localStorage.clear();
@@ -224,7 +224,7 @@ export const Authentication = () => {
             }
             else
             {                
-                console.log(student_course_list.data);
+                //console.log(student_course_list.data);
                 studentMapHandlerState(student_course_list.data);
                 router.push({ pathname: '/overview' });
             }
@@ -606,21 +606,21 @@ export const Authentication = () => {
                         autoComplete='current-password'
                         disabled={loading}
                         focused
-                    />
-                    {
-                    <FormControlLabel
-                        control={<Checkbox id='rememberCheck' value='remember' color='primary' checked={checkId} onChange={SetRememberId} />}
-                        label={<Typography css={sx.rememberLabel}>Remember me</Typography>}
-                    />
-                    }
-                    <Link
-                        href='#'
-                        css={sx.forgotButton}
-                        onClick={triggerResetEmail}
-                        style={{ marginLeft: '225px' }}
-                    >
-                        Forgot password?
-                    </Link>
+                    />                    
+                    <Box> 
+                        <FormControlLabel
+                            control={<Checkbox id='rememberCheck' value='remember' color='primary' checked={checkId} onChange={SetRememberId} />}
+                            label={<Typography css={sx.rememberLabel}>Remember me</Typography>}
+                        />                    
+                        <Link
+                            href='#'
+                            css={sx.forgotButton}
+                            onClick={triggerResetEmail}
+                            style={{ marginLeft: '85px' }}
+                        >
+                            Forgot password?
+                        </Link>
+                    </Box>
 
                     <Button
                         type='submit'
@@ -802,8 +802,6 @@ export const Authentication = () => {
 
 const sx = {
     rememberLabel: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-weight: bold;
         font-size: 14px;
         line-height: 24px;
@@ -811,8 +809,6 @@ const sx = {
         color: #4f5b70;
     `,
     forgotButton: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-weight: 500;
         font-size: 14px;
         line-height: 24px;
