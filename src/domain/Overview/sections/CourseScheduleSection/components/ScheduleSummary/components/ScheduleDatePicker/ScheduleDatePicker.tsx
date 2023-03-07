@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
 import { OnChangeDateType, ScheduleDatePickerType } from './types/ScheduleDatePicker.type';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -19,6 +19,7 @@ export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDa
     {
         // API Date value null 
         startDate = new Date();
+        endDate = new Date();
         dateFlag = true;
     }
     else
@@ -29,8 +30,6 @@ export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDa
 
 
 
-
-
     const [state, setState] = useState(
         {
           startDate: startDate,
@@ -38,6 +37,27 @@ export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDa
           key: picDate?.key
         }
     );
+    
+    const [tempDate, setTempDate] = useState<any>();
+    
+    useEffect(() => {
+
+        if( tempDate != startDate )
+        {
+            setTempDate(startDate);
+
+            setState(
+                {
+                    // startDate: startDate,
+                    startDate: startDate ? startDate : new Date(),
+                    endDate: endDate,
+                    key: picDate?.key
+                }
+            );
+        }
+
+    }, [picDate]);
+    
 
     const onChangeRange = (changeVal: OnChangeDateType) => {
         {
@@ -94,16 +114,10 @@ export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDa
                 disabledDay={disabledDay}
             />
 
-                <Stack 
-                    style={{
-                        top:"100px",
-                        width:"330px",
-                        height:"260px",
-                        position: "absolute",
-                        // border: "3px solid red",
-                    }}
-                >
-                </Stack>
+
+            
+
+
             {/* 
             {
                 disabledYN ?
@@ -122,6 +136,7 @@ export const ScheduleDatePicker = ({picDate, changeDate, disabledYN}: ScheduleDa
             } 
             */}
         </Stack>
+        
     );
 
 };

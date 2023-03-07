@@ -71,9 +71,9 @@ export const CourseScheduleSection = ({data}: DataType) => {
         endDate: new Date(data.result.dateRange.endDate),
         key: "selection"
     };
-
+    
     const onChangeRange = (changeVal: OnChangeDateType) => {
-        
+            
     }
 
     
@@ -110,6 +110,8 @@ const sx = {
         left: 679px;
         background: #ffffff;
         border-radius: 28px;
+        /*
         cursor: pointer;
+        */
     `
 };

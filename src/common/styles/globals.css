@@ -35,3 +35,27 @@ body {
   margin-left: -5px;
   font-family: "DM Sans", sans-serif;
 }
+
+.css-1mtumca-MuiFormLabel-root-MuiInputLabel-root{
+  color: rgb(255 255 255);
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+.css-1mtumca-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+  color: rgb(255 255 255);
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.custom-filter:focus-within {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+}
+
+.css-m3l1ig-MuiNativeSelect-select-MuiInputBase-input:not([multiple]) option {
+
+}
