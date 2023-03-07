@@ -39,6 +39,11 @@ import Image from 'next/image';
 import GoogleLogo from '@/assets/login/google_logo_icon.png';
 import router from 'next/router';
 
+import { useCookies } from 'react-cookie'
+
+var checkId             = false;
+var remRogIds:string    = '';
+
 export const Authentication = () => {
 
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
@@ -51,12 +56,26 @@ export const Authentication = () => {
     const [findEmail, setFindEmail] = useState('');
 
     const [buttonHidden, setButtonHidden] = useState<string>('');
+    
+    const [cookies, setCookie, removeCookie]    = useCookies(['remRogId'])
 
+    const [rememberId, setRemember] = useState(false);
+    console.log('Authentication cookies');
+    console.log(cookies);
     useEffect(() => {
         localStorage.removeItem('accessToken');
         localStorage.clear();
+        
+        if(typeof cookies.remRogId !== 'undefined' && cookies.remRogId !== '') {
+            checkId = true;
+            setRemember(checkId);
+        }
     }, []);
-
+    
+    if(typeof cookies.remRogId !== 'undefined' && cookies.remRogId !== '') {
+        remRogIds   = cookies.remRogId;
+    }
+    
     // email
     const onChangeEmail = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +83,7 @@ export const Authentication = () => {
         },
         []
     );
-
+    
     // reset password
     const triggerResetEmail = async () => {
         setLoading(true);
@@ -108,7 +127,6 @@ export const Authentication = () => {
                         localStorage.setItem('email', await data.user.email);
                     //displayName 이름 정보를 어떻게 가져올것인지..
                     //console.log('localStorage', localStorage);
-
                     // 로그인 성공
                     generalLogin();
                 })
@@ -184,7 +202,9 @@ export const Authentication = () => {
             var email_param = {
                 email: response.data.email,
             };
-
+            
+            SaveRememberId(response.data.email)
+            
             loginInfoHandlerState(email_param);
 
             // 학생 코스 정보 가져오기
@@ -376,6 +396,32 @@ export const Authentication = () => {
         loginInfoHandlerState(email_param);
     };
 
+    const SetRememberId = () => {
+        if(!rememberId) {
+            setRemember(true);
+            checkId = true;
+        } else {
+            setRemember(false);
+            checkId = false;
+
+            //setCookie('remRogId', 'null', { path: '/', secure:false,});
+            removeCookie('remRogId');
+        }
+    }
+
+    const SaveRememberId = async (loginId:string) => {
+        //console.log('SaveRememberId loginId : '+loginId);
+        const expires = new Date();
+        
+        // 년도 설정, 현재의 년도를 가져와 +10을 함
+        expires.setFullYear(expires.getFullYear() + 1);
+        //console.log("checkId : "+checkId);
+        if(checkId) {
+            //localStorage.setItem('loginId', loginId);
+            setCookie('remRogId', loginId, { path: '/', secure:false, expires});
+        }
+    }
+
     return (
         <Grid
             item            
@@ -542,12 +588,12 @@ export const Authentication = () => {
                         required
                         fullWidth
                         id='email'
-                        label={<span css={sx.inputbox}>Email</span>}
+                        label={<span css={sx.inputboxLabel}>Email</span>}
                         name='email'
                         autoComplete='email'
-                        autoFocus
                         onChange={onChangeEmail}
-                        disabled={loading}
+                        defaultValue={remRogIds}
+                        focused
                     />
                     <TextField
                         margin='normal'
@@ -559,13 +605,14 @@ export const Authentication = () => {
                         id='password'
                         autoComplete='current-password'
                         disabled={loading}
+                        focused
                     />
-                    {/*
+                    {
                     <FormControlLabel
-                        control={<Checkbox value='remember' color='primary' />}
+                        control={<Checkbox id='rememberCheck' value='remember' color='primary' checked={checkId} onChange={SetRememberId} />}
                         label={<Typography css={sx.rememberLabel}>Remember me</Typography>}
                     />
-                    */}
+                    }
                     <Link
                         href='#'
                         css={sx.forgotButton}
@@ -772,6 +819,15 @@ const sx = {
         color: #6787b7;
         text-decoration-line: none;
         text-transform: none;
+    `,
+    inputboxLabel: css`
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #4f5b70;
+        cursor: default;
     `,
     inputbox: css`
         font-family: 'DM Sans';
