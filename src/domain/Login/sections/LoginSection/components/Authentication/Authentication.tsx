@@ -38,7 +38,13 @@ import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import Image from 'next/image';
 import GoogleLogo from '@/assets/login/google_logo_icon.png';
 import router from 'next/router';
-
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import { useCookies } from 'react-cookie'
 
 var checkId             = false;
@@ -56,12 +62,11 @@ export const Authentication = () => {
     const [findEmail, setFindEmail] = useState('');
 
     const [buttonHidden, setButtonHidden] = useState<string>('');
-    
+
     const [cookies, setCookie, removeCookie]    = useCookies(['remRogId'])
 
     const [rememberId, setRemember] = useState(false);
-    console.log('Authentication cookies');
-    console.log(cookies);
+
     useEffect(() => {
         localStorage.removeItem('accessToken');
         localStorage.clear();
@@ -71,7 +76,7 @@ export const Authentication = () => {
             setRemember(checkId);
         }
     }, []);
-    
+
     if(typeof cookies.remRogId !== 'undefined' && cookies.remRogId !== '') {
         remRogIds   = cookies.remRogId;
     }
@@ -83,7 +88,7 @@ export const Authentication = () => {
         },
         []
     );
-    
+
     // reset password
     const triggerResetEmail = async () => {
         setLoading(true);
@@ -93,10 +98,92 @@ export const Authentication = () => {
             console.log('Password reset email sent');
             setLoading(false);
         } else {
+            setOpen(true);
+            
             alert('Please enter your email.');
             setLoading(false);
+            
         }
     };
+
+    const [open, setOpen] = useState(false);
+    const [forgotPwReason, setforgotPwReason] = useState('');
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const [emailCheckFlag, setEmailCheckFlag] = useState(false);
+    const [emailCheckButtonFlag, setEmailCheckButtonFlag] = useState(true);
+    const [passwordMent, setPasswordMent] = useState('Please enter your email to reset your password.');
+
+    const handleClickOpen = () => {
+        setOpen(true);
+        setforgotPwReason('');
+        setEmailCheckFlag(true);
+        setEmailCheckButtonFlag(true);
+    };
+    const [findEmailCheck, setFindEmailCheck] = useState('');
+
+    const onChangeEmailCheck = useCallback(
+        async (e: React.ChangeEvent<HTMLInputElement>) => {
+            setFindEmailCheck(e.target.value);
+            if (findEmailCheck != '') {
+                if(CheckEmail(findEmailCheck)){
+                    //setforgotPwReason('[ '+ findEmailCheck +' ] Password reset email sent.');
+                    
+                  //  await sendPasswordResetEmail(auth, findEmailCheck);
+                    setEmailCheckFlag(true);
+                    setLoading(false);
+                    setEmailCheckButtonFlag(false);
+                }else{
+                    setforgotPwReason('Invalid email format');
+                    setEmailCheckFlag(false);
+                    setLoading(false);
+                    setEmailCheckButtonFlag(true);
+                }
+            } else {
+                setforgotPwReason('Invalid email format');
+                setEmailCheckFlag(false);
+                setLoading(false);
+                setEmailCheckButtonFlag(true);
+            }
+        },[findEmailCheck]
+    );
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    
+    const handleAgree = async () => {
+        setLoading(true);
+        try{
+            if(emailCheckFlag){
+                await sendPasswordResetEmail(auth, findEmailCheck);
+
+                setPasswordMent('[ ' + findEmailCheck + ' ] ' + 'Password reset email sent');
+                setLoading(false);
+                setEmailCheckButtonFlag(true);
+                
+            }else{
+                setLoading(false);
+            }
+        }catch (e:any){
+            //alert(e.message);
+            setforgotPwReason('Invalid email address');
+            setEmailCheckFlag(false);
+            setLoading(false);
+            setEmailCheckButtonFlag(true);
+        }
+        
+    }
+
+    const CheckEmail = (str: string) => {                                                 
+        var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+     if(!reg_email.test(str)) {
+          return false;         
+     } else {
+          return true; 
+     }                            
+
+} 
 
     // General Login ////////////////////////////////////////////////////////////////////////////////////
     const handleLoginSubmit = useCallback(
@@ -127,6 +214,7 @@ export const Authentication = () => {
                         localStorage.setItem('email', await data.user.email);
                     //displayName 이름 정보를 어떻게 가져올것인지..
                     //console.log('localStorage', localStorage);
+
                     // 로그인 성공
                     generalLogin();
                 })
@@ -202,7 +290,7 @@ export const Authentication = () => {
             var email_param = {
                 email: response.data.email,
             };
-            
+
             SaveRememberId(response.data.email)
             
             loginInfoHandlerState(email_param);
@@ -616,12 +704,66 @@ export const Authentication = () => {
                     <Link
                         href='#'
                         css={sx.forgotButton}
-                        onClick={triggerResetEmail}
-                        style={{ marginLeft: '225px' }}
+                        onClick={handleClickOpen}
+                        style={{ marginLeft: '85px' }}
                     >
                         Forgot password?
                     </Link>
-
+                    <Dialog
+                        fullScreen={fullScreen}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="responsive-dialog-title"
+                        
+                    >
+                        <DialogTitle id="responsive-dialog-title" sx={{width:'500px', fontWeight: 'bold'}}>
+                        {"Forgot password?"}
+                        </DialogTitle>
+                        <DialogContent>
+                        <DialogContentText sx={{whiteSpace: 'pre-wrap', textAlign: 'center', mb: 2}}>
+                            {passwordMent}
+                        </DialogContentText>
+                        {emailCheckFlag ? (
+                                <TextField
+                                required
+                                fullWidth
+                                id='emailCheck'
+                                label={<span css={sx.inputbox}>Email</span>}
+                                name='emailCheck'
+                                autoComplete='emailCheck'
+                                autoFocus
+                                onChange={onChangeEmailCheck}
+                                disabled={loading}
+                                {...emailCheckFlag ? {color:'success'} : {}}
+                                color='success'
+                                sx={{marginTop:'5px'}}
+                                />
+                            )
+                        :   (
+                                <TextField
+                                required
+                                error
+                                fullWidth
+                                id="emailCheck-error"
+                                label={<span css={sx.inputbox}>Email</span>}
+                                helperText={forgotPwReason}
+                                autoFocus
+                                onChange={onChangeEmailCheck}
+                                disabled={loading}
+                                sx={{marginTop:'5px'}}
+                                />
+                            )
+                        }
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={handleClose} autoFocus>
+                            Close
+                        </Button>   
+                        <Button onClick={handleAgree} autoFocus disabled={emailCheckButtonFlag}>
+                            Agree
+                        </Button>
+                        </DialogActions>
+                    </Dialog>
                     <Button
                         type='submit'
                         fullWidth
