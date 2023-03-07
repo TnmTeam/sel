@@ -158,8 +158,8 @@ export const StudentWorkbook = ({data}: DataType) => {
           (
             <Stack 
               style={{
-                width: "590px", 
-                height: "760px",
+                width: "650px", 
+                height: "800px",
                 backgroundColor: "#efefef",
                 fontFamily: "DM Sans",
                 fontWeight: "400",
@@ -175,8 +175,8 @@ export const StudentWorkbook = ({data}: DataType) => {
             <>
 
               <ReactGoogleSlides
-                width={590} 
-                height={760}
+                width={610} 
+                height={790}
                 slidesLink={data.result.workbookId}
                 position={position}
                 // slideDuration={10}
@@ -259,7 +259,7 @@ const sx = {
     margin-bottom: 31px;
   `,
   container: css`
-    width: 675px; 
+    width: 625px; 
     height: 973px;
   `,
   navigatorDiv: css`
