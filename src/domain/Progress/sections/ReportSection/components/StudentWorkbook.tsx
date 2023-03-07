@@ -12,13 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import Fade from '@mui/material/Fade';
-import Dialog from '@mui/material/Dialog';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import dynamic from 'next/dynamic';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 
 const ReactGoogleSlides = dynamic(
   () => import('react-google-slides'),
@@ -31,7 +25,6 @@ type DataType = {
   data: StudentWorkbookType;
 };
 
-
 export const StudentWorkbook = ({data}: DataType) => {
 
   // const tempUrl = 'https://docs.google.com/presentation/d/1F1fOW7D-zVPvEuX0kVNTrobXDQkQQirT13p8iYpKoVU/';
@@ -39,10 +32,9 @@ export const StudentWorkbook = ({data}: DataType) => {
   // const slidesHtmlOrig = '<iframe src="'+ tempUrl + tempEmbed +'" width="590px" height="600px" ></iframe>'
 
   const [position, setPosition] = useState(1);
-  const [endPage, setEndPage] = useState(1);
+  const [endPage, setEndPage] = useState(2);
   const [prevBtnFlag, setPrevBtnFlag] = useState(false);
   const [nextBtnFlag, setNextBtnFlag] = useState(false);
-  const [fullBtnFlag, setFullBtnFlag] = useState(true);
 
   const prevBtnEvent = () => {
     // goToScroll();
@@ -74,7 +66,8 @@ export const StudentWorkbook = ({data}: DataType) => {
     //console.log("select val " , val);
     setPosition(val);
     handleClose();
-  };
+  }
+
 
   const [workbookId, setWorkbootId] = useState("");
 
@@ -82,11 +75,11 @@ export const StudentWorkbook = ({data}: DataType) => {
     if(data.result)
     {
       const tempUrl = data.result.workbookId;
-      const docsUrl = tempUrl.substring(0, tempUrl.indexOf('edit?')) + "embed?";
-      // console.log("changeUrl", docsUrl);
-
-      try 
+      if( tempUrl != undefined)
       {
+        const docsUrl = tempUrl.substring(0, tempUrl.indexOf('edit?')) + "embed?";
+        // console.log("changeUrl", docsUrl);
+
         // const response = await axiosClient.get('https://docs.google.com/presentation/d/1L7tJTJHxAdVCJkQ3lpZkShk1SbNJnjOfuLRkIFUFdAE/embed?loop=false&start=true&delayms=10000&slide=1');
         const response = await axios.get(docsUrl);
         const innerHtml = response.data;
@@ -102,45 +95,21 @@ export const StudentWorkbook = ({data}: DataType) => {
           const totalPage = +tempArr[1].trim();
     
           // console.log("totalPage ", totalPage);
-          setPosition(1);
           setEndPage(totalPage);
-          setFullBtnFlag(true);
+          setPosition(1);
         }
-      } 
-      catch (error) 
+      }
+      else
       {
         setEndPage(1);
         setPosition(1);
-        setFullBtnFlag(false);
-        // setWorkbootId("");
       }
-
-    }
-    else
-    {
-      setEndPage(1);
-      setPosition(1);
     }
   };
-  
-
-
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [popupOpen, setPopupOpen] = useState(false);
-  const handleClickPopupOpen = () => {
-    setPopupOpen(true); 
-      // setPopupUrl(url);
-  };
-  const handlePopupClose = () => {
-    setPopupOpen(false);
-  };
-  
-  
-
   
 
   useEffect(() => {
+    
     if(data.result)
     {
       if(workbookId != data.result.workbookId)
@@ -154,32 +123,22 @@ export const StudentWorkbook = ({data}: DataType) => {
 
 
   useEffect(() => {
-
-    if (endPage == 1)
+    
+    if (position == 1)
     {
       setPrevBtnFlag(true);
+    }
+    else if (position == endPage)
+    {
       setNextBtnFlag(true);
     }
     else
     {
-      if (position == 1)
-      {
-        setPrevBtnFlag(true);
-        setNextBtnFlag(false);
-      }
-      else if (position == endPage)
-      {
-        setPrevBtnFlag(false);
-        setNextBtnFlag(true);
-      }
-      else
-      {
-        setPrevBtnFlag(false);
-        setNextBtnFlag(false);
-      }
+      setPrevBtnFlag(false);
+      setNextBtnFlag(false);
     }
 
-  }, [position, endPage]);
+  }, [position]);
 
 
   return (
@@ -215,34 +174,14 @@ export const StudentWorkbook = ({data}: DataType) => {
           (
             <>
 
-              {
-                fullBtnFlag ? 
-                <ReactGoogleSlides
+              <ReactGoogleSlides
                 width={590} 
                 height={760}
-                // slidesLink={data.result.workbookId}
-                slidesLink={workbookId}
+                slidesLink={data.result.workbookId}
                 position={position}
                 // slideDuration={10}
                 // showControls={true}     // Toggles the slideshow controls at the bottom of the screen 
-                />
-                :
-                <div 
-                  style={{
-                    width: "590px",
-                    height: "760px",
-                    backgroundColor: "#e0e0e0",
-                    textAlign: "center",
-                    lineHeight: "300px",
-                    fontWeight: "bold",
-                    fontSize: "20px",
-                    borderRadius: "10px",
-                  }}
-                >
-                  no workbook
-                </div>
-              }
-              
+              />
 
               <div css={sx.navigatorDiv}>
                 <Button
@@ -295,52 +234,11 @@ export const StudentWorkbook = ({data}: DataType) => {
                   color="inherit"
                   onClick={nextBtnEvent}
                   disabled={nextBtnFlag}
-                  >
-                  next
-                </Button>
-
-                <div></div>
-
-                <Button
-                  variant="contained" 
-                  color="inherit"
-                  onClick={handleClickPopupOpen} 
-                  disabled={!fullBtnFlag}
-                  style={{ marginLeft: "50px" }}
                 >
-                  <FullscreenIcon />
+                  next
                 </Button>
               </div>
 
-
-
-              <Dialog
-                fullScreen={fullScreen}
-                maxWidth={false}
-                open={popupOpen}
-                onClose={handlePopupClose}
-              >
-                <IconButton
-                  aria-label="close"
-                  onClick={handlePopupClose}
-                  sx={{
-                    position: 'absolute',
-                    right: 8,
-                    top: 8,
-                    color: (theme) => theme.palette.grey[500],
-                  }}
-                >
-                  <CloseIcon />
-                </IconButton>
-                <ReactGoogleSlides
-                  width={window.innerWidth - 100} 
-                  height={window.innerHeight}
-                  slidesLink={workbookId}
-                  position={position}
-                  showControls={true}
-                />
-              </Dialog>
-              
             </>
           )
         )
