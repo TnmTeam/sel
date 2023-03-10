@@ -32,12 +32,7 @@ export const Appbar = () => {
     const menu = [
         { menuType: 'logo', url: '', title: '', buttonType: '' },
         { menuType: 'blank', url: '', title: '', buttonType: '' },
-        // {
-        //     menuType: 'button',
-        //     url: '/select',
-        //     title: '- ' + studentName + ' -',
-        //     buttonType: 'text',
-        // },
+        { menuType: 'select', url: '', title: 'StudentCourse', buttonType: '' },
         {
             menuType: 'button',
             url: '/overview',
@@ -90,9 +85,9 @@ export const Appbar = () => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar
                 position='static'
-                sx={{ height: 89, background: Colors.BackBlue, position: 'fixed', zIndex:999, width: '1440px' }}
+                sx={{ height: 79, background: Colors.BackBlue, position: 'fixed', zIndex:999, width: '1440px' }}
             >
-                <Toolbar component='div' sx={{ height: 89 }}>
+                <Toolbar component='div' sx={{ height: 79 }}>
                     {menu.map((item, index) => {
                         
                         if (item.menuType === 'button') {
@@ -132,10 +127,12 @@ export const Appbar = () => {
                             return <NotificationDialogIcon key={index} />;
                         } else if (item.menuType === 'logout') {
                             return <Logout key={index} />;
+                        } else if (item.menuType === 'select') {
+                            return <StudentCourseSection key={index} data={studentListState}/>
                         }
                     })}
                 </Toolbar>
-                <StudentCourseSection data={studentListState}/>
+                
             </AppBar>
         </Box>
     );
