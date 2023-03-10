@@ -24,7 +24,7 @@ import {
     studentArrayState,
     studentMapState,
     loginInfo,
-    studentCourseArray
+    studentCourseArray,
 } from '@/common/atom/Atom';
 
 import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
@@ -38,14 +38,19 @@ import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import Image from 'next/image';
 import GoogleLogo from '@/assets/login/google_logo_icon.png';
 import router from 'next/router';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import { useCookies } from 'react-cookie';
 
-import { useCookies } from 'react-cookie'
-
-var checkId             = false;
-var remRogIds:string    = '';
+var checkId = false;
+var remRogIds: string = '';
 
 export const Authentication = () => {
-
     const loginInfoHandlerState = useSetRecoilState(loginInfo);
 
     //const studentMapHandlerState = useSetRecoilState(studentMapState);
@@ -56,26 +61,27 @@ export const Authentication = () => {
     const [findEmail, setFindEmail] = useState('');
 
     const [buttonHidden, setButtonHidden] = useState<string>('');
-    
-    const [cookies, setCookie, removeCookie]    = useCookies(['remRogId'])
+
+    const [cookies, setCookie, removeCookie] = useCookies(['remRogId']);
 
     const [rememberId, setRemember] = useState(false);
-    console.log('Authentication cookies');
-    console.log(cookies);
     useEffect(() => {
         localStorage.removeItem('accessToken');
         localStorage.clear();
-        
-        if(typeof cookies.remRogId !== 'undefined' && cookies.remRogId !== '') {
+
+        if (
+            typeof cookies.remRogId !== 'undefined' &&
+            cookies.remRogId !== ''
+        ) {
             checkId = true;
             setRemember(checkId);
         }
     }, []);
-    
-    if(typeof cookies.remRogId !== 'undefined' && cookies.remRogId !== '') {
-        remRogIds   = cookies.remRogId;
+
+    if (typeof cookies.remRogId !== 'undefined' && cookies.remRogId !== '') {
+        remRogIds = cookies.remRogId;
     }
-    
+
     // email
     const onChangeEmail = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +89,7 @@ export const Authentication = () => {
         },
         []
     );
-    
+
     // reset password
     const triggerResetEmail = async () => {
         setLoading(true);
@@ -93,8 +99,93 @@ export const Authentication = () => {
             console.log('Password reset email sent');
             setLoading(false);
         } else {
+            setOpen(true);
+
             alert('Please enter your email.');
             setLoading(false);
+        }
+    };
+
+    const [open, setOpen] = useState(false);
+    const [forgotPwReason, setforgotPwReason] = useState('');
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const [emailCheckFlag, setEmailCheckFlag] = useState(false);
+    const [emailCheckButtonFlag, setEmailCheckButtonFlag] = useState(true);
+    const [passwordMent, setPasswordMent] = useState(
+        'Please enter your email to reset your password.'
+    );
+
+    const handleClickOpen = () => {
+        setOpen(true);
+        setforgotPwReason('');
+        setEmailCheckFlag(true);
+        setEmailCheckButtonFlag(true);
+        setPasswordMent('Please enter your email to reset your password.');
+    };
+    const [findEmailCheck, setFindEmailCheck] = useState('');
+
+    const onChangeEmailCheck = useCallback(
+        async (e: React.ChangeEvent<HTMLInputElement>) => {
+            setFindEmailCheck(e.target.value);
+            if (findEmailCheck != '') {
+                if (CheckEmail(findEmailCheck)) {
+                    //setforgotPwReason('[ '+ findEmailCheck +' ] Password reset email sent.');
+
+                    //  await sendPasswordResetEmail(auth, findEmailCheck);
+                    setEmailCheckFlag(true);
+                    setLoading(false);
+                    setEmailCheckButtonFlag(false);
+                } else {
+                    setforgotPwReason('Invalid email format');
+                    setEmailCheckFlag(false);
+                    setLoading(false);
+                    setEmailCheckButtonFlag(true);
+                }
+            } else {
+                setforgotPwReason('Invalid email format');
+                setEmailCheckFlag(false);
+                setLoading(false);
+                setEmailCheckButtonFlag(true);
+            }
+        },
+        [findEmailCheck]
+    );
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleAgree = async () => {
+        setLoading(true);
+        try {
+            if (emailCheckFlag) {
+                await sendPasswordResetEmail(auth, findEmailCheck);
+
+                setPasswordMent(
+                    '[ ' + findEmailCheck + ' ] ' + 'Password reset email sent'
+                );
+                setLoading(false);
+                setEmailCheckButtonFlag(true);
+            } else {
+                setLoading(false);
+            }
+        } catch (e: any) {
+            //alert(e.message);
+            setforgotPwReason('Invalid email address');
+            setEmailCheckFlag(false);
+            setLoading(false);
+            setEmailCheckButtonFlag(true);
+        }
+    };
+
+    const CheckEmail = (str: string) => {
+        var reg_email =
+            /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+        if (!reg_email.test(str)) {
+            return false;
+        } else {
+            return true;
         }
     };
 
@@ -127,6 +218,7 @@ export const Authentication = () => {
                         localStorage.setItem('email', await data.user.email);
                     //displayName 이름 정보를 어떻게 가져올것인지..
                     //console.log('localStorage', localStorage);
+
                     // 로그인 성공
                     generalLogin();
                 })
@@ -138,7 +230,7 @@ export const Authentication = () => {
                         case 'auth/user-not-found':
                             alert('This email does not exist.');
                             break;
-                        default:                           
+                        default:
                             alert(
                                 'Login failed. Please check your ID and password.'
                             );
@@ -202,9 +294,9 @@ export const Authentication = () => {
             var email_param = {
                 email: response.data.email,
             };
-            
-            SaveRememberId(response.data.email)
-            
+
+            SaveRememberId(response.data.email);
+
             loginInfoHandlerState(email_param);
 
             // 학생 코스 정보 가져오기
@@ -216,22 +308,15 @@ export const Authentication = () => {
                 param
             );
 
-            if( student_course_list.data.length == 0 )
-            {
-                alert('No students.');                
-                location.href="/";
+            if (student_course_list.data.length == 0) {
+                alert('No students.');
+                location.href = '/';
                 setLoading(false);
-            }
-            else
-            {                
-                console.log(student_course_list.data);
+            } else {
+                //console.log(student_course_list.data);
                 studentMapHandlerState(student_course_list.data);
                 router.push({ pathname: '/overview' });
             }
-
-
-            
-
 
             //router.push({ pathname: '/select' });
             setLoading(false);
@@ -294,14 +379,11 @@ export const Authentication = () => {
                 param
             );
 
-            if( student_course_list.data.length == 0 )
-            {
+            if (student_course_list.data.length == 0) {
                 alert('No students.');
-                location.href="/";
+                location.href = '/';
                 setLoading(false);
-            }
-            else
-            {
+            } else {
                 //console.log(student_course_list.data );
                 studentMapHandlerState(student_course_list.data);
                 router.push({ pathname: '/overview' });
@@ -310,7 +392,6 @@ export const Authentication = () => {
             return;
         }
     };
-
 
     const authSignup = async () => {
         const name = localStorage.getItem('displayName');
@@ -344,24 +425,17 @@ export const Authentication = () => {
                 `/navigation/student-course-list`,
                 param
             );
-            
-            if( student_course_list.data.length == 0 )
-            {
+
+            if (student_course_list.data.length == 0) {
                 alert('No students.');
-                location.href="/";
+                location.href = '/';
                 setLoading(false);
-            }
-            else
-            {                
-                //console.log(student_course_list.data );                
+            } else {
+                //console.log(student_course_list.data );
                 studentMapHandlerState(student_course_list.data);
                 router.push({ pathname: '/overview' });
                 setLoading(false);
             }
-
-            
-
-            
         } else {
             setLoading(false);
         }
@@ -397,7 +471,7 @@ export const Authentication = () => {
     };
 
     const SetRememberId = () => {
-        if(!rememberId) {
+        if (!rememberId) {
             setRemember(true);
             checkId = true;
         } else {
@@ -407,26 +481,30 @@ export const Authentication = () => {
             //setCookie('remRogId', 'null', { path: '/', secure:false,});
             removeCookie('remRogId');
         }
-    }
+    };
 
-    const SaveRememberId = async (loginId:string) => {
+    const SaveRememberId = async (loginId: string) => {
         //console.log('SaveRememberId loginId : '+loginId);
         const expires = new Date();
-        
+
         // 년도 설정, 현재의 년도를 가져와 +10을 함
         expires.setFullYear(expires.getFullYear() + 1);
         //console.log("checkId : "+checkId);
-        if(checkId) {
+        if (checkId) {
             //localStorage.setItem('loginId', loginId);
-            setCookie('remRogId', loginId, { path: '/', secure:false, expires});
+            setCookie('remRogId', loginId, {
+                path: '/',
+                secure: false,
+                expires,
+            });
         }
-    }
+    };
 
     return (
         <Grid
-            item            
-            xs={12}            
-            sm={12}            
+            item
+            xs={12}
+            sm={12}
             md={12}
             xl={6}
             component={Paper}
@@ -477,10 +555,8 @@ export const Authentication = () => {
                                 height={30}
                             />
                         </Avatar>
-                    </Link>   
-                    <Box>
-                    - OR -
-                   </Box>                                           
+                    </Link>
+                    <Box>- OR -</Box>
                 </Grid>
                 {/*
                 {buttonHidden == '' ? (
@@ -608,20 +684,98 @@ export const Authentication = () => {
                         focused
                     />
                     {
-                    <FormControlLabel
-                        control={<Checkbox id='rememberCheck' value='remember' color='primary' checked={checkId} onChange={SetRememberId} />}
-                        label={<Typography css={sx.rememberLabel}>Remember me</Typography>}
-                    />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    id='rememberCheck'
+                                    value='remember'
+                                    color='primary'
+                                    checked={checkId}
+                                    onChange={SetRememberId}
+                                />
+                            }
+                            label={
+                                <Typography css={sx.rememberLabel}>
+                                    Remember me
+                                </Typography>
+                            }
+                        />
                     }
                     <Link
                         href='#'
                         css={sx.forgotButton}
-                        onClick={triggerResetEmail}
-                        style={{ marginLeft: '225px' }}
+                        onClick={handleClickOpen}
+                        style={{ marginLeft: '85px' }}
                     >
                         Forgot password?
                     </Link>
-
+                    <Dialog
+                        fullScreen={fullScreen}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby='responsive-dialog-title'
+                    >
+                        <DialogTitle
+                            id='responsive-dialog-title'
+                            sx={{ width: '500px', fontWeight: 'bold' }}
+                        >
+                            {'Forgot password?'}
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText
+                                sx={{
+                                    whiteSpace: 'pre-wrap',
+                                    textAlign: 'center',
+                                    mb: 2,
+                                }}
+                            >
+                                {passwordMent}
+                            </DialogContentText>
+                            {emailCheckFlag ? (
+                                <TextField
+                                    required
+                                    fullWidth
+                                    id='emailCheck'
+                                    label={<span css={sx.inputbox}>Email</span>}
+                                    name='emailCheck'
+                                    autoComplete='emailCheck'
+                                    autoFocus
+                                    onChange={onChangeEmailCheck}
+                                    disabled={loading}
+                                    {...(emailCheckFlag
+                                        ? { color: 'success' }
+                                        : {})}
+                                    color='success'
+                                    sx={{ marginTop: '5px' }}
+                                />
+                            ) : (
+                                <TextField
+                                    required
+                                    error
+                                    fullWidth
+                                    id='emailCheck-error'
+                                    label={<span css={sx.inputbox}>Email</span>}
+                                    helperText={forgotPwReason}
+                                    autoFocus
+                                    onChange={onChangeEmailCheck}
+                                    disabled={loading}
+                                    sx={{ marginTop: '5px' }}
+                                />
+                            )}
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose} autoFocus>
+                                Close
+                            </Button>
+                            <Button
+                                onClick={handleAgree}
+                                autoFocus
+                                disabled={emailCheckButtonFlag}
+                            >
+                                Agree
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                     <Button
                         type='submit'
                         fullWidth
@@ -802,8 +956,6 @@ export const Authentication = () => {
 
 const sx = {
     rememberLabel: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-weight: bold;
         font-size: 14px;
         line-height: 24px;
@@ -811,8 +963,6 @@ const sx = {
         color: #4f5b70;
     `,
     forgotButton: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-weight: 500;
         font-size: 14px;
         line-height: 24px;

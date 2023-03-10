@@ -7,7 +7,6 @@ import { css, styled } from '@mui/material/styles';
 import NativeSelect from '@mui/material/NativeSelect';
 import { StudentListType, StudentType, StudentType2 } from './types/studentCourse.type';
 import InputBase from '@mui/material/InputBase';
-import { axiosClient } from '@/data/client/client';
 import {
     courseArrayState,
     courseMapState,
@@ -18,17 +17,7 @@ import {
 } from '@/common/atom/Atom';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { Colors} from '@/common/themes/Color';
-import { Button } from '@mui/material';
-import { useRouter } from 'next/router';
-import { NavigationItems } from '@/common/themes/Color';
-import Link from 'next/link';
 
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
-import { IntercomShutdown } from '@/pages/_app';
 
 interface DataType {
     data: StudentListType;
@@ -58,43 +47,74 @@ const Student =  () => {
     const studentMapHandlerState = useSetRecoilState(studentMapState);
     const courseMapHandlerState = useSetRecoilState(courseMapState);
 
+
+    // const currenStudentList = useRecoilValue(studentArrayState);
     const currenCourseMap: any = useRecoilValue(courseMapState);
     const currenStudentMap: any = useRecoilValue(studentMapState);
     const studentCourseList: any = useRecoilValue(studentCourseArray);
 
     const [courseList, setCourseList] = useState<any[]>([]);
-    let studentList2 = studentCourseList;
+    let studentList = studentCourseList;
+    if(studentList.length == 0 ){
+        studentList = [{
+            id : 0,
+            lw_id : '',
+            name : 'No Student',
+            courses_list : [{
+                id : 0,
+                course_id : '',
+                title : ''
+            }]
+        }]
+    }
+    let courseList2 = studentList[0].courses_list;
 
+    if(courseList2.length == 0 ){
+        courseList2 =  [{
+            id : 0,
+            course_id : '',
+            title : 'No Course'
+        }]
+    }
     const [selectedStudentValue, setSelectedStudentValue] = useState('');
     const [selectedCourseValue, setSelectedCourseValue] = useState('');
 
     useEffect(() => {
-        studentArrayHandlerState(studentList2);
+        studentArrayHandlerState(studentList);
     })
     useEffect(() => {
-        setCourseList(studentList2[0].courses_list);
-        courseArrayHandlerState(studentList2[0].courses_list);
-        courseMapHandlerState(studentList2[0].courses_list[0]);
-        studentMapHandlerState(studentList2[0]);
-        setSelectedStudentValue(studentList2[0].lw_id);
-        setSelectedCourseValue(studentList2[0].courses_list[0].course_id);
+        setCourseList(courseList2);
+        courseArrayHandlerState(courseList2);
+        courseMapHandlerState(courseList2[0]);
+        studentMapHandlerState(studentList[0]);
+        setSelectedStudentValue(studentList[0].lw_id);
+        setSelectedCourseValue(courseList2[0].course_id);
     }, [])
 
     const handleChange = (event: { target: { value: string } }) => {
         // recoil에 studentMap
         if(event.target.value != '') {
-            const list = studentList2.filter((item: any) => item.lw_id === event.target.value);
-            //console.log(list);
-            courseArrayHandlerState(list[0].courses_list);
+            const list = studentList.filter((item: any) => item.lw_id === event.target.value);
+
+            let courseList3 = list[0].courses_list;
+
+            if(courseList3.length == 0 ){
+                courseList3 =  [{
+                    id : 0,
+                    course_id : '',
+                    title : 'No Course'
+                }]
+            }
+
+            courseArrayHandlerState(courseList3);
 
             setCourseList([]);
 
-            setCourseList(list[0].courses_list);
+            setCourseList(courseList3);
             studentMapHandlerState(list[0]);
-            courseMapHandlerState(list[0].courses_list[0]);
+            courseMapHandlerState(courseList3[0]);
             setSelectedStudentValue(list[0].lw_id);
-            setSelectedCourseValue(list[0].courses_list[0].course_id);
-            console.log(selectedCourseValue);
+            setSelectedCourseValue(courseList3[0].course_id);
         }
     }
 
@@ -125,10 +145,10 @@ const Student =  () => {
                         }}
                         onChange={handleChange}
                         input={<BootstrapInput />}
-                        disabled={studentList2.length == 1 ? true : false}
+                        disabled={studentList.length == 1 ? true : false}
                         value={selectedStudentValue}
                     >
-                        {studentList2.map((it:any, index:any) => (
+                        {studentList.map((it:any, index:any) => (
                             <StudentOption key={index} id={it.id} lw_id={it.lw_id} name={it.name} email={it.email} parent_email={it.parent_email}
                             parent_name={it.parent_name} parent_phone={it.parent_phone} parent_email2={it.parent_email2} parent_name2={it.parent_name2}
                             parent_phone2={it.parent_phone2} grade={it.grade} school={it.school} role={it.role} created_at={it.created_at}  last_login={it.last_login}

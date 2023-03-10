@@ -11,7 +11,7 @@ export interface LinkPopupType {
 export const LinkPopup = ({popupUrl, closeHandle}: LinkPopupType) => {
 
   return (
-    <Stack >
+    <Stack overflow={'hidden'}>
         <ClosePopupBtn closeHandle={closeHandle} />
         {/* <Stack>{popupUrl}</Stack> */}
         <Stack css={sx.popContainer}>
@@ -27,8 +27,8 @@ export const LinkPopup = ({popupUrl, closeHandle}: LinkPopupType) => {
 const sx = {
   popContainer: css`
         width: 1030px;
-        height: 1000px;
-        padding: 20px;
+        height: 980px;
+        padding: 20px;        
     `
 };
 
@@ -40,7 +40,7 @@ const popupIframe = (popupUrl: string) => {
     
     // const html = '<iframe src="' + url + subUrl + '" width="961px" height="620px"></iframe>';
     // API URL 
-    const html = '<iframe src="' + popupUrl + '" width="961px" height="940px"></iframe>';
+    const html = '<iframe src="' + popupUrl + '" width="961px" height="900px"></iframe>';
 
     return {
       __html: html

@@ -7,14 +7,11 @@ import { useEffect, useState } from "react";
 export const useCourseScheduleSection = () => {
 
   const currenCourseMap:any = useRecoilValue(courseMapState);
-  // const courseId = currenCourseMap.course_id;
 
   const [courseId , setCourseId]= useState("");
   useEffect(()=> {
     setCourseId(currenCourseMap.course_id);
   },[currenCourseMap])
-
-
 
   const { data, isLoading } = useGetCourseSchedule(courseId);
   
@@ -32,7 +29,7 @@ export const useCourseScheduleSection = () => {
     data?.start_date,
     data?.end_date
   ];
-  
+
 
   // console.log("startDate ", startDate);
   // console.log("startDate() ", new Date(startDate));

@@ -49,7 +49,7 @@ const sx = {
     popupCenterLine: css`
         position: absolute;
         top: 50%;
-        width: 353px;
+        <!-- width: 353px; -->
         height: 0px;
         border: 0.25px solid #B9B9B9;
         transform: rotate(90deg);
@@ -62,7 +62,7 @@ const sx = {
         flex-direction: column;
         align-items: center;
         padding: 0px;
-        width: 859px;
+        width: 440px;
         height: 469px;
         background: #FFFFFF;
         box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.1), 0px 8px 8px -4px rgba(16, 24, 40, 0.04);

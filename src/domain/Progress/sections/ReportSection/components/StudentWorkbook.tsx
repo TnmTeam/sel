@@ -75,32 +75,35 @@ export const StudentWorkbook = ({data}: DataType) => {
     if(data.result)
     {
       const tempUrl = data.result.workbookId;
-      const docsUrl = tempUrl.substring(0, tempUrl.indexOf('edit?')) + "embed?";
-      // console.log("changeUrl", docsUrl);
-
-      // const response = await axiosClient.get('https://docs.google.com/presentation/d/1L7tJTJHxAdVCJkQ3lpZkShk1SbNJnjOfuLRkIFUFdAE/embed?loop=false&start=true&delayms=10000&slide=1');
-      const response = await axios.get(docsUrl);
-      const innerHtml = response.data;
-      
-      if (innerHtml.includes("slidePageCount"))
+      if( tempUrl != undefined)
       {
-        const idx = innerHtml.indexOf('slidePageCount');
-        const end = innerHtml.indexOf(',', idx);
+        const docsUrl = tempUrl.substring(0, tempUrl.indexOf('edit?')) + "embed?";
+        // console.log("changeUrl", docsUrl);
+
+        // const response = await axiosClient.get('https://docs.google.com/presentation/d/1L7tJTJHxAdVCJkQ3lpZkShk1SbNJnjOfuLRkIFUFdAE/embed?loop=false&start=true&delayms=10000&slide=1');
+        const response = await axios.get(docsUrl);
+        const innerHtml = response.data;
+        
+        if (innerHtml.includes("slidePageCount"))
+        {
+          const idx = innerHtml.indexOf('slidePageCount');
+          const end = innerHtml.indexOf(',', idx);
+      
+          const getStr = innerHtml.substring(idx, end);
     
-        const getStr = innerHtml.substring(idx, end);
-  
-        const tempArr = getStr.split(':');
-        const totalPage = +tempArr[1].trim();
-  
-        // console.log("totalPage ", totalPage);
-        setEndPage(totalPage);
+          const tempArr = getStr.split(':');
+          const totalPage = +tempArr[1].trim();
+    
+          // console.log("totalPage ", totalPage);
+          setEndPage(totalPage);
+          setPosition(1);
+        }
+      }
+      else
+      {
+        setEndPage(1);
         setPosition(1);
       }
-    }
-    else
-    {
-      setEndPage(1);
-      setPosition(1);
     }
   };
   
@@ -155,8 +158,8 @@ export const StudentWorkbook = ({data}: DataType) => {
           (
             <Stack 
               style={{
-                width: "590px", 
-                height: "760px",
+                width: "650px", 
+                height: "800px",
                 backgroundColor: "#efefef",
                 fontFamily: "DM Sans",
                 fontWeight: "400",
@@ -172,8 +175,8 @@ export const StudentWorkbook = ({data}: DataType) => {
             <>
 
               <ReactGoogleSlides
-                width={590} 
-                height={760}
+                width={610} 
+                height={790}
                 slidesLink={data.result.workbookId}
                 position={position}
                 // slideDuration={10}
@@ -256,7 +259,7 @@ const sx = {
     margin-bottom: 31px;
   `,
   container: css`
-    width: 675px; 
+    width: 625px; 
     height: 973px;
   `,
   navigatorDiv: css`
