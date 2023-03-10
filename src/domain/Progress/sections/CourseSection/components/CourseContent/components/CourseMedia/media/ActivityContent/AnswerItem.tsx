@@ -1,4 +1,5 @@
 import { Colors } from "@/common/themes/Color";
+import { css } from '@emotion/react';
 import { Stack, Typography } from "@mui/material";
 
 type AnswerItemType = {
@@ -8,23 +9,40 @@ type AnswerItemType = {
 
 export const AnswerItem = ({ question, answer }: AnswerItemType) => {
   return (
-    <Stack style={{wordBreak: 'normal'}}>
+    <Stack>
       <Typography
-        variant="body2"
-        fontWeight={400}
-        color={Colors.BasicText}
-        letterSpacing="0.02em"
+        variant="h6"
+        fontWeight={'bold'}
+        color="#1B2137"
+        sx={{ opacity: "0.7" }}
       >
-        {question}
+        {'Question'}
       </Typography>
+        <div dangerouslySetInnerHTML={ {__html: question} } css={sx.questionAnswer} ></div>
       <Typography
-        variant="body2"
-        fontWeight={700}
-        color={Colors.BasicText}
-        letterSpacing="0.02em"
+        variant="h6"
+        fontWeight={'bold'}
+        color={Colors.CompeleteGreen}
+        sx={{ opacity: "0.7" }}
       >
-        {answer}
+        {'Answer'}
+      </Typography>
+        <div dangerouslySetInnerHTML={ {__html: answer} } css={sx.questionAnswer} ></div>
+      <Typography
+        sx={{borderBottom: 1}}
+      >
       </Typography>
     </Stack>
   );
+};
+
+const sx = {
+  questionAnswer: css`
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: {Colors.BasicText};
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+  `,
 };
