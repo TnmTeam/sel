@@ -46,6 +46,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useCookies } from 'react-cookie';
+import { Stack } from '@mui/material';
 
 var checkId = false;
 var remRogIds: string = '';
@@ -536,25 +537,69 @@ export const Authentication = () => {
                     display={'flex'}
                     sx={{ mb: 2 }}
                 >
-                    <Link href='#' onClick={handleGoogleLogin}>
-                        <Avatar
+                    <Link href='#' onClick={handleGoogleLogin} css={sx.googleButton}>
+                        {/* <Avatar
                             sx={{
                                 mb: 3,
                                 // bgcolor: 'secondary.main',
                                 bgcolor: 'transparent',
-                                width: '50px',
+                                width: '100px',
                                 height: '50px',
                                 border: '1px solid #d3d3d3',
                             }}
                         >
-                            {/* <GoogleIcon /> */}
                             <Image
                                 src={GoogleLogo}
                                 alt='googleIcon'
                                 width={30}
                                 height={30}
                             />
-                        </Avatar>
+                        </Avatar> 
+                        */}
+                        <Stack sx={{
+                                mb: 3,
+                                // bgcolor: 'secondary.main',
+                                bgcolor: 'transparent',
+                                width: '220px',
+                                height: '52px',
+                                display: 'inline-block',
+                                padding: '2px',
+                                backgroundColor: '#3a88f4',
+                                borderRadius: '3px',
+                                boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);',
+                            }}>
+                            <Stack sx={{
+                                
+                                // bgcolor: 'secondary.main',
+                                bgcolor: 'transparent',
+                                width: '48px',
+                                height: '48px',
+                                border: '1px solid #d3d3d3',
+                                display: 'inline-block',
+                                backgroundColor: '#fff',
+                                borderRadius: '3px',
+                            }}>
+                                <Stack sx={{
+                                    mt: 1.5,
+                                    ml: 1.4,
+                                }}>
+                                    <Image
+                                        src={GoogleLogo}
+                                        alt='googleIcon'
+                                        width={23}
+                                        height={23}
+                                        
+                                    />
+                                </Stack>
+                            </Stack>
+                            <Stack sx={{display: 'inline-block', fontSize:'15px', fontWeight:540,ml:'17px',  }}>
+                                <Stack sx={{position: 'absolute', top:'313px'  }}>
+                                    <span style={{fontFamily: "'Poppins', sans-serif"}}>Sign in with Google</span>
+                                </Stack> 
+                            </Stack>
+                            
+                        </Stack>
+                        
                     </Link>
                     <Box>- OR -</Box>
                 </Grid>
@@ -1001,6 +1046,14 @@ const sx = {
         font-size: 14px;
         line-height: 22px;
     `,
+    googleButton: css`
+        font-family: 'Poppins', sans-serif;    
+        font-size: 14px;
+        line-height: 24px;
+        color: #fff;
+        text-decoration-line: none;
+        text-transform: none;
+    `
 };
 
 const Copyright = () => {
