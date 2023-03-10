@@ -263,7 +263,7 @@ export const SignupSection = () => {
                     textAlign='center'
                     sx={{ mb: 2, fontSize: 25 }}
                 >
-                    Welcome Parents!
+                    Impacter Pathway<br></br>Parent Dashboard
                 </Typography>
 
                 <Grid

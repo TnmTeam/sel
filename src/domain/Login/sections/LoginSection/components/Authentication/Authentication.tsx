@@ -526,7 +526,7 @@ export const Authentication = () => {
                     textAlign='center'
                     sx={{ mb: 2, fontSize: 25 }}
                 >
-                    Welcome Parents!
+                    Impacter Pathway<br></br>Parent Dashboard
                 </Typography>
 
                 <Grid
@@ -819,10 +819,11 @@ export const Authentication = () => {
             >
                 <Link href='/signup' css={sx.forgotButton}>
                     <span css={sx.SignupBf}>
-                        Don&apos;t have an account yet?
+                        First time logging in?
                     </span>
+                    <br></br>
                     &nbsp;&nbsp;
-                    <span css={sx.SignupAf}>Signup for a course.</span>
+                    <span css={sx.SignupAf}>Click HERE to associate your email with your student’s account.</span>
                 </Link>
             </Box>
         </Grid>
@@ -847,7 +848,7 @@ export const Authentication = () => {
                     textAlign='center'
                     sx={{ mb: 3 }}
                 >
-                    Welcome Parents!
+                    Impacter Pathway Parent Dashboard
                 </Typography>
 
                 <Grid
@@ -969,10 +970,9 @@ const sx = {
         color: #6787b7;
         text-decoration-line: none;
         text-transform: none;
+        text-align: center;
     `,
     inputboxLabel: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
@@ -980,26 +980,22 @@ const sx = {
         cursor: default;
     `,
     inputbox: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
         color: #4f5b70;
     `,
     SignupBf: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-weight: 400;
         font-size: 14px;
         line-height: 22px;
         color: #4f5b70;
+        text-align: center;
     `,
     SignupAf: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-size: 14px;
         line-height: 22px;
+        text-align: center;
     `,
 };
 
