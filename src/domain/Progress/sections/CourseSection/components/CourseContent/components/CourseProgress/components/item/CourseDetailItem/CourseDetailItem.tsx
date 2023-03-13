@@ -19,7 +19,7 @@ export const DetailCourseItem = ({
   //console.log("DetailCourseItem");
   //console.log( item );
   return (
-    <Stack direction="row" spacing="20px" css={sx.courseDetailItem(isSelected)}>
+    <Stack direction="row" onClick={onItemClick} spacing="20px" css={sx.courseDetailItem(isSelected)}>
       <Image
         width={20}
         height={30}
@@ -36,7 +36,7 @@ export const DetailCourseItem = ({
       >
         {item.title}
       </Typography>
-      <IconButton onClick={onItemClick} css={sx.mediaImage}>
+      <IconButton css={sx.mediaImage}>
         <Image fill src={getCourseTypeIcon(item.type)} alt="media" />
       </IconButton>
     </Stack>
@@ -56,6 +56,7 @@ const sx = {
     &:nth-last-of-type(1) {
       border-bottom: none;
     }
+    cursor:pointer;
   `,
   text: css`
     color: #0a0b26;
