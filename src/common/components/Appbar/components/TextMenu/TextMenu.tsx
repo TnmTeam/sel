@@ -4,6 +4,7 @@ import { NavigationItems, WhiteButtons } from '@/common/themes/Color';
 import { TextMenuType } from './types/textMenu.types';
 import { useSetRecoilState } from 'recoil';
 import { focusInfo } from '@/common/atom/Atom';
+import { Colors } from '@/common/themes/Color';
 
 export const TextMenu = ({ url, currentRoute, title, buttonType }: TextMenuType) => {
     const focusState:any = useSetRecoilState(focusInfo);
@@ -37,6 +38,7 @@ const stTextButton = (path: string, currentRoute: string) => {
         color: path === currentRoute ? NavigationItems.SelectedTextColor : NavigationItems.TextColor,
         ':hover': {
             color: NavigationItems.OnHoverTextColor,
+            background: Colors.BackBlue,
         },
     }
 }

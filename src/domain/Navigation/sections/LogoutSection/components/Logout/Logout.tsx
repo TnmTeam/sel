@@ -48,5 +48,6 @@ const stOutlineButton = {
     color: NavigationItems.TextColor,
     ':hover': {
         color: NavigationItems.OnHoverTextColor,
+        background: Colors.BackBlue,
     },
 };

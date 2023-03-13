@@ -13,6 +13,8 @@ export const ChartLine = ({ rate }: ChartType) => {
 
     const [point, setPoint] = useState(startPoint);
 
+    if (rate == 0) rate = 87.5;
+
     useEffect(() => {
         setPoint(startPoint + (rate/100*Angle));
     });

@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/system';
 import Image from 'next/image';
-import OverViewBackgroundImage from '@/assets/overview/popupCloseBtn.png';
+import popupCloseBtnImage from '@/assets/overview/popupCloseBtn.png';
 import { ClosePopupBtnType } from './types/ScheduleDetailBox.type';
 
 export const ClosePopupBtn = (props: ClosePopupBtnType) => (
@@ -9,7 +9,7 @@ export const ClosePopupBtn = (props: ClosePopupBtnType) => (
         <Image
             onClick={props.closeHandle}
             style={{cursor: 'pointer'}}
-            src={OverViewBackgroundImage}
+            src={popupCloseBtnImage}
             alt={'overview'}
         />
     </Stack>

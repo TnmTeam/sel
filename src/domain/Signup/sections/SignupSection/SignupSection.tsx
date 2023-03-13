@@ -94,7 +94,7 @@ export const SignupSection = () => {
             }
 
             const validateEmailCheck = validateEmail(email);
-            console.log( await validateEmailCheck ) ;
+            
             //console.log(name, email, role, password);
             if( await validateEmailCheck ){
                  // firebase 회원가입 진행
@@ -148,8 +148,8 @@ export const SignupSection = () => {
         const response = await axiosClient.post(`/navigation/student-list`, param);
         const data = response.data;
 
-        let result = false;
-        if ( data.length == 0 ) result = true;
+        let result = true;
+        if ( data.length == 0 ) result = false;
 
         return result;
     }

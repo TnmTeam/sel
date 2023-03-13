@@ -3,6 +3,8 @@ import { PieChart } from 'react-minimal-pie-chart';
 import { ChartType } from './types/chart.type';
 
 export const HalfPieChart = ({ rate }: ChartType) => {
+    if (rate == 0) rate = 87.5;
+
     return (
         <PieChart
             data={[{ value: 1, key: 1, color: 'url(#gradient)' }]}
@@ -16,7 +18,7 @@ export const HalfPieChart = ({ rate }: ChartType) => {
         >
             <defs>
                 <linearGradient id='gradient'>
-                    <stop offset='0%' stopColor='#BDE0FF' />                    
+                    <stop offset='0%' stopColor='#BDE0FF' />
                     <stop offset='100%' stopColor='#147AD6' />
                 </linearGradient>
             </defs>

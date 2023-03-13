@@ -1,9 +1,10 @@
+import { css } from '@emotion/react';
 import Link from 'next/link';
 import { Colors } from '@/common/themes/Color';
 import { Stack, Box, AppBar, Typography, Button } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import Image from 'next/image';
-import LogoImage from '@/assets/logo/Frame.png';
+import LogoImage from '@/assets/logo/logo.png';
 import { useRouter } from 'next/router';
 import { TextMenu } from './components/TextMenu/TextMenu';
 import { InsightsDialogButton } from '@/domain/Navigation/sections/AddInsightsSection/components';
@@ -98,9 +99,7 @@ export const Appbar = () => {
                     width: '100%',
                     height: 79,
                 }}
-            >
-                
-            </Stack>
+            ></Stack>
             <AppBar
                 position='static'
                 sx={{
@@ -109,7 +108,7 @@ export const Appbar = () => {
                     position: 'fixed',
                     zIndex: 999,
                     width: '1440px',
-                    boxShadow: '0 0 0 0'
+                    boxShadow: '0 0 0 0',
                 }}
             >
                 <Toolbar component='div' sx={{ height: 79 }}>
@@ -133,7 +132,13 @@ export const Appbar = () => {
                                     css={{ textDecoration: 'none' }}
                                     href='https://www.impacterpathway.com/'
                                 >
-                                    <Button>
+                                    <Button
+                                        css={{
+                                            ':hover': {
+                                                background: Colors.BackBlue,
+                                            },
+                                        }}
+                                    >
                                         <Logo />
                                     </Button>
                                 </Link>
@@ -152,7 +157,12 @@ export const Appbar = () => {
                         } else if (item.menuType === 'logout') {
                             return <Logout key={index} />;
                         } else if (item.menuType === 'select') {
-                            return <StudentCourseSection key={index} data={studentListState}/>
+                            return (
+                                <StudentCourseSection
+                                    key={index}
+                                    data={studentListState}
+                                />
+                            );
                         }
                     })}
                 </Toolbar>
@@ -164,8 +174,8 @@ export const Appbar = () => {
 
 const Logo = () => {
     return (
-        <Stack css={{ margin: '0px 0px 0px 0px' }}>
-            <Image src={LogoImage} alt={'img'} width={'150'} />
+        <Stack css={{ margin: '0px 0px 0px -10px' }}>
+            <Image src={LogoImage} alt={'img'} width={'180'} />
         </Stack>
     );
 };
