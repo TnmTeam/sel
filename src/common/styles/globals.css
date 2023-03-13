@@ -60,3 +60,7 @@ body {
     border-radius: 18px;
     font-size: 15px;
 }
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper{
+    max-width: 730px;
+}
