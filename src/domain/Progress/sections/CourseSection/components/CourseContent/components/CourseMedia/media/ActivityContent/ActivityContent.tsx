@@ -44,7 +44,7 @@ export const ActivityContent = ({ selectedDetailCourse }: CourseMediaType) => {
                             {title}
                         </Typography>
                         <Typography
-                            sx={{borderBottom: 1}}
+                            sx={{borderBottom: 1, borderColor: '#DBB5C8'}}
                         >
                         </Typography>
                         {models?.map((it, index) => (

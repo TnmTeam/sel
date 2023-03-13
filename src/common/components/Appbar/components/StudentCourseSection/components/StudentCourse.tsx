@@ -130,7 +130,58 @@ const Student =  () => {
         }
     };
 
-    return (
+    return (        
+        <Stack sx={{display:"inline-block", position: 'absolute', top: '3px', left : '195px'}}>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5, ml:2}}>
+            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                Student
+            </InputLabel>
+            <NativeSelect
+                inputProps={{
+                    name: 'Student',
+                    id: 'selectStudent',
+                }}
+                onChange={handleChange}
+                input={<BootstrapInput />}
+                disabled={studentList.length == 1 ? true : false}
+                value={selectedStudentValue}
+                sx={{borderRadius: '18px'}}
+            >
+                {studentList.map((it:any, index:any) => (
+                    <StudentOption key={index} id={it.id} lw_id={it.lw_id} name={it.name} email={it.email} parent_email={it.parent_email}
+                    parent_name={it.parent_name} parent_phone={it.parent_phone} parent_email2={it.parent_email2} parent_name2={it.parent_name2}
+                    parent_phone2={it.parent_phone2} grade={it.grade} school={it.school} role={it.role} created_at={it.created_at}  last_login={it.last_login}
+                    folder_id={it.folder_id} courses_list={it.courses_list}/>
+                )
+                )}
+
+            </NativeSelect>
+        </FormControl>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5}}>
+            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                Course
+            </InputLabel>    
+            <NativeSelect
+                inputProps={{
+                    name: 'Course',
+                    id: 'selectCourse',
+                }}
+                onChange={handleChange2}
+                input={<BootstrapInput />}
+                disabled={courseList.length == 1 ? true : false}
+                value={selectedCourseValue}
+            >
+                {courseList.map((it, index) => (
+                    <CourseOption key={index} course_id={it.course_id} title={it.title}  />
+                )
+                )}
+
+            </NativeSelect>
+        </FormControl>
+    </Stack>
+
+
+        /*
         <Stack sx={{display:"inline-block"}}>
             <Stack position='static'
             sx={{ height: 79, background: Colors.BackBlue, zIndex:999, width: '1440px', display:'inline-block', boxShadow: '0 4px 4px -4px black' }}>
@@ -180,7 +231,7 @@ const Student =  () => {
                     </NativeSelect>
                 </FormControl>
             </Stack>
-        </Stack>
+        */
     );
 };
 

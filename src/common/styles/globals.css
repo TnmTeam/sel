@@ -1,61 +1,62 @@
-@import url("https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css");
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+@import url('https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
 * {
-  box-sizing: border-box;
-  font-family: "DM Sans", sans-serif;
+    box-sizing: border-box;
+    font-family: 'DM Sans', sans-serif;
 }
 
 html,
 body {
-  width: 100%;
-  height: 100%;
-  font-family: "DM Sans", sans-serif;
+    width: 100%;
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
 }
 
 #__next {
-  width: 100%;
-  height: 100%;
-  font-family: "DM Sans", sans-serif;
+    width: 100%;
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
 }
 
 .rdrCalendarWrapper {
-  background: transparent !important;
+    background: transparent !important;
 }
 .rdrMonthAndYearWrapper {
-  align-items: center;
-  height: 60px;
-  padding-top: 10px;
-  font-size:24px;
-  font-family: "DM Sans", sans-serif;
+    align-items: center;
+    height: 60px;
+    padding-top: 10px;
+    font-size: 24px;
+    font-family: 'DM Sans', sans-serif;
 }
 
 .rdrMonthsVertical {
-  font-size: 14px;
-  margin-left: -5px;
-  font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    margin-left: -5px;
+    font-family: 'DM Sans', sans-serif;
 }
 
-.css-1mtumca-MuiFormLabel-root-MuiInputLabel-root{
-  color: rgb(255 255 255);
-  font-size: 20px;
-  font-weight: bold;
-  margin-left: 5px;
+.css-1mtumca-MuiFormLabel-root-MuiInputLabel-root {
+    color: rgb(255 255 255);
+    font-size: 19px;
+    font-weight: bold;
+    margin-left: 5px;
 }
 .css-1mtumca-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
-  color: rgb(255 255 255);
-  font-weight: bold;
-  font-size: 20px;
+    color: rgb(255 255 255);
+    font-weight: bold;
+    font-size: 19px;
 }
 
 .custom-filter:focus-within {
-  color: #495057;
-  background-color: #fff;
-  border-color: #80bdff;
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
 }
 
-.css-m3l1ig-MuiNativeSelect-select-MuiInputBase-input:not([multiple]) option {
-
+.css-m3l1ig-MuiNativeSelect-select-MuiInputBase-input.css-m3l1ig-MuiNativeSelect-select-MuiInputBase-input.css-m3l1ig-MuiNativeSelect-select-MuiInputBase-input {
+    border-radius: 18px;
+    font-size: 15px;
 }

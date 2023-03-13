@@ -29,7 +29,7 @@ export const AnswerItem = ({ question, answer }: AnswerItemType) => {
       </Typography>
         <div dangerouslySetInnerHTML={ {__html: answer} } css={sx.questionAnswer} ></div>
       <Typography
-        sx={{borderBottom: 1}}
+        sx={{borderBottom: 1, borderColor: '#DBB5C8'}}
       >
       </Typography>
     </Stack>

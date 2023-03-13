@@ -11,7 +11,7 @@ export const PlainProgressList = ({
 }: PlainRateType) => {
   return (
     <Stack direction={"row"} css={sx.wrapper}>
-      <ProgressItem progress={ +hoursSpent.toFixed() } progressDesc={"Hours Spent"} />        {/* Number(hoursSpent.toFixed()) */}
+      <ProgressItem progress={ +hoursSpent.toFixed() } progressDesc={"Minutes Impacting"} />        {/* Number(hoursSpent.toFixed()) */}
       <ProgressItem progress={wordsWritten} progressDesc={"Words Written"} />
       <ProgressItem
         progress={videosUploaded}
