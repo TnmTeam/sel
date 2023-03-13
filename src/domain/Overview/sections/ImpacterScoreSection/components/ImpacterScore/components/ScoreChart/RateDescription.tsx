@@ -19,7 +19,7 @@ export const RateDescription = ({ rate, studentName }: ChartType) => {
                 <Typography
                     variant='h5'
                     lineHeight={2.0}
-                    marginBottom={'110px'}
+                    marginBottom={'90px'}
                     fontWeight={100}
                     color='white'
                     letterSpacing={'1.5px'}
@@ -28,21 +28,27 @@ export const RateDescription = ({ rate, studentName }: ChartType) => {
                     {'JOURNEY'}
                 </Typography>
                 <Typography
-                    fontSize='12px'
-                    lineHeight={3.0}
-                    fontWeight={200}
-                    color='white'
-                    letterSpacing={'1.5px'}
-                    textAlign={'center'}
-                    marginBottom={'10px'}
-                >
-                    {'IMPACTER SCORE'}
-                </Typography>
-                <Typography
-                    fontSize='45px'
+                    fontSize='26px'
                     fontWeight={1200}
                     color='white'
-                    letterSpacing={'-1.75px'}
+                    textAlign={'center'}
+                >
+                    {'On The Road To'}
+                </Typography>
+                <Typography
+                    fontSize='26px'
+                    fontWeight={1200}
+                    color='white'
+                    textAlign={'center'}
+                    marginBottom={'5px'}
+                >
+                    {'IMPACTER'}
+                </Typography>
+                <Typography
+                    fontSize='22px'
+                    fontWeight={200}
+                    color='white'
+                    letterSpacing={'-1px'}
                 >
                     {rate } / 100
                 </Typography>
