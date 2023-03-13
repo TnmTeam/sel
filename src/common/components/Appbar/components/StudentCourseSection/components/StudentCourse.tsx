@@ -131,7 +131,7 @@ const Student =  () => {
     };
 
     return (        
-        <Stack sx={{display:"inline-block", position: 'absolute', top: '3px', left : '195px'}}>
+        <Stack sx={{display:"inline-block", position: 'absolute', top: '3px', left : '210px'}}>
         <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5, ml:2}}>
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
                 Student
