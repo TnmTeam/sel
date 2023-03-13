@@ -127,11 +127,16 @@ export const StudentWorkbook = ({ data }: DataType) => {
                 setWorkbootId(data.result.workbookId);
                 getGoogleSlides();
             }
+
+            if (data.result.workbookId == undefined) {
+                setEndPage(0);
+                setPosition(0);
+            }
         }
     }, [data.result]);
 
     useEffect(() => {
-        if (endPage == 1) {
+        if (endPage <= 1) {
             setPrevBtnFlag(true);
             setNextBtnFlag(true);
         } else {
@@ -160,46 +165,51 @@ export const StudentWorkbook = ({ data }: DataType) => {
                 >
                     <CustomProgress />
                 </Stack>
-            ) : data.result?.workbookId == undefined ? (
-                <Stack
-                    style={{
-                        width: '650px',
-                        height: '800px',
-                        backgroundColor: '#efefef',
-                        fontFamily: 'DM Sans',
-                        fontWeight: '400',
-                        fontSize: '20px',
-                        textAlign: 'center',
-                    }}
-                >
-                    No Presentation
-                </Stack>
             ) : (
                 <>
-                    {fullBtnFlag ? (
-                        <ReactGoogleSlides
-                            width={610}
-                            height={790}
-                            slidesLink={data.result.workbookId}
-                            position={position}
-                            // slideDuration={10}
-                            // showControls={true}     // Toggles the slideshow controls at the bottom of the screen
-                        />
-                    ) : (
-                        <div
+                    {data.result.workbookId == undefined ? (
+                        <Stack
                             style={{
                                 width: '610px',
                                 height: '790px',
-                                backgroundColor: '#e0e0e0',
-                                textAlign: 'center',
-                                lineHeight: '300px',
-                                fontWeight: 'bold',
+                                backgroundColor: '#efefef',
+                                fontFamily: 'DM Sans',
+                                fontWeight: '400',
                                 fontSize: '20px',
-                                borderRadius: '10px',
+                                textAlign: 'center',
+                                paddingTop: '50%',
                             }}
                         >
-                            no workbook
-                        </div>
+                            No Presentation
+                        </Stack>
+                    ) : (
+                        <>
+                            {fullBtnFlag ? (
+                                <ReactGoogleSlides
+                                    width={610}
+                                    height={790}
+                                    slidesLink={data.result.workbookId}
+                                    position={position}
+                                    // slideDuration={10}
+                                    // showControls={true}     // Toggles the slideshow controls at the bottom of the screen
+                                />
+                            ) : (
+                                <div
+                                    style={{
+                                        width: '610px',
+                                        height: '790px',
+                                        backgroundColor: '#e0e0e0',
+                                        textAlign: 'center',
+                                        lineHeight: '300px',
+                                        fontWeight: 'bold',
+                                        fontSize: '20px',
+                                        borderRadius: '10px',
+                                    }}
+                                >
+                                    no workbook
+                                </div>
+                            )}
+                        </>
                     )}
 
                     <div css={sx.navigatorDiv}>
@@ -209,7 +219,7 @@ export const StudentWorkbook = ({ data }: DataType) => {
                             onClick={prevBtnEvent}
                             disabled={prevBtnFlag}
                         >
-                            prev
+                            {'<'}
                         </Button>
 
                         <Button
@@ -266,7 +276,7 @@ export const StudentWorkbook = ({ data }: DataType) => {
                             onClick={nextBtnEvent}
                             disabled={nextBtnFlag}
                         >
-                            next
+                            {'>'}
                         </Button>
 
                         <div></div>
@@ -290,7 +300,7 @@ export const StudentWorkbook = ({ data }: DataType) => {
                     >
                         <ClosePopupBtn closeHandle={handlePopupClose} />
                         <ReactGoogleSlides
-                            width={window.innerWidth - 400}
+                            width={window.innerWidth - 100}
                             height={window.innerHeight}
                             slidesLink={data.result?.workbookId}
                             position={position}

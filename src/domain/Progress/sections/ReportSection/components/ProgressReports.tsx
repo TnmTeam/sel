@@ -2,36 +2,81 @@ import { Stack, Typography } from '@mui/material';
 import { css } from '@emotion/react';
 import Image from 'next/image';
 import report from '@/assets/progress/report/report.png';
-import { ImagePopup } from './popup/ImagePopup';
-import { useModalHooks } from './useModalHooks';
-
-import Dialog from '@mui/material/Dialog';
-import { useState } from 'react';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { LinkPopup } from './popup/LinkPopup';
+import { useEffect, useState } from 'react';
 import { ProgressReportskType } from '../../../types/report.type';
 import { CustomProgress } from '@/common/components/progress';
-import { Url } from 'url';
+import Button from '@mui/material/Button';
+
+
 
 type DataType = {
     data: ProgressReportskType;
 };
 
 export const ProgressReports = ({ data }: DataType) => {
-    const { modalState } = useModalHooks();
-    const [popupUrl, setPopupUrl] = useState('');
+    
+    const [position, setPosition] = useState(1);
+    const [url, setUrl] = useState("");
+    const [prevBtnFlag, setPrevBtnFlag] = useState(false);
+    const [nextBtnFlag, setNextBtnFlag] = useState(false);
 
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const [open, setOpen] = useState(false);
-    const handleClickOpen = (url: string) => {
-        setOpen(true);
-        setPopupUrl(url);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const endPage = data.result?.popupList.length;
+
+    const prevBtnEvent = () => {
+        if(position > 1)
+        {
+          setUrl(data.result.popupList[position-2]); // -1 -1
+          setPosition((position) => position - 1);
+        }
+    }
+    const nextBtnEvent = () => {
+        if(position < endPage)
+        {
+          setUrl(data.result.popupList[position]);  // +1 -1
+          setPosition((position) => position + 1);
+        }
+    }
+
+
+    useEffect(() => {
+        if(endPage > 0)
+        {
+            setPosition(1);
+            setUrl(data.result.popupList[0]);
+        }
+        else
+        {
+            setPosition(0);
+            setUrl("");
+        } 
+    }, [endPage]);
+
+    useEffect(() => {
+        if (endPage <= 1)
+        {
+            setPrevBtnFlag(true);
+            setNextBtnFlag(true);
+        }
+        else
+        {
+            if (position == 1)
+            {
+                setPrevBtnFlag(true);
+                setNextBtnFlag(false);
+            }
+            else if (position == endPage)
+            {
+                setPrevBtnFlag(false);
+                setNextBtnFlag(true);
+            }
+            else
+            {
+                setPrevBtnFlag(false);
+                setNextBtnFlag(false);
+            }
+        }
+    }, [position]);
+
 
     return (
         <Stack css={sx.root}>
@@ -48,31 +93,51 @@ export const ProgressReports = ({ data }: DataType) => {
             ) : (
                 <>
                     <div css={sx.imageContainer}>
-                        {data.result.popupList.map((it, index) => (
-                            <div
-                                css={sx.image}
-                                key={index}
-                                onClick={(e) => {
-                                    handleClickOpen(it);
+                    {
+                        url ? 
+                            <iframe src={url} width={610}></iframe>
+                        : 
+                            <Stack
+                                style={{
+                                    fontFamily: "DM Sans",
+                                    fontWeight: "400",
+                                    fontSize: "20px",
+                                    width: "100%",
+                                    textAlign: "center",
+                                    paddingTop: "50%",
                                 }}
                             >
-                                {/* <Image src={it} alt="report" width={169} height={308} /> */}                                
-                                {ReportThumbnail(index)}
-                            </div>
-                        ))}
+                                No Repoert
+                            </Stack>
+                    }
                     </div>
 
-                    <Dialog
-                        fullScreen={fullScreen}
-                        maxWidth={false}
-                        open={open}
-                        onClose={handleClose}
-                    >
-                        <LinkPopup
-                            popupUrl={popupUrl}
-                            closeHandle={handleClose}
-                        />
-                    </Dialog>
+                    <div css={sx.navigatorDiv}>
+                        <Button
+                        variant="contained" 
+                        color="inherit"
+                        onClick={prevBtnEvent}
+                        disabled={prevBtnFlag}
+                        >
+                            {'<'}
+                        </Button>
+
+                        <Button
+                            style={{width:"100px", cursor:"default"}}
+                        >
+                            {position} / {endPage} 
+                        </Button>
+
+                        <Button
+                        variant="contained" 
+                        color="inherit"
+                        onClick={nextBtnEvent}
+                        disabled={nextBtnFlag}
+                        >
+                            {'>'}
+                        </Button>
+
+                    </div>
                 </>
             )}
         </Stack>
@@ -92,17 +157,9 @@ const sx = {
     `,
     imageContainer: css`
         display: flex;
-        flex-direction: row;        
-        gap: 30px;
-
-        /*
-    border: 5px solid black;
-    */
-        width: 450px;
-        height: 342px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
+        background-color: #efefef;
+        width: 610px;
+        height: 790px;
     `,
     image: css`
         cursor: pointer;
@@ -117,13 +174,13 @@ const sx = {
         line-height: 17px;        
         color: white;
     `,
+    navigatorDiv: css`
+        display: flex;
+        width: 590px;
+        height: 25px;
+        padding-left: 180px;
+        margin-top: 20px;
+  `,
+
 };
 
-const ReportThumbnail = (index:number) => {
-    return (
-      <div>
-        <div css={sx.number}> {index +1 }</div>
-        <Image src={report} alt='report' width={169} height={308} />
-      </div>
-    );
-};
