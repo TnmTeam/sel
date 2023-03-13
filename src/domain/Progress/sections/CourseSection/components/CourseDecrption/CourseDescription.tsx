@@ -6,7 +6,7 @@ type CourseDescriptionType = {
 
 export const CourseDescription = ({ description }: CourseDescriptionType) => {
   return (
-    <Stack paddingX={"36px"} style={{wordBreak: 'normal'}}>
+    <Stack paddingX={"36px"} style={{wordBreak: 'break-word'}}>
       <Typography
         variant="h4"
         color="#1B2137"
