@@ -3,6 +3,33 @@ import { Stack, Typography } from '@mui/material';
 import { ChartType } from './types/chart.type';
 
 export const RateDescription = ({ rate, studentName }: ChartType) => {
+
+    const Impact =( {rate} : {rate:number;} ) => {
+        if(rate == 0){
+            return ( <Typography
+                fontSize='30px'
+                fontWeight={'bold'}
+                color='white'
+                textAlign={'center'}
+                marginBottom={'10px'}
+            >
+                {'IMPACT'}
+            </Typography>);
+        }else{
+            return ( <Typography
+                fontSize='30px'
+                fontWeight={'bold'}
+                color='white'
+                textAlign={'center'}
+                letterSpacing={'-2px'}
+                marginBottom={'10px'}
+            >
+                {rate } / 100
+            </Typography>);
+        }
+        
+    };
+
     return (
         <Stack css={sx.scoreTitleTextContainer}>
             <Stack css={sx.rateTextWrapper}>
@@ -19,7 +46,7 @@ export const RateDescription = ({ rate, studentName }: ChartType) => {
                 <Typography
                     variant='h5'
                     lineHeight={2.0}
-                    marginBottom={'90px'}
+                    marginBottom={'120px'}
                     fontWeight={100}
                     color='white'
                     letterSpacing={'1.5px'}
@@ -29,29 +56,14 @@ export const RateDescription = ({ rate, studentName }: ChartType) => {
                 </Typography>
                 <Typography
                     fontSize='26px'
-                    fontWeight={1200}
+                    fontWeight={'bold'}
                     color='white'
                     textAlign={'center'}
+                    marginBottom={'10px'}
                 >
                     {'On The Road To'}
                 </Typography>
-                <Typography
-                    fontSize='26px'
-                    fontWeight={1200}
-                    color='white'
-                    textAlign={'center'}
-                    marginBottom={'5px'}
-                >
-                    {'IMPACTER'}
-                </Typography>
-                <Typography
-                    fontSize='22px'
-                    fontWeight={200}
-                    color='white'
-                    letterSpacing={'-1px'}
-                >
-                    {rate } / 100
-                </Typography>
+                <Impact rate={rate}/>
             </Stack>
         </Stack>
     );
