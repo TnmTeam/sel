@@ -510,18 +510,16 @@ export const Authentication = () => {
             item
             xs={12}
             sm={12}
-            md={12}
-            xl={6}
-            component={Paper}
+            md={6}
+            xl={6}            
             height={'100%'}
         >
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}
                 display={'flex'}
-                sx={{
-                    mx: 25,
-                    mt: 30,
+                sx={{                    
+                    mt: 28,
                     //mb: 15,
                 }}
             >
@@ -595,10 +593,18 @@ export const Authentication = () => {
                                     />
                                 </Stack>
                             </Stack>
-                            <Stack sx={{display: 'inline-block', fontSize:'15px', fontWeight:540,ml:'17px',  }}>
-                                <Stack sx={{position: 'absolute', top:'328px'  }}>
-                                    <span style={{fontFamily: "'Poppins', sans-serif"}}>Sign in with Google</span>
-                                </Stack> 
+                            <Stack
+                                sx={{
+                                    position: 'relative',
+                                    top: '-5px',
+                                    display: 'inline-block',
+                                    color: 'white',
+                                    fontSize: '15px',
+                                    fontWeight: 540,
+                                    ml: '17px',
+                                }}
+                            >
+                                Sign in with Google
                             </Stack>
                         </Stack>
                     </Link>
@@ -1049,7 +1055,6 @@ const sx = {
         text-align: center;
     `,
     googleButton: css`
-        font-family: 'Poppins', sans-serif;    
         font-size: 14px;
         line-height: 24px;
         color: #fff;
