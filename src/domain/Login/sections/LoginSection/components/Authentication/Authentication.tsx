@@ -113,6 +113,7 @@ export const Authentication = () => {
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const [emailCheckFlag, setEmailCheckFlag] = useState(false);
     const [emailCheckButtonFlag, setEmailCheckButtonFlag] = useState(true);
+    const [passwordSendFlag, setPasswordSendFlag] = useState(false);
     const [passwordMent, setPasswordMent] = useState(
         'Please enter your email to reset your password.'
     );
@@ -123,6 +124,7 @@ export const Authentication = () => {
         setEmailCheckFlag(true);
         setEmailCheckButtonFlag(true);
         setPasswordMent('Please enter your email to reset your password.');
+        setPasswordSendFlag(false);
     };
     const [findEmailCheck, setFindEmailCheck] = useState('');
 
@@ -168,6 +170,7 @@ export const Authentication = () => {
                 );
                 setLoading(false);
                 setEmailCheckButtonFlag(true);
+                setPasswordSendFlag(true);
             } else {
                 setLoading(false);
             }
@@ -177,6 +180,7 @@ export const Authentication = () => {
             setEmailCheckFlag(false);
             setLoading(false);
             setEmailCheckButtonFlag(true);
+            setPasswordSendFlag(false);
         }
     };
 
@@ -772,7 +776,10 @@ export const Authentication = () => {
                             >
                                 {passwordMent}
                             </DialogContentText>
-                            {emailCheckFlag ? (
+                            {passwordSendFlag ? (
+                            <></>
+                        ) : (
+                            emailCheckFlag ? (
                                 <TextField
                                     required
                                     fullWidth
@@ -802,7 +809,10 @@ export const Authentication = () => {
                                     disabled={loading}
                                     sx={{ marginTop: '5px' }}
                                 />
-                            )}
+                            )
+                        )
+                        }
+                            
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleClose} autoFocus>
