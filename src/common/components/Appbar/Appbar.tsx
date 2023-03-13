@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Colors} from '@/common/themes/Color';
+import { Colors } from '@/common/themes/Color';
 import { Stack, Box, AppBar, Typography, Button } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import Image from 'next/image';
@@ -17,9 +17,8 @@ import { StudentCourseSection } from './components/StudentCourseSection/StudentC
 import { useStudentList } from './components/StudentCourseSection/useStudentCourse';
 
 export const Appbar = () => {
-    const {studentListState} = useStudentList();
+    const { studentListState } = useStudentList();
 
-    
     // const currenStudentMap: any = useRecoilValue(studentMapState);
 
     // //(currenStudentMap);
@@ -38,6 +37,7 @@ export const Appbar = () => {
         //     title: '- ' + studentName + ' -',
         //     buttonType: 'text',
         // },
+        { menuType: 'select', url: '', title: 'StudentCourse', buttonType: '' },
         {
             menuType: 'button',
             url: '/overview',
@@ -85,16 +85,35 @@ export const Appbar = () => {
             buttonType: 'text',
         },
     ];
-    
+
     return (
         <Box sx={{ flexGrow: 1 }}>
+            <Stack
+                sx={{
+                    position: 'fixed',
+                    zIndex: 998,
+                    top: 0,
+                    left: 0,
+                    background: Colors.BackBlue,
+                    width: '100%',
+                    height: 79,
+                }}
+            >
+                
+            </Stack>
             <AppBar
                 position='static'
-                sx={{ height: 89, background: Colors.BackBlue, position: 'fixed', zIndex:999, width: '1440px' }}
+                sx={{
+                    height: 79,
+                    background: Colors.BackBlue,
+                    position: 'fixed',
+                    zIndex: 999,
+                    width: '1440px',
+                    boxShadow: '0 0 0 0'
+                }}
             >
-                <Toolbar component='div' sx={{ height: 89 }}>
+                <Toolbar component='div' sx={{ height: 79 }}>
                     {menu.map((item, index) => {
-                        
                         if (item.menuType === 'button') {
                             return (
                                 <TextMenu
@@ -112,7 +131,7 @@ export const Appbar = () => {
                                 <Link
                                     key={index}
                                     css={{ textDecoration: 'none' }}
-                                    href='/overview'
+                                    href='https://www.impacterpathway.com/'
                                 >
                                     <Button>
                                         <Logo />
@@ -132,10 +151,12 @@ export const Appbar = () => {
                             return <NotificationDialogIcon key={index} />;
                         } else if (item.menuType === 'logout') {
                             return <Logout key={index} />;
+                        } else if (item.menuType === 'select') {
+                            return <StudentCourseSection key={index} data={studentListState}/>
                         }
                     })}
                 </Toolbar>
-                <StudentCourseSection data={studentListState}/>
+                {/*<StudentCourseSection data={studentListState} />*/}
             </AppBar>
         </Box>
     );
