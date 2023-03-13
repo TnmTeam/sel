@@ -147,6 +147,12 @@ export const StudentWorkbook = ({data}: DataType) => {
         setWorkbootId(data.result.workbookId);
         getGoogleSlides();
       }
+
+      if(data.result.workbookId == undefined)
+      {
+        setEndPage(0);
+        setPosition(0);
+      }
     }
 
   }, [data.result]);
@@ -154,7 +160,7 @@ export const StudentWorkbook = ({data}: DataType) => {
 
   useEffect(() => {
 
-    if (endPage == 1)
+    if (endPage <= 1)
     {
       setPrevBtnFlag(true);
       setNextBtnFlag(true);
@@ -194,17 +200,20 @@ export const StudentWorkbook = ({data}: DataType) => {
         )
         : 
         (
-          data.result?.workbookId == undefined ?
+          <>
+          {
+          data.result.workbookId == undefined ?
           (
             <Stack 
               style={{
-                width: "650px", 
-                height: "800px",
+                width: "610px", 
+                height: "790px",
                 backgroundColor: "#efefef",
                 fontFamily: "DM Sans",
                 fontWeight: "400",
                 fontSize: "20px",
                 textAlign: "center",
+                paddingTop: "50%",
               }}
             >
               No Presentation
@@ -213,7 +222,6 @@ export const StudentWorkbook = ({data}: DataType) => {
           :
           (
             <>
-
               {
                 fullBtnFlag ? 
                 <ReactGoogleSlides
@@ -240,95 +248,96 @@ export const StudentWorkbook = ({data}: DataType) => {
                   no workbook
                 </div>
               }
-              
-
-              <div css={sx.navigatorDiv}>
-                <Button
-                  variant="contained" 
-                  color="inherit"
-                  onClick={prevBtnEvent}
-                  disabled={prevBtnFlag}
-                >
-                  prev
-                </Button>
-                
-                <Button
-                  id="fade-button"
-                  aria-controls={open ? 'fade-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? 'true' : undefined}
-                  onClick={handleClick}
-                  style={{width:"100px"}}
-                >
-                  {position} / {endPage} 
-                </Button>
-                <Menu
-                  id="fade-menu"
-                  MenuListProps={{
-                    'aria-labelledby': 'fade-button',
-                  }}
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  TransitionComponent={Fade}
-                  style={{height:"200px"}}
-                >
-                  {
-                    // use_for(endPage)
-
-                    (() => {
-                      const result = [];
-                      for (let i = 0; i < endPage; i++) {
-                        const idx = i+1;
-                        result.push( <MenuItem key={i} onClick={(e)=>{handleValue(idx)}} style={{height:"50%", fontSize:"13px"}}>{idx} page</MenuItem> );
-                      }
-                      return result;
-                    })()
-
-                  }
-                </Menu>
-
-                <Button
-                  variant="contained" 
-                  color="inherit"
-                  onClick={nextBtnEvent}
-                  disabled={nextBtnFlag}
-                  >
-                  next
-                </Button>
-
-                <div></div>
-
-                <Button
-                  variant="contained" 
-                  color="inherit"
-                  onClick={handleClickPopupOpen} 
-                  disabled={!fullBtnFlag}
-                  style={{ marginLeft: "50px" }}
-                >
-                  <FullscreenIcon />
-                </Button>
-              </div>
-
-
-
-              <Dialog
-                fullScreen={fullScreen}
-                maxWidth={false}
-                open={popupOpen}
-                onClose={handlePopupClose}
-              >
-                <ReactGoogleSlides
-                  width={window.innerWidth - 100} 
-                  height={window.innerHeight}
-                  slidesLink={data.result?.workbookId}
-                  position={position}
-                  showControls={true}
-                />
-              </Dialog>
-              
             </>
           )
+          }
+
+          <div css={sx.navigatorDiv}>
+            <Button
+              variant="contained" 
+              color="inherit"
+              onClick={prevBtnEvent}
+              disabled={prevBtnFlag}
+            >
+              {'<'}
+            </Button>
+            
+            <Button
+              id="fade-button"
+              aria-controls={open ? 'fade-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+              style={{width:"100px"}}
+            >
+              {position} / {endPage} 
+            </Button>
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                'aria-labelledby': 'fade-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+              style={{height:"200px"}}
+            >
+              {
+                // use_for(endPage)
+
+                (() => {
+                  const result = [];
+                  for (let i = 0; i < endPage; i++) {
+                    const idx = i+1;
+                    result.push( <MenuItem key={i} onClick={(e)=>{handleValue(idx)}} style={{height:"50%", fontSize:"13px"}}>{idx} page</MenuItem> );
+                  }
+                  return result;
+                })()
+
+              }
+            </Menu>
+
+            <Button
+              variant="contained" 
+              color="inherit"
+              onClick={nextBtnEvent}
+              disabled={nextBtnFlag}
+              >
+                {'>'}
+            </Button>
+
+            <div></div>
+
+            <Button
+              variant="contained" 
+              color="inherit"
+              onClick={handleClickPopupOpen} 
+              disabled={!fullBtnFlag}
+              style={{ marginLeft: "50px" }}
+            >
+              <FullscreenIcon />
+            </Button>
+          </div>
+
+
+
+          <Dialog
+            fullScreen={fullScreen}
+            maxWidth={false}
+            open={popupOpen}
+            onClose={handlePopupClose}
+          >
+            <ReactGoogleSlides
+              width={window.innerWidth - 100} 
+              height={window.innerHeight}
+              slidesLink={data.result?.workbookId}
+              position={position}
+              showControls={true}
+            />
+          </Dialog>
+
+          </>
         )
       }
       
