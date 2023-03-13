@@ -27,8 +27,7 @@ export const ActivityContent = ({ selectedDetailCourse }: CourseMediaType) => {
 
     var data1 = useGetUnitItemContent1(studentId, courseId, unitIds);
     var models = data1.data;
-    console.log("ActivityContent");
-    console.log( models );
+    
     //export const ActivityContent = () => {
     return (
         <Stack css={sx.root}>
