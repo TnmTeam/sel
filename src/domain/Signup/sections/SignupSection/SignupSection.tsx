@@ -18,6 +18,13 @@ import {
     signInWithEmailAndPassword,
 } from '@/domain/Login/sections/LoginSection/firebaseConfig';
 import router from 'next/router';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 export const SignupSection = () => {
     useEffect(() => {
@@ -58,7 +65,7 @@ export const SignupSection = () => {
     }, [password, passwordConfirm, isPassword]);
 
     const handleSubmit = useCallback(
-        (event: React.FormEvent<HTMLFormElement>) => {
+        async (event: React.FormEvent<HTMLFormElement>) => {
             setLoading(true); // loading bar start
             event.preventDefault();
             //console.log(event.currentTarget);
@@ -86,10 +93,12 @@ export const SignupSection = () => {
                 return;
             }
 
+            const validateEmailCheck = validateEmail(email);
+            console.log( await validateEmailCheck ) ;
             //console.log(name, email, role, password);
-
-            // firebase 회원가입 진행
-            createUserWithEmailAndPassword(auth, email, password)
+            if( await validateEmailCheck ){
+                 // firebase 회원가입 진행
+                createUserWithEmailAndPassword(auth, email, password)
                 .then(async (data) => {
                     // console.log(data);
                     const accessToken = await data.user.getIdToken();
@@ -121,9 +130,37 @@ export const SignupSection = () => {
                             break;
                     }
                 });
+            }else {
+                setLoading(false);
+                setOpen(true);
+            }
+           
         },
         []
     );
+
+    const validateEmail = async (email: any) => {
+
+        var param = { 
+            parent_email : email
+        };
+
+        const response = await axiosClient.post(`/navigation/student-list`, param);
+        const data = response.data;
+
+        let result = false;
+        if ( data.length == 0 ) result = true;
+
+        return result;
+    }
+
+    const [open, setOpen] = useState(false);
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const firebaseLogin = (
         name: string,
@@ -369,6 +406,39 @@ export const SignupSection = () => {
                     >
                         Sign Up
                     </Button>
+                    <Dialog
+                        fullScreen={fullScreen}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby='responsive-dialog-title'
+                        
+                    >
+                        <DialogTitle
+                            id='responsive-dialog-title'
+                            sx={{ width: '730px', fontWeight: 'bold', textAlign: 'center', mt:1}}
+                        >
+                            {'Unfortunately, that email is not listed in our Student/Parent Database.'}
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText
+                                sx={{
+                                    whiteSpace: 'pre-wrap',
+                                    textAlign: 'center',
+                                    mt:3,
+                                }}
+                            >
+                                
+                                Please try again with an email you used when registering for Impacter Pathway.
+                            </DialogContentText>
+                            
+                            
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose} autoFocus>
+                                Close
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                     {loading && (
                         <CircularProgress
                             size={40}
@@ -412,3 +482,5 @@ const Copyright = () => {
         </Typography>
     );
 };
+
+
