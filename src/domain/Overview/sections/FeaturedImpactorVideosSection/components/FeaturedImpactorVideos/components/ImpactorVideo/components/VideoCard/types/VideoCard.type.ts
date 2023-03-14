@@ -30,6 +30,7 @@ export type Thumbnails = {
     medium: Medium;
     high: High;
     standard: Standard;
+    maxres: Maxres;
 };
 
 export type ResourceId = {
@@ -61,6 +62,12 @@ export type Medium = {
 };
 
 export type Standard = {
+    url: string;
+    width: string;
+    height: string;
+};
+
+export type Maxres = {
     url: string;
     width: string;
     height: string;

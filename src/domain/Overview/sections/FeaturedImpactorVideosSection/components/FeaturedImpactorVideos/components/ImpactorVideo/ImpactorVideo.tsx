@@ -112,7 +112,7 @@ const sx = {
         margin-top: 10px;
     `,
     button: css`
-        font-size:16px;
+        font-size: 15pt;
         line-height: 51px;
         text-transform: none;
     `,

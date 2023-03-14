@@ -46,6 +46,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useCookies } from 'react-cookie';
+import { Stack } from '@mui/material';
 
 var checkId = false;
 var remRogIds: string = '';
@@ -112,6 +113,7 @@ export const Authentication = () => {
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const [emailCheckFlag, setEmailCheckFlag] = useState(false);
     const [emailCheckButtonFlag, setEmailCheckButtonFlag] = useState(true);
+    const [passwordSendFlag, setPasswordSendFlag] = useState(false);
     const [passwordMent, setPasswordMent] = useState(
         'Please enter your email to reset your password.'
     );
@@ -122,6 +124,7 @@ export const Authentication = () => {
         setEmailCheckFlag(true);
         setEmailCheckButtonFlag(true);
         setPasswordMent('Please enter your email to reset your password.');
+        setPasswordSendFlag(false);
     };
     const [findEmailCheck, setFindEmailCheck] = useState('');
 
@@ -167,6 +170,7 @@ export const Authentication = () => {
                 );
                 setLoading(false);
                 setEmailCheckButtonFlag(true);
+                setPasswordSendFlag(true);
             } else {
                 setLoading(false);
             }
@@ -176,6 +180,7 @@ export const Authentication = () => {
             setEmailCheckFlag(false);
             setLoading(false);
             setEmailCheckButtonFlag(true);
+            setPasswordSendFlag(false);
         }
     };
 
@@ -505,18 +510,16 @@ export const Authentication = () => {
             item
             xs={12}
             sm={12}
-            md={12}
-            xl={6}
-            component={Paper}
+            md={6}
+            xl={6}            
             height={'100%'}
         >
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}
                 display={'flex'}
-                sx={{
-                    mx: 25,
-                    mt: 30,
+                sx={{                    
+                    mt: 25,
                     //mb: 15,
                 }}
             >
@@ -524,9 +527,9 @@ export const Authentication = () => {
                     component='h1'
                     variant='h3'
                     textAlign='center'
-                    sx={{ mb: 2, fontSize: 25 }}
+                    sx={{ mb: 4, fontSize: 25 }}
                 >
-                    Welcome Parents!
+                    Impacter Pathway<br></br>Parent Dashboard
                 </Typography>
 
                 <Grid
@@ -534,29 +537,77 @@ export const Authentication = () => {
                     flexDirection={'column'}
                     alignItems={'center'}
                     display={'flex'}
-                    sx={{ mb: 2 }}
+                    sx={{ mb: 4 }}
                 >
-                    <Link href='#' onClick={handleGoogleLogin}>
-                        <Avatar
+                    <Link href='#' onClick={handleGoogleLogin} css={sx.googleButton}>
+                        {/* <Avatar
                             sx={{
                                 mb: 3,
                                 // bgcolor: 'secondary.main',
                                 bgcolor: 'transparent',
-                                width: '50px',
+                                width: '100px',
                                 height: '50px',
                                 border: '1px solid #d3d3d3',
                             }}
                         >
-                            {/* <GoogleIcon /> */}
                             <Image
                                 src={GoogleLogo}
                                 alt='googleIcon'
                                 width={30}
                                 height={30}
                             />
-                        </Avatar>
+                        </Avatar> 
+                        */}
+                        <Stack sx={{
+                                // bgcolor: 'secondary.main',
+                                bgcolor: 'transparent',
+                                width: '220px',
+                                height: '52px',
+                                display: 'inline-block',
+                                padding: '2px',
+                                backgroundColor: '#3a88f4',
+                                borderRadius: '3px',
+                                boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);',
+                            }}>
+                            <Stack sx={{
+                                
+                                // bgcolor: 'secondary.main',
+                                bgcolor: 'transparent',
+                                width: '48px',
+                                height: '48px',
+                                border: '1px solid #d3d3d3',
+                                display: 'inline-block',
+                                backgroundColor: '#fff',
+                                borderRadius: '3px',
+                            }}>
+                                <Stack sx={{
+                                    mt: 1.5,
+                                    ml: 1.4,
+                                }}>
+                                    <Image
+                                        src={GoogleLogo}
+                                        alt='googleIcon'
+                                        width={23}
+                                        height={23}
+                                        
+                                    />
+                                </Stack>
+                            </Stack>
+                            <Stack
+                                sx={{
+                                    position: 'relative',
+                                    top: '-5px',
+                                    display: 'inline-block',
+                                    color: 'white',
+                                    fontSize: '15px',
+                                    fontWeight: 540,
+                                    ml: '17px',
+                                }}
+                            >
+                                Sign in with Google
+                            </Stack>
+                        </Stack>
                     </Link>
-                    <Box>- OR -</Box>
                 </Grid>
                 {/*
                 {buttonHidden == '' ? (
@@ -731,7 +782,10 @@ export const Authentication = () => {
                             >
                                 {passwordMent}
                             </DialogContentText>
-                            {emailCheckFlag ? (
+                            {passwordSendFlag ? (
+                            <></>
+                        ) : (
+                            emailCheckFlag ? (
                                 <TextField
                                     required
                                     fullWidth
@@ -761,7 +815,10 @@ export const Authentication = () => {
                                     disabled={loading}
                                     sx={{ marginTop: '5px' }}
                                 />
-                            )}
+                            )
+                        )
+                        }
+                            
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleClose} autoFocus>
@@ -819,10 +876,11 @@ export const Authentication = () => {
             >
                 <Link href='/signup' css={sx.forgotButton}>
                     <span css={sx.SignupBf}>
-                        Don&apos;t have an account yet?
+                        First time logging in?
                     </span>
+                    <br></br>
                     &nbsp;&nbsp;
-                    <span css={sx.SignupAf}>Signup for a course.</span>
+                    <span css={sx.SignupAf}>Click HERE to associate your email with your student’s account.</span>
                 </Link>
             </Box>
         </Grid>
@@ -847,7 +905,7 @@ export const Authentication = () => {
                     textAlign='center'
                     sx={{ mb: 3 }}
                 >
-                    Welcome Parents!
+                    Impacter Pathway Parent Dashboard
                 </Typography>
 
                 <Grid
@@ -969,10 +1027,9 @@ const sx = {
         color: #6787b7;
         text-decoration-line: none;
         text-transform: none;
+        text-align: center;
     `,
     inputboxLabel: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
@@ -980,27 +1037,30 @@ const sx = {
         cursor: default;
     `,
     inputbox: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
         color: #4f5b70;
     `,
     SignupBf: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-weight: 400;
         font-size: 14px;
         line-height: 22px;
         color: #4f5b70;
+        text-align: center;
     `,
     SignupAf: css`
-        font-family: 'DM Sans';
-        font-style: normal;
         font-size: 14px;
         line-height: 22px;
+        text-align: center;
     `,
+    googleButton: css`
+        font-size: 14px;
+        line-height: 24px;
+        color: #fff;
+        text-decoration-line: none;
+        text-transform: none;
+    `
 };
 
 const Copyright = () => {

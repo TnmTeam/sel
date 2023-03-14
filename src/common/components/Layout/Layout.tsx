@@ -26,11 +26,13 @@ export const Layout = ({ children }: LayoutProps) => {
     
     
     return (
-        <Stack css={st.root}>
+        <Stack css={st.background}>
+        <Stack css={st.root}>            
             <Appbar/>
-            <Stack direction='row' width='100%' height='100%' mt={16}>
+            <Stack direction='row' width='100%' height='100%' mt={9} css={st.children}>
                 <main css={st.main}>{children}</main>
             </Stack>
+        </Stack>
         </Stack>
     );
 };
@@ -38,10 +40,19 @@ export const Layout = ({ children }: LayoutProps) => {
 
 
 const st = {
+    background: css`
+        width: 100%;
+        background-color: rgba(74,113,153,1);
+    `,
     root: css`
         width: 100%;
         max-width: 1440px;
         margin: 0 auto;
+    `,
+    children: css`
+        width: 100%;
+        max-width: 1440px;        
+        background: white;
     `,
     main: css`
         width: 100%;

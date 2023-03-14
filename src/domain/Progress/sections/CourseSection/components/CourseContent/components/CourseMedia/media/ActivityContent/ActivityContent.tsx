@@ -17,23 +17,35 @@ export const ActivityContent = ({ selectedDetailCourse }: CourseMediaType) => {
     var studentId = '';
     var courseId = '';
     var unitIds = '';
-
+    var title = '';
     if (selectedDetailCourse) {
         studentId = selectedDetailCourse.studentId;
         courseId = selectedDetailCourse.courseId;
         unitIds = selectedDetailCourse.unitId;
+        title = selectedDetailCourse.title;
     }
 
     var data1 = useGetUnitItemContent1(studentId, courseId, unitIds);
     var models = data1.data;
-   //console.log("ActivityContent");
-    //console.log( models );
+    
     //export const ActivityContent = () => {
     return (
         <Stack css={sx.root}>
             <Stack css={sx.container}>
                 {models && models?.length > 0 ? (
                     <Stack spacing={'20px'}>
+                        <Typography
+                            variant="h5"
+                            fontWeight={'bold'}
+                            color="#1B2137"
+                            sx={{ opacity: "0.7"}}
+                        >
+                            {title}
+                        </Typography>
+                        <Typography
+                            sx={{borderBottom: 1, borderColor: '#DBB5C8'}}
+                        >
+                        </Typography>
                         {models?.map((it, index) => (
                             <AnswerItem
                                 key={index}
@@ -52,17 +64,18 @@ export const ActivityContent = ({ selectedDetailCourse }: CourseMediaType) => {
 
 const sx = {
     root: css`
-        width: 100%;
+        width: 96%;
         height: 740px;
         display: flex;
         overflow: auto;
         align-items: center;
-        padding-top: 100px;
+        padding-top: 10px;
+        font-family: DM Sans;
     `,
 
     container: css`
         position: relative;
-        width: 556px;
+        width: 96%;
         height: 483px;
     `,
 };
