@@ -36,18 +36,6 @@ body {
     font-family: 'DM Sans', sans-serif;
 }
 
-.css-1mtumca-MuiFormLabel-root-MuiInputLabel-root {
-    color: rgb(255 255 255);
-    font-size: 19px;
-    font-weight: bold;
-    margin-left: 5px;
-}
-.css-1mtumca-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
-    color: rgb(255 255 255);
-    font-weight: bold;
-    font-size: 19px;
-}
-
 .custom-filter:focus-within {
     color: #495057;
     background-color: #fff;
@@ -56,10 +44,6 @@ body {
     box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
 }
 
-.css-m3l1ig-MuiNativeSelect-select-MuiInputBase-input.css-m3l1ig-MuiNativeSelect-select-MuiInputBase-input.css-m3l1ig-MuiNativeSelect-select-MuiInputBase-input {
-    border-radius: 18px;
-    font-size: 15px;
-}
 
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper{
     max-width: 730px;
