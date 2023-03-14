@@ -518,6 +518,7 @@ export const Authentication = () => {
                     open={openStudentCheck}
                     onClose={handleStudentCheckClose}
                     aria-labelledby='responsive-dialog-title'
+                    sx={{ '& .MuiDialog-paper' : { maxWidth:'730px'}}} 
                 >
                     <DialogTitle
                         id='responsive-dialog-title'

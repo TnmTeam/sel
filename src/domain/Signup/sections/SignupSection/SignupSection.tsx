@@ -369,9 +369,9 @@ export const SignupSection = () => {
                         fullScreen={fullScreen}
                         open={open}
                         onClose={handleClose}
-                        aria-labelledby='responsive-dialog-title'
-                        sx={{ '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper' : { maxWidth:'730px'}}}
-                    >
+                        aria-labelledby='responsive-dialog-title'                              
+                        sx={{ '& .MuiDialog-paper' : { maxWidth:'730px'}}} 
+                        >                  
                         <DialogTitle
                             id='responsive-dialog-title'
                             sx={{ width: '730px', fontWeight: 'bold', textAlign: 'center', mt:1}}
