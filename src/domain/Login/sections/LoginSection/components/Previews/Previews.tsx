@@ -23,7 +23,7 @@ export const Previews = () => {
                 // backgroundImage: 'url(https://source.unsplash.com/random)',
                 // backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',                
-                minHeight: '800px'
+                minHeight: '700px'
             }}
         >
             <Stack css={sx.previewImage}>
@@ -33,8 +33,8 @@ export const Previews = () => {
                     style={{
                         position: 'relative',
                         background: Colors.BackBlue,
-                        width: '75%',                        
-                        height: '75%',
+                        width: '85%',                        
+                        height: '90%',
                         margin: 'auto'
                     }}
                     images={images}

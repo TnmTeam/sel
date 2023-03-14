@@ -83,6 +83,23 @@ export const Authentication = () => {
         remRogIds = cookies.remRogId;
     }
 
+    const validateEmail = async (email: any) => {
+        var param = {
+            parent_email: email,
+        };
+
+        const response = await axiosClient.post(
+            `/navigation/student-list`,
+            param
+        );
+        const data = response.data;
+
+        let result = true;
+        if (data.length == 0) result = false;
+
+        return result;
+    };
+
     // email
     const onChangeEmail = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,6 +125,7 @@ export const Authentication = () => {
     };
 
     const [open, setOpen] = useState(false);
+    const [openStudentCheck, setOpenStudentCheck] = useState(false);
     const [forgotPwReason, setforgotPwReason] = useState('');
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -157,6 +175,10 @@ export const Authentication = () => {
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleStudentCheckClose = () => {
+        setOpenStudentCheck(false);
     };
 
     const handleAgree = async () => {
@@ -260,20 +282,32 @@ export const Authentication = () => {
                 // 만료되었거나 5분 이내 완료이면 새로 발급해오는 듯?
                 //console.log(localStorage);
                 localStorage.setItem('accessToken', accessToken);
-                if (data.user.email != null)
-                    localStorage.setItem('email', await data.user.email);
-                if (data.user.displayName != null)
-                    localStorage.setItem(
-                        'displayName',
-                        await data.user.displayName
-                    );
-                if (data.user.displayName != null)
-                    localStorage.setItem('uid', await data.user.uid);
-                //console.log('localStorage', localStorage);
 
-                // 로그인 API 연동
-                authLogin();
-                //location.href='/overview';
+                var email = await data.user.email;
+
+                // student check
+                const validateEmailCheck = validateEmail(email);
+
+                if (await validateEmailCheck) {
+                    // 회원가입 진행
+                    if (email != null) localStorage.setItem('email', email);
+                    if (data.user.displayName != null)
+                        localStorage.setItem(
+                            'displayName',
+                            await data.user.displayName
+                        );
+                    if (data.user.displayName != null)
+                        localStorage.setItem('uid', await data.user.uid);
+                    //console.log('localStorage', localStorage);
+
+                    // 로그인 API 연동
+                    authLogin();
+                    //location.href='/overview';
+                } // 매칭되는 학생 없음
+                else {
+                    setLoading(false);
+                    setOpenStudentCheck(true);
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -506,20 +540,13 @@ export const Authentication = () => {
     };
 
     return (
-        <Grid
-            item
-            xs={12}
-            sm={12}
-            md={6}
-            xl={6}            
-            height={'100%'}
-        >
+        <Grid item xs={12} sm={12} md={6} xl={6} height={'100%'}>
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}
                 display={'flex'}
-                sx={{                    
-                    mt: 25,
+                sx={{
+                    mt: 28,
                     //mb: 15,
                 }}
             >
@@ -539,7 +566,11 @@ export const Authentication = () => {
                     display={'flex'}
                     sx={{ mb: 4 }}
                 >
-                    <Link href='#' onClick={handleGoogleLogin} css={sx.googleButton}>
+                    <Link
+                        href='#'
+                        onClick={handleGoogleLogin}
+                        css={sx.googleButton}
+                    >
                         {/* <Avatar
                             sx={{
                                 mb: 3,
@@ -558,7 +589,8 @@ export const Authentication = () => {
                             />
                         </Avatar> 
                         */}
-                        <Stack sx={{
+                        <Stack
+                            sx={{
                                 // bgcolor: 'secondary.main',
                                 bgcolor: 'transparent',
                                 width: '220px',
@@ -567,29 +599,33 @@ export const Authentication = () => {
                                 padding: '2px',
                                 backgroundColor: '#3a88f4',
                                 borderRadius: '3px',
-                                boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);',
-                            }}>
-                            <Stack sx={{
-                                
-                                // bgcolor: 'secondary.main',
-                                bgcolor: 'transparent',
-                                width: '48px',
-                                height: '48px',
-                                border: '1px solid #d3d3d3',
-                                display: 'inline-block',
-                                backgroundColor: '#fff',
-                                borderRadius: '3px',
-                            }}>
-                                <Stack sx={{
-                                    mt: 1.5,
-                                    ml: 1.4,
-                                }}>
+                                boxShadow:
+                                    '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);',
+                            }}
+                        >
+                            <Stack
+                                sx={{
+                                    // bgcolor: 'secondary.main',
+                                    bgcolor: 'transparent',
+                                    width: '48px',
+                                    height: '48px',
+                                    border: '1px solid #d3d3d3',
+                                    display: 'inline-block',
+                                    backgroundColor: '#fff',
+                                    borderRadius: '3px',
+                                }}
+                            >
+                                <Stack
+                                    sx={{
+                                        mt: 1.5,
+                                        ml: 1.4,
+                                    }}
+                                >
                                     <Image
                                         src={GoogleLogo}
                                         alt='googleIcon'
                                         width={23}
                                         height={23}
-                                        
                                     />
                                 </Stack>
                             </Stack>
@@ -609,6 +645,43 @@ export const Authentication = () => {
                         </Stack>
                     </Link>
                 </Grid>
+                <Dialog
+                    fullScreen={fullScreen}
+                    open={openStudentCheck}
+                    onClose={handleStudentCheckClose}
+                    aria-labelledby='responsive-dialog-title'
+                >
+                    <DialogTitle
+                        id='responsive-dialog-title'
+                        sx={{
+                            width: '730px',
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            mt: 1,
+                        }}
+                    >
+                        {
+                            'Unfortunately, that email is not listed in our Student/Parent Database.'
+                        }
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText
+                            sx={{
+                                whiteSpace: 'pre-wrap',
+                                textAlign: 'center',
+                                mt: 3,
+                            }}
+                        >
+                            Please try again with an email you used when
+                            registering for Impacter Pathway.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleStudentCheckClose} autoFocus>
+                            Close
+                        </Button>
+                    </DialogActions>
+                </Dialog>
                 {/*
                 {buttonHidden == '' ? (
                     <></>
@@ -783,9 +856,8 @@ export const Authentication = () => {
                                 {passwordMent}
                             </DialogContentText>
                             {passwordSendFlag ? (
-                            <></>
-                        ) : (
-                            emailCheckFlag ? (
+                                <></>
+                            ) : emailCheckFlag ? (
                                 <TextField
                                     required
                                     fullWidth
@@ -815,10 +887,7 @@ export const Authentication = () => {
                                     disabled={loading}
                                     sx={{ marginTop: '5px' }}
                                 />
-                            )
-                        )
-                        }
-                            
+                            )}
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleClose} autoFocus>
@@ -875,12 +944,13 @@ export const Authentication = () => {
                 }}
             >
                 <Link href='/signup' css={sx.forgotButton}>
-                    <span css={sx.SignupBf}>
-                        First time logging in?
-                    </span>
+                    <span css={sx.SignupBf}>First time logging in?</span>
                     <br></br>
                     &nbsp;&nbsp;
-                    <span css={sx.SignupAf}>Click HERE to associate your email with your student’s account.</span>
+                    <span css={sx.SignupAf}>
+                        Click HERE to associate your email with your student’s
+                        account.
+                    </span>
                 </Link>
             </Box>
         </Grid>
@@ -1060,7 +1130,7 @@ const sx = {
         color: #fff;
         text-decoration-line: none;
         text-transform: none;
-    `
+    `,
 };
 
 const Copyright = () => {
