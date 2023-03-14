@@ -28,11 +28,8 @@ export const useCourseProgressSection = () => {
     };
   }
 
-  // console.log("useCourseProgressSection data ",data);
-
 
   // CourseProgress
-
   const plain: CourseItemType[] = [];
 
   data.map( (it, index) => {
@@ -49,9 +46,6 @@ export const useCourseProgressSection = () => {
     title: "Course Progress",
     plain: plain
   }
-
-  // console.log("models " , models);
-
 
   return {
     courseProgressState: {

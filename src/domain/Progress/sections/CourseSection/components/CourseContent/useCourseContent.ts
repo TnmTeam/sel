@@ -42,32 +42,22 @@ export const useCourseContent = (models: CourseType[]) => {
 
   // 대강의의 index 가 바뀔 때마다 소강의 api 호출
   useEffect(() => {
-      //console.log("useCourseContent useEffect courseIndex : "+courseIndex);
       if (!courseIndex) return;
-      //console.log("useCourseContent useEffect courseIndex2 : "+courseIndex);
-      //console.log("useCourseContent useEffect sectNum : "+sectNum);
       mutate();
-      //console.log("useEffect data");
-      //console.log(data);
       // 포커스 초기화
       focusState({});
   }, [courseIndex, mutate]);
 
   // funcstions
   const handleSetCourse = (selectedCourse: CourseType) => {
-    //console.log("useCourseContent handleSetCourse selectedCourse");
-    //console.log(selectedCourse);
     setCourse(selectedCourse);
   };
   const handleSetCourseReset = () => {
-    //console.log("useCourseContent handleSetCourseReset");
     setCourse(null);
     setDetailCourse(null);
   };
 
   const handleSetDetailCourse = (selectedDetailCourse: DetailCourseType) => {
-    //console.log("useCourseContent handleSetDetailCourse selectedDetailCourse");
-    //console.log(selectedDetailCourse);
     setDetailCourse(selectedDetailCourse);
   };
 
@@ -90,8 +80,6 @@ export const useCourseContent = (models: CourseType[]) => {
 const mappingToDetailCourses = (
   list: UnitItem[] | null, studentId:string, courseId:string, studentIdNum:number, sectNum:string
 ): DetailCourseType[] | null => {
-  //console.log("mappingToDetailCourses list");
-  //console.log(list);
   if (!list) {
     return null;
   }

@@ -62,7 +62,6 @@ export const StudentWorkbook = ({ data }: DataType) => {
     };
 
     const handleValue = (val: number) => {
-        //console.log("select val " , val);
         setPosition(val);
         handleClose();
     };
@@ -74,7 +73,7 @@ export const StudentWorkbook = ({ data }: DataType) => {
             const tempUrl = data.result.workbookId;
             const docsUrl =
                 tempUrl.substring(0, tempUrl.indexOf('edit?')) + 'embed?';
-            // console.log("changeUrl", docsUrl);
+
 
             try {
                 // const response = await axiosClient.get('https://docs.google.com/presentation/d/1L7tJTJHxAdVCJkQ3lpZkShk1SbNJnjOfuLRkIFUFdAE/embed?loop=false&start=true&delayms=10000&slide=1');
@@ -90,7 +89,6 @@ export const StudentWorkbook = ({ data }: DataType) => {
                     const tempArr = getStr.split(':');
                     const totalPage = +tempArr[1].trim();
 
-                    // console.log("totalPage ", totalPage);
                     setPosition(1);
                     setEndPage(totalPage);
                     setFullBtnFlag(true);

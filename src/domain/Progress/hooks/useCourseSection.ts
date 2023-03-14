@@ -29,9 +29,7 @@ export const useCourseSection = () => {
 
   //const [courseDesc, units] = [response.courseDescription, response.unitList];
   const [courseDesc, units] = [data.courseDescription, data.unitList];
-  //console.log("useCourseSection courseDesc "+courseDesc);
-  //console.log("useCourseSection units ");
-  //console.log(units);
+
   return {
     courseState: {
       result: {

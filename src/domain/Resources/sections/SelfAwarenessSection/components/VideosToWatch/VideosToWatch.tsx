@@ -30,7 +30,6 @@ export const VideosToWatch= () => {
                 const response = await axios.get(url, { params });
 
                 setVideoList(response.data.items);
-                //console.log(response.data.items);
             } catch (e) {
                 console.log(e);
                 alert('error 임시로 메세지만');

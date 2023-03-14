@@ -13,11 +13,7 @@ class StudentCourseApiService {
     var param = { 
       parent_email : parentEmail
     };
-    //console.log("getAppbar Student");
-    //console.log(param);
     const response = await axiosClient.post(`/navigation/student-list`, param);
-    //console.log("response");
-    //console.log(response);
     return response.data;
   }
 
@@ -25,11 +21,7 @@ class StudentCourseApiService {
     var param = { 
       student_id : studentId
     };
-    //console.log("getAppbar Student");
-    //console.log(param);
     const response = await axiosClient.post(`/navigation/course-list`, param);
-    //console.log("response");
-    //console.log(response);
     return response.data;
   }
 }

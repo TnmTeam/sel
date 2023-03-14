@@ -21,7 +21,6 @@ export const useBannerSection = () => {
     setStudentIdNumber(currenStudentMap.id);
   },[currenCourseMap, currenStudentMap])
 
-  //console.log("/progress/banner API ", studentId, " ", studentIdNumber, " ", courseId );
   const { data, isLoading } = useGetBanner(studentIdNumber, studentId, courseId);
 
   if (!data) {
@@ -34,8 +33,6 @@ export const useBannerSection = () => {
   }
 
   const response = data;
-
-  //console.log("progress/banner ", response );
 
   // banner
   const [title, desc, rate] = [

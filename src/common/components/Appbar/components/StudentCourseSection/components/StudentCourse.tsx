@@ -1,4 +1,3 @@
-import TextField from '@mui/material/TextField';
 import { useState, useEffect } from 'react';
 import { Stack } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
@@ -16,7 +15,6 @@ import {
     studentCourseArray
 } from '@/common/atom/Atom';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { Colors} from '@/common/themes/Color';
 
 
 interface DataType {
@@ -26,7 +24,7 @@ interface DataType {
 export const StudentCourse = ({ data }: DataType) => {
     //IntercomShutdown();
     var loginInfoMap: any = useRecoilValue(loginInfo);
-    //console.log('`````', loginInfoMap);
+
     if (loginInfoMap.email == undefined) {
         location.href = '/';
         return <></>;
