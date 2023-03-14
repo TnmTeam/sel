@@ -370,7 +370,7 @@ export const SignupSection = () => {
                         open={open}
                         onClose={handleClose}
                         aria-labelledby='responsive-dialog-title'
-                        
+                        sx={{ '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper' : { maxWidth:'730px'}}}
                     >
                         <DialogTitle
                             id='responsive-dialog-title'

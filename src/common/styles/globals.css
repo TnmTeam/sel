@@ -43,8 +43,3 @@ body {
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
 }
-
-
-.css-1t1j96h-MuiPaper-root-MuiDialog-paper{
-    max-width: 730px;
-}
