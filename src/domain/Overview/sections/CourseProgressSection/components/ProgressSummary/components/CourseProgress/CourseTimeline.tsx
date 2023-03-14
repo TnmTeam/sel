@@ -84,7 +84,6 @@ const sx = {
         height: 20px;
         left: 165px;
         top: 9px;
-        font-family: 'DM Sans';
         font-style: normal;
         font-weight: 500;
         font-size: 15px;
@@ -96,7 +95,6 @@ const sx = {
     `,
     desc: css `
         width: 133px;
-        font-family: 'DM Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 15px;
@@ -111,7 +109,6 @@ const sx = {
         height: 20px;
         left: 165px;
         top: 32px;
-        font-family: 'DM Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 15px;

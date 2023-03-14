@@ -106,7 +106,6 @@ const sx = {
         top: -15px;
     `,
     listFontSelect: css`
-        font-family: 'DM Sans';
         font-style: normal;
         font-weight: 700;
         font-size: 16px;
@@ -115,7 +114,6 @@ const sx = {
         color: #147AD6;
     `,
     listFontDefault: css`
-        font-family: 'DM Sans';
         font-style: normal;
         font-weight: 700;
         font-size: 16px;

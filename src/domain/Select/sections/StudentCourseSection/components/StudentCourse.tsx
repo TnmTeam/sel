@@ -102,7 +102,6 @@ const Student = ({ studentList }: StudentListType) => {
                     studentArrayHandlerState(studentHandlerList);
 
                     setCourseList(response.data.length > 0 ? courseList : []);
-                    //console.log(response);
                 }
             } else {
                 setCourseList([]);

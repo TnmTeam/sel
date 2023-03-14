@@ -13,7 +13,7 @@ export const useSuggestSection = () => {
   useEffect(()=> {
     setCourseId(currenCourseMap.course_id);
   },[currenCourseMap, currenStudentMap])
-  //console.log("useSuggestSection courseId "+courseId);
+
   const { data, isLoading } = useGetSuggestedCourse(courseId);
 
   if (!data) {

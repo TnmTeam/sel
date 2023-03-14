@@ -18,7 +18,6 @@ import { CustomProgress } from '@/common/components/progress';
 
 export const NotificationDialogContent = () => {
     const { notificationState } = useNavigationView();
-    // console.log("notificationState", {notificationState} );
 
     const colorData = {
         Basic: '#147AD6',

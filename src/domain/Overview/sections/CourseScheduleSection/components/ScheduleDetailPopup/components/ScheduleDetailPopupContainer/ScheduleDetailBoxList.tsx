@@ -103,9 +103,7 @@ const sx = {
     `,
     popupDate: css`
         height: 108px;
-        
         padding-top: 35px; 
-        font-family: 'DM Sans';
         font-style: normal;
         font-weight: 700;
         font-size: 24px;

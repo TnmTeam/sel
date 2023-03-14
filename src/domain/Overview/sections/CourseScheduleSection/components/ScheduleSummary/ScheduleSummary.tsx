@@ -45,7 +45,6 @@ const sx = {
         left: 20px;
         top: 35px;
         margin-bottom: 20px;
-        font-family: 'DM Sans';
         font-style: normal;
         font-weight: 700;
         font-size: 16px;

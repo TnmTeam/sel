@@ -27,7 +27,6 @@ export const WatchContent = ({ selectedDetailCourse }: CourseMediaType) => {
     if (temp) {
         url = temp[0]?.content;
     }
-    //console.log("WatchContent url : "+url);
     const { ref, toggleVideoPlay } = useVideoControl();
     const { playBtnVisiblity, hidePlayBtn } = useVideoPlayButton();
 

@@ -70,7 +70,6 @@ const sx = {
         overflow: auto;
         align-items: center;
         padding-top: 10px;
-        font-family: DM Sans;
     `,
 
     container: css`

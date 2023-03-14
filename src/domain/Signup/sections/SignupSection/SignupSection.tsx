@@ -9,8 +9,6 @@ import Typography from '@mui/material/Typography';
 import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
 import { axiosClient } from '@/data/client/client';
 import React, { useCallback, useState, useEffect } from 'react';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { waitForAll } from 'recoil';
 import Paper from '@mui/material/Paper';
 import {
     auth,
@@ -57,10 +55,8 @@ export const SignupSection = () => {
         // 그렇지 않으면 첫 랜더링때부터 checkPswdMessage가 보이게됨.
         if (password === passwordConfirm) {
             setIsPassword(true);
-            //console.log('ok');
         } else {
             setIsPassword(false);
-            //console.log('no');
         }
     }, [password, passwordConfirm, isPassword]);
 
@@ -68,7 +64,6 @@ export const SignupSection = () => {
         async (event: React.FormEvent<HTMLFormElement>) => {
             setLoading(true); // loading bar start
             event.preventDefault();
-            //console.log(event.currentTarget);
             const name = event.currentTarget.user_name.value;
             const email = event.currentTarget.email.value;
             const role = 'parent';
@@ -95,14 +90,11 @@ export const SignupSection = () => {
 
             const validateEmailCheck = validateEmail(email);
             
-            //console.log(name, email, role, password);
             if( await validateEmailCheck ){
                  // firebase 회원가입 진행
                 createUserWithEmailAndPassword(auth, email, password)
                 .then(async (data) => {
-                    // console.log(data);
                     const accessToken = await data.user.getIdToken();
-                    // console.log(accessToken);
 
                     // 가입성공 -> DB signup 진행
                     authSignup(accessToken, name, email, role);
@@ -168,19 +160,14 @@ export const SignupSection = () => {
         password: string,
         role: string
     ) => {
-        //console.log(email, password);
         // firebase 로그인 진행
         signInWithEmailAndPassword(auth, email, password)
             .then(async (data) => {
                 // firebase 일반 로그인 시도
-                //console.log(data);
                 const accessToken = await data.user.getIdToken();
-                // console.log(accessToken);
                 localStorage.setItem('accessToken', accessToken);
                 if (data.user.email != null)
                     localStorage.setItem('email', await data.user.email);
-                //displayName 이름 정보를 어떻게 가져올것인지..
-                //console.log('localStorage', localStorage);
 
                 // firebase 로그인 -> DB signup 진행
                 authSignup(accessToken, name, email, role);
@@ -204,29 +191,6 @@ export const SignupSection = () => {
             });
     };
 
-    const authLogin = async () => {
-        const response = await axiosClient('/auth/login');
-        if (response.data.status_code == 500) {
-            // Expired toekn
-            //console.log(response.data.message);
-            alert(response.data.message);
-        } else if (response.data.status_code == 400) {
-            // 로그인 시도 성공
-            // Account Already Exists!!
-            // or
-            // Account Does Not Exist!!
-            //console.log(response.data.message);
-            // 이미 가입되어 있는 계정입니다.
-            alert(response.data.message);
-            const authEmail = await response.data.email;
-        } else {
-            // 정상 로그인
-            var email_param = {
-                email: response.data.email,
-            };
-        }
-    };
-
     const authSignup = async (
         accessToken: string,
         name: string,
@@ -244,11 +208,9 @@ export const SignupSection = () => {
 
         // 회원 가입 성공
         const response = await axiosClient.post('/auth/signup', params);
-        //console.log(response);
 
         if (response.data.status_code == 500) {
             // Expired toekn
-            //console.log(response.data.message);
             alert(response.data.message);
             setLoading(false); // loading bar stop
         } else if (response.data.status_code == 400) {
@@ -258,13 +220,10 @@ export const SignupSection = () => {
         } else {
             // 정상 로그인
 
-            //alert(response.data.message);
-
             const authEmail = await response.data.email;
             if (email == authEmail) {
-                alert('[' + email + ']' + ' Signed up Complete.');
+                alert('"' + email + '" ' + 'Signed up Complete.');
 
-                //location.href = '/';
                 localStorage.clear();
                 router.push({pathname: "/"});
             }
@@ -277,11 +236,8 @@ export const SignupSection = () => {
             item
             xs={12}            
             sm={12}            
-            md={12}
+            md={6}
             xl={6}
-            component={Paper}
-            elevation={6}
-            square
             height={'100%'}
         >
             <Box
@@ -289,8 +245,7 @@ export const SignupSection = () => {
                 alignItems={'center'}
                 display={'flex'}
                 sx={{
-                    mx: 25,
-                    mt: 30,
+                    mt: 28,
                     //mb: 15,
                 }}
             >
@@ -328,6 +283,7 @@ export const SignupSection = () => {
                         name='user_name'
                         autoComplete='user_name'
                         autoFocus
+                        focused
                     />
                     <TextField
                         disabled={loading}
@@ -338,6 +294,7 @@ export const SignupSection = () => {
                         label={<span css={sx.inputbox}>Email</span>}
                         name='email'
                         autoComplete='email'
+                        focused
                     />
                     <TextField
                         disabled={loading}
@@ -350,6 +307,7 @@ export const SignupSection = () => {
                         id='password'
                         autoComplete='current-password'
                         onChange={onChangePassword}
+                        focused
                     />
                     <TextField
                         margin='normal'
@@ -366,6 +324,7 @@ export const SignupSection = () => {
                                 ? { backgroundColor: 'rgba(0,0,0,0.5)' }
                                 : {}
                         }
+                        
                     />
 
                     <Button
@@ -461,26 +420,12 @@ export const SignupSection = () => {
 const sx = {
     sample: css``,
     inputbox: css`
-        font-family: 'DM Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
         color: #4f5b70;
     `,
-};
-
-const Copyright = () => {
-    return (
-        <Typography variant='body2' color='text.secondary' align='center'>
-            {'Copyright © '}
-            <Link color='inherit' href='https://mui.com/'>
-                ##########
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
 };
 
 

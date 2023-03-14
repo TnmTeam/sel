@@ -144,7 +144,6 @@ const sx = {
         width: 82.05px;
         */
         height: 16px;
-        font-family: 'DM Sans';
         font-style: normal;
         font-weight: 700;
         font-size: 18px;

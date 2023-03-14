@@ -1,15 +1,13 @@
 import { css } from '@emotion/react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from 'next/link';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { FlexBlueButtons, WhiteButtons } from '@/common/themes/Color';
+import { FlexBlueButtons } from '@/common/themes/Color';
 import CircularProgress from '@mui/material/CircularProgress';
 import React, { useCallback, useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
@@ -18,23 +16,10 @@ import {
     signInWithEmailAndPassword,
     sendPasswordResetEmail,
 } from '../../firebaseConfig';
-import {
-    courseArrayState,
-    courseMapState,
-    studentArrayState,
-    studentMapState,
-    loginInfo,
-    studentCourseArray,
-} from '@/common/atom/Atom';
-
-import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import GoogleIcon from '@mui/icons-material/Google';
-import AppleIcon from '@mui/icons-material/Apple';
+import { loginInfo, studentCourseArray } from '@/common/atom/Atom';
 
 import { axiosClient } from '@/data/client/client';
-import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import Image from 'next/image';
 import GoogleLogo from '@/assets/login/google_logo_icon.png';
 import router from 'next/router';
@@ -59,10 +44,6 @@ export const Authentication = () => {
 
     const [loading, setLoading] = useState(false);
 
-    const [findEmail, setFindEmail] = useState('');
-
-    const [buttonHidden, setButtonHidden] = useState<string>('');
-
     const [cookies, setCookie, removeCookie] = useCookies(['remRogId']);
 
     const [rememberId, setRemember] = useState(false);
@@ -83,31 +64,25 @@ export const Authentication = () => {
         remRogIds = cookies.remRogId;
     }
 
-    // email
-    const onChangeEmail = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            setFindEmail(e.target.value);
-        },
-        []
-    );
+    const validateEmail = async (email: any) => {
+        var param = {
+            parent_email: email,
+        };
 
-    // reset password
-    const triggerResetEmail = async () => {
-        setLoading(true);
-        if (findEmail != '') {
-            await sendPasswordResetEmail(auth, findEmail);
-            alert('[ ' + findEmail + ' ] ' + 'Password reset email sent');
-            console.log('Password reset email sent');
-            setLoading(false);
-        } else {
-            setOpen(true);
+        const response = await axiosClient.post(
+            `/navigation/student-list`,
+            param
+        );
+        const data = response.data;
 
-            alert('Please enter your email.');
-            setLoading(false);
-        }
+        let result = true;
+        if (data.length == 0) result = false;
+
+        return result;
     };
 
     const [open, setOpen] = useState(false);
+    const [openStudentCheck, setOpenStudentCheck] = useState(false);
     const [forgotPwReason, setforgotPwReason] = useState('');
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -159,6 +134,10 @@ export const Authentication = () => {
         setOpen(false);
     };
 
+    const handleStudentCheckClose = () => {
+        setOpenStudentCheck(false);
+    };
+
     const handleAgree = async () => {
         setLoading(true);
         try {
@@ -166,7 +145,7 @@ export const Authentication = () => {
                 await sendPasswordResetEmail(auth, findEmailCheck);
 
                 setPasswordMent(
-                    '[ ' + findEmailCheck + ' ] ' + 'Password reset email sent'
+                    '"' + findEmailCheck + '" ' + 'Password reset email sent'
                 );
                 setLoading(false);
                 setEmailCheckButtonFlag(true);
@@ -199,30 +178,28 @@ export const Authentication = () => {
         (event: React.FormEvent<HTMLFormElement>) => {
             setLoading(true);
             event.preventDefault();
-            //console.log(event.currentTarget);
             const email = event.currentTarget.email.value;
             const password = event.currentTarget.password.value;
 
-            if (email != '') {
-                setFindEmail(email);
-            } else {
+            if (email == '') {
+                alert('Please enter your email.');
+                setLoading(false);
+                return;
+            }
+            if (password == '') {
+                alert('Please enter your password.');
                 setLoading(false);
                 return;
             }
 
-            //console.log(email, password);
             // firebase 로그인 진행
             signInWithEmailAndPassword(auth, email, password)
                 .then(async (data) => {
                     // firebase 일반 로그인 시도
-                    //console.log(data);
                     const accessToken = await data.user.getIdToken();
-                    // console.log(accessToken);
                     localStorage.setItem('accessToken', accessToken);
                     if (data.user.email != null)
                         localStorage.setItem('email', await data.user.email);
-                    //displayName 이름 정보를 어떻게 가져올것인지..
-                    //console.log('localStorage', localStorage);
 
                     // 로그인 성공
                     generalLogin();
@@ -254,26 +231,31 @@ export const Authentication = () => {
         const provider = new GoogleAuthProvider(); // provider를 구글로 설정
         signInWithPopup(auth, provider) // popup을 이용한 signup
             .then(async (data) => {
-                //console.log(data);
-                //console.log(data.user);
                 const accessToken = await data.user.getIdToken();
-                // 만료되었거나 5분 이내 완료이면 새로 발급해오는 듯?
-                //console.log(localStorage);
                 localStorage.setItem('accessToken', accessToken);
-                if (data.user.email != null)
-                    localStorage.setItem('email', await data.user.email);
-                if (data.user.displayName != null)
-                    localStorage.setItem(
-                        'displayName',
-                        await data.user.displayName
-                    );
-                if (data.user.displayName != null)
-                    localStorage.setItem('uid', await data.user.uid);
-                //console.log('localStorage', localStorage);
 
-                // 로그인 API 연동
-                authLogin();
-                //location.href='/overview';
+                var email = await data.user.email;
+
+                // student check
+                const validateEmailCheck = validateEmail(email);
+
+                if (await validateEmailCheck) {
+                    // 회원가입 진행
+                    if (email != null) localStorage.setItem('email', email);
+                    if (data.user.displayName != null)
+                        localStorage.setItem(
+                            'displayName',
+                            await data.user.displayName
+                        );
+                    if (data.user.displayName != null)
+                        localStorage.setItem('uid', await data.user.uid);
+                    // 로그인 API 연동
+                    authLogin();
+                } // 매칭되는 학생 없음
+                else {
+                    setLoading(false);
+                    setOpenStudentCheck(true);
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -286,12 +268,10 @@ export const Authentication = () => {
         const response = await axiosClient('/auth/login');
         if (response.data.status_code == 500) {
             // Expired toekn
-            //console.log(response.data.message);
             alert(response.data.message);
             setLoading(false);
         } else if (response.data.status_code == 400) {
             // Account Does Not Exist!!
-            //console.log(response.data.message);
             alert(response.data.message);
             setLoading(false);
         } else {
@@ -318,16 +298,11 @@ export const Authentication = () => {
                 location.href = '/';
                 setLoading(false);
             } else {
-                //console.log(student_course_list.data);
                 studentMapHandlerState(student_course_list.data);
                 router.push({ pathname: '/overview' });
             }
 
-            //router.push({ pathname: '/select' });
             setLoading(false);
-
-            // overview 화면 이동
-            //            location.href='/overview';
         }
     };
 
@@ -339,7 +314,7 @@ export const Authentication = () => {
             alert(response.data.message);
             setLoading(false);
         } else if (response.data.status_code == 400) {
-            // 로그인 시도 성공
+            
             // Account Already Exists!!
             // or
             // Account Does Not Exist!!
@@ -349,33 +324,18 @@ export const Authentication = () => {
             const authEmail = await response.data.email;
 
             authSignup();
-            /*
-            if (localStorage.getItem('email') == authEmail) {
-                // 회원 가입 성공
-                localStorage.setItem('role', await response.data.role);
-                //location.href = '/overview';  // 페이지 이동
-                //location.href = '/select'; // 학생/코스 선택 화면 이동
-                authSignup();
-            } else {
-                localStorage.setItem('role', await response.data.role);
-                //location.href = '/overview';  // 페이지 이동
-                //location.href = '/select'; // 학생/코스 선택 화면 이동
-            }
-            */
+            
         } else {
             // 정상 로그인
             var email_param = {
                 email: response.data.email,
             };
 
-            setButtonHidden(() => response.data.email);
             loginInfoHandlerState(email_param);
 
-            //router.push({ pathname: '/select' });
             setLoading(false);
 
             // student-course-list 정보 가져오기
-
             var param = {
                 parent_email: response.data.email,
             };
@@ -389,7 +349,6 @@ export const Authentication = () => {
                 location.href = '/';
                 setLoading(false);
             } else {
-                //console.log(student_course_list.data );
                 studentMapHandlerState(student_course_list.data);
                 router.push({ pathname: '/overview' });
                 setLoading(false);
@@ -410,17 +369,12 @@ export const Authentication = () => {
             password,
         };
 
-        // 자동으로 회원 가입( 2.23 임시)
         const response = await axiosClient.post('/auth/signup', params);
-        //console.log(response);
-
         const authEmail = await response.data.email;
         if (localStorage.getItem('email') == authEmail) {
             // 회원 가입 성공
             localStorage.setItem('role', await response.data.role);
-            //location.href = '/overview';  // 페이지 이동
-            //location.href = '/select'; // 학생/코스 선택 화면 이동
-            setButtonHidden(() => response.data.email);
+
 
             // 학생 코스 정보 가져오기
             var param = {
@@ -436,7 +390,6 @@ export const Authentication = () => {
                 location.href = '/';
                 setLoading(false);
             } else {
-                //console.log(student_course_list.data );
                 studentMapHandlerState(student_course_list.data);
                 router.push({ pathname: '/overview' });
                 setLoading(false);
@@ -444,35 +397,6 @@ export const Authentication = () => {
         } else {
             setLoading(false);
         }
-
-        //location.href = '/signup';
-    };
-
-    const MoveSelectView = () => {
-        //console.log('MoveSelectView');
-        //console.log(localStorage.getItem('email'));
-
-        if (localStorage.getItem('email') == null)
-            alert('google account link!');
-
-        var email_param = {
-            email: localStorage.getItem('email'),
-        };
-        loginInfoHandlerState(email_param);
-    };
-
-    const MoveSelectView_demo = () => {
-        var email_param = {
-            email: 'josharnold@gmail.com',
-        };
-        loginInfoHandlerState(email_param);
-    };
-
-    const MoveSelectView_admin = () => {
-        var email_param = {
-            email: 'admin',
-        };
-        loginInfoHandlerState(email_param);
     };
 
     const SetRememberId = () => {
@@ -483,20 +407,16 @@ export const Authentication = () => {
             setRemember(false);
             checkId = false;
 
-            //setCookie('remRogId', 'null', { path: '/', secure:false,});
             removeCookie('remRogId');
         }
     };
 
     const SaveRememberId = async (loginId: string) => {
-        //console.log('SaveRememberId loginId : '+loginId);
         const expires = new Date();
 
         // 년도 설정, 현재의 년도를 가져와 +10을 함
         expires.setFullYear(expires.getFullYear() + 1);
-        //console.log("checkId : "+checkId);
         if (checkId) {
-            //localStorage.setItem('loginId', loginId);
             setCookie('remRogId', loginId, {
                 path: '/',
                 secure: false,
@@ -506,20 +426,13 @@ export const Authentication = () => {
     };
 
     return (
-        <Grid
-            item
-            xs={12}
-            sm={12}
-            md={6}
-            xl={6}            
-            height={'100%'}
-        >
+        <Grid item xs={12} sm={12} md={6} xl={6} height={'100%'}>
             <Box
                 flexDirection={'column'}
                 alignItems={'center'}
                 display={'flex'}
-                sx={{                    
-                    mt: 25,
+                sx={{
+                    mt: 28,
                     //mb: 15,
                 }}
             >
@@ -539,26 +452,13 @@ export const Authentication = () => {
                     display={'flex'}
                     sx={{ mb: 4 }}
                 >
-                    <Link href='#' onClick={handleGoogleLogin} css={sx.googleButton}>
-                        {/* <Avatar
+                    <Link
+                        href='#'
+                        onClick={handleGoogleLogin}
+                        css={sx.googleButton}
+                    >
+                        <Stack
                             sx={{
-                                mb: 3,
-                                // bgcolor: 'secondary.main',
-                                bgcolor: 'transparent',
-                                width: '100px',
-                                height: '50px',
-                                border: '1px solid #d3d3d3',
-                            }}
-                        >
-                            <Image
-                                src={GoogleLogo}
-                                alt='googleIcon'
-                                width={30}
-                                height={30}
-                            />
-                        </Avatar> 
-                        */}
-                        <Stack sx={{
                                 // bgcolor: 'secondary.main',
                                 bgcolor: 'transparent',
                                 width: '220px',
@@ -567,29 +467,33 @@ export const Authentication = () => {
                                 padding: '2px',
                                 backgroundColor: '#3a88f4',
                                 borderRadius: '3px',
-                                boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);',
-                            }}>
-                            <Stack sx={{
-                                
-                                // bgcolor: 'secondary.main',
-                                bgcolor: 'transparent',
-                                width: '48px',
-                                height: '48px',
-                                border: '1px solid #d3d3d3',
-                                display: 'inline-block',
-                                backgroundColor: '#fff',
-                                borderRadius: '3px',
-                            }}>
-                                <Stack sx={{
-                                    mt: 1.5,
-                                    ml: 1.4,
-                                }}>
+                                boxShadow:
+                                    '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);',
+                            }}
+                        >
+                            <Stack
+                                sx={{
+                                    // bgcolor: 'secondary.main',
+                                    bgcolor: 'transparent',
+                                    width: '48px',
+                                    height: '48px',
+                                    border: '1px solid #d3d3d3',
+                                    display: 'inline-block',
+                                    backgroundColor: '#fff',
+                                    borderRadius: '3px',
+                                }}
+                            >
+                                <Stack
+                                    sx={{
+                                        mt: 1.5,
+                                        ml: 1.4,
+                                    }}
+                                >
                                     <Image
                                         src={GoogleLogo}
                                         alt='googleIcon'
                                         width={23}
                                         height={23}
-                                        
                                     />
                                 </Stack>
                             </Stack>
@@ -609,101 +513,43 @@ export const Authentication = () => {
                         </Stack>
                     </Link>
                 </Grid>
-                {/*
-                {buttonHidden == '' ? (
-                    <></>
-                ) : (
-                    <Link
-                        id='loginBtn'
-                        type='submit'
-                        onClick={MoveSelectView}
-                        href='/select'
-                        style={{ textDecoration: 'none' }}
+                <Dialog
+                    fullScreen={fullScreen}
+                    open={openStudentCheck}
+                    onClose={handleStudentCheckClose}
+                    aria-labelledby='responsive-dialog-title'
+                >
+                    <DialogTitle
+                        id='responsive-dialog-title'
+                        sx={{
+                            width: '730px',
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            mt: 1,
+                        }}
                     >
-                        <Button
-                            type='submit'
-                            fullWidth
-                            variant='contained'
+                        {
+                            'Unfortunately, that email is not listed in our Student/Parent Database.'
+                        }
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText
                             sx={{
-                                mb: 1,
-                                fontSize: '12pt',
-                                width: '350px',
-                                background: FlexBlueButtons.ButtonColor,
-                                color: FlexBlueButtons.TextColor,
-                                ':hover': {
-                                    background:
-                                        FlexBlueButtons.onHoverButtonColor,
-                                    color: FlexBlueButtons.OnHoverTextColor,
-                                },
+                                whiteSpace: 'pre-wrap',
+                                textAlign: 'center',
+                                mt: 3,
                             }}
                         >
-                            {buttonHidden}
+                            Please try again with an email you used when
+                            registering for Impacter Pathway.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleStudentCheckClose} autoFocus>
+                            Close
                         </Button>
-                    </Link>
-                )}
-                {buttonHidden != '' ? (
-                    <></>
-                ) : (
-                    <Link
-                        id='loginBtn'
-                        type='submit'
-                        onClick={MoveSelectView_demo}
-                        href='/select'
-                        style={{ textDecoration: 'none' }}
-                    >
-                        <Button
-                            type='submit'
-                            fullWidth
-                            variant='contained'
-                            sx={{
-                                mb: 3,
-                                fontSize: '16px',
-                                width: '350px',
-                                background: FlexBlueButtons.ButtonColor,
-                                color: FlexBlueButtons.TextColor,
-                                ':hover': {
-                                    background:
-                                        FlexBlueButtons.onHoverButtonColor,
-                                    color: FlexBlueButtons.OnHoverTextColor,
-                                },
-                            }}
-                        >
-                            josharnold@gmail.com
-                        </Button>
-                    </Link>
-                )}
-                {buttonHidden != '' ? (
-                    <></>
-                ) : (
-                    <Link
-                        id='loginBtn'
-                        type='submit'
-                        onClick={MoveSelectView_admin}
-                        href='/select'
-                        style={{ textDecoration: 'none' }}
-                    >
-                        <Button
-                            type='submit'
-                            fullWidth
-                            variant='contained'
-                            sx={{
-                                mb: 1,
-                                fontSize: '16px',
-                                width: '350px',
-                                background: FlexBlueButtons.ButtonColor,
-                                color: FlexBlueButtons.TextColor,
-                                ':hover': {
-                                    background:
-                                        FlexBlueButtons.onHoverButtonColor,
-                                    color: FlexBlueButtons.OnHoverTextColor,
-                                },
-                            }}
-                        >
-                            admin
-                        </Button>
-                    </Link>
-                )}
-                        */}
+                    </DialogActions>
+                </Dialog>
                 <Box
                     component='form'
                     noValidate
@@ -718,8 +564,9 @@ export const Authentication = () => {
                         label={<span css={sx.inputboxLabel}>Email</span>}
                         name='email'
                         autoComplete='email'
-                        onChange={onChangeEmail}
                         defaultValue={remRogIds}
+                        disabled={loading}
+                        autoFocus
                         focused
                     />
                     <TextField
@@ -783,9 +630,8 @@ export const Authentication = () => {
                                 {passwordMent}
                             </DialogContentText>
                             {passwordSendFlag ? (
-                            <></>
-                        ) : (
-                            emailCheckFlag ? (
+                                <></>
+                            ) : emailCheckFlag ? (
                                 <TextField
                                     required
                                     fullWidth
@@ -794,6 +640,7 @@ export const Authentication = () => {
                                     name='emailCheck'
                                     autoComplete='emailCheck'
                                     autoFocus
+                                    focused
                                     onChange={onChangeEmailCheck}
                                     disabled={loading}
                                     {...(emailCheckFlag
@@ -815,10 +662,7 @@ export const Authentication = () => {
                                     disabled={loading}
                                     sx={{ marginTop: '5px' }}
                                 />
-                            )
-                        )
-                        }
-                            
+                            )}
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleClose} autoFocus>
@@ -875,141 +719,17 @@ export const Authentication = () => {
                 }}
             >
                 <Link href='/signup' css={sx.forgotButton}>
-                    <span css={sx.SignupBf}>
-                        First time logging in?
-                    </span>
+                    <span css={sx.SignupBf}>First time logging in?</span>
                     <br></br>
                     &nbsp;&nbsp;
-                    <span css={sx.SignupAf}>Click HERE to associate your email with your student’s account.</span>
+                    <span css={sx.SignupAf}>
+                        Click HERE to associate your email with your student’s
+                        account.
+                    </span>
                 </Link>
             </Box>
         </Grid>
     );
-
-    /*
-    return (
-        <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} square>
-            <Box
-                flexDirection={'column'}
-                alignItems={'center'}
-                display={'flex'}
-                sx={{
-                    mx: 25,
-                    mt: 20,
-                    mb: 25,
-                }}
-            >
-                <Typography
-                    component='h1'
-                    variant='h3'
-                    textAlign='center'
-                    sx={{ mb: 3 }}
-                >
-                    Impacter Pathway Parent Dashboard
-                </Typography>
-
-                <Grid
-                    item
-                    flexDirection={'row'}
-                    alignItems={'center'}
-                    display={'flex'}
-                    sx={{ mb: 3 }}
-                >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
-                        <FacebookSharpIcon />
-                    </Avatar>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
-                        <TwitterIcon />
-                    </Avatar>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
-                        <LinkedInIcon />
-                    </Avatar>
-                    <Link href='#' onClick={handleGoogleLogin}>
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
-                            <GoogleIcon />
-                        </Avatar>
-                    </Link>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width:'50px', height:'50px' }}>
-                        <AppleIcon />
-                    </Avatar>
-                </Grid>
-
-                <Typography component='h1' variant='h6' sx={{ mb: 3 }}>
-                    - or -
-                </Typography>
-                <Box component='form' noValidate onSubmit={handleSubmit}>
-                    <TextField
-                        margin='normal'
-                        required
-                        fullWidth
-                        id='email'
-                        label='Email'
-                        name='email'
-                        autoComplete='email'
-                        autoFocus
-                    />
-                    <TextField
-                        margin='normal'
-                        required
-                        fullWidth
-                        name='password'
-                        label='Password'
-                        type='password'
-                        id='password'
-                        autoComplete='current-password'
-                    />
-
-                    <FormControlLabel
-                        control={<Checkbox value='remember' color='primary' />}
-                        label='Remember me'
-                    />
-                    <Link href='#' textAlign={'right'}>
-                        Forgot password?
-                    </Link>
-
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        sx={{
-                            mt: 3,
-                            mb: 2,
-                            fontSize: '18pt',
-                            background: FlexBlueButtons.ButtonColor,
-                            color: FlexBlueButtons.TextColor,
-                            ':hover': {
-                                background: FlexBlueButtons.onHoverButtonColor,
-                                color: FlexBlueButtons.OnHoverTextColor,
-                            },
-                        }}
-                        href='/overview'
-                    >
-                        Login
-                    </Button>
-                    
-                    <Button
-                        fullWidth
-                        variant='contained'
-                        onClick={apiTest}
-                    >
-                        API test
-                    </Button>
-                </Box>
-            </Box>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <Link href='#' style={{ marginTop: 10 }}>
-                    {"Don't have an account yet? Signup for a course."}
-                </Link>
-            </Box>
-        </Grid>
-    );
-    */
 };
 
 const sx = {
@@ -1060,14 +780,14 @@ const sx = {
         color: #fff;
         text-decoration-line: none;
         text-transform: none;
-    `
+    `,
 };
 
 const Copyright = () => {
     return (
         <Typography variant='body2' color='text.secondary' align='center'>
             {'Copyright © '}
-            <Link color='inherit' href='https://mui.com/'>
+            <Link color='inherit' href='https://www.impacterpathway.com/'>
                 ##########
             </Link>{' '}
             {new Date().getFullYear()}

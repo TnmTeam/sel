@@ -17,7 +17,7 @@ export const CurrentCourseTitle = ({ title, desc }: CurrentCourseTitleType) => (
       {"CURRENT COURSE"}
     </Typography>
     <Typography variant="h2" color="white" letterSpacing="0.3px" mb={"4px"}>
-      {title + ":"}
+      {title + ""}
     </Typography>
     <Typography
       variant="h3"

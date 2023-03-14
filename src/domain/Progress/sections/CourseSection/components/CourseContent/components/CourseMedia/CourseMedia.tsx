@@ -2,6 +2,7 @@ import { Stack, Typography } from '@mui/material';
 import { css } from '@emotion/react';
 import { ActivityContent, ReadContent, WatchContent, NoContent } from './media';
 import { DetailCourseType } from '@/domain/Progress/types/course.type';
+import { DefaultContent } from './media/DefaultContent/DefaultContent';
 
 type CourseMediaType = {
     selectedDetailCourse: DetailCourseType | null;
@@ -19,10 +20,7 @@ export const CourseMedia = ({ selectedDetailCourse }: CourseMediaType) => {
                 selectedDetailCourse?.type !== '' ? (
                     <Media selectedDetailCourse={selectedDetailCourse}/>
                 ) : (
-                    <Typography
-                        marginTop={'120px'}
-                        textAlign={'center'}
-                    >{'DefaultImage'}</Typography>
+                    <DefaultContent />
                 )
             }
         </Stack>

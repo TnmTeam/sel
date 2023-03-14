@@ -10,8 +10,6 @@ type CourseMediaType = {
 };
 
 export const ReadContent = ({ selectedDetailCourse }: CourseMediaType) => {
-  //console.log("ReadContent url : "+url);
-  //const imageUrl = (url).startsWith("") ? ReadContentSampleImage : url;
   const imageUrl = (selectedDetailCourse?.contentUrl)? selectedDetailCourse.contentUrl : ReadContentSampleImage;
   
   return (

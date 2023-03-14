@@ -13,17 +13,12 @@ class OverviewApiService {
 
   async getImpacterScore(studentId: string, courseId: string): Promise<ImpacterScoreResponse> {
 
-    //console.log( "=====");
-    //console.log( studentId);
-    //console.log( courseId);
     var param = { 
       student_id : studentId, 
       course_id : courseId 
     };
     
     const response = await axiosClient.post(`/overview/impacter-score`, param);
-    //console.log("response");
-    //console.log(response);
     return response.data;
   }
 
