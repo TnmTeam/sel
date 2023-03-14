@@ -1,30 +1,49 @@
-import { Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import { css } from '@emotion/react';
 import { ActivityContent, ReadContent, WatchContent, NoContent } from './media';
 import { DetailCourseType } from '@/domain/Progress/types/course.type';
+
+var studentIdNum = 0;
+var studentId = '';
+var courseId = '';
+var sectNum = '';
+var unitIds = '';
 
 type CourseMediaType = {
     selectedDetailCourse: DetailCourseType | null;
 };
 
 export const CourseMedia = ({ selectedDetailCourse }: CourseMediaType) => {
-
-    const Media =( {selectedDetailCourse} : {selectedDetailCourse:DetailCourseType;} ) => {
-        return  useMediaContentByCourseType(  selectedDetailCourse?.type, selectedDetailCourse);
+    if (selectedDetailCourse) {
+        studentIdNum = selectedDetailCourse.studentIdNum;
+        studentId = selectedDetailCourse.studentId;
+        courseId = selectedDetailCourse.courseId;
+        sectNum = selectedDetailCourse.sectNum;
     }
 
     return (
         <Stack css={sx.mediaContainer}>
+            {/* {selectedDetailCourse &&
+        useMediaContentByCourseType(
+          selectedDetailCourse.type,
+          selectedDetailCourse.contentType,
+          selectedDetailCourse.unitId
+        )} */}
+
             {selectedDetailCourse &&
-                selectedDetailCourse?.type !== '' ? (
-                    <Media selectedDetailCourse={selectedDetailCourse}/>
+            selectedDetailCourse?.type == 'assessmentV2' ? (
+                <ActivityContent selectedDetailCourse={selectedDetailCourse} />
+            ) : (
+                selectedDetailCourse?.type == 'embed' ? (
+                    <WatchContent selectedDetailCourse={selectedDetailCourse} />
                 ) : (
-                    <Typography
-                        marginTop={'120px'}
-                        textAlign={'center'}
-                    >{'DefaultImage'}</Typography>
+                    selectedDetailCourse?.type == 'pdf' ? (
+                        <ReadContent selectedDetailCourse={selectedDetailCourse} />
+                    ) : (
+                        <NoContent></NoContent>
+                    )
                 )
-            }
+            )}
         </Stack>
     );
 };
@@ -36,16 +55,32 @@ const sx = {
     `,
 };
 
-const useMediaContentByCourseType = (type: string, selectedDetailCourse: DetailCourseType) => {
+// const useMediaContentByCourseType = (type: string, contentType: string, unitId: string) => {
+//   unitIds = unitId
+//   //console.log("CourseMedia useMediaContentByCourseType studentIdNum : "+studentIdNum);
+//   //console.log("CourseMedia useMediaContentByCourseType studentId : "+studentId);
+//   //console.log("CourseMedia useMediaContentByCourseType courseId : "+courseId);
+//   //console.log("CourseMedia useMediaContentByCourseType unitId : "+unitIds);
+//   //console.log("CourseMedia useMediaContentByCourseType type : "+type);
 
-     switch (type) {
-        case "assessmentV2":
-             return <ActivityContent selectedDetailCourse={selectedDetailCourse} />;
-        case "embed":
-             return <WatchContent selectedDetailCourse={selectedDetailCourse} />;
-         case "pdf":
-             return <ReadContent selectedDetailCourse={selectedDetailCourse} />;
-        default:
-            return <NoContent></NoContent>;
-     }
-};
+//     switch (type) {
+//       case "embed":
+//         //console.log("CourseMedia useMediaContentByCourseType embed useGetUnitItemContent2");
+//         var data2 = useGetUnitItemContent2(studentIdNum, unitIds);
+//         var data  = data2?.data;
+//         var content = '';
+//         if(data)
+//         content = data[0].content;
+//         //console.log("CourseMedia useMediaContentByCourseType embed data2");
+//         //console.log(content);
+//         return <WatchContent url={content} />;
+//         //return <ReadContent url={content} />;
+//       case "assessmentV2":
+//         var data1 = useGetUnitItemContent1(studentId, courseId, unitIds);
+//         //console.log("CourseMedia useMediaContentByCourseType type : "+type);
+//         //console.log(data1);
+//         return <ActivityContent models={data1.data} />;
+//       default:
+//         return <></>;
+//     }
+// };
