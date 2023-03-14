@@ -55,7 +55,7 @@ export const ActivityContent = ({ selectedDetailCourse }: CourseMediaType) => {
                         ))}
                     </Stack>
                 ) : (
-                    <NoContent />
+                    <></>
                 )}
             </Stack>
         </Stack>
