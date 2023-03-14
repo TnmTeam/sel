@@ -11,20 +11,20 @@ import { useRecoilValue } from 'recoil';
 import { IntercomBoot } from '@/pages/_app';
 import { studentMapState } from '@/common/atom/Atom';
 import { useEffect, useState } from 'react';
-import { CustomProgress } from "@/common/components/progress";
+import { CustomProgress } from '@/common/components/progress';
 
 export const OverviewView = () => {
+    const currenStudentMap: any = useRecoilValue(studentMapState);
 
-    const currenStudentMap:any = useRecoilValue(studentMapState);
-    
-    const [studentName , setStudentName]= useState("");
-    useEffect(()=> {
+    const [studentName, setStudentName] = useState('');
+    useEffect(() => {
         setStudentName(currenStudentMap.name);
-    },[currenStudentMap])
+    }, [currenStudentMap]);
 
     IntercomBoot(studentName);
 
-    const { impacterSocreState, courseScheduleState, courseProgressState } = useOverView();    
+    const { impacterSocreState, courseScheduleState, courseProgressState } =
+        useOverView();
 
     return (
         <Stack css={sx.overviewContainer}>
@@ -32,15 +32,14 @@ export const OverviewView = () => {
             <Stack direction={'row'} css={sx.CourseContainer}>
                 <CourseProgressSection data={courseProgressState} />
                 <CourseScheduleSection data={courseScheduleState} />
-                
-                { /* <FeaturedStudentWorkSection /> */}
+
+                {/* <FeaturedStudentWorkSection /> */}
                 <LinkContainer />
             </Stack>
             {/*
             <SelfScoresSection />
             */}
             <FeaturedImpactorVideosSection />
-            
         </Stack>
     );
 };
@@ -64,15 +63,23 @@ const sx = {
         background: #4a7199;
     `,
 
-
-
-    FeaturedContainer: css`
+    FeaturedContainer1: (displayFlag: boolean) => css`
         position: absolute;
         width: 289px;
         height: 427px;
         right: 59px;
-        background: #FFFFFF;
+        background: #ffffff;
         border-radius: 28px;
+        display: ${displayFlag ? 'none' : ''};
+    `,
+    FeaturedContainer2: (displayFlag: boolean) => css`
+        position: absolute;
+        width: 289px;
+        height: 427px;
+        right: 59px;
+        background: #ffffff;
+        border-radius: 28px;
+        display: ${displayFlag ? '' : 'none'};
     `,
     CircleOut: css`
         position: absolute;
@@ -80,7 +87,7 @@ const sx = {
         height: 80px;
         left: 200.22px;
         top: 265.5px;
-        color: #FFF;
+        color: #fff;
     `,
     CircleIn: css`
         position: absolute;
@@ -88,7 +95,7 @@ const sx = {
         height: 65px;
         left: 207.72px;
         top: 273px;
-        color: #6787B7;
+        color: #6787b7;
     `,
     SendIcon: css`
         position: absolute;
@@ -97,15 +104,15 @@ const sx = {
         left: 230px;
         top: 292px;
         transform: matrix(0.74, -0.67, 0.65, 0.76, 0, 0);
-        color: #FFF;
-`,
+        color: #fff;
+    `,
     FavoriteIcon: css`
         width: 250px;
         height: 250px;
         position: absolute;
-        left: 6.5%;        
-        top: 22%;        
-        color: #EA4848;
+        left: 6.5%;
+        top: 22%;
+        color: #ea4848;
     `,
     comingSoon: css`
         background: rgba(0, 0, 0, 0.7);
@@ -118,36 +125,34 @@ const sx = {
         z-index: 999;
         text-align: center;
     `,
-
-
-
 };
 
-
-const LinkContainer = () => { 
-    
+const LinkContainer = () => {
     const [displayFlag, setDisplayFlag] = useState(false);
-    setTimeout( () => setDisplayFlag(true), 1000);
+    setTimeout(() => setDisplayFlag(true), 1000);
 
     return (
         <>
-            <Stack css={sx.FeaturedContainer}>
-                <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
+            <Stack css={sx.FeaturedContainer1(displayFlag)}>
+                <Stack
+                    height={'452px'}
+                    justifyContent='center'
+                    alignItems={'center'}
+                >
                     <CustomProgress />
                 </Stack>
             </Stack>
 
-            
-            <Stack css={sx.FeaturedContainer}>
-                <iframe src="https://flext.typeform.com/to/AiBGxC9I" 
+            <Stack css={sx.FeaturedContainer2(displayFlag)}>
+                <iframe
+                    src='https://flext.typeform.com/to/AiBGxC9I'
                     style={{
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: "28px"
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '28px',
                     }}
-                >
-                </iframe>
+                ></iframe>
             </Stack>
         </>
     );
-}
+};
