@@ -11,8 +11,7 @@ export const NoContent = () => {
 };
 
 const sx = {
-  noContent: css`
-    font-family: DM Sans;
+  noContent: css`    
     font-size: 30px;
     font-weight: 700;
     color: #4F5B70;
