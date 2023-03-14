@@ -131,18 +131,14 @@ const LinkContainer = () => {
 
     return (
         <>
-            <Stack css={sx.FeaturedContainer} 
-                style={{display: displayFlag ? "none" : ""}}
-            >
+            <Stack css={sx.FeaturedContainer}>
                 <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
                     <CustomProgress />
                 </Stack>
             </Stack>
 
             
-            <Stack css={sx.FeaturedContainer} 
-                style={{display: displayFlag ? "" : "none"}}
-            >
+            <Stack css={sx.FeaturedContainer}>
                 <iframe src="https://flext.typeform.com/to/AiBGxC9I" 
                     style={{
                         width: "100%",
