@@ -4,7 +4,11 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { css, styled } from '@mui/material/styles';
 import NativeSelect from '@mui/material/NativeSelect';
-import { StudentListType, StudentType, StudentType2 } from './types/studentCourse.type';
+import {
+    StudentListType,
+    StudentType,
+    StudentType2,
+} from './types/studentCourse.type';
 import InputBase from '@mui/material/InputBase';
 import {
     courseArrayState,
@@ -12,10 +16,9 @@ import {
     studentArrayState,
     studentMapState,
     loginInfo,
-    studentCourseArray
+    studentCourseArray,
 } from '@/common/atom/Atom';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-
 
 interface DataType {
     data: StudentListType;
@@ -37,14 +40,12 @@ export const StudentCourse = ({ data }: DataType) => {
     }
 };
 
-const Student =  () => {
-
+const Student = () => {
     const studentArrayHandlerState = useSetRecoilState(studentArrayState);
     const courseArrayHandlerState = useSetRecoilState(courseArrayState);
 
     const studentMapHandlerState = useSetRecoilState(studentMapState);
     const courseMapHandlerState = useSetRecoilState(courseMapState);
-
 
     // const currenStudentList = useRecoilValue(studentArrayState);
     const currenCourseMap: any = useRecoilValue(courseMapState);
@@ -53,33 +54,39 @@ const Student =  () => {
 
     const [courseList, setCourseList] = useState<any[]>([]);
     let studentList = studentCourseList;
-    if(studentList.length == 0 ){
-        studentList = [{
-            id : 0,
-            lw_id : '',
-            name : 'No Student',
-            courses_list : [{
-                id : 0,
-                course_id : '',
-                title : ''
-            }]
-        }]
+    if (studentList.length == 0) {
+        studentList = [
+            {
+                id: 0,
+                lw_id: '',
+                name: 'No Student',
+                courses_list: [
+                    {
+                        id: 0,
+                        course_id: '',
+                        title: '',
+                    },
+                ],
+            },
+        ];
     }
     let courseList2 = studentList[0].courses_list;
 
-    if(courseList2.length == 0 ){
-        courseList2 =  [{
-            id : 0,
-            course_id : '',
-            title : 'No Course'
-        }]
+    if (courseList2.length == 0) {
+        courseList2 = [
+            {
+                id: 0,
+                course_id: '',
+                title: 'No Course',
+            },
+        ];
     }
     const [selectedStudentValue, setSelectedStudentValue] = useState('');
     const [selectedCourseValue, setSelectedCourseValue] = useState('');
 
     useEffect(() => {
         studentArrayHandlerState(studentList);
-    })
+    });
     useEffect(() => {
         setCourseList(courseList2);
         courseArrayHandlerState(courseList2);
@@ -87,21 +94,25 @@ const Student =  () => {
         studentMapHandlerState(studentList[0]);
         setSelectedStudentValue(studentList[0].lw_id);
         setSelectedCourseValue(courseList2[0].course_id);
-    }, [])
+    }, []);
 
     const handleChange = (event: { target: { value: string } }) => {
         // recoil에 studentMap
-        if(event.target.value != '') {
-            const list = studentList.filter((item: any) => item.lw_id === event.target.value);
+        if (event.target.value != '') {
+            const list = studentList.filter(
+                (item: any) => item.lw_id === event.target.value
+            );
 
             let courseList3 = list[0].courses_list;
 
-            if(courseList3.length == 0 ){
-                courseList3 =  [{
-                    id : 0,
-                    course_id : '',
-                    title : 'No Course'
-                }]
+            if (courseList3.length == 0) {
+                courseList3 = [
+                    {
+                        id: 0,
+                        course_id: '',
+                        title: 'No Course',
+                    },
+                ];
             }
 
             courseArrayHandlerState(courseList3);
@@ -114,7 +125,7 @@ const Student =  () => {
             setSelectedStudentValue(list[0].lw_id);
             setSelectedCourseValue(courseList3[0].course_id);
         }
-    }
+    };
 
     const handleChange2 = (event: { target: { value: string } }) => {
         let courseId = event.target.value;
@@ -128,56 +139,99 @@ const Student =  () => {
         }
     };
 
-    return (        
-        <Stack sx={{display:"inline-block", position: 'absolute', top: '3px', left : '210px'}}>
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5, ml:2}}>
-            <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                Student
-            </InputLabel>
-            <NativeSelect
-                inputProps={{
-                    name: 'Student',
-                    id: 'selectStudent',
+    return (
+        <Stack
+            sx={{
+                display: 'inline-block',
+                position: 'absolute',
+                top: '3px',
+                left: '210px',
+            }}
+        >
+            <FormControl
+                variant='standard'
+                sx={{
+                    m: 1,
+                    minWidth: 100,
+                    fontSize: 5,
+                    ml: 2,
+                    '& .MuiInputLabel-root': { color: 'white !important' },
                 }}
-                onChange={handleChange}
-                input={<BootstrapInput />}
-                disabled={studentList.length == 1 ? true : false}
-                value={selectedStudentValue}
-                sx={{borderRadius: '18px'}}
             >
-                {studentList.map((it:any, index:any) => (
-                    <StudentOption key={index} id={it.id} lw_id={it.lw_id} name={it.name} email={it.email} parent_email={it.parent_email}
-                    parent_name={it.parent_name} parent_phone={it.parent_phone} parent_email2={it.parent_email2} parent_name2={it.parent_name2}
-                    parent_phone2={it.parent_phone2} grade={it.grade} school={it.school} role={it.role} created_at={it.created_at}  last_login={it.last_login}
-                    folder_id={it.folder_id} courses_list={it.courses_list}/>
-                )
-                )}
-
-            </NativeSelect>
-        </FormControl>
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 100 , fontSize: 5}}>
-            <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                Course
-            </InputLabel>    
-            <NativeSelect
-                inputProps={{
-                    name: 'Course',
-                    id: 'selectCourse',
+                <InputLabelStyled
+                    variant='standard'
+                    htmlFor='uncontrolled-native'
+                >
+                    Student
+                </InputLabelStyled>
+                <NativeSelect
+                    inputProps={{
+                        name: 'Student',
+                        id: 'selectStudent',
+                    }}
+                    onChange={handleChange}
+                    input={<BootstrapInput />}
+                    disabled={studentList.length == 1 ? true : false}
+                    value={selectedStudentValue}
+                    sx={{ maxWidth:'220px'}}
+                >
+                    {studentList.map((it: any, index: any) => (
+                        <StudentOption
+                            key={index}
+                            id={it.id}
+                            lw_id={it.lw_id}
+                            name={it.name}
+                            email={it.email}
+                            parent_email={it.parent_email}
+                            parent_name={it.parent_name}
+                            parent_phone={it.parent_phone}
+                            parent_email2={it.parent_email2}
+                            parent_name2={it.parent_name2}
+                            parent_phone2={it.parent_phone2}
+                            grade={it.grade}
+                            school={it.school}
+                            role={it.role}
+                            created_at={it.created_at}
+                            last_login={it.last_login}
+                            folder_id={it.folder_id}
+                            courses_list={it.courses_list}
+                        />
+                    ))}
+                </NativeSelect>
+            </FormControl>
+            <FormControl
+                variant='standard'
+                sx={{
+                    m: 1,
+                    minWidth: 100,
+                    fontSize: 5,
+                    '& .MuiInputLabel-root': { color: 'white !important' },
                 }}
-                onChange={handleChange2}
-                input={<BootstrapInput />}
-                disabled={courseList.length == 1 ? true : false}
-                value={selectedCourseValue}
             >
-                {courseList.map((it, index) => (
-                    <CourseOption key={index} course_id={it.course_id} title={it.title}  />
-                )
-                )}
-
-            </NativeSelect>
-        </FormControl>
-    </Stack>
-
+                <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+                    Course
+                </InputLabel>
+                <NativeSelect
+                    inputProps={{
+                        name: 'Course',
+                        id: 'selectCourse',
+                    }}
+                    onChange={handleChange2}
+                    input={<BootstrapInput />}
+                    disabled={courseList.length == 1 ? true : false}
+                    value={selectedCourseValue}
+                    sx={{ maxWidth:'330px'}}
+                >
+                    {courseList.map((it, index) => (
+                        <CourseOption
+                            key={index}
+                            course_id={it.course_id}
+                            title={it.title}
+                        />
+                    ))}
+                </NativeSelect>
+            </FormControl>
+        </Stack>
 
         /*
         <Stack sx={{display:"inline-block"}}>
@@ -265,22 +319,20 @@ const CourseOption = ({ title, course_id }: courseProps) => {
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
         marginTop: theme.spacing(2.5),
-        Colors: '#ced4da',
+        colors: '#ced4da !important',
     },
     '& .MuiInputBase-input': {
-        borderRadius: 4,
+        borderRadius: 15,        
         position: 'relative',
         backgroundColor: theme.palette.background.paper,
         border: '1px solid #7ab6f1',
-        fontSize: 18,
+        fontSize: 15,
         padding: '5px 26px 5px 10px',
         transition: theme.transitions.create(['border-color', 'box-shadow']),
         // Use the system font instead of the default Roboto font.
-        fontFamily: [
-            'DM Sans'
-        ].join(','),
+        fontFamily: ['DM Sans'].join(','),
         '&:focus': {
-            borderRadius: 4,
+            borderRadius: 15,
             backgroundColor: '#e0edff',
             borderColor: '#46a3ff',
             boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
@@ -288,3 +340,6 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+const InputLabelStyled = styled(InputLabel)`
+    color: white;
+`;
