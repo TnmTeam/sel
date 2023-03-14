@@ -15,7 +15,6 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { IntercomBoot } from '@/pages/_app';
 import { courseMapState, studentMapState } from '@/common/atom/Atom';
 import { useEffect, useState } from 'react';
-import { CustomProgress } from "@/common/components/progress";
 
 export const OverviewView = () => {
 
@@ -159,34 +158,23 @@ const sx = {
 };
 
 
-const LinkContainer = () => { 
-    
-    const [displayFlag, setDisplayFlag] = useState(false);
-    setTimeout( () => setDisplayFlag(true), 1000);
 
-    return (
-        <>
-            <Stack css={sx.FeaturedContainer} 
-                style={{display: displayFlag ? "none" : ""}}
-            >
-                <Stack height={"452px"} justifyContent="center" alignItems={"center"}>
-                    <CustomProgress />
-                </Stack>
-            </Stack>
-
-            
-            <Stack css={sx.FeaturedContainer} 
-                style={{display: displayFlag ? "" : "none"}}
-            >
-                <iframe src="https://flext.typeform.com/to/AiBGxC9I" 
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: "28px"
-                    }}
-                >
-                </iframe>
-            </Stack>
-        </>
-    );
-}
+const LinkContainer = () => (
+    <Stack css={sx.FeaturedContainer}>
+        {/* 
+        <Image
+            css={sx.FavoriteIcon}
+            objectFit='cover'
+            src={CircleImagePng}
+            alt={'CircleImage'}
+        /> 
+        */}
+        <iframe src="https://flext.typeform.com/to/AiBGxC9I" 
+                style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "28px",
+                }} 
+        />
+    </Stack>
+);
