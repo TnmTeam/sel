@@ -111,7 +111,6 @@ export const VideoCard = ({ item, index }: VideoCardItemType) => {
 
 const sx = {
     date: css`
-        font-family : 'DM Sans'
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
@@ -121,7 +120,6 @@ const sx = {
 
     `,
     title: css`
-        font-family : 'DM Sans'
         font-style: normal;
         font-weight: bolad;
         font-size: 22px;
@@ -129,7 +127,6 @@ const sx = {
         margin-bottom: 5px;
     `,
     desc: css`
-        font-family : 'DM Sans'
         font-style: normal;
         font-weight: 400;
         font-size: 14px;

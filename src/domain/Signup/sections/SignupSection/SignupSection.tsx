@@ -420,7 +420,6 @@ export const SignupSection = () => {
 const sx = {
     sample: css``,
     inputbox: css`
-        font-family: 'DM Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 16px;

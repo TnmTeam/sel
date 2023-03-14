@@ -48,7 +48,6 @@ const sx = {
 
     answer: css `
         width: 100%;
-        font-family: 'DM Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 15px;
