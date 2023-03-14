@@ -1,4 +1,3 @@
-import { Stack } from '@mui/system';
 import { CourseProgressApiType } from '../../types/courseProgress.type';
 import { ProgressSummary } from './components';
 

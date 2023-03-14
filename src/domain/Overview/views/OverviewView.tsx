@@ -1,52 +1,22 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/material';
-import Image from 'next/image';
-import CircleImagePng from '@/assets/overview/img-circle.png';
 import {
     CourseProgressSection,
     ImpacterScoreSection,
     CourseScheduleSection,
 } from '../sections';
 import { FeaturedImpactorVideosSection } from '../sections';
-import { SelfScoresSection } from '../sections';
-import { FeaturedStudentWorkSection } from '../sections/FeaturedStudentWorkSection/FeaturedStudentWorkSection';
 import { useOverView } from './useOverView';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { IntercomBoot } from '@/pages/_app';
-import { courseMapState, studentMapState } from '@/common/atom/Atom';
+import { studentMapState } from '@/common/atom/Atom';
 import { useEffect, useState } from 'react';
 import { CustomProgress } from "@/common/components/progress";
 
 export const OverviewView = () => {
 
-    const currenCourseMap:any = useRecoilValue(courseMapState);
     const currenStudentMap:any = useRecoilValue(studentMapState);
-
-    const studentMapHandlerState = useSetRecoilState(studentMapState);
-    const courseMapHandlerState = useSetRecoilState(courseMapState);
     
-    
-    //console.log( "/overview" );
-    //console.log( currenStudentMap );
-   
-   
-    
-    
-    
-    /*
-    useEffect(() =>{   
-    if(Object.keys(currenStudentMap).length == 0){
-        //console.log("gd");
-        
-        //console.log(window.sessionStorage);
-        var jsonObj = JSON.parse(window.sessionStorage.persistAtom);
-        //console.log(jsonObj);
-        studentMapHandlerState(jsonObj.studentMap);
-        courseMapHandlerState(jsonObj.courseMap);
-        
-    }
-    });
-    */
     const [studentName , setStudentName]= useState("");
     useEffect(()=> {
         setStudentName(currenStudentMap.name);
@@ -54,12 +24,7 @@ export const OverviewView = () => {
 
     IntercomBoot(studentName);
 
-    const { impacterSocreState, courseScheduleState, courseProgressState } = useOverView();
-    // return (
-    //     <Stack css={sx.overviewContainer}>
-            
-    //     </Stack>
-    // );
+    const { impacterSocreState, courseScheduleState, courseProgressState } = useOverView();    
 
     return (
         <Stack css={sx.overviewContainer}>

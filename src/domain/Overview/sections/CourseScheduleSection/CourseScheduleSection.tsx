@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Stack } from '@mui/material';
 import { ScheduleDetailPopup, ScheduleSummary } from './components';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import Dialog from '@mui/material/Dialog';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -30,29 +30,6 @@ export const CourseScheduleSection = ({data}: DataType) => {
     const handleClose = () => {
         setOpen(false);
     };
-
-/*
-    const [state, setState] = useState(
-        {
-            startDate: new Date(data.result.dateRange.startDate),
-            endDate: new Date(data.result.dateRange.endDate),
-            key: "selection"
-        }
-    );
-    
-    const onChangeRange = (changeVal: OnChangeDateType) => {
-        {
-            setState
-            (
-                {
-                    startDate: changeVal.startDate,
-                    endDate: changeVal.endDate,
-                    key: changeVal.key
-                }
-            ); 
-        }
-    }
-*/
 
     if (!data.result || data.isLoading || !data.result.dateRange) {
         return (
@@ -109,9 +86,6 @@ const sx = {
         height: 427px;
         left: 679px;
         background: #ffffff;
-        border-radius: 28px;
-        /*
-        cursor: pointer;
-        */
+        border-radius: 28px;        
     `
 };
