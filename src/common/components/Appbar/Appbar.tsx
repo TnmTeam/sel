@@ -92,7 +92,7 @@ export const Appbar = () => {
             <Stack
                 sx={{
                     position: 'fixed',
-                    zIndex: 998,
+                    zIndex: 9998,
                     top: 0,
                     left: 0,
                     background: Colors.BackBlue,
@@ -106,7 +106,7 @@ export const Appbar = () => {
                     height: 79,
                     background: Colors.BackBlue,
                     position: 'fixed',
-                    zIndex: 999,
+                    zIndex: 9999,
                     width: '1440px',
                     boxShadow: '0 0 0 0',
                 }}
