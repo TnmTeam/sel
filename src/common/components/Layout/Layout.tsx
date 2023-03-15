@@ -45,9 +45,10 @@ const st = {
         background-color: rgba(74,113,153,1);
     `,
     root: css`
-        width: 100%;
+        width: 1440px;
         max-width: 1440px;
         margin: 0 auto;
+        overflow-x: auto;
     `,
     children: css`
         width: 100%;
